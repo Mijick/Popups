@@ -13,6 +13,7 @@ import SwiftUI
 struct PopupTopStackView: PopupStack {
     let items: [AnyPopup<TopPopupConfig>]
     let globalConfig: GlobalConfig
+    @Binding var enable: Bool
     @State var gestureTranslation: CGFloat = 0
     @State var heights: [ID: CGFloat] = [:]
     @State var dragHeights: [ID: CGFloat] = [:]
@@ -25,7 +26,12 @@ struct PopupTopStackView: PopupStack {
             .background(createTapArea())
             .animation(getHeightAnimation(isAnimationDisabled: screenManager.animationsDisabled), value: heights)
             .animation(isGestureActive ? dragGestureAnimation : transitionRemovalAnimation, value: gestureTranslation)
-            .onDragGesture($isGestureActive, onChanged: onPopupDragGestureChanged, onEnded: onPopupDragGestureEnded)
+            .onDragGesture(
+                $isGestureActive,
+                enable: $enable,
+                onChanged: onPopupDragGestureChanged,
+                onEnded: onPopupDragGestureEnded
+            )
     }
 }
 

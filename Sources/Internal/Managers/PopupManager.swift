@@ -18,6 +18,9 @@ public class PopupManager: ObservableObject {
     private(set) var popupActionsOnDismiss: [ID: () -> ()] = [:]
 
     static let shared: PopupManager = .init()
+    
+    @Published public var enable = true
+    
     private init() {}
 }
 private extension PopupManager {
@@ -52,10 +55,16 @@ private extension PopupManager {
         case .removeAllUpTo, .removeAll: shared.popupsToBeDismissed.removeAll()
         default: break
     }}
-    static func updateOperationType(_ operation: StackOperation) { switch operation {
-        case .insertAndReplace, .insertAndStack: shared.presenting = true
-        case .removeLast, .remove, .removeAllUpTo, .removeAll: shared.presenting = false
-    }}
+    static func updateOperationType(_ operation: StackOperation) {
+        switch operation {
+        case .insertAndReplace, .insertAndStack:
+            shared.enable = true
+            shared.presenting = true
+        case .removeLast, .remove, .removeAllUpTo, .removeAll:
+            shared.enable = false
+            shared.presenting = false
+        }
+    }
 }
 
 fileprivate extension [any Popup] {

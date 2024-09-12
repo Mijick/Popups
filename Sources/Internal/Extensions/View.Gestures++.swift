@@ -14,7 +14,16 @@ import SwiftUI
 #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
 extension View {
     func onTapGesture(perform action: @escaping () -> ()) -> some View { onTapGesture(count: 1, perform: action) }
-    func onDragGesture(_ state: GestureState<Bool>, onChanged actionOnChanged: @escaping (CGFloat) -> (), onEnded actionOnEnded: @escaping (CGFloat) -> ()) -> some View { simultaneousGesture(createDragGesture(state, actionOnChanged, actionOnEnded)).onStateChange(state, actionOnEnded) }
+    func onDragGesture(_ state: GestureState<Bool>,enable: Binding<Bool>, onChanged actionOnChanged: @escaping (CGFloat) -> (), onEnded actionOnEnded: @escaping (CGFloat) -> ()) -> some View {
+        simultaneousGesture(
+            enable.wrappedValue ? createDragGesture(
+                state,
+                actionOnChanged,
+                actionOnEnded
+            ) : nil
+        )
+        .onStateChange(state, actionOnEnded)
+    }
 }
 private extension View {
     func createDragGesture(_ state: GestureState<Bool>, _ actionOnChanged: @escaping (CGFloat) -> (), _ actionOnEnded: @escaping (CGFloat) -> ()) -> some Gesture {
