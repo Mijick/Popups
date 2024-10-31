@@ -13,11 +13,11 @@
 
 <!--Links: Demo, Wiki, Roadmap-->
 <p align="center">
-    <a href="https://github.com/Mijick/Popups-Demo" rel="nofollow"><b>Try demo we prepared</b></a>
+    <a href="https://link.mijick.com/popups-demo" rel="nofollow"><b>Try demo we prepared</b></a>
     |
-    <a href="https://github.com/Mijick/Popups/wiki" rel="nofollow"><b>Framework documentation</b></a>
+    <a href="https://link.mijick.com/popups-wiki" rel="nofollow"><b>Framework documentation</b></a>
     |
-    <a href="https://cottony-licorice-ab9.notion.site/Popups-11b6ea2aa843809194dbfe0395575efb?pvs=25" rel="nofollow"><b>Roadmap</b></a>
+    <a href="https://link.mijick.com/roadmap" rel="nofollow"><b>Roadmap</b></a>
 </p>
 
 <br>
@@ -42,16 +42,16 @@
     <tbody>
         <tr>
             <td>
-                <img src="https://github.com/Mijick/Assets/blob/main/PopupView/GIFs/PopupView-Bottom.gif" />
+                <img src="https://github.com/Mijick/Assets/blob/main/PopupView/GIFs/PopupView-Bottom.gif"/>
             </td>
             <td>
-                <img src="https://github.com/Mijick/Assets/blob/main/PopupView/GIFs/PopupView-Bottom.gif" />
+                <img src="https://github.com/Mijick/Assets/blob/main/PopupView/GIFs/PopupView-Bottom.gif"/>
             </td>
             <td>
-                <img src="https://github.com/Mijick/Assets/blob/main/PopupView/GIFs/PopupView-Bottom.gif" />
+                <img src="https://github.com/Mijick/Assets/blob/main/PopupView/GIFs/PopupView-Bottom.gif"/>
             </td>
             <td>
-                <img src="https://github.com/Mijick/Assets/blob/main/PopupView/GIFs/PopupView-Bottom.gif" />
+                <img src="https://github.com/Mijick/Assets/blob/main/PopupView/GIFs/PopupView-Bottom.gif"/>
             </td>
         </tr>
     </tbody>
@@ -62,19 +62,19 @@
 <!--Buttons-->
 <p>
     <!--Discord-->
-    <a href="https://discord.com/invite/dT5V7nm5SC">
+    <a href="https://link.mijick.com/discord">
         <img alt="Join us on Discord" src="https://github.com/Mijick/Assets/blob/main/Popups/Buttons/discord.png" height="40px">
     </a>
     <!--GitHub-->
-    <a href="https://github.com/Mijick">
+    <a href="https://link.mijick.com/github">
         <img alt="See our other frameworks" src="https://github.com/Mijick/Assets/blob/main/Popups/Buttons/github.png" height="40px">
     </a>
     <!--Medium-->
-    <a href="https://medium.com/@mijick">
+    <a href="https://link.mijick.com/medium">
         <img alt="Read us on Medium" src="https://github.com/Mijick/Assets/blob/main/Popups/Buttons/medium.png" height="40px">
     </a>
     <!--Buymeacoffee-->
-    <a href="https://buymeacoffee.com/mijick">
+    <a href="https://link.mijick.com/buymeacoffee">
         <img alt="Buy us a coffee" src="https://github.com/Mijick/Assets/blob/main/Popups/Buttons/buymeacoffee.png" height="40px">
     </a>
 </p>
@@ -130,18 +130,18 @@ MijickPopups solves two seemingly contradictory problems - to allow developers t
 
 <!--Documentation-->
 # 🚀 How to use it?
-Visit the framework's [documentation page](https://github.com/Mijick/Popups/wiki) to learn how to integrate your project with **MijickPopups**.
+Visit the framework's [documentation page](https://link.mijick.com/popups-wiki) to learn how to integrate your project with **MijickPopups**.
 
 <!--Community-->
 # 🍀 Community
-Join the welcoming community of developers on [Discord](https://discord.com/invite/dT5V7nm5SC).
+Join the welcoming community of developers on [Discord](https://link.mijick.com/discord).
 
 <!--Contribution-->
 # 🌼 Contribute
 To contribute a feature or idea to **MijickPopups**, create an [issue](https://github.com/Mijick/Popups/issues/new?assignees=FulcrumOne&labels=state%3A+inactive%2C+type%3A+feature&projects=&template=🚀-feature-request.md&title=%5BFREQ%5D) explaining your idea or bring it up on [Discord](https://discord.com/invite/dT5V7nm5SC). <br>
 If you find a bug, please create an [issue](https://github.com/Mijick/Popups/issues/new?assignees=FulcrumOne%2C+jay-jay-lama&labels=state%3A+inactive%2C+type%3A+bug&projects=&template=🦟-bug-report.md&title=%5BBUG%5D). <br>
-If you would like to contribute, please refer to the [contribution guidelines](https://github.com/Mijick/Popups/blob/main/.github/CONTRIBUTING.md).
+If you would like to contribute, please refer to the [Contribution Guidelines](https://link.mijick.com/contribution-guidelines).
 
 <!--Sponsorship-->
 # 💜 Sponsor our work
-Support our work by [becoming a backer](https://buymeacoffee.com/mijick).
+Support our work by [becoming a backer](https://link.mijick.com/buymeacoffee).
