@@ -33,10 +33,10 @@
 <table>
     <thead>
         <tr>
-            <th>X1</th>
-            <th>X2</th>
-            <th>X3</th>
-            <th>X4</th>
+            <th>Popups</th>
+            <th>Alerts</th>
+            <th>Sheets</th>
+            <th>Banners</th>
         </tr>
     </thead>
     <tbody>
