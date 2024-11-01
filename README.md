@@ -42,10 +42,10 @@
     <tbody>
         <tr>
             <td>
-               <img src="https://github.com/user-attachments/assets/654225e4-05ee-4e01-8b64-53d1671248a7"/>
+               <img src="https://github.com/user-attachments/assets/c4c12d7e-1d04-48a7-af61-13482d801076"/>
             </td>
             <td>
-                <img src="https://github.com/user-attachments/assets/654225e4-05ee-4e01-8b64-53d1671248a7"/>
+                <img src="https://github.com/user-attachments/assets/c4c12d7e-1d04-48a7-af61-13482d801076"/>
             </td>
             <td>
                <img src="https://github.com/user-attachments/assets/654225e4-05ee-4e01-8b64-53d1671248a7"/>
