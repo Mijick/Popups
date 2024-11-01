@@ -35,7 +35,7 @@
         <tr>
             <th>Popups</th>
             <th>Alerts</th>
-            <th>Sheets</th>
+            <th>Resizable Sheets</th>
             <th>Banners</th>
         </tr>
     </thead>
