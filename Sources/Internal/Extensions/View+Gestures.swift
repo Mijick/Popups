@@ -24,12 +24,15 @@ extension View {
 
 // MARK: On Drag Gesture
 extension View {
-    func onDragGesture(onChanged actionOnChanged: @escaping (CGFloat) -> (), onEnded actionOnEnded: @escaping (CGFloat) -> ()) -> some View {
+    @ViewBuilder func onDragGesture(onChanged actionOnChanged: @escaping (CGFloat) -> (), onEnded actionOnEnded: @escaping (CGFloat) -> (), isEnabled: Bool) -> some View {
         #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
-        highPriorityGesture(DragGesture()
-            .onChanged { actionOnChanged($0.translation.height) }
-            .onEnded { actionOnEnded($0.translation.height) }
-        )
+        if isEnabled { self }
+        else {
+            highPriorityGesture(DragGesture()
+                .onChanged { actionOnChanged($0.translation.height) }
+                .onEnded { actionOnEnded($0.translation.height) }
+            )
+        }
         #elseif os(tvOS)
         self
         #endif

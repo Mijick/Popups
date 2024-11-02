@@ -18,7 +18,7 @@ struct PopupVerticalStackView<Config: LocalConfig.Vertical>: View {
     var body: some View {
         ZStack(alignment: (!viewModel.alignment).toAlignment(), content: createPopupStack)
             .frame(height: viewModel.screen.height, alignment: viewModel.alignment.toAlignment())
-            .onDragGesture(onChanged: viewModel.onPopupDragGestureChanged, onEnded: viewModel.onPopupDragGestureEnded)
+            .onDragGesture(onChanged: viewModel.onPopupDragGestureChanged, onEnded: viewModel.onPopupDragGestureEnded, isEnabled: viewModel.dragGestureEnabled)
     }
 }
 private extension PopupVerticalStackView {
