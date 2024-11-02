@@ -26,7 +26,7 @@ extension View {
 extension View {
     @ViewBuilder func onDragGesture(onChanged actionOnChanged: @escaping (CGFloat) -> (), onEnded actionOnEnded: @escaping (CGFloat) -> (), isEnabled: Bool) -> some View {
         #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
-        if isEnabled { self }
+        if !isEnabled { self }
         else {
             highPriorityGesture(DragGesture()
                 .onChanged { actionOnChanged($0.translation.height) }
