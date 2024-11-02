@@ -29,6 +29,8 @@ public extension Popup {
      ``SwiftUICore/View/dismissPopup(_:popupManagerID:)-9mkd5``,
      ``SwiftUICore/View/dismissAllPopups(popupManagerID:)``
      should be called with the same **popupManagerID** as the one used here.
+     
+     - Warning: To present multiple views of the same type assign a unique identifier using the method ``Popup/setCustomID(_:)``.
      */
     func present(popupManagerID: PopupManagerID = .shared) { PopupManager.fetchInstance(id: popupManagerID)?.stack(.insertPopup(self)) }
 }
