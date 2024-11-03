@@ -94,7 +94,7 @@ public extension LocalConfig.Vertical {
     func heightMode(_ value: HeightMode) -> Self { self.heightMode = value; return self }
 
     /**
-     Sets the available detents for the popup.
+     Sets the available detents for the popup. Enables drag and drop functionality.
 
      ## Visualisation
      ![image](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/drag-detent.png?raw=true)
