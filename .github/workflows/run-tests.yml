@@ -11,4 +11,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Run tests
-      run: xcodebuild test -scheme MijickPopups -destination 'platform=iOS Simulator,OS=18.0,name=iPhone 13 Pro'
+      run: xcodebuild test -scheme MijickPopups -destination 'platform=iOS Simulator,OS=18.0,name=iPhone 16 Pro'
