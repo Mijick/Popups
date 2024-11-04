@@ -24,7 +24,7 @@ extension View {
 
 // MARK: On Drag Gesture
 extension View {
-    @ViewBuilder func onDragGesture(onChanged actionOnChanged: @escaping (CGFloat) -> (), onEnded actionOnEnded: @escaping (CGFloat) -> (), isEnabled: Bool) -> some View {
+    func onDragGesture(onChanged actionOnChanged: @escaping (CGFloat) -> (), onEnded actionOnEnded: @escaping (CGFloat) -> (), isEnabled: Bool) -> some View {
         #if os(tvOS)
         self
         #else
