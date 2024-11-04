@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   MijickPopups is a free and open-source library dedicated for SwiftUI that makes the process of presenting popups easier and much cleaner.
                                DESC
   
-  s.version               = '3.0.0'
+  s.version               = '3.0.1'
   s.ios.deployment_target = '14.0'
   s.osx.deployment_target = '12.0'
   s.tvos.deployment_target = '15.0'
