@@ -320,8 +320,6 @@ private extension VM.VerticalStack {
     var maxStackOverlayFactor: CGFloat { 0.48 }
     var stackOffset: CGFloat { GlobalConfigContainer.vertical.isStackingEnabled ? 8 : 0 }
     var dragThreshold: CGFloat { GlobalConfigContainer.vertical.dragThreshold }
-}
-extension VM.VerticalStack {
     var dragGestureEnabled: Bool { getActivePopupConfig().isDragGestureEnabled }
 }
 
