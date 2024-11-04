@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   s.name                  = 'MijickPopups'
   s.summary               = 'Popups, popovers, sheets, alerts, toasts, banners, (...) presentation made simple. Written with and for SwiftUI.'
   s.description           = <<-DESC
-  MijickPopups is a free and open-source library dedicated for SwiftUI that makes the process of presenting popups easier and much cleaner.
+  MijickPopups solves two seemingly contradictory problems - to allow developers to create fully customizable popup, and to make the process as simple as possible.
                                DESC
   
   s.version               = '3.0.1'

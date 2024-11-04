@@ -314,7 +314,7 @@ private extension VM.VerticalStack {
 }
 
 // MARK: Attributes
-private extension VM.VerticalStack {
+extension VM.VerticalStack {
     var stackScaleFactor: CGFloat { 0.025 }
     var stackOverlayFactor: CGFloat { 0.1 }
     var maxStackOverlayFactor: CGFloat { 0.48 }
