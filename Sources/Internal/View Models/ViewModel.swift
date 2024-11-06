@@ -70,12 +70,8 @@ extension ViewModel {
     }}
 }
 extension ViewModel {
-    func getConfig(_ item: AnyPopup?) -> AnyPopupConfig {
-        let config = item?.config
-        return config ?? .init()
-    }
     func getActivePopupConfig() -> AnyPopupConfig {
-        getConfig(popups.last)
+        popups.last?.config ?? .init()
     }
 }
 
