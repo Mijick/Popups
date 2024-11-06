@@ -15,11 +15,11 @@ public class LocalConfigVertical: LocalConfig { required public init() {}
     // MARK: Content
     public var popupPadding: EdgeInsets = GlobalConfigContainer.vertical.popupPadding
     public var cornerRadius: CGFloat = GlobalConfigContainer.vertical.cornerRadius
-    public var ignoredSafeAreaEdges: Edge.Set = []
+    public var ignoredSafeAreaEdges: Edge.Set = GlobalConfigContainer.vertical.ignoredSafeAreaEdges
     public var backgroundColor: Color = GlobalConfigContainer.vertical.backgroundColor
     public var overlayColor: Color = GlobalConfigContainer.vertical.overlayColor
-    public var heightMode: HeightMode = .auto
-    public var dragDetents: [DragDetent] = []
+    public var heightMode: HeightMode = GlobalConfigContainer.vertical.heightMode
+    public var dragDetents: [DragDetent] = GlobalConfigContainer.vertical.dragDetents
 
     // MARK: Gestures
     public var isTapOutsideToDismissEnabled: Bool = GlobalConfigContainer.vertical.isTapOutsideToDismissEnabled
