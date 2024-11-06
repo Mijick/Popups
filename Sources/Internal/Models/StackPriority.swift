@@ -22,10 +22,10 @@ struct StackPriority: Equatable {
 
 // MARK: Reshuffle
 extension StackPriority {
-    @MainActor mutating func reshuffle(newPopups: [AnyPopup]) { switch newPopups.last {
-        case .some(let popup) where popup.config is TopPopupConfig: reshuffle(0)
-        case .some(let popup) where popup.config is CentrePopupConfig: reshuffle(1)
-        case .some(let popup) where popup.config is BottomPopupConfig: reshuffle(2)
+    @MainActor mutating func reshuffle(newPopups: [AnyPopup]) { switch newPopups.last?.alignment {
+        case .top: reshuffle(0)
+        case .centre: reshuffle(1)
+        case .bottom: reshuffle(2)
         default: return
     }}
 }

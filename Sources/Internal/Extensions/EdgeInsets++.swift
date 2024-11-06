@@ -14,6 +14,7 @@ import SwiftUI
 extension EdgeInsets {
     subscript(_ edge: VerticalEdge) -> CGFloat { switch edge {
         case .top: top
+        case .centre: 0
         case .bottom: bottom
     }}
 }
