@@ -56,16 +56,24 @@ public extension LocalConfigCentre {
     func tapOutsideToDismissPopup(_ value: Bool) -> Self { self.isTapOutsideToDismissEnabled = value; return self }
 }
 
-
-
-
-
-
-
-
-
 // MARK: Vertical
 public extension LocalConfigVertical {
+    /**
+     Distance of the entire popup (including its background) from the top edge of the screen.
+
+     ## Visualisation
+     ![image](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/top-padding.png?raw=true)
+     */
+    func popupTopPadding(_ value: CGFloat) -> Self { self.popupPadding = .init(top: value, leading: popupPadding.leading, bottom: popupPadding.bottom, trailing: popupPadding.trailing); return self }
+
+    /**
+     Distance of the entire popup (including its background) from the bottom edge of the screen.
+
+     ## Visualisation
+     ![image](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/bottom-padding.png?raw=true)
+     */
+    func popupBottomPadding(_ value: CGFloat) -> Self { self.popupPadding = .init(top: popupPadding.top, leading: popupPadding.leading, bottom: value, trailing: popupPadding.trailing); return self }
+
     /**
      Distance of the entire popup (including its background) from the horizontal edges of the screen.
 
@@ -111,22 +119,6 @@ public extension LocalConfigVertical {
 
 // MARK: Only Vertical
 public extension LocalConfigVertical {
-    /**
-     Distance of the entire popup (including its background) from the top edge of the screen.
-
-     ## Visualisation
-     ![image](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/top-padding.png?raw=true)
-     */
-    func popupTopPadding(_ value: CGFloat) -> Self { self.popupPadding = .init(top: value, leading: popupPadding.leading, bottom: popupPadding.bottom, trailing: popupPadding.trailing); return self }
-
-    /**
-     Distance of the entire popup (including its background) from the bottom edge of the screen.
-
-     ## Visualisation
-     ![image](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/bottom-padding.png?raw=true)
-     */
-    func popupBottomPadding(_ value: CGFloat) -> Self { self.popupPadding = .init(top: popupPadding.top, leading: popupPadding.leading, bottom: value, trailing: popupPadding.trailing); return self }
-
     /**
      Expands the safe area of a popup.
 
