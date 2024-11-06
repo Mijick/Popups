@@ -67,7 +67,7 @@ private extension AnyPopup {
 
 
 // MARK: Popup
-extension AnyPopup { typealias Config = LocalConfig
+extension AnyPopup { typealias Config = AnyPopupConfig
     var body: some View { _body }
 
     func onFocus() { _onFocus() }
