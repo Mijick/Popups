@@ -26,7 +26,8 @@ struct AnyPopupConfig: LocalConfig, Sendable { init() {}
     var isDragGestureEnabled: Bool = false
 
     // MARK: Initializer
-    init(_ config: any LocalConfig) {
+    init<Config: LocalConfig>(_ config: Config) {
+        self.alignment = .init(Config.self)
         self.popupPadding = config.popupPadding
         self.cornerRadius = config.cornerRadius
         self.ignoredSafeAreaEdges = config.ignoredSafeAreaEdges
