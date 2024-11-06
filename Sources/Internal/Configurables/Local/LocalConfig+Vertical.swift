@@ -34,7 +34,7 @@ public extension LocalConfig { class Vertical: LocalConfig {
 
 - important: If a certain method is not called here, the popup inherits the configuration from ``GlobalConfigContainer``.
  */
-public typealias TopPopupConfig = LocalConfig.Vertical.Top
+public typealias TopPopupConfig = LocalConfigVertical.Top
 
 /**
  Configures the popup.
@@ -42,10 +42,10 @@ public typealias TopPopupConfig = LocalConfig.Vertical.Top
 
 - important: If a certain method is not called here, the popup inherits the configuration from ``GlobalConfigContainer``.
  */
-public typealias BottomPopupConfig = LocalConfig.Vertical.Bottom
-public extension LocalConfig.Vertical {
-    class Top: LocalConfig.Vertical {}
-    class Bottom: LocalConfig.Vertical {}
+public typealias BottomPopupConfig = LocalConfigVertical.Bottom
+public extension LocalConfigVertical {
+    class Top: LocalConfigVertical {}
+    class Bottom: LocalConfigVertical {}
 }
 
 
@@ -55,8 +55,8 @@ public extension LocalConfig.Vertical {
 
 
 
-extension LocalConfig.Vertical {
-    static func t_createNew<C: LocalConfig.Vertical>(popupPadding: EdgeInsets, cornerRadius: CGFloat, ignoredSafeAreaEdges: Edge.Set, heightMode: HeightMode, dragDetents: [DragDetent], isDragGestureEnabled: Bool) -> C {
+extension LocalConfigVertical {
+    static func t_createNew<C: LocalConfigVertical>(popupPadding: EdgeInsets, cornerRadius: CGFloat, ignoredSafeAreaEdges: Edge.Set, heightMode: HeightMode, dragDetents: [DragDetent], isDragGestureEnabled: Bool) -> C {
         let config = C()
         config.popupPadding = popupPadding
         config.cornerRadius = cornerRadius
