@@ -20,11 +20,8 @@ extension VM { class VerticalStack<Config: LocalConfigVertical>: ViewModel<Confi
     override func recalculateAndSave(height: CGFloat, for popup: AnyPopup) { _recalculateAndSave(height: height, for: popup) }
     override func calculateHeightForActivePopup() -> CGFloat? { _calculateHeightForActivePopup() }
     override func calculatePopupPadding() -> EdgeInsets { _calculatePopupPadding() }
-    override func calculateCornerRadius() -> [VerticalEdge : CGFloat] { _calculateCornerRadius() }
+    override func calculateCornerRadius() -> [PopupAlignment : CGFloat] { _calculateCornerRadius() }
     override func calculateVerticalFixedSize(for popup: AnyPopup) -> Bool { _calculateVerticalFixedSize(for: popup) }
-
-    // MARK: Initialise
-    override init() { self.alignment = .init(Config.self) }
 }}
 
 
