@@ -11,21 +11,20 @@
 
 import SwiftUI
 
-public extension LocalConfig { class Vertical: LocalConfig {
-    var ignoredSafeAreaEdges: Edge.Set = []
-    var heightMode: HeightMode = .auto
-    var dragDetents: [DragDetent] = []
-    var isDragGestureEnabled: Bool = GlobalConfigContainer.vertical.isDragGestureEnabled
+public class LocalConfigVertical: LocalConfig { required public init() {}
+    // MARK: Content
+    public var popupPadding: EdgeInsets = GlobalConfigContainer.vertical.popupPadding
+    public var cornerRadius: CGFloat = GlobalConfigContainer.vertical.cornerRadius
+    public var ignoredSafeAreaEdges: Edge.Set = []
+    public var backgroundColor: Color = GlobalConfigContainer.vertical.backgroundColor
+    public var overlayColor: Color = GlobalConfigContainer.vertical.overlayColor
+    public var heightMode: HeightMode = .auto
+    public var dragDetents: [DragDetent] = []
 
-
-    required init() { super.init()
-        self.popupPadding = GlobalConfigContainer.vertical.popupPadding
-        self.cornerRadius = GlobalConfigContainer.vertical.cornerRadius
-        self.backgroundColor = GlobalConfigContainer.vertical.backgroundColor
-        self.overlayColor = GlobalConfigContainer.vertical.overlayColor
-        self.isTapOutsideToDismissEnabled = GlobalConfigContainer.vertical.isTapOutsideToDismissEnabled
-    }
-}}
+    // MARK: Gestures
+    public var isTapOutsideToDismissEnabled: Bool = GlobalConfigContainer.vertical.isTapOutsideToDismissEnabled
+    public var isDragGestureEnabled: Bool = GlobalConfigContainer.vertical.isDragGestureEnabled
+}
 
 // MARK: Subclasses & Typealiases
 /**
