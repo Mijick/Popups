@@ -180,6 +180,7 @@ private extension VM.VerticalStack {
         return switch alignment {
             case .top: min(gestureTranslation + lastPopupDragHeight, 0)
             case .bottom: max(gestureTranslation - lastPopupDragHeight, 0)
+            case .centre: fatalError()
         }
     }
     func calculateOffsetForStackedPopup(_ popup: AnyPopup) -> CGFloat {
@@ -188,6 +189,7 @@ private extension VM.VerticalStack {
         let alignmentMultiplier = switch alignment {
             case .top: 1.0
             case .bottom: -1.0
+            case .centre: fatalError()
         }
 
         return offsetValue * alignmentMultiplier
@@ -229,10 +231,12 @@ private extension VM.VerticalStack {
     func calculateTopCornerRadius(_ cornerRadiusValue: CGFloat) -> CGFloat { switch alignment {
         case .top: calculatePopupPadding().top != 0 ? cornerRadiusValue : 0
         case .bottom: cornerRadiusValue
+        case .centre: fatalError()
     }}
     func calculateBottomCornerRadius(_ cornerRadiusValue: CGFloat) -> CGFloat { switch alignment {
         case .top: cornerRadiusValue
         case .bottom: calculatePopupPadding().bottom != 0 ? cornerRadiusValue : 0
+        case .centre: fatalError()
     }}
 }
 
@@ -293,6 +297,7 @@ private extension VM.VerticalStack {
     func getDragTranslationMultiplier() -> CGFloat { switch alignment {
         case .top: 1
         case .bottom: -1
+        case .centre: fatalError()
     }}
 }
 
@@ -301,6 +306,7 @@ private extension VM.VerticalStack {
     func calculateTranslationProgress() -> CGFloat { guard let activePopupHeight = popups.last?.height else { return 0 }; return switch alignment {
         case .top: abs(min(gestureTranslation + (popups.last?.dragHeight ?? 0), 0)) / activePopupHeight
         case .bottom: max(gestureTranslation - (popups.last?.dragHeight ?? 0), 0) / activePopupHeight
+        case .centre: fatalError()
     }}
 }
 
@@ -365,6 +371,7 @@ private extension VM.VerticalStack {
     func calculateDragExtremeValue(_ value1: CGFloat, _ value2: CGFloat) -> CGFloat { switch alignment {
         case .top: min(value1, value2)
         case .bottom: max(value1, value2)
+        case .centre: fatalError()
     }}
 }
 private extension VM.VerticalStack {
@@ -454,12 +461,12 @@ private extension VM.VerticalStack {
 extension VM.VerticalStack {
     func t_calculatePopupPadding() -> EdgeInsets { calculatePopupPadding() }
     func t_calculateBodyPadding(for popup: AnyPopup) -> EdgeInsets { calculateBodyPadding(for: popup) }
-    func t_calculateHeight(heightCandidate: CGFloat, popupConfig: Config) -> CGFloat { calculateHeight(heightCandidate, popupConfig) }
+    func t_calculateHeight(heightCandidate: CGFloat, popupConfig: AnyPopupConfig) -> CGFloat { calculateHeight(heightCandidate, popupConfig) }
     func t_calculateOffsetY(for popup: AnyPopup) -> CGFloat { calculateOffsetY(for: popup) }
     func t_calculateScaleX(for popup: AnyPopup) -> CGFloat { calculateScaleX(for: popup) }
     func t_calculateVerticalFixedSize(for popup: AnyPopup) -> Bool { calculateVerticalFixedSize(for: popup) }
     func t_calculateStackOverlayOpacity(for popup: AnyPopup) -> CGFloat { calculateStackOverlayOpacity(for: popup) }
-    func t_calculateCornerRadius() -> [VerticalEdge: CGFloat] { calculateCornerRadius() }
+    func t_calculateCornerRadius() -> [PopupAlignment: CGFloat] { calculateCornerRadius() }
     func t_calculateTranslationProgress() -> CGFloat { calculateTranslationProgress() }
     func t_getInvertedIndex(of popup: AnyPopup) -> Int { getInvertedIndex(of: popup) }
 
