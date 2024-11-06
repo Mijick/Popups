@@ -17,9 +17,9 @@ struct PopupView: View {
     #endif
 
     @ObservedObject var popupManager: PopupManager
-    private let topStackViewModel: VM.VerticalStack<TopPopupConfig> = .init()
-    private let centreStackViewModel: VM.CentreStack = .init()
-    private let bottomStackViewModel: VM.VerticalStack<BottomPopupConfig> = .init()
+    private let topStackViewModel: VM.VerticalStack = .init(TopPopupConfig.self)
+    private let centreStackViewModel: VM.CentreStack = .init(CentrePopupConfig.self)
+    private let bottomStackViewModel: VM.VerticalStack = .init(BottomPopupConfig.self)
 
 
     var body: some View {

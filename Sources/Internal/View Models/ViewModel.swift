@@ -12,7 +12,7 @@
 import SwiftUI
 
 enum VM {}
-class ViewModel<Config: LocalConfig>: ViewModelObject {
+class ViewModel: ViewModelObject {
     // MARK: Attributes
     private(set) var alignment: PopupAlignment
     private(set) var popups: [AnyPopup] = []
@@ -32,7 +32,7 @@ class ViewModel<Config: LocalConfig>: ViewModelObject {
     func calculateVerticalFixedSize(for popup: AnyPopup) -> Bool { fatalError() }
 
     // MARK: Initializer
-    init() { self.alignment = .init(Config.self) }
+    init<Config: LocalConfig>(_ config: Config.Type) { self.alignment = .init(Config.self) }
 }
 
 // MARK: Setup

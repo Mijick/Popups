@@ -11,7 +11,7 @@
 
 import SwiftUI
 
-extension VM { class VerticalStack<Config: LocalConfigVertical>: ViewModel<Config> {
+extension VM { class VerticalStack: ViewModel {
     // MARK: Attributes
     private(set) var gestureTranslation: CGFloat = 0
     private(set) var translationProgress: CGFloat = 0

@@ -11,7 +11,7 @@
 
 import SwiftUI
 
-extension VM { class CentreStack: ViewModel<LocalConfigCentre> {
+extension VM { class CentreStack: ViewModel {
     // MARK: Overridden Methods
     override func recalculateAndSave(height: CGFloat, for popup: AnyPopup) { _recalculateAndSave(height: height, for: popup) }
     override func calculateHeightForActivePopup() -> CGFloat? { _calculateHeightForActivePopup() }
