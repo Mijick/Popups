@@ -46,7 +46,7 @@ extension ViewModel {
 // MARK: Update
 extension ViewModel {
     func updatePopupsValue(_ newPopups: [AnyPopup]) {
-        popups = newPopups.filter { $0.alignment == alignment }
+        popups = newPopups.filter { $0.config.alignment == alignment }
         activePopupHeight = calculateHeightForActivePopup()
 
         withAnimation(.transition) { objectWillChange.send() }
