@@ -60,7 +60,7 @@ private extension VM.VerticalStack {
     }}
 }
 private extension VM.VerticalStack {
-    func calculateHeight(_ heightCandidate: CGFloat, _ popupConfig: Config) -> CGFloat { switch popupConfig.heightMode {
+    func calculateHeight(_ heightCandidate: CGFloat, _ popupConfig: AnyPopupConfig) -> CGFloat { switch popupConfig.heightMode {
         case .auto: min(heightCandidate, calculateLargeScreenHeight())
         case .large: calculateLargeScreenHeight()
         case .fullscreen: getFullscreenHeight()
@@ -130,27 +130,29 @@ extension VM.VerticalStack {
     )}
 }
 private extension VM.VerticalStack {
-    func calculateTopBodyPadding(activePopupHeight: CGFloat, popupConfig: Config) -> CGFloat {
+    func calculateTopBodyPadding(activePopupHeight: CGFloat, popupConfig: AnyPopupConfig) -> CGFloat {
         if popupConfig.ignoredSafeAreaEdges.contains(.top) { return 0 }
 
         return switch alignment {
             case .top: calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.top, popupPadding: calculatePopupPadding().top)
             case .bottom: calculateVerticalPaddingCounterEdge(popupHeight: activePopupHeight, safeArea: screen.safeArea.top)
+            case .centre: fatalError()
         }
     }
-    func calculateBottomBodyPadding(activePopupHeight: CGFloat, popupConfig: Config) -> CGFloat {
+    func calculateBottomBodyPadding(activePopupHeight: CGFloat, popupConfig: AnyPopupConfig) -> CGFloat {
         if popupConfig.ignoredSafeAreaEdges.contains(.bottom) && !isKeyboardActive { return 0 }
 
         return switch alignment {
             case .top: calculateVerticalPaddingCounterEdge(popupHeight: activePopupHeight, safeArea: screen.safeArea.bottom)
             case .bottom: calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.bottom, popupPadding: calculatePopupPadding().bottom)
+            case .centre: fatalError()
         }
     }
-    func calculateLeadingBodyPadding(popupConfig: Config) -> CGFloat { switch popupConfig.ignoredSafeAreaEdges.contains(.leading) {
+    func calculateLeadingBodyPadding(popupConfig: AnyPopupConfig) -> CGFloat { switch popupConfig.ignoredSafeAreaEdges.contains(.leading) {
         case true: 0
         case false: screen.safeArea.leading
     }}
-    func calculateTrailingBodyPadding(popupConfig: Config) -> CGFloat { switch popupConfig.ignoredSafeAreaEdges.contains(.trailing) {
+    func calculateTrailingBodyPadding(popupConfig: AnyPopupConfig) -> CGFloat { switch popupConfig.ignoredSafeAreaEdges.contains(.trailing) {
         case true: 0
         case false: screen.safeArea.trailing
     }}
