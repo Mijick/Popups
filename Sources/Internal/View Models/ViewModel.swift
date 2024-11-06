@@ -14,6 +14,7 @@ import SwiftUI
 enum VM {}
 class ViewModel<Config: LocalConfig>: ViewModelObject {
     // MARK: Attributes
+    private(set) var alignment: PopupAlignment
     private(set) var popups: [AnyPopup] = []
     private(set) var updatePopupAction: ((AnyPopup) -> ())!
     private(set) var closePopupAction: ((AnyPopup) -> ())!
@@ -27,8 +28,11 @@ class ViewModel<Config: LocalConfig>: ViewModelObject {
     func recalculateAndSave(height: CGFloat, for popup: AnyPopup) { fatalError() }
     func calculateHeightForActivePopup() -> CGFloat? { fatalError() }
     func calculatePopupPadding() -> EdgeInsets { fatalError() }
-    func calculateCornerRadius() -> [VerticalEdge: CGFloat] { fatalError() }
+    func calculateCornerRadius() -> [PopupAlignment: CGFloat] { fatalError() }
     func calculateVerticalFixedSize(for popup: AnyPopup) -> Bool { fatalError() }
+
+    // MARK: Initializer
+    init() { self.alignment = .init(Config.self) }
 }
 
 // MARK: Setup
@@ -42,7 +46,7 @@ extension ViewModel {
 // MARK: Update
 extension ViewModel {
     func updatePopupsValue(_ newPopups: [AnyPopup]) {
-        popups = newPopups.filter { $0.config is Config }
+        popups = newPopups.filter { $0.alignment == alignment }
         activePopupHeight = calculateHeightForActivePopup()
 
         withAnimation(.transition) { objectWillChange.send() }
@@ -66,11 +70,11 @@ extension ViewModel {
     }}
 }
 extension ViewModel {
-    func getConfig(_ item: AnyPopup?) -> Config {
-        let config = item?.config as? Config
+    func getConfig(_ item: AnyPopup?) -> AnyPopupConfig {
+        let config = item?.config
         return config ?? .init()
     }
-    func getActivePopupConfig() -> Config {
+    func getActivePopupConfig() -> AnyPopupConfig {
         getConfig(popups.last)
     }
 }
