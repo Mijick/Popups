@@ -13,6 +13,7 @@ import SwiftUI
 
 struct AnyPopupConfig: LocalConfig, Sendable { init() {}
     // MARK: Content
+    var alignment: PopupAlignment = .centre
     var popupPadding: EdgeInsets = .init()
     var cornerRadius: CGFloat = 0
     var ignoredSafeAreaEdges: Edge.Set = []
