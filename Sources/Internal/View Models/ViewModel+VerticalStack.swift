@@ -96,7 +96,7 @@ private extension VM.VerticalStack {
     )}
 }
 private extension VM.VerticalStack {
-    func calculateVerticalPopupPadding(for edge: VerticalEdge) -> CGFloat {
+    func calculateVerticalPopupPadding(for edge: PopupAlignment) -> CGFloat {
         guard let activePopupHeight else { return 0 }
         
         let largeScreenHeight = calculateLargeScreenHeight(),
@@ -114,7 +114,7 @@ private extension VM.VerticalStack {
     }
 }
 private extension VM.VerticalStack {
-    func calculatePriorityPopupPaddingValue(for edge: VerticalEdge) -> CGFloat { switch edge == alignment {
+    func calculatePriorityPopupPaddingValue(for edge: PopupAlignment) -> CGFloat { switch edge == alignment {
         case true: 0
         case false: getActivePopupConfig().popupPadding[!edge]
     }}
@@ -215,7 +215,7 @@ private extension VM.VerticalStack {
 
 // MARK: Corner Radius
 private extension VM.VerticalStack {
-    func _calculateCornerRadius() -> [VerticalEdge: CGFloat] {
+    func _calculateCornerRadius() -> [PopupAlignment: CGFloat] {
         let cornerRadiusValue = calculateCornerRadiusValue(getActivePopupConfig())
         return [
             .top: calculateTopCornerRadius(cornerRadiusValue),
@@ -224,7 +224,7 @@ private extension VM.VerticalStack {
     }
 }
 private extension VM.VerticalStack {
-    func calculateCornerRadiusValue(_ activePopupConfig: Config) -> CGFloat { switch activePopupConfig.heightMode {
+    func calculateCornerRadiusValue(_ activePopupConfig: AnyPopupConfig) -> CGFloat { switch activePopupConfig.heightMode {
         case .auto, .large: activePopupConfig.cornerRadius
         case .fullscreen: 0
     }}
