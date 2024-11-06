@@ -13,7 +13,8 @@ import SwiftUI
 
 struct AnyPopup: Popup {
     private(set) var id: PopupID
-    private(set) var config: LocalConfig
+    private(set) var alignment: PopupAlignment
+    private(set) var config: AnyPopupConfig
     private(set) var height: CGFloat? = nil
     private(set) var dragHeight: CGFloat? = nil
 
