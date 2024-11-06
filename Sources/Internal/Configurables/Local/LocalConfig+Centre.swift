@@ -20,10 +20,10 @@ public class LocalConfigCentre: LocalConfig { required public init() {}
     public var isTapOutsideToDismissEnabled: Bool = GlobalConfigContainer.centre.isTapOutsideToDismissEnabled
 
     // MARK: Inactive Variables
-    public var ignoredSafeAreaEdges: Edge.Set = []
-    public var heightMode: HeightMode = .auto
-    public var dragDetents: [DragDetent] = []
-    public var isDragGestureEnabled: Bool = false
+    public var ignoredSafeAreaEdges: Edge.Set = GlobalConfigContainer.centre.ignoredSafeAreaEdges
+    public var heightMode: HeightMode = GlobalConfigContainer.centre.heightMode
+    public var dragDetents: [DragDetent] = GlobalConfigContainer.centre.dragDetents
+    public var isDragGestureEnabled: Bool = GlobalConfigContainer.centre.isDragGestureEnabled
 }
 
 // MARK: Typealias
