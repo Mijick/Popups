@@ -11,10 +11,17 @@
 
 import SwiftUI
 
-public class LocalConfig { required init() {}
-    var popupPadding: EdgeInsets = .init()
-    var cornerRadius: CGFloat = 0
-    var backgroundColor: Color = .clear
-    var overlayColor: Color = .clear
-    var isTapOutsideToDismissEnabled: Bool = false
+public protocol LocalConfig { init()
+    // MARK: Content
+    var popupPadding: EdgeInsets { get set }
+    var cornerRadius: CGFloat { get set }
+    var ignoredSafeAreaEdges: Edge.Set { get set }
+    var backgroundColor: Color { get set }
+    var overlayColor: Color { get set }
+    var heightMode: HeightMode { get set }
+    var dragDetents: [DragDetent] { get set }
+
+    // MARK: Gestures
+    var isTapOutsideToDismissEnabled: Bool { get set }
+    var isDragGestureEnabled: Bool { get set }
 }
