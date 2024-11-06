@@ -36,7 +36,8 @@ extension AnyPopup {
         if let popup = popup as? AnyPopup { self = popup }
         else {
             self.id = .create(from: P.self)
-            self.config = popup.configurePopup(config: .init())
+            self.alignment = .init(P.Config.self)
+            self.config = .init(popup.configurePopup(config: .init()))
             self._body = AnyView(popup)
             self._onFocus = popup.onFocus
             self._onDismiss = popup.onDismiss
@@ -92,7 +93,8 @@ extension AnyPopup: Hashable {
 extension AnyPopup {
     static func t_createNew(id: String = UUID().uuidString, config: LocalConfig) -> AnyPopup { .init(
         id: .create(from: id),
-        config: config,
+        alignment: .init(Config.self),
+        config: .init(config),
         height: nil,
         dragHeight: nil,
         dismissTimer: nil,
