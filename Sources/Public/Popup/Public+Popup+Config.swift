@@ -91,6 +91,17 @@ public extension LocalConfigVertical {
     func cornerRadius(_ value: CGFloat) -> Self { self.cornerRadius = value; return self }
 
     /**
+     Expands the safe area of a popup.
+
+     - Parameters:
+     - edges: The regions to expand the popup’s safe area into.
+
+     ## Visualisation
+     ![image](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/ignore-safe-area.png?raw=true)
+     */
+    func ignoreSafeArea(edges: Edge.Set) -> Self { self.ignoredSafeAreaEdges = edges; return self }
+
+    /**
      Background color of the popup.
 
      ## Visualisation
@@ -109,28 +120,6 @@ public extension LocalConfigVertical {
     func overlayColor(_ color: Color) -> Self { self.overlayColor = color; return self }
 
     /**
-     If enabled, dismisses the active popup when touched outside its area.
-
-     ## Visualisation
-     ![image](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/tap-to-close.png?raw=true)
-     */
-    func tapOutsideToDismissPopup(_ value: Bool) -> Self { self.isTapOutsideToDismissEnabled = value; return self }
-}
-
-// MARK: Only Vertical
-public extension LocalConfigVertical {
-    /**
-     Expands the safe area of a popup.
-
-     - Parameters:
-        - edges: The regions to expand the popup’s safe area into.
-
-     ## Visualisation
-     ![image](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/ignore-safe-area.png?raw=true)
-     */
-    func ignoreSafeArea(edges: Edge.Set) -> Self { self.ignoredSafeAreaEdges = edges; return self }
-
-    /**
      Sets the height for the popup. By default, the height of the popup is calculated based on its content.
 
      ## Visualisation
@@ -145,6 +134,14 @@ public extension LocalConfigVertical {
      ![image](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/drag-detent.png?raw=true)
      */
     func dragDetents(_ value: [DragDetent]) -> Self { self.dragDetents = value; return self }
+
+    /**
+     If enabled, dismisses the active popup when touched outside its area.
+
+     ## Visualisation
+     ![image](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/tap-to-close.png?raw=true)
+     */
+    func tapOutsideToDismissPopup(_ value: Bool) -> Self { self.isTapOutsideToDismissEnabled = value; return self }
 
     /**
      Determines whether it's possible to interact with popups using a drag gesture.
