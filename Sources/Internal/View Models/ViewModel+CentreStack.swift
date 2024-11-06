@@ -16,7 +16,7 @@ extension VM { class CentreStack: ViewModel<LocalConfigCentre> {
     override func recalculateAndSave(height: CGFloat, for popup: AnyPopup) { _recalculateAndSave(height: height, for: popup) }
     override func calculateHeightForActivePopup() -> CGFloat? { _calculateHeightForActivePopup() }
     override func calculatePopupPadding() -> EdgeInsets { _calculatePopupPadding() }
-    override func calculateCornerRadius() -> [VerticalEdge : CGFloat] { _calculateCornerRadius() }
+    override func calculateCornerRadius() -> [PopupAlignment : CGFloat] { _calculateCornerRadius() }
     override func calculateVerticalFixedSize(for popup: AnyPopup) -> Bool { _calculateVerticalFixedSize(for: popup) }
 }}
 
@@ -56,7 +56,7 @@ private extension VM.CentreStack {
     )}
 }
 private extension VM.CentreStack {
-    func calculateVerticalPopupPadding(for edge: VerticalEdge) -> CGFloat {
+    func calculateVerticalPopupPadding(for edge: PopupAlignment) -> CGFloat {
         guard let activePopupHeight,
               isKeyboardActive && edge == .bottom
         else { return 0 }
@@ -75,7 +75,7 @@ private extension VM.CentreStack {
 
 // MARK: Corner Radius
 private extension VM.CentreStack {
-    func _calculateCornerRadius() -> [VerticalEdge : CGFloat] {[
+    func _calculateCornerRadius() -> [PopupAlignment : CGFloat] {[
         .top: getActivePopupConfig().cornerRadius,
         .bottom: getActivePopupConfig().cornerRadius
     ]}
@@ -119,7 +119,7 @@ private extension VM.CentreStack {
 extension VM.CentreStack {
     func t_calculateHeight(heightCandidate: CGFloat) -> CGFloat { calculateHeight(heightCandidate) }
     func t_calculatePopupPadding() -> EdgeInsets { calculatePopupPadding() }
-    func t_calculateCornerRadius() -> [VerticalEdge: CGFloat] { calculateCornerRadius() }
+    func t_calculateCornerRadius() -> [PopupAlignment: CGFloat] { calculateCornerRadius() }
     func t_calculateOpacity(for popup: AnyPopup) -> CGFloat { calculateOpacity(for: popup) }
     func t_calculateVerticalFixedSize(for popup: AnyPopup) -> Bool { calculateVerticalFixedSize(for: popup) }
 }

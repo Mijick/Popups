@@ -135,7 +135,7 @@ extension PopupCentreStackViewModelTests {
     }
 }
 private extension PopupCentreStackViewModelTests {
-    func appendPopupsAndCheckCornerRadius(popups: [AnyPopup], expectedValue: [MijickPopups.VerticalEdge: CGFloat]) {
+    func appendPopupsAndCheckCornerRadius(popups: [AnyPopup], expectedValue: [MijickPopups.PopupAlignment: CGFloat]) {
         appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: false,

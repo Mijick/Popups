@@ -12,7 +12,7 @@
 import Foundation
 
 // MARK: Height Mode
-public enum HeightMode {
+public enum HeightMode: Sendable {
     /**
      Popup height is calculated based on its content.
 
@@ -41,7 +41,7 @@ public enum HeightMode {
 }
 
 // MARK: Drag Detent
-public enum DragDetent {
+public enum DragDetent: Sendable {
     /**
      A detent with the specified height.
 
