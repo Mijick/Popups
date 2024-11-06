@@ -13,7 +13,6 @@ import SwiftUI
 
 struct AnyPopup: Popup {
     private(set) var id: PopupID
-    private(set) var alignment: PopupAlignment
     private(set) var config: AnyPopupConfig
     private(set) var height: CGFloat? = nil
     private(set) var dragHeight: CGFloat? = nil
@@ -36,7 +35,6 @@ extension AnyPopup {
         if let popup = popup as? AnyPopup { self = popup }
         else {
             self.id = .create(from: P.self)
-            self.alignment = .init(P.Config.self)
             self.config = .init(popup.configurePopup(config: .init()))
             self._body = AnyView(popup)
             self._onFocus = popup.onFocus
@@ -93,7 +91,6 @@ extension AnyPopup: Hashable {
 extension AnyPopup {
     static func t_createNew(id: String = UUID().uuidString, config: LocalConfig) -> AnyPopup { .init(
         id: .create(from: id),
-        alignment: .init(Config.self),
         config: .init(config),
         height: nil,
         dragHeight: nil,
