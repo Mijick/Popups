@@ -11,9 +11,8 @@
 
 import SwiftUI
 
-extension VM { class VerticalStack<Config: LocalConfig.Vertical>: ViewModel<Config> {
+extension VM { class VerticalStack<Config: LocalConfigVertical>: ViewModel<Config> {
     // MARK: Attributes
-    private(set) var alignment: VerticalEdge
     private(set) var gestureTranslation: CGFloat = 0
     private(set) var translationProgress: CGFloat = 0
 
