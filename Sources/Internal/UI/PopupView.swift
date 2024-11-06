@@ -114,7 +114,7 @@ private extension PopupView {
     func closePopup(_ popup: AnyPopup) {
         popupManager.stack(.removePopupInstance(popup))
     }
-    func updateViewModels(_ updateBuilder: (any ViewModelObject) -> ()) {
+    func updateViewModels(_ updateBuilder: (ViewModel) -> ()) {
         [topStackViewModel, centreStackViewModel, bottomStackViewModel].forEach(updateBuilder)
     }
 }

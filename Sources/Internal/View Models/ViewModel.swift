@@ -12,7 +12,7 @@
 import SwiftUI
 
 enum VM {}
-class ViewModel: ViewModelObject {
+@MainActor class ViewModel: ObservableObject {
     // MARK: Attributes
     private(set) var alignment: PopupAlignment
     private(set) var popups: [AnyPopup] = []
