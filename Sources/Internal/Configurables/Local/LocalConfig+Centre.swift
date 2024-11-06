@@ -11,15 +11,20 @@
 
 import SwiftUI
 
-public extension LocalConfig { class Centre: LocalConfig {
-    required init() { super.init()
-        self.popupPadding = GlobalConfigContainer.centre.popupPadding
-        self.cornerRadius = GlobalConfigContainer.centre.cornerRadius
-        self.backgroundColor = GlobalConfigContainer.centre.backgroundColor
-        self.overlayColor = GlobalConfigContainer.centre.overlayColor
-        self.isTapOutsideToDismissEnabled = GlobalConfigContainer.centre.isTapOutsideToDismissEnabled
-    }
-}}
+public class LocalConfigCentre: LocalConfig { required public init() {}
+    // MARK: Active Variables
+    public var popupPadding: EdgeInsets = GlobalConfigContainer.centre.popupPadding
+    public var cornerRadius: CGFloat = GlobalConfigContainer.centre.cornerRadius
+    public var backgroundColor: Color = GlobalConfigContainer.centre.backgroundColor
+    public var overlayColor: Color = GlobalConfigContainer.centre.overlayColor
+    public var isTapOutsideToDismissEnabled: Bool = GlobalConfigContainer.centre.isTapOutsideToDismissEnabled
+
+    // MARK: Inactive Variables
+    public var ignoredSafeAreaEdges: Edge.Set = []
+    public var heightMode: HeightMode = .auto
+    public var dragDetents: [DragDetent] = []
+    public var isDragGestureEnabled: Bool = false
+}
 
 // MARK: Typealias
 /**
