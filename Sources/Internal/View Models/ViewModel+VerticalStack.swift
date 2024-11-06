@@ -118,7 +118,7 @@ private extension VM.VerticalStack {
 
 // MARK: Body Padding
 extension VM.VerticalStack {
-    func calculateBodyPadding(for popup: AnyPopup) -> EdgeInsets { let activePopupHeight = activePopupHeight ?? 0, popupConfig = getConfig(popup); return .init(
+    func calculateBodyPadding(for popup: AnyPopup) -> EdgeInsets { let activePopupHeight = activePopupHeight ?? 0, popupConfig = popup.config; return .init(
         top: calculateTopBodyPadding(activePopupHeight: activePopupHeight, popupConfig: popupConfig),
         leading: calculateLeadingBodyPadding(popupConfig: popupConfig),
         bottom: calculateBottomBodyPadding(activePopupHeight: activePopupHeight, popupConfig: popupConfig),
@@ -240,7 +240,7 @@ private extension VM.VerticalStack {
 
 // MARK: Fixed Size
 private extension VM.VerticalStack {
-    func _calculateVerticalFixedSize(for popup: AnyPopup) -> Bool { switch getConfig(popup).heightMode {
+    func _calculateVerticalFixedSize(for popup: AnyPopup) -> Bool { switch popup.config.heightMode {
         case .fullscreen, .large: false
         case .auto: activePopupHeight != calculateLargeScreenHeight()
     }}
