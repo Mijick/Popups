@@ -11,10 +11,7 @@
 
 import SwiftUI
 
-public class GlobalConfig { required init() {}
-    var popupPadding: EdgeInsets = .init()
-    var cornerRadius: CGFloat = 28
-    var backgroundColor: Color = .white
-    var overlayColor: Color = .black.opacity(0.44)
-    var isTapOutsideToDismissEnabled: Bool = false
+public protocol GlobalConfig: LocalConfig {
+    var dragThreshold: CGFloat { get set }
+    var isStackingEnabled: Bool { get set }
 }
