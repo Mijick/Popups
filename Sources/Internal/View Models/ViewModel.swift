@@ -60,10 +60,13 @@ extension ViewModel {
 
         withAnimation(.transition) { objectWillChange.send() }
     }
-    func recalculateAndUpdatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) { Task {
-        let recalculatedPopupHeight = await recalculatePopupHeight(heightCandidate, popup)
-        if popup.height != recalculatedPopupHeight { updatePopupAction(popup.settingHeight(recalculatedPopupHeight)) }
-    }}
+    func recalculateAndUpdatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async {
+        var newPopup = popup
+        newPopup.popupPadding = await calculatePopupPadding()
+        newPopup.height = await calculatePopupHeight(heightCandidate, newPopup)
+
+        await updatePopupAction(newPopup)
+    }
 }
 private extension ViewModel {
     nonisolated func filterPopups(_ popups: [AnyPopup]) async -> [AnyPopup] {
