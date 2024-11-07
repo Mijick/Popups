@@ -17,7 +17,7 @@ struct AnyPopup: Popup {
     var height: CGFloat? = nil
     var dragHeight: CGFloat? = nil
     var popupPadding: EdgeInsets = .init()
-    var cornerRadius: CGFloat = 0
+    var cornerRadius: [PopupAlignment: CGFloat] = [.top: 0, .bottom: 0]
 
     private var dismissTimer: PopupActionScheduler? = nil
     private var _body: AnyView

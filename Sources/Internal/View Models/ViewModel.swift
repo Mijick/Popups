@@ -27,6 +27,7 @@ enum VM {}
     // MARK: Methods to Override
     nonisolated func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { fatalError() }
     nonisolated func calculatePopupPadding() async -> EdgeInsets { fatalError() }
+    nonisolated func calculateCornerRadius() async -> [PopupAlignment: CGFloat] { fatalError() }
     nonisolated func calculateHeightForActivePopup() async -> CGFloat? { fatalError() }
 
     // MARK: Initializer
@@ -63,6 +64,7 @@ extension ViewModel {
         var newPopup = popup
         newPopup.popupPadding = await calculatePopupPadding()
         newPopup.height = await calculatePopupHeight(heightCandidate, newPopup)
+        newPopup.cornerRadius = await calculateCornerRadius()
 
         await updatePopupAction(newPopup)
     }
