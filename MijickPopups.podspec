@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   MijickPopups solves two seemingly contradictory problems - to allow developers to create fully customizable popup, and to make the process as simple as possible.
                                DESC
   
-  s.version               = '3.0.2'
+  s.version               = '4.0.0'
   s.ios.deployment_target = '14.0'
   s.osx.deployment_target = '12.0'
   s.tvos.deployment_target = '15.0'
