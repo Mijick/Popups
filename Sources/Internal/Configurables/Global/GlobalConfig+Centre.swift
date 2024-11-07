@@ -9,11 +9,21 @@
 //  Copyright ©2024 Mijick. All rights reserved.
 
 
-import Foundation
+import SwiftUI
 
-public extension GlobalConfig { class Centre: GlobalConfig {
-    required init() { super.init()
-        self.popupPadding = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
-        self.cornerRadius = 24
-    }
-}}
+public final class GlobalConfigCentre: GlobalConfig { required public init() {}
+    // MARK: Active Variables
+    public var popupPadding: EdgeInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
+    public var cornerRadius: CGFloat = 24
+    public var backgroundColor: Color = .init(.secondarySystemBackground)
+    public var overlayColor: Color = .black.opacity(0.5)
+    public var isTapOutsideToDismissEnabled: Bool = false
+
+    // MARK: Inactive Variables
+    public var ignoredSafeAreaEdges: Edge.Set = []
+    public var heightMode: HeightMode = .auto
+    public var dragDetents: [DragDetent] = []
+    public var isDragGestureEnabled: Bool = false
+    public var dragThreshold: CGFloat = 0
+    public var isStackingEnabled: Bool = false
+}
