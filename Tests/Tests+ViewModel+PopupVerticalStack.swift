@@ -29,15 +29,15 @@ private extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func updatePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.t_popups.firstIndex(of: popup) {
-        var popups = viewModel.t_popups
+    func updatePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.popups.firstIndex(of: popup) {
+        var popups = viewModel.popups
         popups[index] = popup
 
         await viewModel.t_updatePopupsValue(popups)
         await viewModel.t_calculateAndUpdateActivePopupHeight()
     }}
-    func closePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.t_popups.firstIndex(of: popup) {
-        var popups = viewModel.t_popups
+    func closePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.popups.firstIndex(of: popup) {
+        var popups = viewModel.popups
         popups.remove(at: index)
 
         await viewModel.t_updatePopupsValue(popups)
@@ -58,7 +58,7 @@ extension PopupVerticalStackViewModelTests {
         ])
 
         XCTAssertEqual(
-            bottomViewModel.t_getInvertedIndex(of: bottomViewModel.t_popups[0]),
+            bottomViewModel.t_getInvertedIndex(of: bottomViewModel.popups[0]),
             0
         )
     }
@@ -72,7 +72,7 @@ extension PopupVerticalStackViewModelTests {
         ])
 
         XCTAssertEqual(
-            bottomViewModel.t_getInvertedIndex(of: bottomViewModel.t_popups[3]),
+            bottomViewModel.t_getInvertedIndex(of: bottomViewModel.popups[3]),
             1
         )
     }
@@ -136,9 +136,9 @@ private extension PopupVerticalStackViewModelTests {
         await viewModel.t_updatePopupsValue(popups)
         await viewModel.t_updatePopup(updatedPopup)
 
-        if let index = viewModel.t_popups.firstIndex(of: updatedPopup) {
-            XCTAssertEqual(viewModel.t_popups[index].height, expectedValue.height)
-            XCTAssertEqual(viewModel.t_popups[index].dragHeight, expectedValue.dragHeight)
+        if let index = viewModel.popups.firstIndex(of: updatedPopup) {
+            XCTAssertEqual(viewModel.popups[index].height, expectedValue.height)
+            XCTAssertEqual(viewModel.popups[index].dragHeight, expectedValue.dragHeight)
         }
     }
 }
@@ -273,7 +273,7 @@ extension PopupVerticalStackViewModelTests {
 }
 private extension PopupVerticalStackViewModelTests {
     func calculateLastPopupHeight(_ viewModel: ViewModel) -> CGFloat {
-        viewModel.t_calculateHeight(heightCandidate: viewModel.t_popups.last!.height!, popup: viewModel.t_popups.last!)
+        viewModel.t_calculateHeight(heightCandidate: viewModel.popups.last!.height!, popup: viewModel.popups.last!)
     }
 }
 
@@ -427,7 +427,7 @@ private extension PopupVerticalStackViewModelTests {
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { $0.t_activePopupHeight },
+            calculatedValue: { $0.activePopupHeight },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
@@ -445,7 +445,7 @@ extension PopupVerticalStackViewModelTests {
         ])
 
         XCTAssertEqual(
-            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.t_popups[2]),
+            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.popups[2]),
             -bottomViewModel.t_stackOffset * 2
         )
     }
@@ -459,7 +459,7 @@ extension PopupVerticalStackViewModelTests {
         ])
 
         XCTAssertEqual(
-            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.t_popups[4]),
+            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.popups[4]),
             0
         )
     }
@@ -470,7 +470,7 @@ extension PopupVerticalStackViewModelTests {
         await bottomViewModel.t_updateGestureTranslation(-100)
 
         XCTAssertEqual(
-            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.t_popups[0]),
+            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.popups[0]),
             0
         )
     }
@@ -482,7 +482,7 @@ extension PopupVerticalStackViewModelTests {
         await bottomViewModel.t_updateGestureTranslation(100)
 
         XCTAssertEqual(
-            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.t_popups[0]),
+            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.popups[0]),
             -bottomViewModel.t_stackOffset
         )
     }
@@ -494,7 +494,7 @@ extension PopupVerticalStackViewModelTests {
         await bottomViewModel.t_updateGestureTranslation(100)
 
         XCTAssertEqual(
-            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.t_popups[1]),
+            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.popups[1]),
             100 - 21
         )
     }
@@ -506,7 +506,7 @@ extension PopupVerticalStackViewModelTests {
         GlobalConfigContainer.vertical.isStackingEnabled = false
 
         XCTAssertEqual(
-            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.t_popups[0]),
+            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.popups[0]),
             0
         )
     }
@@ -517,7 +517,7 @@ extension PopupVerticalStackViewModelTests {
         ])
 
         XCTAssertEqual(
-            topViewModel.t_calculateOffsetY(for: topViewModel.t_popups[0]),
+            topViewModel.t_calculateOffsetY(for: topViewModel.popups[0]),
             topViewModel.t_stackOffset
         )
     }
@@ -529,7 +529,7 @@ extension PopupVerticalStackViewModelTests {
         await topViewModel.t_updateGestureTranslation(-100)
 
         XCTAssertEqual(
-            topViewModel.t_calculateOffsetY(for: topViewModel.t_popups[1]),
+            topViewModel.t_calculateOffsetY(for: topViewModel.popups[1]),
             21 - 100
         )
     }
@@ -984,7 +984,7 @@ private extension PopupVerticalStackViewModelTests {
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { $0.t_calculateScaleX(for: $0.t_popups[index]) },
+            calculatedValue: { $0.t_calculateScaleX(for: $0.popups[index]) },
             expectedValueBuilder: expectedValueBuilder
         )
     }
@@ -1059,7 +1059,7 @@ private extension PopupVerticalStackViewModelTests {
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { $0.t_calculateVerticalFixedSize(for: $0.t_popups[index]) },
+            calculatedValue: { $0.t_calculateVerticalFixedSize(for: $0.popups[index]) },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
@@ -1174,7 +1174,7 @@ private extension PopupVerticalStackViewModelTests {
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { $0.t_calculateStackOverlayOpacity(for: $0.t_popups[index]) },
+            calculatedValue: { $0.t_calculateStackOverlayOpacity(for: $0.popups[index]) },
             expectedValueBuilder: expectedValueBuilder
         )
     }
@@ -1273,7 +1273,7 @@ private extension PopupVerticalStackViewModelTests {
         await updatePopups(viewModel)
         await viewModel.t_onPopupDragGestureChanged(gestureValue)
 
-        XCTAssertEqual(viewModel.t_activePopupHeight, expectedValues.popupHeight)
+        XCTAssertEqual(viewModel.activePopupHeight, expectedValues.popupHeight)
         XCTAssertEqual(viewModel.t_gestureTranslation, expectedValues.gestureTranslation)
     }
 }
@@ -1445,8 +1445,8 @@ private extension PopupVerticalStackViewModelTests {
         await viewModel.t_calculateAndUpdateTranslationProgress()
         await viewModel.t_onPopupDragGestureEnded(gestureValue)
 
-        XCTAssertEqual(viewModel.t_popups.count, expectedValues.shouldPopupBeDismissed ? 0 : 1)
-        XCTAssertEqual(viewModel.t_activePopupHeight, expectedValues.popupHeight)
+        XCTAssertEqual(viewModel.popups.count, expectedValues.shouldPopupBeDismissed ? 0 : 1)
+        XCTAssertEqual(viewModel.activePopupHeight, expectedValues.popupHeight)
     }
 }
 
@@ -1485,7 +1485,7 @@ private extension PopupVerticalStackViewModelTests {
         isDragGestureEnabled: dragGestureEnabled
     )}
     func updatePopups(_ viewModel: ViewModel) async {
-        for popup in viewModel.t_popups { await viewModel.recalculateAndUpdatePopupHeight(popup.height!, popup) }
+        for popup in viewModel.popups { await viewModel.recalculateAndUpdatePopupHeight(popup.height!, popup) }
     }
 }
 

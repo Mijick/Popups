@@ -22,15 +22,15 @@ import SwiftUI
     }
 }
 private extension PopupCentreStackViewModelTests {
-    func updatePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.t_popups.firstIndex(of: popup) {
-        var popups = viewModel.t_popups
+    func updatePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.popups.firstIndex(of: popup) {
+        var popups = viewModel.popups
         popups[index] = popup
 
         await viewModel.t_updatePopupsValue(popups)
         await viewModel.t_calculateAndUpdateActivePopupHeight()
     }}
-    func closePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.t_popups.firstIndex(of: popup) {
-        var popups = viewModel.t_popups
+    func closePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.popups.firstIndex(of: popup) {
+        var popups = viewModel.popups
         popups.remove(at: index)
 
         await viewModel.t_updatePopupsValue(popups)
@@ -179,7 +179,7 @@ private extension PopupCentreStackViewModelTests {
         await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: false,
-            calculatedValue: { [self] in $0.t_calculateOpacity(for: viewModel.t_popups[index]) },
+            calculatedValue: { [self] in $0.t_calculateOpacity(for: viewModel.popups[index]) },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
@@ -219,7 +219,7 @@ private extension PopupCentreStackViewModelTests {
         await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: false,
-            calculatedValue: { $0.t_calculateVerticalFixedSize(for: $0.t_popups[index]) },
+            calculatedValue: { $0.t_calculateVerticalFixedSize(for: $0.popups[index]) },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
@@ -251,7 +251,7 @@ private extension PopupCentreStackViewModelTests {
         popupPadding: popupPadding,
         cornerRadius: cornerRadius
     )}
-    func recalculatePopupHeights(_ viewModel: ViewModel) -> [AnyPopup] { viewModel.t_popups.map {
+    func recalculatePopupHeights(_ viewModel: ViewModel) -> [AnyPopup] { viewModel.popups.map {
         $0.settingHeight(viewModel.t_calculateHeight(heightCandidate: $0.height!))
     }}
 }

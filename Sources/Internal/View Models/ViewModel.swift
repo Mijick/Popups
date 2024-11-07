@@ -94,10 +94,4 @@ extension ViewModel {
     func t_updatePopup(_ popup: AnyPopup) async { await updatePopupAction(popup) }
     func t_calculateAndUpdateActivePopupHeight() async { activePopupHeight = await calculateHeightForActivePopup() }
 }
-
-// MARK: Variables
-extension ViewModel {
-    var t_popups: [AnyPopup] { popups }
-    var t_activePopupHeight: CGFloat? { activePopupHeight }
-}
 #endif
