@@ -15,7 +15,7 @@ public final class GlobalConfigCentre: GlobalConfig { required public init() {}
     // MARK: Active Variables
     public var popupPadding: EdgeInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
     public var cornerRadius: CGFloat = 24
-    public var backgroundColor: Color = .init(.secondarySystemBackground)
+    public var backgroundColor: Color = .white
     public var overlayColor: Color = .black.opacity(0.5)
     public var isTapOutsideToDismissEnabled: Bool = false
 

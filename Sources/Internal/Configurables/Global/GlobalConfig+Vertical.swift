@@ -15,7 +15,7 @@ public final class GlobalConfigVertical: GlobalConfig { required public init() {
     // MARK: Content
     public var popupPadding: EdgeInsets = .init()
     public var cornerRadius: CGFloat = 40
-    public var backgroundColor: Color = .init(.secondarySystemBackground)
+    public var backgroundColor: Color = .white
     public var overlayColor: Color = .black.opacity(0.5)
     public var isStackingEnabled: Bool = true
 

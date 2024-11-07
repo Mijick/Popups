@@ -56,10 +56,10 @@ private extension VM.VerticalStack {
     }
 }
 private extension VM.VerticalStack {
-    func calculateNewPopupHeight(_ heightCandidate: CGFloat, _ popupConfig: AnyPopupConfig) -> CGFloat { switch popupConfig.heightMode {
-        case .auto: min(heightCandidate, calculateLargeScreenHeight())
-        case .large: calculateLargeScreenHeight()
-        case .fullscreen: getFullscreenHeight()
+    nonisolated func calculateNewPopupHeight(_ heightCandidate: CGFloat, _ popupConfig: AnyPopupConfig) async -> CGFloat { switch popupConfig.heightMode {
+        case .auto: await min(heightCandidate, calculateLargeScreenHeight())
+        case .large: await calculateLargeScreenHeight()
+        case .fullscreen: await getFullscreenHeight()
     }}
 }
 private extension VM.VerticalStack {
