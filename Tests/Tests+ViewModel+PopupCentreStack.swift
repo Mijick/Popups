@@ -240,8 +240,8 @@ private extension PopupCentreStackViewModelTests {
     func appendPopupsAndPerformChecks<Value: Equatable>(popups: [AnyPopup], isKeyboardActive: Bool, calculatedValue: @escaping (ViewModel) -> (Value), expectedValueBuilder: @escaping (ViewModel) -> Value) async {
         await viewModel.updatePopupsValue(popups)
         await viewModel.updatePopupsValue(recalculatePopupHeights(viewModel))
-        viewModel.t_updateKeyboardValue(isKeyboardActive)
-        viewModel.t_updateScreenValue(isKeyboardActive ? screenWithKeyboard : screen)
+        viewModel.updateKeyboardValue(isKeyboardActive)
+        viewModel.updateScreenValue(isKeyboardActive ? screenWithKeyboard : screen)
 
         XCTAssertEqual(calculatedValue(viewModel), expectedValueBuilder(viewModel))
     }

@@ -88,8 +88,7 @@ extension ViewModel {
 // MARK: Methods
 extension ViewModel {
 
-    func t_updateScreenValue(_ newScreen: Screen) { updateScreenValue(newScreen) }
-    func t_updateKeyboardValue(_ isActive: Bool) { updateKeyboardValue(isActive) }
+
     func t_updatePopup(_ popup: AnyPopup) async { await updatePopupAction(popup) }
     func t_calculateAndUpdateActivePopupHeight() async { activePopupHeight = await calculateHeightForActivePopup() }
 }
