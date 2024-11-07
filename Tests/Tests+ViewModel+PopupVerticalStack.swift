@@ -1465,12 +1465,14 @@ private extension PopupVerticalStackViewModelTests {
             .settingHeight(popupHeight)
             .settingDragHeight(popupDragHeight)
     }
-    func appendPopupsAndPerformChecks<Value: Equatable>(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, calculatedValue: @escaping (ViewModel) -> (Value), expectedValueBuilder: @escaping (ViewModel) -> Value) {
-        viewModel.t_updatePopupsValue(popups)
-        viewModel.t_updatePopupsValue(recalculatePopupHeights(viewModel))
-        viewModel.t_updateGestureTranslation(gestureTranslation)
+    func appendPopupsAndPerformChecks<Value: Equatable & Sendable>(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, calculatedValue: @escaping (ViewModel) async -> (Value), expectedValueBuilder: @escaping (ViewModel) async -> Value) async {
+        await viewModel.t_updatePopupsValue(popups)
+        await viewModel.t_updatePopupsValue(recalculatePopupHeights(viewModel))
+        await viewModel.t_updateGestureTranslation(gestureTranslation)
 
-        XCTAssertEqual(calculatedValue(viewModel), expectedValueBuilder(viewModel))
+        let calculatedValue = await calculatedValue(viewModel)
+        let expectedValue = await expectedValueBuilder(viewModel)
+        XCTAssertEqual(calculatedValue, expectedValue)
     }
 }
 private extension PopupVerticalStackViewModelTests {
