@@ -30,13 +30,13 @@ extension VM { class VerticalStack: ViewModel {
 
 // MARK: Update
 private extension VM.VerticalStack {
-    func updateGestureTranslation(_ newGestureTranslation: CGFloat) { Task {
+    func updateGestureTranslation(_ newGestureTranslation: CGFloat) async {
         gestureTranslation = newGestureTranslation
         translationProgress = await calculateTranslationProgress()
         activePopupHeight = await calculateHeightForActivePopup()
 
         withAnimation(gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
-    }}
+    }
 }
 
 
@@ -48,7 +48,7 @@ private extension VM.VerticalStack {
 // MARK: Popup Height
 private extension VM.VerticalStack {
     nonisolated func _calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat {
-        guard await gestureTranslation.isZero, heightCandidate != popup.height else { return popup.height ?? 0 }
+        guard await gestureTranslation.isZero else { return popup.height ?? 0 }
 
         let popupHeight = await calculateNewPopupHeight(heightCandidate, popup.config)
         return popupHeight
@@ -468,11 +468,11 @@ extension VM.VerticalStack {
     func t_calculateTranslationProgress() async -> CGFloat { await calculateTranslationProgress() }
     func t_getInvertedIndex(of popup: AnyPopup) -> Int { getInvertedIndex(of: popup) }
 
-    func t_calculateAndUpdateTranslationProgress() { Task { translationProgress = await calculateTranslationProgress() }}
-    func t_updateGestureTranslation(_ newGestureTranslation: CGFloat) { updateGestureTranslation(newGestureTranslation) }
+    func t_calculateAndUpdateTranslationProgress() async { translationProgress = await calculateTranslationProgress() }
+    func t_updateGestureTranslation(_ newGestureTranslation: CGFloat) async { await updateGestureTranslation(newGestureTranslation) }
 
-    func t_onPopupDragGestureChanged(_ value: CGFloat) { onPopupDragGestureChanged(value) }
-    func t_onPopupDragGestureEnded(_ value: CGFloat) { onPopupDragGestureEnded(value) }
+    func t_onPopupDragGestureChanged(_ value: CGFloat) async { await onPopupDragGestureChanged(value) }
+    func t_onPopupDragGestureEnded(_ value: CGFloat) async { await onPopupDragGestureEnded(value) }
 }
 
 // MARK: Variables

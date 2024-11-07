@@ -14,8 +14,10 @@ import SwiftUI
 struct AnyPopup: Popup {
     private(set) var id: PopupID
     private(set) var config: AnyPopupConfig
-    private(set) var height: CGFloat? = nil
-    private(set) var dragHeight: CGFloat? = nil
+    var height: CGFloat? = nil
+    var dragHeight: CGFloat? = nil
+    var popupPadding: EdgeInsets = .init()
+    var cornerRadius: CGFloat = 0
 
     private var dismissTimer: PopupActionScheduler? = nil
     private var _body: AnyView
