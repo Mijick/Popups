@@ -9,16 +9,21 @@
 //  Copyright ©2024 Mijick. All rights reserved.
 
 
-import Foundation
+import SwiftUI
 
-public extension GlobalConfig { class Vertical: GlobalConfig {
-    var dragThreshold: CGFloat = 1/3
-    var isStackingEnabled: Bool = true
-    var isDragGestureEnabled: Bool = true
+public final class GlobalConfigVertical: GlobalConfig { required public init() {}
+    // MARK: Content
+    public var popupPadding: EdgeInsets = .init()
+    public var cornerRadius: CGFloat = 40
+    public var ignoredSafeAreaEdges: Edge.Set = []
+    public var backgroundColor: Color = .init(.secondarySystemBackground)
+    public var overlayColor: Color = .black.opacity(0.5)
+    public var heightMode: HeightMode = .auto
+    public var dragDetents: [DragDetent] = []
+    public var isStackingEnabled: Bool = true
 
-
-    required init() { super.init()
-        self.popupPadding = .init()
-        self.cornerRadius = 40
-    }
-}}
+    // MARK: Gestures
+    public var isTapOutsideToDismissEnabled: Bool = false
+    public var isDragGestureEnabled: Bool = true
+    public var dragThreshold: CGFloat = 1/3
+}
