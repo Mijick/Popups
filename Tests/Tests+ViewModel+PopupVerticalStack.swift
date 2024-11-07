@@ -1270,7 +1270,7 @@ extension PopupVerticalStackViewModelTests {
 private extension PopupVerticalStackViewModelTests {
     func appendPopupsAndCheckGestureTranslationOnChange(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat, gestureTranslation: CGFloat)) async {
         await viewModel.t_updatePopupsValue(popups)
-        await recalculatePopupHeights(viewModel)
+        await updatePopups(viewModel)
         await viewModel.t_onPopupDragGestureChanged(gestureValue)
 
         XCTAssertEqual(viewModel.t_activePopupHeight, expectedValues.popupHeight)
@@ -1440,7 +1440,7 @@ extension PopupVerticalStackViewModelTests {
 private extension PopupVerticalStackViewModelTests {
     func appendPopupsAndCheckGestureTranslationOnEnd(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat?, shouldPopupBeDismissed: Bool)) async {
         await viewModel.t_updatePopupsValue(popups)
-        await recalculatePopupHeights(viewModel)
+        await updatePopups(viewModel)
         await viewModel.t_updateGestureTranslation(gestureValue)
         await viewModel.t_calculateAndUpdateTranslationProgress()
         await viewModel.t_onPopupDragGestureEnded(gestureValue)
@@ -1467,7 +1467,7 @@ private extension PopupVerticalStackViewModelTests {
     }
     func appendPopupsAndPerformChecks<Value: Equatable & Sendable>(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, calculatedValue: @escaping (ViewModel) async -> (Value), expectedValueBuilder: @escaping (ViewModel) async -> Value) async {
         await viewModel.t_updatePopupsValue(popups)
-        await recalculatePopupHeights(viewModel)
+        await updatePopups(viewModel)
         await viewModel.t_updateGestureTranslation(gestureTranslation)
 
         let calculatedValue = await calculatedValue(viewModel)
@@ -1484,9 +1484,9 @@ private extension PopupVerticalStackViewModelTests {
         dragDetents: dragDetents,
         isDragGestureEnabled: dragGestureEnabled
     )}
-    func recalculatePopupHeights(_ viewModel: ViewModel) -> [AnyPopup] { viewModel.t_popups.map {
-        $0.settingHeight(viewModel.t_calculateHeight(heightCandidate: $0.height!, popup: $0))
-    }}
+    func updatePopups(_ viewModel: ViewModel) async {
+        for popup in viewModel.t_popups { await viewModel.recalculateAndUpdatePopupHeight(popup.height!, popup) }
+    }
 }
 
 // MARK: Screen
