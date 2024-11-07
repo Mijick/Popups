@@ -273,7 +273,7 @@ extension PopupVerticalStackViewModelTests {
 }
 private extension PopupVerticalStackViewModelTests {
     func calculateLastPopupHeight(_ viewModel: ViewModel) -> CGFloat {
-        viewModel.t_calculateHeight(heightCandidate: viewModel.t_popups.last!.height!, popupConfig: viewModel.t_popups.last!.config)
+        viewModel.t_calculateHeight(heightCandidate: viewModel.t_popups.last!.height!, popup: viewModel.t_popups.last!)
     }
 }
 
@@ -1458,14 +1458,14 @@ private extension PopupVerticalStackViewModelTests {
 
 // MARK: Methods
 private extension PopupVerticalStackViewModelTests {
-    func createPopupInstanceForPopupHeightTests<C: Config>(type: C.Type, heightMode: HeightMode, popupHeight: CGFloat, popupDragHeight: CGFloat? = nil, ignoredSafeAreaEdges: Edge.Set = [], popupPadding: EdgeInsets = .init(), cornerRadius: CGFloat = 0, dragGestureEnabled: Bool = true, dragDetents: [DragDetent] = []) -> AnyPopup {
+    func createPopupInstanceForPopupHeightTests<C: LocalConfigVertical>(type: C.Type, heightMode: HeightMode, popupHeight: CGFloat, popupDragHeight: CGFloat? = nil, ignoredSafeAreaEdges: Edge.Set = [], popupPadding: EdgeInsets = .init(), cornerRadius: CGFloat = 0, dragGestureEnabled: Bool = true, dragDetents: [DragDetent] = []) -> AnyPopup {
         let config = getConfigForPopupHeightTests(type: type, heightMode: heightMode, ignoredSafeAreaEdges: ignoredSafeAreaEdges, popupPadding: popupPadding, cornerRadius: cornerRadius, dragGestureEnabled: dragGestureEnabled, dragDetents: dragDetents)
 
         return AnyPopup.t_createNew(config: config)
             .settingHeight(popupHeight)
             .settingDragHeight(popupDragHeight)
     }
-    func appendPopupsAndPerformChecks<Value: Equatable, C: Config>(viewModel: ViewModel<C>, popups: [AnyPopup], gestureTranslation: CGFloat, calculatedValue: @escaping (ViewModel<C>) -> (Value), expectedValueBuilder: @escaping (ViewModel<C>) -> Value) {
+    func appendPopupsAndPerformChecks<Value: Equatable>(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, calculatedValue: @escaping (ViewModel) -> (Value), expectedValueBuilder: @escaping (ViewModel) -> Value) {
         viewModel.t_updatePopupsValue(popups)
         viewModel.t_updatePopupsValue(recalculatePopupHeights(viewModel))
         viewModel.t_updateGestureTranslation(gestureTranslation)
@@ -1474,7 +1474,7 @@ private extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func getConfigForPopupHeightTests<C: Config>(type: C.Type, heightMode: HeightMode, ignoredSafeAreaEdges: Edge.Set, popupPadding: EdgeInsets, cornerRadius: CGFloat, dragGestureEnabled: Bool, dragDetents: [DragDetent]) -> C { .t_createNew(
+    func getConfigForPopupHeightTests<C: LocalConfigVertical>(type: C.Type, heightMode: HeightMode, ignoredSafeAreaEdges: Edge.Set, popupPadding: EdgeInsets, cornerRadius: CGFloat, dragGestureEnabled: Bool, dragDetents: [DragDetent]) -> C { .t_createNew(
         popupPadding: popupPadding,
         cornerRadius: cornerRadius,
         ignoredSafeAreaEdges: ignoredSafeAreaEdges,
@@ -1483,7 +1483,7 @@ private extension PopupVerticalStackViewModelTests {
         isDragGestureEnabled: dragGestureEnabled
     )}
     func recalculatePopupHeights(_ viewModel: ViewModel) -> [AnyPopup] { viewModel.t_popups.map {
-        $0.settingHeight(viewModel.t_calculateHeight(heightCandidate: $0.height!, popupConfig: $0.config))
+        $0.settingHeight(viewModel.t_calculateHeight(heightCandidate: $0.height!, popup: $0))
     }}
 }
 
