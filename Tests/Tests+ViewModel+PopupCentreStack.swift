@@ -252,9 +252,9 @@ private extension PopupCentreStackViewModelTests {
         popupPadding: popupPadding,
         cornerRadius: cornerRadius
     )}
-    func recalculatePopupHeights(_ viewModel: ViewModel) -> [AnyPopup] { viewModel.popups.map {
-        $0.settingHeight(viewModel.t_calculateHeight(heightCandidate: $0.height!))
-    }}
+    func updatePopups(_ viewModel: ViewModel) async {
+        for popup in viewModel.popups { await viewModel.recalculateAndUpdatePopupHeight(popup.height!, popup) }
+    }
 }
 
 // MARK: Screen
