@@ -57,7 +57,7 @@ extension PopupVerticalStackViewModelTests {
         ])
 
         XCTAssertEqual(
-            bottomViewModel.t_getInvertedIndex(of: bottomViewModel.popups[0]),
+            bottomViewModel.getInvertedIndex(of: bottomViewModel.popups[0]),
             0
         )
     }
@@ -71,7 +71,7 @@ extension PopupVerticalStackViewModelTests {
         ])
 
         XCTAssertEqual(
-            bottomViewModel.t_getInvertedIndex(of: bottomViewModel.popups[3]),
+            bottomViewModel.getInvertedIndex(of: bottomViewModel.popups[3]),
             1
         )
     }
@@ -813,7 +813,7 @@ private extension PopupVerticalStackViewModelTests {
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { await $0.t_calculateTranslationProgress() },
+            calculatedValue: { await $0.calculateTranslationProgress() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
@@ -973,7 +973,7 @@ extension PopupVerticalStackViewModelTests {
             popups: popups,
             gestureTranslation: 100,
             calculateForIndex: 1,
-            expectedValueBuilder: { await 1 - $0.t_stackScaleFactor * 3 * max(1 - $0.t_calculateTranslationProgress(), $0.t_minScaleProgressMultiplier) }
+            expectedValueBuilder: { await 1 - $0.t_stackScaleFactor * 3 * max(1 - $0.calculateTranslationProgress(), $0.t_minScaleProgressMultiplier) }
         )
     }
 }
@@ -1163,7 +1163,7 @@ extension PopupVerticalStackViewModelTests {
             popups: popups,
             gestureTranslation: 241,
             calculateForIndex: 2,
-            expectedValueBuilder: { await (1 - $0.t_calculateTranslationProgress()) * $0.t_stackOverlayFactor }
+            expectedValueBuilder: { await (1 - $0.calculateTranslationProgress()) * $0.t_stackOverlayFactor }
         )
     }
 }
