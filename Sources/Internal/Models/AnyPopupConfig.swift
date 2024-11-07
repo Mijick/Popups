@@ -25,8 +25,10 @@ struct AnyPopupConfig: LocalConfig, Sendable { init() {}
     // MARK: Gestures
     var isTapOutsideToDismissEnabled: Bool = false
     var isDragGestureEnabled: Bool = false
+}
 
-    // MARK: Initializer
+// MARK: Initialization
+extension AnyPopupConfig {
     init<Config: LocalConfig>(_ config: Config) {
         self.alignment = .init(Config.self)
         self.popupPadding = config.popupPadding
