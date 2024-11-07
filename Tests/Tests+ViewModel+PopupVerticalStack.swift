@@ -422,7 +422,7 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckActivePopupHeight<C: Config>(viewModel: ViewModel<C>, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: CGFloat) {
+    func appendPopupsAndCheckActivePopupHeight(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: CGFloat) {
         appendPopupsAndPerformChecks(
             viewModel: viewModel,
             popups: popups,
@@ -623,7 +623,7 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckPopupPadding<C: Config>(viewModel: ViewModel<C>, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: EdgeInsets) {
+    func appendPopupsAndCheckPopupPadding(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: EdgeInsets) {
         appendPopupsAndPerformChecks(
             viewModel: viewModel,
             popups: popups,
@@ -734,7 +734,7 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckBodyPadding<C: Config>(viewModel: ViewModel<C>, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: EdgeInsets) {
+    func appendPopupsAndCheckBodyPadding(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: EdgeInsets) {
         appendPopupsAndPerformChecks(
             viewModel: viewModel,
             popups: popups,
@@ -809,7 +809,7 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckTranslationProgress<C: Config>(viewModel: ViewModel<C>, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: CGFloat) {
+    func appendPopupsAndCheckTranslationProgress(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: CGFloat) {
         appendPopupsAndPerformChecks(
             viewModel: viewModel,
             popups: popups,
@@ -900,7 +900,7 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckCornerRadius<C: Config>(viewModel: ViewModel<C>, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: [MijickPopups.PopupAlignment: CGFloat]) {
+    func appendPopupsAndCheckCornerRadius(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: [MijickPopups.PopupAlignment: CGFloat]) {
         appendPopupsAndPerformChecks(
             viewModel: viewModel,
             popups: popups,
