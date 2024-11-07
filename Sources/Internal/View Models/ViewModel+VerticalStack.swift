@@ -278,14 +278,14 @@ private extension VM.VerticalStack {
 
 // MARK: Active Popup Height
 private extension VM.VerticalStack {
-    func _calculateHeightForActivePopup() -> CGFloat? {
-        guard let activePopupHeight = popups.last?.height else { return nil }
+    nonisolated func _calculateHeightForActivePopup() async -> CGFloat? {
+        guard let activePopupHeight = await popups.last?.height else { return nil }
 
-        let activePopupDragHeight = popups.last?.dragHeight ?? 0
-        let popupHeightFromGestureTranslation = activePopupHeight + activePopupDragHeight + gestureTranslation * getDragTranslationMultiplier()
+        let activePopupDragHeight = await popups.last?.dragHeight ?? 0
+        let popupHeightFromGestureTranslation = await activePopupHeight + activePopupDragHeight + gestureTranslation * getDragTranslationMultiplier()
 
         let newHeightCandidate1 = max(activePopupHeight, popupHeightFromGestureTranslation),
-            newHeightCanditate2 = screen.height
+            newHeightCanditate2 = await screen.height
         return min(newHeightCandidate1, newHeightCanditate2)
     }
 }

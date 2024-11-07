@@ -94,8 +94,8 @@ extension VM.CentreStack {
 
 // MARK: Active Popup Height
 private extension VM.CentreStack {
-    func _calculateHeightForActivePopup() -> CGFloat? {
-        popups.last?.height
+    nonisolated func _calculateHeightForActivePopup() async -> CGFloat? {
+        await popups.last?.height
     }
 }
 
