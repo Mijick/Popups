@@ -138,7 +138,7 @@ private extension PopupCentreStackViewModelTests {
         await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: false,
-            calculatedValue: { $0.calculateCornerRadius() },
+            calculatedValue: { await $0.calculateCornerRadius() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
