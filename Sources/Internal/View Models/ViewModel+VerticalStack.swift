@@ -471,7 +471,7 @@ extension VM.VerticalStack {
     func t_calculateAndUpdateTranslationProgress() async { translationProgress = await calculateTranslationProgress() }
     func t_updateGestureTranslation(_ newGestureTranslation: CGFloat) async { await updateGestureTranslation(newGestureTranslation) }
 
-    func t_onPopupDragGestureChanged(_ value: CGFloat) async { await onPopupDragGestureChanged(value) }
+
     func t_onPopupDragGestureEnded(_ value: CGFloat) async { await onPopupDragGestureEnded(value) }
 }
 
@@ -484,6 +484,5 @@ extension VM.VerticalStack {
     var t_minStackOverlayProgressMultiplier: CGFloat { minStackOverlayProgressMultiplier }
     var t_maxStackOverlayFactor: CGFloat { maxStackOverlayFactor }
     var t_dragTranslationThreshold: CGFloat { dragTranslationThreshold }
-    var t_gestureTranslation: CGFloat { gestureTranslation }
 }
 #endif
