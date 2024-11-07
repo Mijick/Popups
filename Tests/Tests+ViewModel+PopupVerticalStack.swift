@@ -904,7 +904,7 @@ private extension PopupVerticalStackViewModelTests {
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { $0.t_calculateCornerRadius() },
+            calculatedValue: { $0.calculateCornerRadius() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
