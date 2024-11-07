@@ -25,7 +25,7 @@ enum VM {}
     var isKeyboardActive: Bool = false
 
     // MARK: Methods to Override
-    func recalculateAndSave(height: CGFloat, for popup: AnyPopup) { fatalError() }
+    func recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) -> CGFloat { fatalError() }
     func calculateHeightForActivePopup() -> CGFloat? { fatalError() }
     func calculatePopupPadding() -> EdgeInsets { fatalError() }
     func calculateCornerRadius() -> [PopupAlignment: CGFloat] { fatalError() }
