@@ -457,7 +457,7 @@ private extension VM.VerticalStack {
 
 // MARK: Methods
 extension VM.VerticalStack {
-    func t_calculatePopupPadding() -> EdgeInsets { calculatePopupPadding() }
+    func t_calculatePopupPadding() async -> EdgeInsets { await calculatePopupPadding() }
     func t_calculateBodyPadding(for popup: AnyPopup) -> EdgeInsets { calculateBodyPadding(for: popup) }
     func t_calculateHeight(heightCandidate: CGFloat, popup: AnyPopup) -> CGFloat { calculateNewPopupHeight(heightCandidate, popup.config) }
     func t_calculateOffsetY(for popup: AnyPopup) -> CGFloat { calculateOffsetY(for: popup) }
@@ -465,10 +465,10 @@ extension VM.VerticalStack {
     func t_calculateVerticalFixedSize(for popup: AnyPopup) -> Bool { calculateVerticalFixedSize(for: popup) }
     func t_calculateStackOverlayOpacity(for popup: AnyPopup) -> CGFloat { calculateStackOverlayOpacity(for: popup) }
     func t_calculateCornerRadius() -> [PopupAlignment: CGFloat] { calculateCornerRadius() }
-    func t_calculateTranslationProgress() -> CGFloat { calculateTranslationProgress() }
+    func t_calculateTranslationProgress() async -> CGFloat { await calculateTranslationProgress() }
     func t_getInvertedIndex(of popup: AnyPopup) -> Int { getInvertedIndex(of: popup) }
 
-    func t_calculateAndUpdateTranslationProgress() { translationProgress = calculateTranslationProgress() }
+    func t_calculateAndUpdateTranslationProgress() { Task { translationProgress = await calculateTranslationProgress() }}
     func t_updateGestureTranslation(_ newGestureTranslation: CGFloat) { updateGestureTranslation(newGestureTranslation) }
 
     func t_onPopupDragGestureChanged(_ value: CGFloat) { onPopupDragGestureChanged(value) }
