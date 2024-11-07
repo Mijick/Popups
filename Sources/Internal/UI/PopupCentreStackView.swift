@@ -31,7 +31,7 @@ private extension PopupCentreStackView {
     func createPopup(_ popup: AnyPopup) -> some View {
         popup.body
             .fixedSize(horizontal: false, vertical: viewModel.calculateVerticalFixedSize(for: popup))
-            .onHeightChange { viewModel.recalculateAndSave(height: $0, for: popup) }
+            .onHeightChange { viewModel.recalculateAndUpdatePopupHeight($0, popup) }
             .frame(height: viewModel.activePopupHeight)
             .frame(maxWidth: .infinity, maxHeight: viewModel.activePopupHeight)
             .background(backgroundColor: getBackgroundColor(for: popup), overlayColor: .clear, corners: viewModel.calculateCornerRadius())

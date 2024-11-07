@@ -13,7 +13,7 @@ import SwiftUI
 
 extension VM { class CentreStack: ViewModel {
     // MARK: Overridden Methods
-    override func recalculateAndSave(height: CGFloat, for popup: AnyPopup) { _recalculateAndSave(height: height, for: popup) }
+    override func recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) -> CGFloat { recalculatePopupHeight(heightCandidate) }
     override func calculateHeightForActivePopup() -> CGFloat? { _calculateHeightForActivePopup() }
     override func calculatePopupPadding() -> EdgeInsets { _calculatePopupPadding() }
     override func calculateCornerRadius() -> [PopupAlignment : CGFloat] { _calculateCornerRadius() }
@@ -28,13 +28,7 @@ extension VM { class CentreStack: ViewModel {
 
 // MARK: Recalculate & Update Popup Height
 private extension VM.CentreStack {
-    func _recalculateAndSave(height: CGFloat, for popup: AnyPopup) {
-        let newHeight = calculateHeight(height)
-        updateHeight(newHeight, popup)
-    }
-}
-private extension VM.CentreStack {
-    func calculateHeight(_ heightCandidate: CGFloat) -> CGFloat {
+    func recalculatePopupHeight(_ heightCandidate: CGFloat) -> CGFloat {
         min(heightCandidate, calculateLargeScreenHeight())
     }
 }
@@ -117,7 +111,7 @@ private extension VM.CentreStack {
 
 // MARK: Methods
 extension VM.CentreStack {
-    func t_calculateHeight(heightCandidate: CGFloat) -> CGFloat { calculateHeight(heightCandidate) }
+    func t_calculateHeight(heightCandidate: CGFloat) -> CGFloat { recalculatePopupHeight(heightCandidate) }
     func t_calculatePopupPadding() -> EdgeInsets { calculatePopupPadding() }
     func t_calculateCornerRadius() -> [PopupAlignment: CGFloat] { calculateCornerRadius() }
     func t_calculateOpacity(for popup: AnyPopup) -> CGFloat { calculateOpacity(for: popup) }
