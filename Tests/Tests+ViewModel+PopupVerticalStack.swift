@@ -979,7 +979,7 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckScaleX<C: Config>(viewModel: ViewModel<C>, popups: [AnyPopup], gestureTranslation: CGFloat, calculateForIndex index: Int, expectedValueBuilder: @escaping (ViewModel<C>) -> CGFloat) {
+    func appendPopupsAndCheckScaleX(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, calculateForIndex index: Int, expectedValueBuilder: @escaping (ViewModel) -> CGFloat) {
         appendPopupsAndPerformChecks(
             viewModel: viewModel,
             popups: popups,
@@ -1054,7 +1054,7 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckVerticalFixedSize<C: Config>(viewModel: ViewModel<C>, popups: [AnyPopup], gestureTranslation: CGFloat, calculateForIndex index: Int, expectedValue: Bool) {
+    func appendPopupsAndCheckVerticalFixedSize(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, calculateForIndex index: Int, expectedValue: Bool) {
         appendPopupsAndPerformChecks(
             viewModel: viewModel,
             popups: popups,
@@ -1169,7 +1169,7 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckStackOverlayOpacity<C: Config>(viewModel: ViewModel<C>, popups: [AnyPopup], gestureTranslation: CGFloat, calculateForIndex index: Int, expectedValueBuilder: @escaping (ViewModel<C>) -> CGFloat) {
+    func appendPopupsAndCheckStackOverlayOpacity(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, calculateForIndex index: Int, expectedValueBuilder: @escaping (ViewModel) -> CGFloat) {
         appendPopupsAndPerformChecks(
             viewModel: viewModel,
             popups: popups,
@@ -1268,7 +1268,7 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckGestureTranslationOnChange<C: Config>(viewModel: ViewModel<C>, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat, gestureTranslation: CGFloat)) {
+    func appendPopupsAndCheckGestureTranslationOnChange(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat, gestureTranslation: CGFloat)) {
         viewModel.t_updatePopupsValue(popups)
         viewModel.t_updatePopupsValue(recalculatePopupHeights(viewModel))
         viewModel.t_onPopupDragGestureChanged(gestureValue)
@@ -1438,7 +1438,7 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckGestureTranslationOnEnd<C: Config>(viewModel: ViewModel<C>, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat?, shouldPopupBeDismissed: Bool)) {
+    func appendPopupsAndCheckGestureTranslationOnEnd(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat?, shouldPopupBeDismissed: Bool)) {
         viewModel.t_updatePopupsValue(popups)
         viewModel.t_updatePopupsValue(recalculatePopupHeights(viewModel))
         viewModel.t_updateGestureTranslation(gestureValue)
