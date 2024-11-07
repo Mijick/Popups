@@ -18,7 +18,7 @@ struct AnyPopup: Popup {
     private(set) var dragHeight: CGFloat? = nil
 
     private var dismissTimer: PopupActionScheduler? = nil
-    private var _body: AnyView
+    private var _body: any View
     private let _onFocus: () -> ()
     private let _onDismiss: () -> ()
 }
@@ -36,7 +36,7 @@ extension AnyPopup {
         else {
             self.id = .create(from: P.self)
             self.config = .init(popup.configurePopup(config: .init()))
-            self._body = AnyView(popup)
+            self._body = popup
             self._onFocus = popup.onFocus
             self._onDismiss = popup.onDismiss
         }
@@ -50,7 +50,7 @@ extension AnyPopup {
     func startingDismissTimerIfNeeded(_ popupManager: PopupManager) -> AnyPopup { updatingPopup { $0.dismissTimer?.schedule { popupManager.stack(.removePopupInstance(self)) }}}
     func settingHeight(_ newHeight: CGFloat?) -> AnyPopup { updatingPopup { $0.height = newHeight }}
     func settingDragHeight(_ newDragHeight: CGFloat?) -> AnyPopup { updatingPopup { $0.dragHeight = newDragHeight }}
-    func settingEnvironmentObject(_ environmentObject: some ObservableObject) -> AnyPopup { updatingPopup { $0._body = AnyView(_body.environmentObject(environmentObject)) }}
+    func settingEnvironmentObject(_ environmentObject: some ObservableObject) -> AnyPopup { updatingPopup { $0._body = _body.environmentObject(environmentObject) }}
 }
 private extension AnyPopup {
     func updatingPopup(_ customBuilder: (inout AnyPopup) -> ()) -> AnyPopup {
