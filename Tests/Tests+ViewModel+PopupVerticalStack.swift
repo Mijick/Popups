@@ -1173,7 +1173,7 @@ private extension PopupVerticalStackViewModelTests {
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { $0.t_calculateStackOverlayOpacity(for: $0.popups[index]) },
+            calculatedValue: { $0.calculateStackOverlayOpacity(for: $0.popups[index]) },
             expectedValueBuilder: expectedValueBuilder
         )
     }

@@ -252,7 +252,7 @@ extension VM.VerticalStack {
 
 // MARK: - Stack Overlay Opacity
 extension VM.VerticalStack {
-    func calculateStackOverlayOpacity(for popup: AnyPopup) -> Double {
+    func calculateStackOverlayOpacity(for popup: AnyPopup) -> CGFloat {
         guard popup != popups.last else { return 0 }
 
         let invertedIndex = getInvertedIndex(of: popup),
@@ -456,8 +456,6 @@ extension VM.VerticalStack {
     func t_calculateHeight(heightCandidate: CGFloat, popup: AnyPopup) -> CGFloat { calculateNewPopupHeight(heightCandidate, popup.config) }
 
 
-
-    func t_calculateStackOverlayOpacity(for popup: AnyPopup) -> CGFloat { calculateStackOverlayOpacity(for: popup) }
     func t_calculateAndUpdateTranslationProgress() async { translationProgress = await calculateTranslationProgress() }
 
 
