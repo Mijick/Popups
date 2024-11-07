@@ -29,7 +29,7 @@ extension VM { class VerticalStack: ViewModel {
 
 
 // MARK: Update
-private extension VM.VerticalStack {
+extension VM.VerticalStack {
     func updateGestureTranslation(_ newGestureTranslation: CGFloat) async {
         gestureTranslation = newGestureTranslation
         translationProgress = await calculateTranslationProgress()
@@ -463,7 +463,7 @@ extension VM.VerticalStack {
     func t_calculateCornerRadius() -> [PopupAlignment: CGFloat] { calculateCornerRadius() }
 
     func t_calculateAndUpdateTranslationProgress() async { translationProgress = await calculateTranslationProgress() }
-    func t_updateGestureTranslation(_ newGestureTranslation: CGFloat) async { await updateGestureTranslation(newGestureTranslation) }
+
 
 }
 #endif

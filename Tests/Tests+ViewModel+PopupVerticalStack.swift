@@ -466,7 +466,7 @@ extension PopupVerticalStackViewModelTests {
         await bottomViewModel.updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 100)
         ])
-        await bottomViewModel.t_updateGestureTranslation(-100)
+        await bottomViewModel.updateGestureTranslation(-100)
 
         XCTAssertEqual(
             bottomViewModel.t_calculateOffsetY(for: bottomViewModel.popups[0]),
@@ -478,7 +478,7 @@ extension PopupVerticalStackViewModelTests {
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 249),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
-        await bottomViewModel.t_updateGestureTranslation(100)
+        await bottomViewModel.updateGestureTranslation(100)
 
         XCTAssertEqual(
             bottomViewModel.calculateOffsetY(for: bottomViewModel.popups[0]),
@@ -490,7 +490,7 @@ extension PopupVerticalStackViewModelTests {
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 249),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
-        await bottomViewModel.t_updateGestureTranslation(100)
+        await bottomViewModel.updateGestureTranslation(100)
 
         XCTAssertEqual(
             bottomViewModel.calculateOffsetY(for: bottomViewModel.popups[1]),
@@ -525,7 +525,7 @@ extension PopupVerticalStackViewModelTests {
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 249),
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
-        await topViewModel.t_updateGestureTranslation(-100)
+        await topViewModel.updateGestureTranslation(-100)
 
         XCTAssertEqual(
             topViewModel.t_calculateOffsetY(for: topViewModel.popups[1]),
@@ -1440,7 +1440,7 @@ private extension PopupVerticalStackViewModelTests {
     func appendPopupsAndCheckGestureTranslationOnEnd(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat?, shouldPopupBeDismissed: Bool)) async {
         await viewModel.updatePopupsValue(popups)
         await updatePopups(viewModel)
-        await viewModel.t_updateGestureTranslation(gestureValue)
+        await viewModel.updateGestureTranslation(gestureValue)
         await viewModel.t_calculateAndUpdateTranslationProgress()
         await viewModel.onPopupDragGestureEnded(gestureValue)
 
@@ -1467,7 +1467,7 @@ private extension PopupVerticalStackViewModelTests {
     func appendPopupsAndPerformChecks<Value: Equatable & Sendable>(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, calculatedValue: @escaping (ViewModel) async -> (Value), expectedValueBuilder: @escaping (ViewModel) async -> Value) async {
         await viewModel.updatePopupsValue(popups)
         await updatePopups(viewModel)
-        await viewModel.t_updateGestureTranslation(gestureTranslation)
+        await viewModel.updateGestureTranslation(gestureTranslation)
 
         let calculatedValue = await calculatedValue(viewModel)
         let expectedValue = await expectedValueBuilder(viewModel)
