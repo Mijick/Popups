@@ -111,7 +111,7 @@ private extension VM.CentreStack {
 
 // MARK: Methods
 extension VM.CentreStack {
-    func t_calculateHeight(heightCandidate: CGFloat) -> CGFloat { recalculatePopupHeight(heightCandidate) }
+    func t_calculateHeight(heightCandidate: CGFloat) -> CGFloat { min(heightCandidate, calculateLargeScreenHeight()) }
     func t_calculatePopupPadding() -> EdgeInsets { calculatePopupPadding() }
     func t_calculateCornerRadius() -> [PopupAlignment: CGFloat] { calculateCornerRadius() }
     func t_calculateOpacity(for popup: AnyPopup) -> CGFloat { calculateOpacity(for: popup) }
