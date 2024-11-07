@@ -25,7 +25,7 @@ enum VM {}
     var isKeyboardActive: Bool = false
 
     // MARK: Methods to Override
-    func recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) -> CGFloat { fatalError() }
+    nonisolated func recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { fatalError() }
     func calculateHeightForActivePopup() -> CGFloat? { fatalError() }
     func calculatePopupPadding() -> EdgeInsets { fatalError() }
     func calculateCornerRadius() -> [PopupAlignment: CGFloat] { fatalError() }
@@ -61,10 +61,10 @@ extension ViewModel {
 
         withAnimation(.transition) { objectWillChange.send() }
     }
-    func recalculateAndUpdatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) {
-        let recalculatedPopupHeight = recalculatePopupHeight(heightCandidate, popup)
+    func recalculateAndUpdatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) { Task {
+        let recalculatedPopupHeight = await recalculatePopupHeight(heightCandidate, popup)
         if popup.height != recalculatedPopupHeight { updatePopupAction(popup.settingHeight(recalculatedPopupHeight)) }
-    }
+    }}
 }
 
 // MARK: Helpers

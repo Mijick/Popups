@@ -17,7 +17,7 @@ extension VM { class VerticalStack: ViewModel {
     private(set) var translationProgress: CGFloat = 0
 
     // MARK: Overridden Methods
-    override func recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) -> CGFloat { _recalculatePopupHeight(heightCandidate, popup) }
+    override func recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { await _recalculatePopupHeight(heightCandidate, popup) }
     override func calculateHeightForActivePopup() -> CGFloat? { _calculateHeightForActivePopup() }
     override func calculatePopupPadding() -> EdgeInsets { _calculatePopupPadding() }
     override func calculateCornerRadius() -> [PopupAlignment : CGFloat] { _calculateCornerRadius() }
