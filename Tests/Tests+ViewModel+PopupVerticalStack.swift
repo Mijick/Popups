@@ -214,59 +214,69 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculatePopupHeight_withFullscreenHeightMode_whenOnePopupStacked() async {
-        await bottomViewModel.updatePopupsValue([
+        let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 100)
-        ])
+        ]
 
-        XCTAssertEqual(
-            calculateLastPopupHeight(bottomViewModel),
-            screen.height
+        await appendPopupsAndCheckPopupHeight(
+            viewModel: bottomViewModel,
+            popups: popups,
+            calculateForIndex: 0,
+            expectedValue: screen.height
         )
     }
     func test_calculatePopupHeight_withFullscreenHeightMode_whenThreePopupsStacked() async {
-        await bottomViewModel.updatePopupsValue([
+        let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 2000),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 3000)
-        ])
+        ]
 
-        XCTAssertEqual(
-            calculateLastPopupHeight(bottomViewModel),
-            screen.height
+        await appendPopupsAndCheckPopupHeight(
+            viewModel: bottomViewModel,
+            popups: popups,
+            calculateForIndex: 2,
+            expectedValue: screen.height
         )
     }
     func test_calculatePopupHeight_withLargeHeightMode_whenThreePopupsStacked_popupPadding() async {
-        await bottomViewModel.updatePopupsValue([
+        let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 2000),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .large, popupHeight: 3000, popupPadding: .init(top: 33, leading: 15, bottom: 21, trailing: 15))
-        ])
+        ]
 
-        XCTAssertEqual(
-            calculateLastPopupHeight(bottomViewModel),
-            screen.height - screen.safeArea.top - 2 * bottomViewModel.stackOffset
+        await appendPopupsAndCheckPopupHeight(
+            viewModel: bottomViewModel,
+            popups: popups,
+            calculateForIndex: 2,
+            expectedValue: screen.height - screen.safeArea.top - 2 * bottomViewModel.stackOffset
         )
     }
     func test_calculatePopupHeight_withFullscreenHeightMode_whenThreePopupsStacked_popupPadding() async {
-        await bottomViewModel.updatePopupsValue([
+        let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 2000),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 3000, popupPadding: .init(top: 33, leading: 15, bottom: 21, trailing: 15))
-        ])
+        ]
 
-        XCTAssertEqual(
-            calculateLastPopupHeight(bottomViewModel),
-            screen.height
+        await appendPopupsAndCheckPopupHeight(
+            viewModel: bottomViewModel,
+            popups: popups,
+            calculateForIndex: 2,
+            expectedValue: screen.height
         )
     }
     func test_calculatePopupHeight_withLargeHeightMode_whenPopupsHaveTopAlignment() async {
-        await topViewModel.updatePopupsValue([
+        let popups = [
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .large, popupHeight: 100)
-        ])
+        ]
 
-        XCTAssertEqual(
-            calculateLastPopupHeight(topViewModel),
-            screen.height - screen.safeArea.bottom
+        await appendPopupsAndCheckPopupHeight(
+            viewModel: topViewModel,
+            popups: popups,
+            calculateForIndex: 0,
+            expectedValue: screen.height - screen.safeArea.bottom
         )
     }
 }
