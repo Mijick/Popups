@@ -102,7 +102,7 @@ private extension PopupCentreStackViewModelTests {
         await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: isKeyboardActive,
-            calculatedValue: { $0.calculatePopupPadding() },
+            calculatedValue: { await $0.calculatePopupPadding() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
@@ -236,13 +236,15 @@ private extension PopupCentreStackViewModelTests {
         let config = getConfigForPopupHeightTests(cornerRadius: cornerRadius, popupPadding: popupPadding)
         return AnyPopup.t_createNew(config: config).settingHeight(popupHeight)
     }
-    func appendPopupsAndPerformChecks<Value: Equatable>(popups: [AnyPopup], isKeyboardActive: Bool, calculatedValue: @escaping (ViewModel) -> (Value), expectedValueBuilder: @escaping (ViewModel) -> Value) async {
+    func appendPopupsAndPerformChecks<Value: Equatable & Sendable>(popups: [AnyPopup], isKeyboardActive: Bool, calculatedValue: @escaping (ViewModel) async -> (Value), expectedValueBuilder: @escaping (ViewModel) async -> Value) async {
         await viewModel.updatePopupsValue(popups)
-        await viewModel.updatePopupsValue(recalculatePopupHeights(viewModel))
+        await updatePopups(viewModel)
         viewModel.updateKeyboardValue(isKeyboardActive)
         viewModel.updateScreenValue(isKeyboardActive ? screenWithKeyboard : screen)
 
-        XCTAssertEqual(calculatedValue(viewModel), expectedValueBuilder(viewModel))
+        let calculatedValue = await calculatedValue(viewModel)
+        let expectedValue = await expectedValueBuilder(viewModel)
+        XCTAssertEqual(calculatedValue, expectedValue)
     }
 }
 private extension PopupCentreStackViewModelTests {
