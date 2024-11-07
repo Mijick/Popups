@@ -220,16 +220,16 @@ private extension VM.VerticalStack {
     }
 }
 private extension VM.VerticalStack {
-    func calculateCornerRadiusValue(_ activePopup: AnyPopup) -> CGFloat { switch activePopup.config.heightMode {
+    nonisolated func calculateCornerRadiusValue(_ activePopup: AnyPopup) async -> CGFloat { switch activePopup.config.heightMode {
         case .auto, .large: activePopup.config.cornerRadius
         case .fullscreen: 0
     }}
-    func calculateTopCornerRadius(_ cornerRadiusValue: CGFloat, _ activePopup: AnyPopup) -> CGFloat { switch alignment {
+    nonisolated func calculateTopCornerRadius(_ cornerRadiusValue: CGFloat, _ activePopup: AnyPopup) async -> CGFloat { switch alignment {
         case .top: activePopup.popupPadding.top != 0 ? cornerRadiusValue : 0
         case .bottom: cornerRadiusValue
         case .centre: fatalError()
     }}
-    func calculateBottomCornerRadius(_ cornerRadiusValue: CGFloat, _ activePopup: AnyPopup) -> CGFloat { switch alignment {
+    nonisolated func calculateBottomCornerRadius(_ cornerRadiusValue: CGFloat, _ activePopup: AnyPopup) async -> CGFloat { switch alignment {
         case .top: cornerRadiusValue
         case .bottom: activePopup.popupPadding.bottom != 0 ? cornerRadiusValue : 0
         case .centre: fatalError()
