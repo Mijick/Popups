@@ -178,17 +178,19 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculatePopupHeight_withAutoHeightMode_whenBiggerThanScreen_fivePopupStacked() async {
-        await bottomViewModel.updatePopupsValue([
+        let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 150),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 200),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 2000)
-        ])
+        ]
 
-        XCTAssertEqual(
-            calculateLastPopupHeight(bottomViewModel),
-            screen.height - screen.safeArea.top - bottomViewModel.stackOffset * 4
+        await appendPopupsAndCheckPopupHeight(
+            viewModel: bottomViewModel,
+            popups: popups,
+            calculateForIndex: 4,
+            expectedValue: screen.height - screen.safeArea.top - bottomViewModel.stackOffset * 4
         )
     }
     func test_calculatePopupHeight_withLargeHeightMode_whenOnePopupStacked() async {
