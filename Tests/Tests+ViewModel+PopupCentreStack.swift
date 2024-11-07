@@ -17,8 +17,8 @@ import SwiftUI
     @ObservedObject private var viewModel: ViewModel = .init(CentrePopupConfig.self)
 
     override func setUp() async throws {
-        viewModel.t_updateScreenValue(screen)
-        viewModel.t_setup(updatePopupAction: { [self] in await updatePopupAction(viewModel, $0) }, closePopupAction: { [self] in await closePopupAction(viewModel, $0) })
+        viewModel.updateScreenValue(screen)
+        viewModel.setup(updatePopupAction: { [self] in await updatePopupAction(viewModel, $0) }, closePopupAction: { [self] in await closePopupAction(viewModel, $0) })
     }
 }
 private extension PopupCentreStackViewModelTests {
@@ -26,14 +26,14 @@ private extension PopupCentreStackViewModelTests {
         var popups = viewModel.popups
         popups[index] = popup
 
-        await viewModel.t_updatePopupsValue(popups)
+        await viewModel.updatePopupsValue(popups)
         await viewModel.t_calculateAndUpdateActivePopupHeight()
     }}
     func closePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.popups.firstIndex(of: popup) {
         var popups = viewModel.popups
         popups.remove(at: index)
 
-        await viewModel.t_updatePopupsValue(popups)
+        await viewModel.updatePopupsValue(popups)
     }}
 }
 
@@ -238,8 +238,8 @@ private extension PopupCentreStackViewModelTests {
         return AnyPopup.t_createNew(config: config).settingHeight(popupHeight)
     }
     func appendPopupsAndPerformChecks<Value: Equatable>(popups: [AnyPopup], isKeyboardActive: Bool, calculatedValue: @escaping (ViewModel) -> (Value), expectedValueBuilder: @escaping (ViewModel) -> Value) async {
-        await viewModel.t_updatePopupsValue(popups)
-        await viewModel.t_updatePopupsValue(recalculatePopupHeights(viewModel))
+        await viewModel.updatePopupsValue(popups)
+        await viewModel.updatePopupsValue(recalculatePopupHeights(viewModel))
         viewModel.t_updateKeyboardValue(isKeyboardActive)
         viewModel.t_updateScreenValue(isKeyboardActive ? screenWithKeyboard : screen)
 

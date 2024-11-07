@@ -87,8 +87,7 @@ extension ViewModel {
 
 // MARK: Methods
 extension ViewModel {
-    func t_setup(updatePopupAction: @escaping (AnyPopup) async -> (), closePopupAction: @escaping (AnyPopup) async -> ()) { setup(updatePopupAction: updatePopupAction, closePopupAction: closePopupAction) }
-    func t_updatePopupsValue(_ newPopups: [AnyPopup]) async { await updatePopupsValue(newPopups) }
+
     func t_updateScreenValue(_ newScreen: Screen) { updateScreenValue(newScreen) }
     func t_updateKeyboardValue(_ isActive: Bool) { updateKeyboardValue(isActive) }
     func t_updatePopup(_ popup: AnyPopup) async { await updatePopupAction(popup) }
