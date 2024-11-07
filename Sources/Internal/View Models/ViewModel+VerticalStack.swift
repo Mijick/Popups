@@ -50,9 +50,7 @@ private extension VM.VerticalStack {
 // MARK: Recalculate Popup Height
 private extension VM.VerticalStack {
     func _recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) -> CGFloat {
-        guard gestureTranslation.isZero,
-              heightCandidate != popup.height
-        else { return popup.height ?? 0 }
+        guard gestureTranslation.isZero, heightCandidate != popup.height else { return popup.height ?? 0 }
 
         let popupHeight = calculateNewPopupHeight(heightCandidate, popup.config)
         return popupHeight
