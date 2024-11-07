@@ -18,7 +18,7 @@ extension VM { class VerticalStack: ViewModel {
 
     // MARK: Overridden Methods
     override func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { await _calculatePopupHeight(heightCandidate, popup) }
-    override func calculatePopupPadding() async -> EdgeInsets { _calculatePopupPadding() }
+    override func calculatePopupPadding() async -> EdgeInsets { await _calculatePopupPadding() }
     override func calculateHeightForActivePopup() async -> CGFloat? { await _calculateHeightForActivePopup() }
 }}
 
@@ -83,7 +83,7 @@ private extension VM.VerticalStack {
 
 // MARK: Popup Padding
 private extension VM.VerticalStack {
-    func _calculatePopupPadding() -> EdgeInsets { guard let activePopupConfig = popups.last?.config else { return .init() }; return .init(
+    nonisolated func _calculatePopupPadding() async -> EdgeInsets { guard let activePopupConfig = await popups.last?.config else { return .init() }; return await .init(
         top: calculateVerticalPopupPadding(for: .top, activePopupConfig: activePopupConfig),
         leading: calculateLeadingPopupPadding(activePopupConfig: activePopupConfig),
         bottom: calculateVerticalPopupPadding(for: .bottom, activePopupConfig: activePopupConfig),
@@ -91,26 +91,26 @@ private extension VM.VerticalStack {
     )}
 }
 private extension VM.VerticalStack {
-    func calculateVerticalPopupPadding(for edge: PopupAlignment, activePopupConfig: AnyPopupConfig) -> CGFloat {
-        let largeScreenHeight = calculateLargeScreenHeight(),
-            activePopupHeight = activePopupHeight ?? 0,
-            priorityPopupPaddingValue = calculatePriorityPopupPaddingValue(for: edge),
+    nonisolated func calculateVerticalPopupPadding(for edge: PopupAlignment, activePopupConfig: AnyPopupConfig) async -> CGFloat {
+        let largeScreenHeight = await calculateLargeScreenHeight(),
+            activePopupHeight = await activePopupHeight ?? 0,
+            priorityPopupPaddingValue = await calculatePriorityPopupPaddingValue(for: edge, activePopupConfig: activePopupConfig),
             remainingHeight = largeScreenHeight - activePopupHeight - priorityPopupPaddingValue
 
         let popupPaddingCandidate = min(remainingHeight, activePopupConfig.popupPadding[edge])
         return max(popupPaddingCandidate, 0)
     }
-    func calculateLeadingPopupPadding(activePopupConfig: AnyPopupConfig) -> CGFloat {
+    nonisolated func calculateLeadingPopupPadding(activePopupConfig: AnyPopupConfig) async -> CGFloat {
         activePopupConfig.popupPadding.leading
     }
-    func calculateTrailingPopupPadding(activePopupConfig: AnyPopupConfig) -> CGFloat {
+    nonisolated func calculateTrailingPopupPadding(activePopupConfig: AnyPopupConfig) async -> CGFloat {
         activePopupConfig.popupPadding.trailing
     }
 }
 private extension VM.VerticalStack {
-    func calculatePriorityPopupPaddingValue(for edge: PopupAlignment) -> CGFloat { switch edge == alignment {
+    nonisolated func calculatePriorityPopupPaddingValue(for edge: PopupAlignment, activePopupConfig: AnyPopupConfig) async -> CGFloat { switch edge == alignment {
         case true: 0
-        case false: getActivePopupConfig().popupPadding[!edge]
+        case false: activePopupConfig.popupPadding[!edge]
     }}
 }
 
