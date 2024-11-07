@@ -38,7 +38,7 @@ private extension PopupVerticalStackView {
             .offset(y: viewModel.calculateOffsetY(for: popup))
             .scaleEffect(x: viewModel.calculateScaleX(for: popup))
             .focusSection_tvOS()
-            .padding(viewModel.calculatePopupPadding())
+            .padding(popup.popupPadding)
             .transition(transition)
             .zIndex(viewModel.calculateZIndex())
             .compositingGroup()
