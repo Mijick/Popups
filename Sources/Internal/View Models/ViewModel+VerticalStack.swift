@@ -47,19 +47,19 @@ private extension VM.VerticalStack {
 
 
 
-// MARK: Recalculate & Update Popup Height
+// MARK: Recalculate Popup Height
 private extension VM.VerticalStack {
-    func _recalculateAndSave(height: CGFloat, for popup: AnyPopup) { if gestureTranslation.isZero, height != popup.height {
-        let newHeight = calculateHeight(height, popup.config)
-        updateHeight(newHeight, popup)
-    }}
-}
-private extension VM.VerticalStack {
-    func calculateHeight(_ heightCandidate: CGFloat, _ popupConfig: AnyPopupConfig) -> CGFloat { switch popupConfig.heightMode {
-        case .auto: min(heightCandidate, calculateLargeScreenHeight())
-        case .large: calculateLargeScreenHeight()
-        case .fullscreen: getFullscreenHeight()
-    }}
+    func _recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) -> CGFloat {
+        guard gestureTranslation.isZero,
+              heightCandidate != popup.height
+        else { return popup.height ?? 0 }
+
+        return switch popup.config.heightMode {
+            case .auto: min(heightCandidate, calculateLargeScreenHeight())
+            case .large: calculateLargeScreenHeight()
+            case .fullscreen: getFullscreenHeight()
+        }
+    }
 }
 private extension VM.VerticalStack {
     func calculateLargeScreenHeight() -> CGFloat {
