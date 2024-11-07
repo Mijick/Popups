@@ -456,8 +456,6 @@ extension VM.VerticalStack {
     func t_calculateHeight(heightCandidate: CGFloat, popup: AnyPopup) -> CGFloat { calculateNewPopupHeight(heightCandidate, popup.config) }
 
 
-    func t_calculateAndUpdateTranslationProgress() async { translationProgress = await calculateTranslationProgress() }
-
 
 }
 #endif
