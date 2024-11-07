@@ -52,8 +52,8 @@ private extension PopupVerticalStackViewModelTests {
 
 // MARK: Inverted Index
 extension PopupVerticalStackViewModelTests {
-    func test_getInvertedIndex_1() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_getInvertedIndex_1() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 150)
         ])
 
@@ -62,8 +62,8 @@ extension PopupVerticalStackViewModelTests {
             0
         )
     }
-    func test_getInvertedIndex_2() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_getInvertedIndex_2() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 150),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 150),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 150),
@@ -80,7 +80,7 @@ extension PopupVerticalStackViewModelTests {
 
 // MARK: Update Popup
 extension PopupVerticalStackViewModelTests {
-    func test_updatePopup_1() {
+    func test_updatePopup_1() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 0)
         ]
@@ -88,14 +88,14 @@ extension PopupVerticalStackViewModelTests {
             .settingHeight(100)
             .settingDragHeight(100)
 
-        appendPopupsAndCheckPopups(
+        await appendPopupsAndCheckPopups(
             viewModel: bottomViewModel,
             popups: popups,
             updatedPopup: updatedPopup,
             expectedValue: (height: 100, dragHeight: 100)
         )
     }
-    func test_updatePopup_2() {
+    func test_updatePopup_2() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 50),
@@ -105,14 +105,14 @@ extension PopupVerticalStackViewModelTests {
         ]
         let updatedPopup = popups[2].settingHeight(1371)
 
-        appendPopupsAndCheckPopups(
+        await appendPopupsAndCheckPopups(
             viewModel: bottomViewModel,
             popups: popups,
             updatedPopup: updatedPopup,
             expectedValue: (height: 1371, dragHeight: nil)
         )
     }
-    func test_updatePopup_3() {
+    func test_updatePopup_3() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 50),
@@ -123,7 +123,7 @@ extension PopupVerticalStackViewModelTests {
         ]
         let updatedPopup = popups[4].settingHeight(nil)
 
-        appendPopupsAndCheckPopups(
+        await appendPopupsAndCheckPopups(
             viewModel: bottomViewModel,
             popups: popups,
             updatedPopup: updatedPopup,
@@ -132,9 +132,9 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckPopups(viewModel: ViewModel, popups: [AnyPopup], updatedPopup: AnyPopup, expectedValue: (height: CGFloat?, dragHeight: CGFloat?)) {
-        viewModel.t_updatePopupsValue(popups)
-        viewModel.t_updatePopup(updatedPopup)
+    func appendPopupsAndCheckPopups(viewModel: ViewModel, popups: [AnyPopup], updatedPopup: AnyPopup, expectedValue: (height: CGFloat?, dragHeight: CGFloat?)) async {
+        await viewModel.t_updatePopupsValue(popups)
+        await viewModel.t_updatePopup(updatedPopup)
 
         if let index = viewModel.t_popups.firstIndex(of: updatedPopup) {
             XCTAssertEqual(viewModel.t_popups[index].height, expectedValue.height)
@@ -145,8 +145,8 @@ private extension PopupVerticalStackViewModelTests {
 
 // MARK: Popup Height
 extension PopupVerticalStackViewModelTests {
-    func test_calculatePopupHeight_withAutoHeightMode_whenLessThanScreen_onePopupStacked() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculatePopupHeight_withAutoHeightMode_whenLessThanScreen_onePopupStacked() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 150)
         ])
 
@@ -155,8 +155,8 @@ extension PopupVerticalStackViewModelTests {
             150.0
         )
     }
-    func test_calculatePopupHeight_withAutoHeightMode_whenLessThanScreen_fourPopupsStacked() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculatePopupHeight_withAutoHeightMode_whenLessThanScreen_fourPopupsStacked() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 150),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 200),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300),
@@ -168,8 +168,8 @@ extension PopupVerticalStackViewModelTests {
             100.0
         )
     }
-    func test_calculatePopupHeight_withAutoHeightMode_whenBiggerThanScreen_onePopupStacked() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculatePopupHeight_withAutoHeightMode_whenBiggerThanScreen_onePopupStacked() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 2000)
         ])
 
@@ -178,8 +178,8 @@ extension PopupVerticalStackViewModelTests {
             screen.height - screen.safeArea.top
         )
     }
-    func test_calculatePopupHeight_withAutoHeightMode_whenBiggerThanScreen_fivePopupStacked() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculatePopupHeight_withAutoHeightMode_whenBiggerThanScreen_fivePopupStacked() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 150),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 200),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300),
@@ -192,8 +192,8 @@ extension PopupVerticalStackViewModelTests {
             screen.height - screen.safeArea.top - bottomViewModel.t_stackOffset * 4
         )
     }
-    func test_calculatePopupHeight_withLargeHeightMode_whenOnePopupStacked() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculatePopupHeight_withLargeHeightMode_whenOnePopupStacked() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .large, popupHeight: 100)
         ])
 
@@ -202,8 +202,8 @@ extension PopupVerticalStackViewModelTests {
             screen.height - screen.safeArea.top
         )
     }
-    func test_calculatePopupHeight_withLargeHeightMode_whenThreePopupStacked() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculatePopupHeight_withLargeHeightMode_whenThreePopupStacked() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .large, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .large, popupHeight: 700),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .large, popupHeight: 1000)
@@ -214,8 +214,8 @@ extension PopupVerticalStackViewModelTests {
             screen.height - screen.safeArea.top - bottomViewModel.t_stackOffset * 2
         )
     }
-    func test_calculatePopupHeight_withFullscreenHeightMode_whenOnePopupStacked() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculatePopupHeight_withFullscreenHeightMode_whenOnePopupStacked() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 100)
         ])
 
@@ -224,8 +224,8 @@ extension PopupVerticalStackViewModelTests {
             screen.height
         )
     }
-    func test_calculatePopupHeight_withFullscreenHeightMode_whenThreePopupsStacked() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculatePopupHeight_withFullscreenHeightMode_whenThreePopupsStacked() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 2000),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 3000)
@@ -236,8 +236,8 @@ extension PopupVerticalStackViewModelTests {
             screen.height
         )
     }
-    func test_calculatePopupHeight_withLargeHeightMode_whenThreePopupsStacked_popupPadding() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculatePopupHeight_withLargeHeightMode_whenThreePopupsStacked_popupPadding() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 2000),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .large, popupHeight: 3000, popupPadding: .init(top: 33, leading: 15, bottom: 21, trailing: 15))
@@ -248,8 +248,8 @@ extension PopupVerticalStackViewModelTests {
             screen.height - screen.safeArea.top - 2 * bottomViewModel.t_stackOffset
         )
     }
-    func test_calculatePopupHeight_withFullscreenHeightMode_whenThreePopupsStacked_popupPadding() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculatePopupHeight_withFullscreenHeightMode_whenThreePopupsStacked_popupPadding() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 2000),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 3000, popupPadding: .init(top: 33, leading: 15, bottom: 21, trailing: 15))
@@ -260,8 +260,8 @@ extension PopupVerticalStackViewModelTests {
             screen.height
         )
     }
-    func test_calculatePopupHeight_withLargeHeightMode_whenPopupsHaveTopAlignment() {
-        topViewModel.t_updatePopupsValue([
+    func test_calculatePopupHeight_withLargeHeightMode_whenPopupsHaveTopAlignment() async {
+        await topViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .large, popupHeight: 100)
         ])
 
@@ -279,141 +279,141 @@ private extension PopupVerticalStackViewModelTests {
 
 // MARK: Active Popup Height
 extension PopupVerticalStackViewModelTests {
-    func test_calculateActivePopupHeight_withAutoHeightMode_whenLessThanScreen_onePopupStacked() {
+    func test_calculateActivePopupHeight_withAutoHeightMode_whenLessThanScreen_onePopupStacked() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 100)
         ]
 
-        appendPopupsAndCheckActivePopupHeight(
+        await appendPopupsAndCheckActivePopupHeight(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: 100
         )
     }
-    func test_calculateActivePopupHeight_withAutoHeightMode_whenBiggerThanScreen_threePopupsStacked() {
+    func test_calculateActivePopupHeight_withAutoHeightMode_whenBiggerThanScreen_threePopupsStacked() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 3000),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 1000),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 2000)
         ]
 
-        appendPopupsAndCheckActivePopupHeight(
+        await appendPopupsAndCheckActivePopupHeight(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: screen.height - screen.safeArea.top - 2 * bottomViewModel.t_stackOffset
         )
     }
-    func test_calculateActivePopupHeight_withLargeHeightMode_whenThreePopupsStacked() {
+    func test_calculateActivePopupHeight_withLargeHeightMode_whenThreePopupsStacked() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 1000),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .large, popupHeight: 2000)
         ]
 
-        appendPopupsAndCheckActivePopupHeight(
+        await appendPopupsAndCheckActivePopupHeight(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: screen.height - screen.safeArea.top - 2 * bottomViewModel.t_stackOffset
         )
     }
-    func test_calculateActivePopupHeight_withAutoHeightMode_whenGestureIsNegative_twoPopupsStacked() {
+    func test_calculateActivePopupHeight_withAutoHeightMode_whenGestureIsNegative_twoPopupsStacked() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 2000)
         ]
 
-        appendPopupsAndCheckActivePopupHeight(
+        await appendPopupsAndCheckActivePopupHeight(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: -51,
             expectedValue: screen.height - screen.safeArea.top - bottomViewModel.t_stackOffset * 1 + 51
         )
     }
-    func test_calculateActivePopupHeight_withLargeHeightMode_whenGestureIsNegative_onePopupStacked() {
+    func test_calculateActivePopupHeight_withLargeHeightMode_whenGestureIsNegative_onePopupStacked() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .large, popupHeight: 350)
         ]
 
-        appendPopupsAndCheckActivePopupHeight(
+        await appendPopupsAndCheckActivePopupHeight(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: -99,
             expectedValue: screen.height - screen.safeArea.top + 99
         )
     }
-    func test_calculateActivePopupHeight_withFullscreenHeightMode_whenGestureIsNegative_twoPopupsStacked() {
+    func test_calculateActivePopupHeight_withFullscreenHeightMode_whenGestureIsNegative_twoPopupsStacked() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 250)
         ]
 
-        appendPopupsAndCheckActivePopupHeight(
+        await appendPopupsAndCheckActivePopupHeight(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: -21,
             expectedValue: screen.height
         )
     }
-    func test_calculateActivePopupHeight_withAutoHeightMode_whenGestureIsPositive_threePopupsStacked() {
+    func test_calculateActivePopupHeight_withAutoHeightMode_whenGestureIsPositive_threePopupsStacked() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .large, popupHeight: 350),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 1000),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 850)
         ]
 
-        appendPopupsAndCheckActivePopupHeight(
+        await appendPopupsAndCheckActivePopupHeight(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 100,
             expectedValue: 850
         )
     }
-    func test_calculateActivePopupHeight_withFullscreenHeightMode_whenGestureIsPositive_onePopupStacked() {
+    func test_calculateActivePopupHeight_withFullscreenHeightMode_whenGestureIsPositive_onePopupStacked() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 350)
         ]
 
-        appendPopupsAndCheckActivePopupHeight(
+        await appendPopupsAndCheckActivePopupHeight(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 31,
             expectedValue: screen.height
         )
     }
-    func test_calculateActivePopupHeight_withAutoHeightMode_whenGestureIsNegative_hasDragHeightStored_twoPopupsStacked() {
+    func test_calculateActivePopupHeight_withAutoHeightMode_whenGestureIsNegative_hasDragHeightStored_twoPopupsStacked() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 350),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 500, popupDragHeight: 100)
         ]
 
-        appendPopupsAndCheckActivePopupHeight(
+        await appendPopupsAndCheckActivePopupHeight(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: -93,
             expectedValue: 500 + 100 + 93
         )
     }
-    func test_calculateActivePopupHeight_withAutoHeightMode_whenGestureIsPositive_hasDragHeightStored_onePopupStacked() {
+    func test_calculateActivePopupHeight_withAutoHeightMode_whenGestureIsPositive_hasDragHeightStored_onePopupStacked() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 1300, popupDragHeight: 100)
         ]
 
-        appendPopupsAndCheckActivePopupHeight(
+        await appendPopupsAndCheckActivePopupHeight(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 350,
             expectedValue: screen.height - screen.safeArea.top
         )
     }
-    func test_calculateActivePopupHeight_withPopupsHaveTopAlignment() {
+    func test_calculateActivePopupHeight_withPopupsHaveTopAlignment() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .large, popupHeight: 1300)
         ]
 
-        appendPopupsAndCheckActivePopupHeight(
+        await appendPopupsAndCheckActivePopupHeight(
             viewModel: topViewModel,
             popups: popups,
             gestureTranslation: 0,
@@ -422,8 +422,8 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckActivePopupHeight(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: CGFloat) {
-        appendPopupsAndPerformChecks(
+    func appendPopupsAndCheckActivePopupHeight(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: CGFloat) async {
+        await appendPopupsAndPerformChecks(
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
@@ -435,8 +435,8 @@ private extension PopupVerticalStackViewModelTests {
 
 // MARK: Offset
 extension PopupVerticalStackViewModelTests {
-    func test_calculateOffsetY_withZeroGestureTranslation_fivePopupsStacked_thirdElement() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculateOffsetY_withZeroGestureTranslation_fivePopupsStacked_thirdElement() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 120),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 240),
@@ -449,8 +449,8 @@ extension PopupVerticalStackViewModelTests {
             -bottomViewModel.t_stackOffset * 2
         )
     }
-    func test_calculateOffsetY_withZeroGestureTranslation_fivePopupsStacked_lastElement() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculateOffsetY_withZeroGestureTranslation_fivePopupsStacked_lastElement() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 120),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 240),
@@ -463,11 +463,11 @@ extension PopupVerticalStackViewModelTests {
             0
         )
     }
-    func test_calculateOffsetY_withNegativeGestureTranslation_dragHeight_onePopupStacked() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculateOffsetY_withNegativeGestureTranslation_dragHeight_onePopupStacked() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 100)
         ])
-        bottomViewModel.t_updateGestureTranslation(-100)
+        await bottomViewModel.t_updateGestureTranslation(-100)
 
         XCTAssertEqual(
             bottomViewModel.t_calculateOffsetY(for: bottomViewModel.t_popups[0]),
@@ -1268,10 +1268,10 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckGestureTranslationOnChange(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat, gestureTranslation: CGFloat)) {
-        viewModel.t_updatePopupsValue(popups)
-        viewModel.t_updatePopupsValue(recalculatePopupHeights(viewModel))
-        viewModel.t_onPopupDragGestureChanged(gestureValue)
+    func appendPopupsAndCheckGestureTranslationOnChange(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat, gestureTranslation: CGFloat)) async {
+        await viewModel.t_updatePopupsValue(popups)
+        await viewModel.t_updatePopupsValue(recalculatePopupHeights(viewModel))
+        await viewModel.t_onPopupDragGestureChanged(gestureValue)
 
         XCTAssertEqual(viewModel.t_activePopupHeight, expectedValues.popupHeight)
         XCTAssertEqual(viewModel.t_gestureTranslation, expectedValues.gestureTranslation)
@@ -1280,144 +1280,144 @@ private extension PopupVerticalStackViewModelTests {
 
 // MARK: On Drag Gesture Ended
 extension PopupVerticalStackViewModelTests {
-    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenNoDragDetents() {
+    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenNoDragDetents() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 344)
         ]
 
-        appendPopupsAndCheckGestureTranslationOnEnd(
+        await appendPopupsAndCheckGestureTranslationOnEnd(
             viewModel: bottomViewModel,
             popups: popups,
             gestureValue: -200,
             expectedValues: (popupHeight: 344, shouldPopupBeDismissed: false)
         )
     }
-    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenDragDetentsSet_bottomPopupsAlignment_1() {
+    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenDragDetentsSet_bottomPopupsAlignment_1() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 344, dragDetents: [.height(440)])
         ]
 
-        appendPopupsAndCheckGestureTranslationOnEnd(
+        await appendPopupsAndCheckGestureTranslationOnEnd(
             viewModel: bottomViewModel,
             popups: popups,
             gestureValue: -200,
             expectedValues: (popupHeight: 440, shouldPopupBeDismissed: false)
         )
     }
-    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenDragDetentsSet_bottomPopupsAlignment_2() {
+    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenDragDetentsSet_bottomPopupsAlignment_2() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 344, dragDetents: [.height(440), .height(520)])
         ]
 
-        appendPopupsAndCheckGestureTranslationOnEnd(
+        await appendPopupsAndCheckGestureTranslationOnEnd(
             viewModel: bottomViewModel,
             popups: popups,
             gestureValue: -120,
             expectedValues: (popupHeight: 520, shouldPopupBeDismissed: false)
         )
     }
-    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenDragDetentsSet_bottomPopupsAlignment_3() {
+    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenDragDetentsSet_bottomPopupsAlignment_3() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 344, dragDetents: [.height(440), .height(520)])
         ]
 
-        appendPopupsAndCheckGestureTranslationOnEnd(
+        await appendPopupsAndCheckGestureTranslationOnEnd(
             viewModel: bottomViewModel,
             popups: popups,
             gestureValue: -42,
             expectedValues: (popupHeight: 440, shouldPopupBeDismissed: false)
         )
     }
-    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenDragDetentsSet_bottomPopupsAlignment_4() {
+    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenDragDetentsSet_bottomPopupsAlignment_4() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 344, dragDetents: [.height(440), .height(520), .large, .fullscreen])
         ]
 
-        appendPopupsAndCheckGestureTranslationOnEnd(
+        await appendPopupsAndCheckGestureTranslationOnEnd(
             viewModel: bottomViewModel,
             popups: popups,
             gestureValue: -300,
             expectedValues: (popupHeight: screen.height - screen.safeArea.top, shouldPopupBeDismissed: false)
         )
     }
-    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenDragDetentsSet_bottomPopupsAlignment_5() {
+    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenDragDetentsSet_bottomPopupsAlignment_5() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 344, dragDetents: [.height(440), .height(520), .large, .fullscreen])
         ]
 
-        appendPopupsAndCheckGestureTranslationOnEnd(
+        await appendPopupsAndCheckGestureTranslationOnEnd(
             viewModel: bottomViewModel,
             popups: popups,
             gestureValue: -600,
             expectedValues: (popupHeight: screen.height, shouldPopupBeDismissed: false)
         )
     }
-    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenDragDetentsSet_topPopupsAlignment_1() {
+    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenDragDetentsSet_topPopupsAlignment_1() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 344, dragDetents: [.height(440), .height(520), .large, .fullscreen])
         ]
 
-        appendPopupsAndCheckGestureTranslationOnEnd(
+        await appendPopupsAndCheckGestureTranslationOnEnd(
             viewModel: topViewModel,
             popups: popups,
             gestureValue: -300,
             expectedValues: (popupHeight: nil, shouldPopupBeDismissed: true)
         )
     }
-    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenDragDetentsSet_topPopupsAlignment_2() {
+    func test_calculateValuesOnDragGestureEnded_withNegativeDragValue_whenDragDetentsSet_topPopupsAlignment_2() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 344, dragDetents: [.height(440), .height(520), .large, .fullscreen])
         ]
 
-        appendPopupsAndCheckGestureTranslationOnEnd(
+        await appendPopupsAndCheckGestureTranslationOnEnd(
             viewModel: topViewModel,
             popups: popups,
             gestureValue: -15,
             expectedValues: (popupHeight: 344, shouldPopupBeDismissed: false)
         )
     }
-    func test_calculateValuesOnDragGestureEnded_withPositiveDragValue_bottomPopupsAlignment_1() {
+    func test_calculateValuesOnDragGestureEnded_withPositiveDragValue_bottomPopupsAlignment_1() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 400)
         ]
 
-        appendPopupsAndCheckGestureTranslationOnEnd(
+        await appendPopupsAndCheckGestureTranslationOnEnd(
             viewModel: bottomViewModel,
             popups: popups,
             gestureValue: 50,
             expectedValues: (popupHeight: 400, shouldPopupBeDismissed: false)
         )
     }
-    func test_calculateValuesOnDragGestureEnded_withPositiveDragValue_bottomPopupsAlignment_2() {
+    func test_calculateValuesOnDragGestureEnded_withPositiveDragValue_bottomPopupsAlignment_2() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 400)
         ]
 
-        appendPopupsAndCheckGestureTranslationOnEnd(
+        await appendPopupsAndCheckGestureTranslationOnEnd(
             viewModel: bottomViewModel,
             popups: popups,
             gestureValue: 300,
             expectedValues: (popupHeight: nil, shouldPopupBeDismissed: true)
         )
     }
-    func test_calculateValuesOnDragGestureEnded_withPositiveDragValue_topPopupsAlignment_1() {
+    func test_calculateValuesOnDragGestureEnded_withPositiveDragValue_topPopupsAlignment_1() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 400)
         ]
 
-        appendPopupsAndCheckGestureTranslationOnEnd(
+        await appendPopupsAndCheckGestureTranslationOnEnd(
             viewModel: topViewModel,
             popups: popups,
             gestureValue: 400,
             expectedValues: (popupHeight: 400, shouldPopupBeDismissed: false)
         )
     }
-    func test_calculateValuesOnDragGestureEnded_withPositiveDragValue_topPopupsAlignment_2() {
+    func test_calculateValuesOnDragGestureEnded_withPositiveDragValue_topPopupsAlignment_2() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 400, dragDetents: [.large])
         ]
 
-        appendPopupsAndCheckGestureTranslationOnEnd(
+        await appendPopupsAndCheckGestureTranslationOnEnd(
             viewModel: topViewModel,
             popups: popups,
             gestureValue: 100,
@@ -1438,12 +1438,12 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckGestureTranslationOnEnd(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat?, shouldPopupBeDismissed: Bool)) {
-        viewModel.t_updatePopupsValue(popups)
-        viewModel.t_updatePopupsValue(recalculatePopupHeights(viewModel))
-        viewModel.t_updateGestureTranslation(gestureValue)
-        viewModel.t_calculateAndUpdateTranslationProgress()
-        viewModel.t_onPopupDragGestureEnded(gestureValue)
+    func appendPopupsAndCheckGestureTranslationOnEnd(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat?, shouldPopupBeDismissed: Bool)) async {
+        await viewModel.t_updatePopupsValue(popups)
+        await viewModel.t_updatePopupsValue(recalculatePopupHeights(viewModel))
+        await viewModel.t_updateGestureTranslation(gestureValue)
+        await viewModel.t_calculateAndUpdateTranslationProgress()
+        await viewModel.t_onPopupDragGestureEnded(gestureValue)
 
         XCTAssertEqual(viewModel.t_popups.count, expectedValues.shouldPopupBeDismissed ? 0 : 1)
         XCTAssertEqual(viewModel.t_activePopupHeight, expectedValues.popupHeight)
