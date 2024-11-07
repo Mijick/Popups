@@ -134,7 +134,7 @@ extension PopupVerticalStackViewModelTests {
 private extension PopupVerticalStackViewModelTests {
     func appendPopupsAndCheckPopups(viewModel: ViewModel, popups: [AnyPopup], updatedPopup: AnyPopup, expectedValue: (height: CGFloat?, dragHeight: CGFloat?)) async {
         await viewModel.updatePopupsValue(popups)
-        await viewModel.t_updatePopup(updatedPopup)
+        await viewModel.updatePopupAction(updatedPopup)
 
         if let index = viewModel.popups.firstIndex(of: updatedPopup) {
             XCTAssertEqual(viewModel.popups[index].height, expectedValue.height)
