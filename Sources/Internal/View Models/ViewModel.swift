@@ -61,14 +61,13 @@ extension ViewModel {
 
         withAnimation(.transition) { objectWillChange.send() }
     }
+    func recalculateAndUpdatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) {
+        let recalculatedPopupHeight = recalculatePopupHeight(heightCandidate, popup)
+        if popup.height != recalculatedPopupHeight { updatePopupAction(popup.settingHeight(recalculatedPopupHeight)) }
+    }
 }
 
 // MARK: Helpers
-extension ViewModel {
-    func updateHeight(_ newHeight: CGFloat, _ popup: AnyPopup) { if popup.height != newHeight {
-        updatePopupAction(popup.settingHeight(newHeight))
-    }}
-}
 extension ViewModel {
     func getActivePopupConfig() -> AnyPopupConfig {
         popups.last?.config ?? .init()
