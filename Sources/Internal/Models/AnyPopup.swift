@@ -95,7 +95,7 @@ extension AnyPopup {
         height: nil,
         dragHeight: nil,
         dismissTimer: nil,
-        _body: .init(EmptyView()),
+        _body: EmptyView(),
         _onFocus: {},
         _onDismiss: {}
     )}
