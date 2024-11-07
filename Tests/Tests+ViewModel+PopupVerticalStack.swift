@@ -25,22 +25,22 @@ import SwiftUI
 private extension PopupVerticalStackViewModelTests {
     func setup(_ viewModel: ViewModel) {
         viewModel.t_updateScreenValue(screen)
-        viewModel.t_setup(updatePopupAction: { self.updatePopupAction(viewModel, $0) }, closePopupAction: { self.closePopupAction(viewModel, $0) })
+        viewModel.t_setup(updatePopupAction: { await self.updatePopupAction(viewModel, $0) }, closePopupAction: { await self.closePopupAction(viewModel, $0) })
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func updatePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) { if let index = viewModel.t_popups.firstIndex(of: popup) {
+    func updatePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.t_popups.firstIndex(of: popup) {
         var popups = viewModel.t_popups
         popups[index] = popup
 
-        viewModel.t_updatePopupsValue(popups)
-        viewModel.t_calculateAndUpdateActivePopupHeight()
+        await viewModel.t_updatePopupsValue(popups)
+        await viewModel.t_calculateAndUpdateActivePopupHeight()
     }}
-    func closePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) { if let index = viewModel.t_popups.firstIndex(of: popup) {
+    func closePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.t_popups.firstIndex(of: popup) {
         var popups = viewModel.t_popups
         popups.remove(at: index)
 
-        viewModel.t_updatePopupsValue(popups)
+        await viewModel.t_updatePopupsValue(popups)
     }}
 }
 
@@ -809,12 +809,12 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckTranslationProgress(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: CGFloat) {
-        appendPopupsAndPerformChecks(
+    func appendPopupsAndCheckTranslationProgress(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: CGFloat) async {
+        await appendPopupsAndPerformChecks(
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { $0.t_calculateTranslationProgress() },
+            calculatedValue: { await $0.t_calculateTranslationProgress() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
