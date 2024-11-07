@@ -16,8 +16,8 @@ enum VM {}
     // MARK: Attributes
     nonisolated let alignment: PopupAlignment
     private(set) var popups: [AnyPopup] = []
-    private(set) var updatePopupAction: ((AnyPopup) -> ())!
-    private(set) var closePopupAction: ((AnyPopup) -> ())!
+    private(set) var updatePopupAction: ((AnyPopup) async -> ())!
+    private(set) var closePopupAction: ((AnyPopup) async -> ())!
 
     // MARK: Subclass Attributes
     var activePopupHeight: CGFloat? = nil
@@ -25,7 +25,8 @@ enum VM {}
     var isKeyboardActive: Bool = false
 
     // MARK: Methods to Override
-    nonisolated func recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { fatalError() }
+    nonisolated func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { fatalError() }
+    nonisolated func calculatePopupPadding() async -> EdgeInsets { fatalError() }
     nonisolated func calculateHeightForActivePopup() async -> CGFloat? { fatalError() }
     nonisolated func recalculatePopupPadding() async -> EdgeInsets { fatalError() }
 
@@ -35,7 +36,7 @@ enum VM {}
 
 // MARK: Setup
 extension ViewModel {
-    func setup(updatePopupAction: @escaping (AnyPopup) -> (), closePopupAction: @escaping (AnyPopup) -> ()) {
+    func setup(updatePopupAction: @escaping (AnyPopup) async -> (), closePopupAction: @escaping (AnyPopup) async -> ()) {
         self.updatePopupAction = updatePopupAction
         self.closePopupAction = closePopupAction
     }
@@ -43,12 +44,12 @@ extension ViewModel {
 
 // MARK: Update
 extension ViewModel {
-    func updatePopupsValue(_ newPopups: [AnyPopup]) { Task {
+    func updatePopupsValue(_ newPopups: [AnyPopup]) async {
         popups = await filterPopups(newPopups)
         activePopupHeight = await calculateHeightForActivePopup()
 
         withAnimation(.transition) { objectWillChange.send() }
-    }}
+    }
     func updateScreenValue(_ newScreen: Screen) {
         screen = newScreen
 
@@ -86,12 +87,12 @@ extension ViewModel {
 
 // MARK: Methods
 extension ViewModel {
-    func t_setup(updatePopupAction: @escaping (AnyPopup) -> (), closePopupAction: @escaping (AnyPopup) -> ()) { setup(updatePopupAction: updatePopupAction, closePopupAction: closePopupAction) }
-    func t_updatePopupsValue(_ newPopups: [AnyPopup]) { updatePopupsValue(newPopups) }
+    func t_setup(updatePopupAction: @escaping (AnyPopup) async -> (), closePopupAction: @escaping (AnyPopup) async -> ()) { setup(updatePopupAction: updatePopupAction, closePopupAction: closePopupAction) }
+    func t_updatePopupsValue(_ newPopups: [AnyPopup]) async { await updatePopupsValue(newPopups) }
     func t_updateScreenValue(_ newScreen: Screen) { updateScreenValue(newScreen) }
     func t_updateKeyboardValue(_ isActive: Bool) { updateKeyboardValue(isActive) }
-    func t_updatePopup(_ popup: AnyPopup) { updatePopupAction(popup) }
-    func t_calculateAndUpdateActivePopupHeight() { Task { activePopupHeight = await calculateHeightForActivePopup() }}
+    func t_updatePopup(_ popup: AnyPopup) async { await updatePopupAction(popup) }
+    func t_calculateAndUpdateActivePopupHeight() async { activePopupHeight = await calculateHeightForActivePopup() }
 }
 
 // MARK: Variables

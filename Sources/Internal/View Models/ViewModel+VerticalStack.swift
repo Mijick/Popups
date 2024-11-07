@@ -335,9 +335,9 @@ extension VM.VerticalStack {
 
 // MARK: On Changed
 extension VM.VerticalStack {
-    func onPopupDragGestureChanged(_ value: CGFloat) { if dragGestureEnabled {
+    func onPopupDragGestureChanged(_ value: CGFloat) async { if dragGestureEnabled {
         let newGestureTranslation = calculateGestureTranslation(value)
-        updateGestureTranslation(newGestureTranslation)
+        await updateGestureTranslation(newGestureTranslation)
     }}
 }
 private extension VM.VerticalStack {
@@ -437,11 +437,11 @@ private extension VM.VerticalStack {
     func calculateTargetDragHeight(_ targetHeight: CGFloat, _ activePopupHeight: CGFloat) -> CGFloat {
         targetHeight - activePopupHeight
     }
-    func updateDragHeight(_ targetDragHeight: CGFloat) { if let activePopup = popups.last {
-        updatePopupAction(activePopup.settingDragHeight(targetDragHeight))
+    func updateDragHeight(_ targetDragHeight: CGFloat) async { if let activePopup = popups.last {
+        await updatePopupAction(activePopup.settingDragHeight(targetDragHeight))
     }}
-    func resetGestureTranslation() {
-        updateGestureTranslation(0)
+    func resetGestureTranslation() async {
+        await updateGestureTranslation(0)
     }
     func shouldDismissPopup() -> Bool {
         translationProgress >= dragThreshold
