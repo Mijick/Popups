@@ -18,22 +18,22 @@ import SwiftUI
 
     override func setUp() async throws {
         viewModel.t_updateScreenValue(screen)
-        viewModel.t_setup(updatePopupAction: { [self] in updatePopupAction(viewModel, $0) }, closePopupAction: { [self] in closePopupAction(viewModel, $0) })
+        viewModel.t_setup(updatePopupAction: { [self] in await updatePopupAction(viewModel, $0) }, closePopupAction: { [self] in await closePopupAction(viewModel, $0) })
     }
 }
 private extension PopupCentreStackViewModelTests {
-    func updatePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) { if let index = viewModel.t_popups.firstIndex(of: popup) {
+    func updatePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.t_popups.firstIndex(of: popup) {
         var popups = viewModel.t_popups
         popups[index] = popup
 
-        viewModel.t_updatePopupsValue(popups)
-        viewModel.t_calculateAndUpdateActivePopupHeight()
+        await viewModel.t_updatePopupsValue(popups)
+        await viewModel.t_calculateAndUpdateActivePopupHeight()
     }}
-    func closePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) { if let index = viewModel.t_popups.firstIndex(of: popup) {
+    func closePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.t_popups.firstIndex(of: popup) {
         var popups = viewModel.t_popups
         popups.remove(at: index)
 
-        viewModel.t_updatePopupsValue(popups)
+        await viewModel.t_updatePopupsValue(popups)
     }}
 }
 
@@ -45,53 +45,53 @@ private extension PopupCentreStackViewModelTests {
 
 // MARK: Popup Padding
 extension PopupCentreStackViewModelTests {
-    func test_calculatePopupPadding_withKeyboardHidden_whenCustomPaddingNotSet() {
+    func test_calculatePopupPadding_withKeyboardHidden_whenCustomPaddingNotSet() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 350),
             createPopupInstanceForPopupHeightTests(popupHeight: 72),
             createPopupInstanceForPopupHeightTests(popupHeight: 400)
         ]
 
-        appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckPopupPadding(
             popups: popups,
             isKeyboardActive: false,
             expectedValue: .init()
         )
     }
-    func test_calculatePopupPadding_withKeyboardHidden_whenCustomPaddingSet() {
+    func test_calculatePopupPadding_withKeyboardHidden_whenCustomPaddingSet() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 350),
             createPopupInstanceForPopupHeightTests(popupHeight: 72, popupPadding: .init(top: 0, leading: 11, bottom: 0, trailing: 11)),
             createPopupInstanceForPopupHeightTests(popupHeight: 400, popupPadding: .init(top: 0, leading: 16, bottom: 0, trailing: 16))
         ]
 
-        appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckPopupPadding(
             popups: popups,
             isKeyboardActive: false,
             expectedValue: .init(top: 0, leading: 16, bottom: 0, trailing: 16)
         )
     }
-    func test_calculatePopupPadding_withKeyboardShown_whenKeyboardNotOverlapingPopup() {
+    func test_calculatePopupPadding_withKeyboardShown_whenKeyboardNotOverlapingPopup() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 350),
             createPopupInstanceForPopupHeightTests(popupHeight: 72, popupPadding: .init(top: 0, leading: 11, bottom: 0, trailing: 11)),
             createPopupInstanceForPopupHeightTests(popupHeight: 400, popupPadding: .init(top: 0, leading: 16, bottom: 0, trailing: 16))
         ]
 
-        appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckPopupPadding(
             popups: popups,
             isKeyboardActive: true,
             expectedValue: .init(top: 0, leading: 16, bottom: 0, trailing: 16)
         )
     }
-    func test_calculatePopupPadding_withKeyboardShown_whenKeyboardOverlapingPopup() {
+    func test_calculatePopupPadding_withKeyboardShown_whenKeyboardOverlapingPopup() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 350),
             createPopupInstanceForPopupHeightTests(popupHeight: 72, popupPadding: .init(top: 0, leading: 11, bottom: 0, trailing: 11)),
             createPopupInstanceForPopupHeightTests(popupHeight: 1000, popupPadding: .init(top: 0, leading: 16, bottom: 0, trailing: 16))
         ]
 
-        appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckPopupPadding(
             popups: popups,
             isKeyboardActive: true,
             expectedValue: .init(top: 0, leading: 16, bottom: 250, trailing: 16)
@@ -99,8 +99,8 @@ extension PopupCentreStackViewModelTests {
     }
 }
 private extension PopupCentreStackViewModelTests {
-    func appendPopupsAndCheckPopupPadding(popups: [AnyPopup], isKeyboardActive: Bool, expectedValue: EdgeInsets) {
-        appendPopupsAndPerformChecks(
+    func appendPopupsAndCheckPopupPadding(popups: [AnyPopup], isKeyboardActive: Bool, expectedValue: EdgeInsets) async {
+        await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: isKeyboardActive,
             calculatedValue: { $0.t_calculatePopupPadding() },
@@ -111,32 +111,32 @@ private extension PopupCentreStackViewModelTests {
 
 // MARK: Corner Radius
 extension PopupCentreStackViewModelTests {
-    func test_calculateCornerRadius_withCornerRadiusZero() {
+    func test_calculateCornerRadius_withCornerRadiusZero() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 234, cornerRadius: 20),
             createPopupInstanceForPopupHeightTests(popupHeight: 234, cornerRadius: 0),
         ]
 
-        appendPopupsAndCheckCornerRadius(
+        await appendPopupsAndCheckCornerRadius(
             popups: popups,
             expectedValue: [.top: 0, .bottom: 0]
         )
     }
-    func test_calculateCornerRadius_withCornerRadiusNonZero() {
+    func test_calculateCornerRadius_withCornerRadiusNonZero() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 234, cornerRadius: 20),
             createPopupInstanceForPopupHeightTests(popupHeight: 234, cornerRadius: 24),
         ]
 
-        appendPopupsAndCheckCornerRadius(
+        await appendPopupsAndCheckCornerRadius(
             popups: popups,
             expectedValue: [.top: 24, .bottom: 24]
         )
     }
 }
 private extension PopupCentreStackViewModelTests {
-    func appendPopupsAndCheckCornerRadius(popups: [AnyPopup], expectedValue: [MijickPopups.PopupAlignment: CGFloat]) {
-        appendPopupsAndPerformChecks(
+    func appendPopupsAndCheckCornerRadius(popups: [AnyPopup], expectedValue: [MijickPopups.PopupAlignment: CGFloat]) async {
+        await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: false,
             calculatedValue: { $0.t_calculateCornerRadius() },
@@ -147,27 +147,27 @@ private extension PopupCentreStackViewModelTests {
 
 // MARK: Opacity
 extension PopupCentreStackViewModelTests {
-    func test_calculatePopupOpacity_1() {
+    func test_calculatePopupOpacity_1() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 350),
             createPopupInstanceForPopupHeightTests(popupHeight: 72),
             createPopupInstanceForPopupHeightTests(popupHeight: 400)
         ]
 
-        appendPopupsAndCheckOpacity(
+        await appendPopupsAndCheckOpacity(
             popups: popups,
             calculateForIndex: 1,
             expectedValue: 0
         )
     }
-    func test_calculatePopupOpacity_2() {
+    func test_calculatePopupOpacity_2() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 350),
             createPopupInstanceForPopupHeightTests(popupHeight: 72),
             createPopupInstanceForPopupHeightTests(popupHeight: 400)
         ]
 
-        appendPopupsAndCheckOpacity(
+        await appendPopupsAndCheckOpacity(
             popups: popups,
             calculateForIndex: 2,
             expectedValue: 1
@@ -175,8 +175,8 @@ extension PopupCentreStackViewModelTests {
     }
 }
 private extension PopupCentreStackViewModelTests {
-    func appendPopupsAndCheckOpacity(popups: [AnyPopup], calculateForIndex index: Int, expectedValue: CGFloat) {
-        appendPopupsAndPerformChecks(
+    func appendPopupsAndCheckOpacity(popups: [AnyPopup], calculateForIndex index: Int, expectedValue: CGFloat) async {
+        await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: false,
             calculatedValue: { [self] in $0.t_calculateOpacity(for: viewModel.t_popups[index]) },
@@ -187,27 +187,27 @@ private extension PopupCentreStackViewModelTests {
 
 // MARK: Vertical Fixed Size
 extension PopupCentreStackViewModelTests {
-    func test_calculateVerticalFixedSize_withHeightSmallerThanScreen() {
+    func test_calculateVerticalFixedSize_withHeightSmallerThanScreen() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 350),
             createPopupInstanceForPopupHeightTests(popupHeight: 913),
             createPopupInstanceForPopupHeightTests(popupHeight: 400)
         ]
 
-        appendPopupsAndCheckVerticalFixedSize(
+        await appendPopupsAndCheckVerticalFixedSize(
             popups: popups,
             calculateForIndex: 2,
             expectedValue: true
         )
     }
-    func test_calculateVerticalFixedSize_withHeightLargerThanScreen() {
+    func test_calculateVerticalFixedSize_withHeightLargerThanScreen() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 350),
             createPopupInstanceForPopupHeightTests(popupHeight: 72),
             createPopupInstanceForPopupHeightTests(popupHeight: 913)
         ]
 
-        appendPopupsAndCheckVerticalFixedSize(
+        await appendPopupsAndCheckVerticalFixedSize(
             popups: popups,
             calculateForIndex: 2,
             expectedValue: false
@@ -215,8 +215,8 @@ extension PopupCentreStackViewModelTests {
     }
 }
 private extension PopupCentreStackViewModelTests {
-    func appendPopupsAndCheckVerticalFixedSize(popups: [AnyPopup], calculateForIndex index: Int, expectedValue: Bool) {
-        appendPopupsAndPerformChecks(
+    func appendPopupsAndCheckVerticalFixedSize(popups: [AnyPopup], calculateForIndex index: Int, expectedValue: Bool) async {
+        await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: false,
             calculatedValue: { $0.t_calculateVerticalFixedSize(for: $0.t_popups[index]) },
@@ -237,9 +237,9 @@ private extension PopupCentreStackViewModelTests {
         let config = getConfigForPopupHeightTests(cornerRadius: cornerRadius, popupPadding: popupPadding)
         return AnyPopup.t_createNew(config: config).settingHeight(popupHeight)
     }
-    func appendPopupsAndPerformChecks<Value: Equatable>(popups: [AnyPopup], isKeyboardActive: Bool, calculatedValue: @escaping (ViewModel) -> (Value), expectedValueBuilder: @escaping (ViewModel) -> Value) {
-        viewModel.t_updatePopupsValue(popups)
-        viewModel.t_updatePopupsValue(recalculatePopupHeights(viewModel))
+    func appendPopupsAndPerformChecks<Value: Equatable>(popups: [AnyPopup], isKeyboardActive: Bool, calculatedValue: @escaping (ViewModel) -> (Value), expectedValueBuilder: @escaping (ViewModel) -> Value) async {
+        await viewModel.t_updatePopupsValue(popups)
+        await viewModel.t_updatePopupsValue(recalculatePopupHeights(viewModel))
         viewModel.t_updateKeyboardValue(isKeyboardActive)
         viewModel.t_updateScreenValue(isKeyboardActive ? screenWithKeyboard : screen)
 
