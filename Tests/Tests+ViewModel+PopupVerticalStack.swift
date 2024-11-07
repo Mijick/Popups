@@ -1442,7 +1442,7 @@ private extension PopupVerticalStackViewModelTests {
         await updatePopups(viewModel)
         await viewModel.t_updateGestureTranslation(gestureValue)
         await viewModel.t_calculateAndUpdateTranslationProgress()
-        await viewModel.t_onPopupDragGestureEnded(gestureValue)
+        await viewModel.onPopupDragGestureEnded(gestureValue)
 
         XCTAssertEqual(viewModel.popups.count, expectedValues.shouldPopupBeDismissed ? 0 : 1)
         XCTAssertEqual(viewModel.activePopupHeight, expectedValues.popupHeight)

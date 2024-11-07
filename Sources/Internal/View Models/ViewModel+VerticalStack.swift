@@ -471,8 +471,6 @@ extension VM.VerticalStack {
     func t_calculateAndUpdateTranslationProgress() async { translationProgress = await calculateTranslationProgress() }
     func t_updateGestureTranslation(_ newGestureTranslation: CGFloat) async { await updateGestureTranslation(newGestureTranslation) }
 
-
-    func t_onPopupDragGestureEnded(_ value: CGFloat) async { await onPopupDragGestureEnded(value) }
 }
 
 // MARK: Variables
