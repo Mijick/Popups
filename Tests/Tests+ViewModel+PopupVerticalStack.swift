@@ -474,32 +474,32 @@ extension PopupVerticalStackViewModelTests {
             0
         )
     }
-    func test_calculateOffsetY_withPositiveGestureTranslation_dragHeight_twoPopupsStacked_firstElement() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculateOffsetY_withPositiveGestureTranslation_dragHeight_twoPopupsStacked_firstElement() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 249),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
-        bottomViewModel.t_updateGestureTranslation(100)
+        await bottomViewModel.t_updateGestureTranslation(100)
 
         XCTAssertEqual(
             bottomViewModel.t_calculateOffsetY(for: bottomViewModel.t_popups[0]),
             -bottomViewModel.t_stackOffset
         )
     }
-    func test_calculateOffsetY_withPositiveGestureTranslation_dragHeight_twoPopupsStacked_lastElement() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculateOffsetY_withPositiveGestureTranslation_dragHeight_twoPopupsStacked_lastElement() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 249),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
-        bottomViewModel.t_updateGestureTranslation(100)
+        await bottomViewModel.t_updateGestureTranslation(100)
 
         XCTAssertEqual(
             bottomViewModel.t_calculateOffsetY(for: bottomViewModel.t_popups[1]),
             100 - 21
         )
     }
-    func test_calculateOffsetY_withStackingDisabled() {
-        bottomViewModel.t_updatePopupsValue([
+    func test_calculateOffsetY_withStackingDisabled() async {
+        await bottomViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 249),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
@@ -510,8 +510,8 @@ extension PopupVerticalStackViewModelTests {
             0
         )
     }
-    func test_calculateOffsetY_withPopupsHaveTopAlignment_1() {
-        topViewModel.t_updatePopupsValue([
+    func test_calculateOffsetY_withPopupsHaveTopAlignment_1() async {
+        await topViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 249),
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
@@ -521,12 +521,12 @@ extension PopupVerticalStackViewModelTests {
             topViewModel.t_stackOffset
         )
     }
-    func test_calculateOffsetY_withPopupsHaveTopAlignment_2() {
-        topViewModel.t_updatePopupsValue([
+    func test_calculateOffsetY_withPopupsHaveTopAlignment_2() async {
+        await topViewModel.t_updatePopupsValue([
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 249),
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
-        topViewModel.t_updateGestureTranslation(-100)
+        await topViewModel.t_updateGestureTranslation(-100)
 
         XCTAssertEqual(
             topViewModel.t_calculateOffsetY(for: topViewModel.t_popups[1]),
@@ -537,84 +537,84 @@ extension PopupVerticalStackViewModelTests {
 
 // MARK: Popup Padding
 extension PopupVerticalStackViewModelTests {
-    func test_calculatePopupPadding_withAutoHeightMode_whenLessThanScreen() {
+    func test_calculatePopupPadding_withAutoHeightMode_whenLessThanScreen() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 344, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
         ]
 
-        appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckPopupPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 12, leading: 17, bottom: 33, trailing: 17)
         )
     }
-    func test_calculatePopupPadding_withAutoHeightMode_almostLikeScreen_onlyOnePaddingShouldBeNonZero() {
+    func test_calculatePopupPadding_withAutoHeightMode_almostLikeScreen_onlyOnePaddingShouldBeNonZero() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 877, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
         ]
 
-        appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckPopupPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 0, leading: 17, bottom: 23, trailing: 17)
         )
     }
-    func test_calculatePopupPadding_withAutoHeightMode_almostLikeScreen_bothPaddingsShouldBeNonZero() {
+    func test_calculatePopupPadding_withAutoHeightMode_almostLikeScreen_bothPaddingsShouldBeNonZero() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 861, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
         ]
 
-        appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckPopupPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 6, leading: 17, bottom: 33, trailing: 17)
         )
     }
-    func test_calculatePopupPadding_withAutoHeightMode_almostLikeScreen_topPopupsAlignment() {
+    func test_calculatePopupPadding_withAutoHeightMode_almostLikeScreen_topPopupsAlignment() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 911, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
         ]
 
-        appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckPopupPadding(
             viewModel: topViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 12, leading: 17, bottom: 27, trailing: 17)
         )
     }
-    func test_calculatePopupPadding_withAutoHeightMode_whenBiggerThanScreen() {
+    func test_calculatePopupPadding_withAutoHeightMode_whenBiggerThanScreen() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 1100, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
         ]
 
-        appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckPopupPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 0, leading: 17, bottom: 0, trailing: 17)
         )
     }
-    func test_calculatePopupPadding_withLargeHeightMode() {
+    func test_calculatePopupPadding_withLargeHeightMode() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .large, popupHeight: 344, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
         ]
 
-        appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckPopupPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 0, leading: 17, bottom: 0, trailing: 17)
         )
     }
-    func test_calculatePopupPadding_withFullscreenHeightMode() {
+    func test_calculatePopupPadding_withFullscreenHeightMode() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 344, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
         ]
 
-        appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckPopupPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
@@ -623,12 +623,12 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckPopupPadding(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: EdgeInsets) {
-        appendPopupsAndPerformChecks(
+    func appendPopupsAndCheckPopupPadding(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: EdgeInsets) async {
+        await appendPopupsAndPerformChecks(
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { $0.t_calculatePopupPadding() },
+            calculatedValue: { await $0.t_calculatePopupPadding() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
@@ -636,96 +636,96 @@ private extension PopupVerticalStackViewModelTests {
 
 // MARK: Body Padding
 extension PopupVerticalStackViewModelTests {
-    func test_calculateBodyPadding_withDefaultSettings() {
+    func test_calculateBodyPadding_withDefaultSettings() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 350)
         ]
 
-        appendPopupsAndCheckBodyPadding(
+        await appendPopupsAndCheckBodyPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: screen.safeArea.top, leading: screen.safeArea.leading, bottom: screen.safeArea.bottom, trailing: screen.safeArea.trailing)
         )
     }
-    func test_calculateBodyPadding_withIgnoringSafeArea_bottom() {
+    func test_calculateBodyPadding_withIgnoringSafeArea_bottom() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 200, ignoredSafeAreaEdges: .bottom)
         ]
 
-        appendPopupsAndCheckBodyPadding(
+        await appendPopupsAndCheckBodyPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 0, leading: screen.safeArea.leading, bottom: 0, trailing: screen.safeArea.trailing)
         )
     }
-    func test_calculateBodyPadding_withIgnoringSafeArea_all() {
+    func test_calculateBodyPadding_withIgnoringSafeArea_all() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 1200, ignoredSafeAreaEdges: .all)
         ]
 
-        appendPopupsAndCheckBodyPadding(
+        await appendPopupsAndCheckBodyPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 0, leading: 0, bottom: 0, trailing: 0)
         )
     }
-    func test_calculateBodyPadding_withPopupPadding() {
+    func test_calculateBodyPadding_withPopupPadding() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 1200, popupPadding: .init(top: 21, leading: 12, bottom: 37, trailing: 12))
         ]
 
-        appendPopupsAndCheckBodyPadding(
+        await appendPopupsAndCheckBodyPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 0, leading: screen.safeArea.leading, bottom: screen.safeArea.bottom, trailing: screen.safeArea.trailing)
         )
     }
-    func test_calculateBodyPadding_withFullscreenHeightMode_ignoringSafeArea_top() {
+    func test_calculateBodyPadding_withFullscreenHeightMode_ignoringSafeArea_top() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 100, ignoredSafeAreaEdges: .top)
         ]
 
-        appendPopupsAndCheckBodyPadding(
+        await appendPopupsAndCheckBodyPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 0, leading: screen.safeArea.leading, bottom: screen.safeArea.bottom, trailing: screen.safeArea.trailing)
         )
     }
-    func test_calculateBodyPadding_withGestureTranslation() {
+    func test_calculateBodyPadding_withGestureTranslation() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 800)
         ]
 
-        appendPopupsAndCheckBodyPadding(
+        await appendPopupsAndCheckBodyPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: -300,
             expectedValue: .init(top: screen.safeArea.top, leading: screen.safeArea.leading, bottom: screen.safeArea.bottom, trailing: screen.safeArea.trailing)
         )
     }
-    func test_calculateBodyPadding_withGestureTranslation_dragHeight() {
+    func test_calculateBodyPadding_withGestureTranslation_dragHeight() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300, popupDragHeight: 700)
         ]
 
-        appendPopupsAndCheckBodyPadding(
+        await appendPopupsAndCheckBodyPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 21,
             expectedValue: .init(top: screen.safeArea.top - 21, leading: screen.safeArea.leading, bottom: screen.safeArea.bottom, trailing: screen.safeArea.trailing)
         )
     }
-    func test_calculateBodyPadding_withGestureTranslation_dragHeight_topPopupsAlignment() {
+    func test_calculateBodyPadding_withGestureTranslation_dragHeight_topPopupsAlignment() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 300, popupDragHeight: 700)
         ]
 
-        appendPopupsAndCheckBodyPadding(
+        await appendPopupsAndCheckBodyPadding(
             viewModel: topViewModel,
             popups: popups,
             gestureTranslation: -21,
@@ -734,8 +734,8 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckBodyPadding(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: EdgeInsets) {
-        appendPopupsAndPerformChecks(
+    func appendPopupsAndCheckBodyPadding(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: EdgeInsets) async {
+        await appendPopupsAndPerformChecks(
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
@@ -747,60 +747,60 @@ private extension PopupVerticalStackViewModelTests {
 
 // MARK: Translation Progress
 extension PopupVerticalStackViewModelTests {
-    func test_calculateTranslationProgress_withNoGestureTranslation() {
+    func test_calculateTranslationProgress_withNoGestureTranslation() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300)
         ]
 
-        appendPopupsAndCheckTranslationProgress(
+        await appendPopupsAndCheckTranslationProgress(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: 0
         )
     }
-    func test_calculateTranslationProgress_withPositiveGestureTranslation() {
+    func test_calculateTranslationProgress_withPositiveGestureTranslation() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300)
         ]
 
-        appendPopupsAndCheckTranslationProgress(
+        await appendPopupsAndCheckTranslationProgress(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 250,
             expectedValue: 250 / 300
         )
     }
-    func test_calculateTranslationProgress_withPositiveGestureTranslation_dragHeight() {
+    func test_calculateTranslationProgress_withPositiveGestureTranslation_dragHeight() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300, popupDragHeight: 120)
         ]
 
-        appendPopupsAndCheckTranslationProgress(
+        await appendPopupsAndCheckTranslationProgress(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 250,
             expectedValue: (250 - 120) / 300
         )
     }
-    func test_calculateTranslationProgress_withNegativeGestureTranslation() {
+    func test_calculateTranslationProgress_withNegativeGestureTranslation() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300)
         ]
 
-        appendPopupsAndCheckTranslationProgress(
+        await appendPopupsAndCheckTranslationProgress(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: -175,
             expectedValue: 0
         )
     }
-    func test_calculateTranslationProgress_withNegativeGestureTranslation_whenTopPopupsAlignment() {
+    func test_calculateTranslationProgress_withNegativeGestureTranslation_whenTopPopupsAlignment() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 300)
         ]
 
-        appendPopupsAndCheckTranslationProgress(
+        await appendPopupsAndCheckTranslationProgress(
             viewModel: topViewModel,
             popups: popups,
             gestureTranslation: -175,
