@@ -28,7 +28,6 @@ enum VM {}
     nonisolated func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { fatalError() }
     nonisolated func calculatePopupPadding() async -> EdgeInsets { fatalError() }
     nonisolated func calculateHeightForActivePopup() async -> CGFloat? { fatalError() }
-    nonisolated func recalculatePopupPadding() async -> EdgeInsets { fatalError() }
 
     // MARK: Initializer
     init<Config: LocalConfig>(_ config: Config.Type) { self.alignment = .init(Config.self) }

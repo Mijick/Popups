@@ -98,16 +98,3 @@ private extension VM.CentreStack {
         await popups.last?.height
     }
 }
-
-
-
-// MARK: - TESTS
-#if DEBUG
-
-
-
-// MARK: Methods
-extension VM.CentreStack {
-    func t_calculateHeight(heightCandidate: CGFloat) -> CGFloat { min(heightCandidate, calculateLargeScreenHeight()) }
-}
-#endif
