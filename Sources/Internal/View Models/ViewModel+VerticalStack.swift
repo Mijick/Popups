@@ -17,8 +17,8 @@ extension VM { class VerticalStack: ViewModel {
     private(set) var translationProgress: CGFloat = 0
 
     // MARK: Overridden Methods
-    override func recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { await _recalculatePopupHeight(heightCandidate, popup) }
-    override func recalculatePopupPadding() async -> EdgeInsets { calculatePopupPadding() }
+    override func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { await _calculatePopupHeight(heightCandidate, popup) }
+    override func calculatePopupPadding() async -> EdgeInsets { _calculatePopupPadding() }
     override func calculateHeightForActivePopup() async -> CGFloat? { await _calculateHeightForActivePopup() }
 }}
 
@@ -47,7 +47,7 @@ private extension VM.VerticalStack {
 
 // MARK: Popup Height
 private extension VM.VerticalStack {
-    nonisolated func _recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat {
+    nonisolated func _calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat {
         guard await gestureTranslation.isZero, heightCandidate != popup.height else { return popup.height ?? 0 }
 
         let popupHeight = await calculateNewPopupHeight(heightCandidate, popup.config)
@@ -83,7 +83,7 @@ private extension VM.VerticalStack {
 
 // MARK: Popup Padding
 private extension VM.VerticalStack {
-    func calculatePopupPadding() -> EdgeInsets { guard let activePopupConfig = popups.last?.config else { return .init() }; return .init(
+    func _calculatePopupPadding() -> EdgeInsets { guard let activePopupConfig = popups.last?.config else { return .init() }; return .init(
         top: calculateVerticalPopupPadding(for: .top, activePopupConfig: activePopupConfig),
         leading: calculateLeadingPopupPadding(activePopupConfig: activePopupConfig),
         bottom: calculateVerticalPopupPadding(for: .bottom, activePopupConfig: activePopupConfig),
