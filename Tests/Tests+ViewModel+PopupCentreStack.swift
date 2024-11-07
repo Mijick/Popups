@@ -102,7 +102,7 @@ private extension PopupCentreStackViewModelTests {
         await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: isKeyboardActive,
-            calculatedValue: { $0.t_calculatePopupPadding() },
+            calculatedValue: { $0.calculatePopupPadding() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
@@ -138,7 +138,7 @@ private extension PopupCentreStackViewModelTests {
         await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: false,
-            calculatedValue: { $0.t_calculateCornerRadius() },
+            calculatedValue: { $0.calculateCornerRadius() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
@@ -178,7 +178,7 @@ private extension PopupCentreStackViewModelTests {
         await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: false,
-            calculatedValue: { [self] in $0.t_calculateOpacity(for: viewModel.popups[index]) },
+            calculatedValue: { [self] in $0.calculateOpacity(for: viewModel.popups[index]) },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
@@ -218,7 +218,7 @@ private extension PopupCentreStackViewModelTests {
         await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: false,
-            calculatedValue: { $0.t_calculateVerticalFixedSize(for: $0.popups[index]) },
+            calculatedValue: { $0.calculateVerticalFixedSize(for: $0.popups[index]) },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
