@@ -443,19 +443,3 @@ private extension VM.VerticalStack {
         translationProgress >= dragThreshold
     }
 }
-
-
-
-// MARK: - TESTS
-#if DEBUG
-
-
-
-// MARK: Methods
-extension VM.VerticalStack {
-    func t_calculateHeight(heightCandidate: CGFloat, popup: AnyPopup) -> CGFloat { calculateNewPopupHeight(heightCandidate, popup.config) }
-
-
-
-}
-#endif
