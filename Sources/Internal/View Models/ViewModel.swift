@@ -14,7 +14,7 @@ import SwiftUI
 enum VM {}
 @MainActor class ViewModel: ObservableObject {
     // MARK: Attributes
-    private(set) var alignment: PopupAlignment
+    nonisolated let alignment: PopupAlignment
     private(set) var popups: [AnyPopup] = []
     private(set) var updatePopupAction: ((AnyPopup) -> ())!
     private(set) var closePopupAction: ((AnyPopup) -> ())!
@@ -43,8 +43,8 @@ extension ViewModel {
 // MARK: Update
 extension ViewModel {
     func updatePopupsValue(_ newPopups: [AnyPopup]) { Task {
-        popups = newPopups.filter { $0.config.alignment == alignment }
-        await activePopupHeight = calculateHeightForActivePopup()
+        popups = await filterPopups(newPopups)
+        activePopupHeight = await calculateHeightForActivePopup()
 
         withAnimation(.transition) { objectWillChange.send() }
     }}
@@ -62,6 +62,11 @@ extension ViewModel {
         let recalculatedPopupHeight = await recalculatePopupHeight(heightCandidate, popup)
         if popup.height != recalculatedPopupHeight { updatePopupAction(popup.settingHeight(recalculatedPopupHeight)) }
     }}
+}
+private extension ViewModel {
+    nonisolated func filterPopups(_ popups: [AnyPopup]) async -> [AnyPopup] {
+        popups.filter { $0.config.alignment == alignment }
+    }
 }
 
 // MARK: Helpers
