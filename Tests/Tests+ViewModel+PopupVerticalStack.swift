@@ -973,7 +973,7 @@ extension PopupVerticalStackViewModelTests {
             popups: popups,
             gestureTranslation: 100,
             calculateForIndex: 1,
-            expectedValueBuilder: { await 1 - $0.t_stackScaleFactor * 3 * max(1 - $0.calculateTranslationProgress(), $0.t_minScaleProgressMultiplier) }
+            expectedValueBuilder: { await 1 - $0.stackScaleFactor * 3 * max(1 - $0.calculateTranslationProgress(), $0.minScaleProgressMultiplier) }
         )
     }
 }
@@ -1132,7 +1132,7 @@ extension PopupVerticalStackViewModelTests {
             popups: popups,
             gestureTranslation: -123,
             calculateForIndex: 0,
-            expectedValueBuilder: { min($0.t_stackOverlayFactor * 9, $0.t_maxStackOverlayFactor) }
+            expectedValueBuilder: { min($0.t_stackOverlayFactor * 9, $0.maxStackOverlayFactor) }
         )
     }
     func test_calculateStackOverlayOpacity_withThreePopupsStacked_whenGestureTranslationIsPositive_last() async {

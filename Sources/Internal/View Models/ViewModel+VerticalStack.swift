@@ -205,9 +205,6 @@ extension VM.VerticalStack {
         return 1 - scaleValue
     }
 }
-private extension VM.VerticalStack {
-    var minScaleProgressMultiplier: CGFloat { 0.7 }
-}
 
 // MARK: Corner Radius
 extension VM.VerticalStack {
@@ -326,6 +323,7 @@ extension VM.VerticalStack {
     var dragThreshold: CGFloat { GlobalConfigContainer.vertical.dragThreshold }
     var dragGestureEnabled: Bool { getActivePopupConfig().isDragGestureEnabled }
     var dragTranslationThreshold: CGFloat { 8 }
+    var minScaleProgressMultiplier: CGFloat { 0.7 }
 }
 
 
@@ -474,7 +472,5 @@ extension VM.VerticalStack {
     var t_stackOffset: CGFloat { stackOffset }
     var t_stackScaleFactor: CGFloat { stackScaleFactor }
     var t_stackOverlayFactor: CGFloat { stackOverlayFactor }
-    var t_minScaleProgressMultiplier: CGFloat { minScaleProgressMultiplier }
-    var t_maxStackOverlayFactor: CGFloat { maxStackOverlayFactor }
 }
 #endif
