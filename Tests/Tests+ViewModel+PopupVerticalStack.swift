@@ -271,8 +271,14 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func calculateLastPopupHeight(_ viewModel: ViewModel) -> CGFloat {
-        viewModel.t_calculateHeight(heightCandidate: viewModel.popups.last!.height!, popup: viewModel.popups.last!)
+    func appendPopupsAndCheckPopupHeight(viewModel: ViewModel, popups: [AnyPopup], calculateForIndex index: Int, expectedValue: CGFloat) async {
+        await appendPopupsAndPerformChecks(
+            viewModel: viewModel,
+            popups: popups,
+            gestureTranslation: 0,
+            calculatedValue: { $0.popups[index].height },
+            expectedValueBuilder: { _ in expectedValue }
+        )
     }
 }
 
