@@ -117,37 +117,37 @@ private extension VM.VerticalStack {
 
 // MARK: Body Padding
 extension VM.VerticalStack {
-    func calculateBodyPadding(for popup: AnyPopup) -> EdgeInsets { let activePopupHeight = activePopupHeight ?? 0, popupConfig = popup.config; return .init(
-        top: calculateTopBodyPadding(activePopupHeight: activePopupHeight, popupConfig: popupConfig),
-        leading: calculateLeadingBodyPadding(popupConfig: popupConfig),
-        bottom: calculateBottomBodyPadding(activePopupHeight: activePopupHeight, popupConfig: popupConfig),
-        trailing: calculateTrailingBodyPadding(popupConfig: popupConfig)
+    func calculateBodyPadding(for popup: AnyPopup) -> EdgeInsets { let activePopupHeight = activePopupHeight ?? 0; return .init(
+        top: calculateTopBodyPadding(activePopupHeight: activePopupHeight, popup: popup),
+        leading: calculateLeadingBodyPadding(popup: popup),
+        bottom: calculateBottomBodyPadding(activePopupHeight: activePopupHeight, popup: popup),
+        trailing: calculateTrailingBodyPadding(popup: popup)
     )}
 }
 private extension VM.VerticalStack {
-    func calculateTopBodyPadding(activePopupHeight: CGFloat, popupConfig: AnyPopupConfig) -> CGFloat {
-        if popupConfig.ignoredSafeAreaEdges.contains(.top) { return 0 }
+    func calculateTopBodyPadding(activePopupHeight: CGFloat, popup: AnyPopup) -> CGFloat {
+        if popup.config.ignoredSafeAreaEdges.contains(.top) { return 0 }
 
         return switch alignment {
-            case .top: calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.top, popupPadding: calculatePopupPadding().top)
+            case .top: calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.top, popupPadding: popup.popupPadding.top)
             case .bottom: calculateVerticalPaddingCounterEdge(popupHeight: activePopupHeight, safeArea: screen.safeArea.top)
             case .centre: fatalError()
         }
     }
-    func calculateBottomBodyPadding(activePopupHeight: CGFloat, popupConfig: AnyPopupConfig) -> CGFloat {
-        if popupConfig.ignoredSafeAreaEdges.contains(.bottom) && !isKeyboardActive { return 0 }
+    func calculateBottomBodyPadding(activePopupHeight: CGFloat, popup: AnyPopup) -> CGFloat {
+        if popup.config.ignoredSafeAreaEdges.contains(.bottom) && !isKeyboardActive { return 0 }
 
         return switch alignment {
             case .top: calculateVerticalPaddingCounterEdge(popupHeight: activePopupHeight, safeArea: screen.safeArea.bottom)
-            case .bottom: calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.bottom, popupPadding: calculatePopupPadding().bottom)
+            case .bottom: calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.bottom, popupPadding: popup.popupPadding.bottom)
             case .centre: fatalError()
         }
     }
-    func calculateLeadingBodyPadding(popupConfig: AnyPopupConfig) -> CGFloat { switch popupConfig.ignoredSafeAreaEdges.contains(.leading) {
+    func calculateLeadingBodyPadding(popup: AnyPopup) -> CGFloat { switch popup.config.ignoredSafeAreaEdges.contains(.leading) {
         case true: 0
         case false: screen.safeArea.leading
     }}
-    func calculateTrailingBodyPadding(popupConfig: AnyPopupConfig) -> CGFloat { switch popupConfig.ignoredSafeAreaEdges.contains(.trailing) {
+    func calculateTrailingBodyPadding(popup: AnyPopup) -> CGFloat { switch popup.config.ignoredSafeAreaEdges.contains(.trailing) {
         case true: 0
         case false: screen.safeArea.trailing
     }}
@@ -213,26 +213,28 @@ private extension VM.VerticalStack {
 // MARK: Corner Radius
 extension VM.VerticalStack {
     func calculateCornerRadius() -> [PopupAlignment: CGFloat] {
-        let cornerRadiusValue = calculateCornerRadiusValue(getActivePopupConfig())
+        guard let activePopup = popups.last else { return [:] }
+
+        let cornerRadiusValue = calculateCornerRadiusValue(activePopup)
         return [
-            .top: calculateTopCornerRadius(cornerRadiusValue),
-            .bottom: calculateBottomCornerRadius(cornerRadiusValue)
+            .top: calculateTopCornerRadius(cornerRadiusValue, activePopup),
+            .bottom: calculateBottomCornerRadius(cornerRadiusValue, activePopup)
         ]
     }
 }
 private extension VM.VerticalStack {
-    func calculateCornerRadiusValue(_ activePopupConfig: AnyPopupConfig) -> CGFloat { switch activePopupConfig.heightMode {
-        case .auto, .large: activePopupConfig.cornerRadius
+    func calculateCornerRadiusValue(_ activePopup: AnyPopup) -> CGFloat { switch activePopup.config.heightMode {
+        case .auto, .large: activePopup.config.cornerRadius
         case .fullscreen: 0
     }}
-    func calculateTopCornerRadius(_ cornerRadiusValue: CGFloat) -> CGFloat { switch alignment {
-        case .top: calculatePopupPadding().top != 0 ? cornerRadiusValue : 0
+    func calculateTopCornerRadius(_ cornerRadiusValue: CGFloat, _ activePopup: AnyPopup) -> CGFloat { switch alignment {
+        case .top: activePopup.popupPadding.top != 0 ? cornerRadiusValue : 0
         case .bottom: cornerRadiusValue
         case .centre: fatalError()
     }}
-    func calculateBottomCornerRadius(_ cornerRadiusValue: CGFloat) -> CGFloat { switch alignment {
+    func calculateBottomCornerRadius(_ cornerRadiusValue: CGFloat, _ activePopup: AnyPopup) -> CGFloat { switch alignment {
         case .top: cornerRadiusValue
-        case .bottom: calculatePopupPadding().bottom != 0 ? cornerRadiusValue : 0
+        case .bottom: activePopup.popupPadding.bottom != 0 ? cornerRadiusValue : 0
         case .centre: fatalError()
     }}
 }
