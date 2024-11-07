@@ -77,17 +77,3 @@ extension ViewModel {
         popups.last?.config ?? .init()
     }
 }
-
-
-
-// MARK: - TESTS
-#if DEBUG
-
-
-
-// MARK: Methods
-extension ViewModel {
-
-    func t_calculateAndUpdateActivePopupHeight() async { activePopupHeight = await calculateHeightForActivePopup() }
-}
-#endif

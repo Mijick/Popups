@@ -34,7 +34,6 @@ private extension PopupVerticalStackViewModelTests {
         popups[index] = popup
 
         await viewModel.updatePopupsValue(popups)
-        await viewModel.t_calculateAndUpdateActivePopupHeight()
     }}
     func closePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.popups.firstIndex(of: popup) {
         var popups = viewModel.popups
