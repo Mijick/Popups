@@ -117,28 +117,28 @@ private extension VM.VerticalStack {
 
 // MARK: Body Padding
 extension VM.VerticalStack {
-    func calculateBodyPadding(for popup: AnyPopup) -> EdgeInsets { let activePopupHeight = activePopupHeight ?? 0; return .init(
-        top: calculateTopBodyPadding(activePopupHeight: activePopupHeight, popup: popup),
+    func calculateBodyPadding(for popup: AnyPopup) -> EdgeInsets { .init(
+        top: calculateTopBodyPadding(popup: popup),
         leading: calculateLeadingBodyPadding(popup: popup),
-        bottom: calculateBottomBodyPadding(activePopupHeight: activePopupHeight, popup: popup),
+        bottom: calculateBottomBodyPadding(popup: popup),
         trailing: calculateTrailingBodyPadding(popup: popup)
     )}
 }
 private extension VM.VerticalStack {
-    func calculateTopBodyPadding(activePopupHeight: CGFloat, popup: AnyPopup) -> CGFloat {
+    func calculateTopBodyPadding(popup: AnyPopup) -> CGFloat {
         if popup.config.ignoredSafeAreaEdges.contains(.top) { return 0 }
 
         return switch alignment {
             case .top: calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.top, popupPadding: popup.popupPadding.top)
-            case .bottom: calculateVerticalPaddingCounterEdge(popupHeight: activePopupHeight, safeArea: screen.safeArea.top)
+            case .bottom: calculateVerticalPaddingCounterEdge(popupHeight: activePopupHeight ?? 0, safeArea: screen.safeArea.top)
             case .centre: fatalError()
         }
     }
-    func calculateBottomBodyPadding(activePopupHeight: CGFloat, popup: AnyPopup) -> CGFloat {
+    func calculateBottomBodyPadding(popup: AnyPopup) -> CGFloat {
         if popup.config.ignoredSafeAreaEdges.contains(.bottom) && !isKeyboardActive { return 0 }
 
         return switch alignment {
-            case .top: calculateVerticalPaddingCounterEdge(popupHeight: activePopupHeight, safeArea: screen.safeArea.bottom)
+            case .top: calculateVerticalPaddingCounterEdge(popupHeight: activePopupHeight ?? 0, safeArea: screen.safeArea.bottom)
             case .bottom: calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.bottom, popupPadding: popup.popupPadding.bottom)
             case .centre: fatalError()
         }
