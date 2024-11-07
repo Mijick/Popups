@@ -29,13 +29,13 @@ extension VM { class VerticalStack: ViewModel {
 
 // MARK: Update
 private extension VM.VerticalStack {
-    func updateGestureTranslation(_ newGestureTranslation: CGFloat) {
+    func updateGestureTranslation(_ newGestureTranslation: CGFloat) { Task {
         gestureTranslation = newGestureTranslation
         translationProgress = calculateTranslationProgress()
-        activePopupHeight = calculateHeightForActivePopup()
+        activePopupHeight = await calculateHeightForActivePopup()
 
         withAnimation(gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
-    }
+    }}
 }
 
 
