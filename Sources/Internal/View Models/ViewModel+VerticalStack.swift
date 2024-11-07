@@ -19,7 +19,6 @@ extension VM { class VerticalStack: ViewModel {
     // MARK: Overridden Methods
     override func recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { await _recalculatePopupHeight(heightCandidate, popup) }
     override func recalculatePopupPadding() async -> EdgeInsets { calculatePopupPadding() }
-    override func recalculateBodyPadding(for popup: AnyPopup) async -> EdgeInsets { calculateBodyPadding(for: popup) }
     override func calculateHeightForActivePopup() async -> CGFloat? { await _calculateHeightForActivePopup() }
 }}
 
