@@ -19,6 +19,7 @@ extension VM { class VerticalStack: ViewModel {
     // MARK: Overridden Methods
     override func recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { await _recalculatePopupHeight(heightCandidate, popup) }
     override func recalculatePopupPadding() async -> EdgeInsets { calculatePopupPadding() }
+    override func recalculateBodyPadding(for popup: AnyPopup) async -> EdgeInsets { calculateBodyPadding(for: popup) }
     override func calculateHeightForActivePopup() async -> CGFloat? { await _calculateHeightForActivePopup() }
 }}
 
@@ -83,16 +84,17 @@ private extension VM.VerticalStack {
 
 // MARK: Popup Padding
 private extension VM.VerticalStack {
-    func calculatePopupPadding() -> EdgeInsets { guard let activePopupConfig = popups.last?.config, let activePopupHeight else { return .init() }; return .init(
-        top: calculateVerticalPopupPadding(for: .top, activePopupHeight: activePopupHeight, activePopupConfig: activePopupConfig),
+    func calculatePopupPadding() -> EdgeInsets { guard let activePopupConfig = popups.last?.config else { return .init() }; return .init(
+        top: calculateVerticalPopupPadding(for: .top, activePopupConfig: activePopupConfig),
         leading: calculateLeadingPopupPadding(activePopupConfig: activePopupConfig),
-        bottom: calculateVerticalPopupPadding(for: .bottom, activePopupHeight: activePopupHeight, activePopupConfig: activePopupConfig),
+        bottom: calculateVerticalPopupPadding(for: .bottom, activePopupConfig: activePopupConfig),
         trailing: calculateTrailingPopupPadding(activePopupConfig: activePopupConfig)
     )}
 }
 private extension VM.VerticalStack {
-    func calculateVerticalPopupPadding(for edge: PopupAlignment, activePopupHeight: CGFloat, activePopupConfig: AnyPopupConfig) -> CGFloat {
+    func calculateVerticalPopupPadding(for edge: PopupAlignment, activePopupConfig: AnyPopupConfig) -> CGFloat {
         let largeScreenHeight = calculateLargeScreenHeight(),
+            activePopupHeight = activePopupHeight ?? 0,
             priorityPopupPaddingValue = calculatePriorityPopupPaddingValue(for: edge),
             remainingHeight = largeScreenHeight - activePopupHeight - priorityPopupPaddingValue
 
