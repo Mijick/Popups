@@ -188,7 +188,7 @@ extension PopupVerticalStackViewModelTests {
 
         XCTAssertEqual(
             calculateLastPopupHeight(bottomViewModel),
-            screen.height - screen.safeArea.top - bottomViewModel.t_stackOffset * 4
+            screen.height - screen.safeArea.top - bottomViewModel.stackOffset * 4
         )
     }
     func test_calculatePopupHeight_withLargeHeightMode_whenOnePopupStacked() async {
@@ -210,7 +210,7 @@ extension PopupVerticalStackViewModelTests {
 
         XCTAssertEqual(
             calculateLastPopupHeight(bottomViewModel),
-            screen.height - screen.safeArea.top - bottomViewModel.t_stackOffset * 2
+            screen.height - screen.safeArea.top - bottomViewModel.stackOffset * 2
         )
     }
     func test_calculatePopupHeight_withFullscreenHeightMode_whenOnePopupStacked() async {
@@ -244,7 +244,7 @@ extension PopupVerticalStackViewModelTests {
 
         XCTAssertEqual(
             calculateLastPopupHeight(bottomViewModel),
-            screen.height - screen.safeArea.top - 2 * bottomViewModel.t_stackOffset
+            screen.height - screen.safeArea.top - 2 * bottomViewModel.stackOffset
         )
     }
     func test_calculatePopupHeight_withFullscreenHeightMode_whenThreePopupsStacked_popupPadding() async {
@@ -301,7 +301,7 @@ extension PopupVerticalStackViewModelTests {
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
-            expectedValue: screen.height - screen.safeArea.top - 2 * bottomViewModel.t_stackOffset
+            expectedValue: screen.height - screen.safeArea.top - 2 * bottomViewModel.stackOffset
         )
     }
     func test_calculateActivePopupHeight_withLargeHeightMode_whenThreePopupsStacked() async {
@@ -315,7 +315,7 @@ extension PopupVerticalStackViewModelTests {
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
-            expectedValue: screen.height - screen.safeArea.top - 2 * bottomViewModel.t_stackOffset
+            expectedValue: screen.height - screen.safeArea.top - 2 * bottomViewModel.stackOffset
         )
     }
     func test_calculateActivePopupHeight_withAutoHeightMode_whenGestureIsNegative_twoPopupsStacked() async {
@@ -328,7 +328,7 @@ extension PopupVerticalStackViewModelTests {
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: -51,
-            expectedValue: screen.height - screen.safeArea.top - bottomViewModel.t_stackOffset * 1 + 51
+            expectedValue: screen.height - screen.safeArea.top - bottomViewModel.stackOffset * 1 + 51
         )
     }
     func test_calculateActivePopupHeight_withLargeHeightMode_whenGestureIsNegative_onePopupStacked() async {
@@ -444,8 +444,8 @@ extension PopupVerticalStackViewModelTests {
         ])
 
         XCTAssertEqual(
-            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.popups[2]),
-            -bottomViewModel.t_stackOffset * 2
+            bottomViewModel.calculateOffsetY(for: bottomViewModel.popups[2]),
+            -bottomViewModel.stackOffset * 2
         )
     }
     func test_calculateOffsetY_withZeroGestureTranslation_fivePopupsStacked_lastElement() async {
@@ -481,8 +481,8 @@ extension PopupVerticalStackViewModelTests {
         await bottomViewModel.t_updateGestureTranslation(100)
 
         XCTAssertEqual(
-            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.popups[0]),
-            -bottomViewModel.t_stackOffset
+            bottomViewModel.calculateOffsetY(for: bottomViewModel.popups[0]),
+            -bottomViewModel.stackOffset
         )
     }
     func test_calculateOffsetY_withPositiveGestureTranslation_dragHeight_twoPopupsStacked_lastElement() async {
@@ -493,7 +493,7 @@ extension PopupVerticalStackViewModelTests {
         await bottomViewModel.t_updateGestureTranslation(100)
 
         XCTAssertEqual(
-            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.popups[1]),
+            bottomViewModel.calculateOffsetY(for: bottomViewModel.popups[1]),
             100 - 21
         )
     }
@@ -505,7 +505,7 @@ extension PopupVerticalStackViewModelTests {
         GlobalConfigContainer.vertical.isStackingEnabled = false
 
         XCTAssertEqual(
-            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.popups[0]),
+            bottomViewModel.calculateOffsetY(for: bottomViewModel.popups[0]),
             0
         )
     }
@@ -516,8 +516,8 @@ extension PopupVerticalStackViewModelTests {
         ])
 
         XCTAssertEqual(
-            topViewModel.t_calculateOffsetY(for: topViewModel.popups[0]),
-            topViewModel.t_stackOffset
+            topViewModel.calculateOffsetY(for: topViewModel.popups[0]),
+            topViewModel.stackOffset
         )
     }
     func test_calculateOffsetY_withPopupsHaveTopAlignment_2() async {
@@ -940,7 +940,7 @@ extension PopupVerticalStackViewModelTests {
             popups: popups,
             gestureTranslation: 0,
             calculateForIndex: 1,
-            expectedValueBuilder: { 1 - $0.t_stackScaleFactor * 2 }
+            expectedValueBuilder: { 1 - $0.stackScaleFactor * 2 }
         )
     }
     func test_calculateScaleX_withNegativeGestureTranslation_fourPopupsStacked_third() async {
@@ -956,7 +956,7 @@ extension PopupVerticalStackViewModelTests {
             popups: popups,
             gestureTranslation: -100,
             calculateForIndex: 2,
-            expectedValueBuilder: { 1 - $0.t_stackScaleFactor * 1 }
+            expectedValueBuilder: { 1 - $0.stackScaleFactor * 1 }
         )
     }
     func test_calculateScaleX_withPositiveGestureTranslation_fivePopupsStacked_second() async {
@@ -1094,7 +1094,7 @@ extension PopupVerticalStackViewModelTests {
             popups: popups,
             gestureTranslation: 0,
             calculateForIndex: 1,
-            expectedValueBuilder: { $0.t_stackOverlayFactor * 2 }
+            expectedValueBuilder: { $0.stackOverlayFactor * 2 }
         )
     }
     func test_calculateStackOverlayOpacity_withFourPopupsStacked_whenGestureTranslationIsNegative_last() async {
@@ -1132,7 +1132,7 @@ extension PopupVerticalStackViewModelTests {
             popups: popups,
             gestureTranslation: -123,
             calculateForIndex: 0,
-            expectedValueBuilder: { min($0.t_stackOverlayFactor * 9, $0.maxStackOverlayFactor) }
+            expectedValueBuilder: { min($0.stackOverlayFactor * 9, $0.maxStackOverlayFactor) }
         )
     }
     func test_calculateStackOverlayOpacity_withThreePopupsStacked_whenGestureTranslationIsPositive_last() async {
@@ -1163,7 +1163,7 @@ extension PopupVerticalStackViewModelTests {
             popups: popups,
             gestureTranslation: 241,
             calculateForIndex: 2,
-            expectedValueBuilder: { await (1 - $0.calculateTranslationProgress()) * $0.t_stackOverlayFactor }
+            expectedValueBuilder: { await (1 - $0.calculateTranslationProgress()) * $0.stackOverlayFactor }
         )
     }
 }

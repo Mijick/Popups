@@ -466,11 +466,4 @@ extension VM.VerticalStack {
     func t_updateGestureTranslation(_ newGestureTranslation: CGFloat) async { await updateGestureTranslation(newGestureTranslation) }
 
 }
-
-// MARK: Variables
-extension VM.VerticalStack {
-    var t_stackOffset: CGFloat { stackOffset }
-    var t_stackScaleFactor: CGFloat { stackScaleFactor }
-    var t_stackOverlayFactor: CGFloat { stackOverlayFactor }
-}
 #endif
