@@ -12,9 +12,12 @@
 import SwiftUI
 
 extension View {
-    func onHeightChange(perform action: @escaping (CGFloat) -> ()) -> some View { background(
+    func onHeightChange(perform action: @escaping (CGFloat) async -> ()) -> some View { background(
         GeometryReader { proxy in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { action(proxy.size.height) }
+            Task { @MainActor in
+                try await Task.sleep(nanoseconds: 10_000_000)
+                await action(proxy.size.height)
+            }
             return Color.clear
         }
     )}
