@@ -28,8 +28,8 @@ extension VM { class CentreStack: ViewModel {
 
 // MARK: Recalculate Popup Height
 private extension VM.CentreStack {
-    func recalculatePopupHeight(_ heightCandidate: CGFloat) -> CGFloat {
-        min(heightCandidate, calculateLargeScreenHeight())
+    nonisolated func recalculatePopupHeight(_ heightCandidate: CGFloat) async -> CGFloat {
+        await min(heightCandidate, calculateLargeScreenHeight())
     }
 }
 private extension VM.CentreStack {
