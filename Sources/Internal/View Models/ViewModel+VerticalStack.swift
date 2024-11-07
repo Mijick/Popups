@@ -325,6 +325,7 @@ extension VM.VerticalStack {
     var stackOffset: CGFloat { GlobalConfigContainer.vertical.isStackingEnabled ? 8 : 0 }
     var dragThreshold: CGFloat { GlobalConfigContainer.vertical.dragThreshold }
     var dragGestureEnabled: Bool { getActivePopupConfig().isDragGestureEnabled }
+    var dragTranslationThreshold: CGFloat { 8 }
 }
 
 
@@ -371,9 +372,6 @@ private extension VM.VerticalStack {
         case .bottom: max(value1, value2)
         case .centre: fatalError()
     }}
-}
-private extension VM.VerticalStack {
-    var dragTranslationThreshold: CGFloat { 8 }
 }
 
 // MARK: On Ended
@@ -477,8 +475,6 @@ extension VM.VerticalStack {
     var t_stackScaleFactor: CGFloat { stackScaleFactor }
     var t_stackOverlayFactor: CGFloat { stackOverlayFactor }
     var t_minScaleProgressMultiplier: CGFloat { minScaleProgressMultiplier }
-    var t_minStackOverlayProgressMultiplier: CGFloat { minStackOverlayProgressMultiplier }
     var t_maxStackOverlayFactor: CGFloat { maxStackOverlayFactor }
-    var t_dragTranslationThreshold: CGFloat { dragTranslationThreshold }
 }
 #endif

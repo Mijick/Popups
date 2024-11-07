@@ -1250,7 +1250,7 @@ extension PopupVerticalStackViewModelTests {
             viewModel: bottomViewModel,
             popups: popups,
             gestureValue: -133,
-            expectedValues: (popupHeight: 370 + bottomViewModel.t_dragTranslationThreshold, gestureTranslation: 344 - 370 - bottomViewModel.t_dragTranslationThreshold)
+            expectedValues: (popupHeight: 370 + bottomViewModel.dragTranslationThreshold, gestureTranslation: 344 - 370 - bottomViewModel.dragTranslationThreshold)
         )
     }
     func test_calculateValuesOnDragGestureChanged_withNegativeDragValue_whenDragDetentsLessThanDragValue_topPopupsAlignment() async {
