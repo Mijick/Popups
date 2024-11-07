@@ -456,12 +456,10 @@ extension VM.VerticalStack {
     func t_calculatePopupPadding() async -> EdgeInsets { await calculatePopupPadding() }
     func t_calculateBodyPadding(for popup: AnyPopup) -> EdgeInsets { calculateBodyPadding(for: popup) }
     func t_calculateHeight(heightCandidate: CGFloat, popup: AnyPopup) -> CGFloat { calculateNewPopupHeight(heightCandidate, popup.config) }
-    func t_calculateOffsetY(for popup: AnyPopup) -> CGFloat { calculateOffsetY(for: popup) }
-    func t_calculateScaleX(for popup: AnyPopup) -> CGFloat { calculateScaleX(for: popup) }
-    func t_calculateVerticalFixedSize(for popup: AnyPopup) -> Bool { calculateVerticalFixedSize(for: popup) }
-    func t_calculateStackOverlayOpacity(for popup: AnyPopup) -> CGFloat { calculateStackOverlayOpacity(for: popup) }
-    func t_calculateCornerRadius() -> [PopupAlignment: CGFloat] { calculateCornerRadius() }
 
+
+
+    func t_calculateStackOverlayOpacity(for popup: AnyPopup) -> CGFloat { calculateStackOverlayOpacity(for: popup) }
     func t_calculateAndUpdateTranslationProgress() async { translationProgress = await calculateTranslationProgress() }
 
 

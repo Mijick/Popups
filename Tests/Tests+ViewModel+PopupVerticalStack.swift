@@ -458,7 +458,7 @@ extension PopupVerticalStackViewModelTests {
         ])
 
         XCTAssertEqual(
-            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.popups[4]),
+            bottomViewModel.calculateOffsetY(for: bottomViewModel.popups[4]),
             0
         )
     }
@@ -469,7 +469,7 @@ extension PopupVerticalStackViewModelTests {
         await bottomViewModel.updateGestureTranslation(-100)
 
         XCTAssertEqual(
-            bottomViewModel.t_calculateOffsetY(for: bottomViewModel.popups[0]),
+            bottomViewModel.calculateOffsetY(for: bottomViewModel.popups[0]),
             0
         )
     }
@@ -528,7 +528,7 @@ extension PopupVerticalStackViewModelTests {
         await topViewModel.updateGestureTranslation(-100)
 
         XCTAssertEqual(
-            topViewModel.t_calculateOffsetY(for: topViewModel.popups[1]),
+            topViewModel.calculateOffsetY(for: topViewModel.popups[1]),
             21 - 100
         )
     }
@@ -983,7 +983,7 @@ private extension PopupVerticalStackViewModelTests {
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { $0.t_calculateScaleX(for: $0.popups[index]) },
+            calculatedValue: { $0.calculateScaleX(for: $0.popups[index]) },
             expectedValueBuilder: expectedValueBuilder
         )
     }
@@ -1058,7 +1058,7 @@ private extension PopupVerticalStackViewModelTests {
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { $0.t_calculateVerticalFixedSize(for: $0.popups[index]) },
+            calculatedValue: { $0.calculateVerticalFixedSize(for: $0.popups[index]) },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
