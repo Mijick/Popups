@@ -19,9 +19,6 @@ extension VM { class VerticalStack: ViewModel {
     // MARK: Overridden Methods
     override func recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { await _recalculatePopupHeight(heightCandidate, popup) }
     override func calculateHeightForActivePopup() -> CGFloat? { _calculateHeightForActivePopup() }
-    override func calculatePopupPadding() -> EdgeInsets { _calculatePopupPadding() }
-    override func calculateCornerRadius() -> [PopupAlignment : CGFloat] { _calculateCornerRadius() }
-    override func calculateVerticalFixedSize(for popup: AnyPopup) -> Bool { _calculateVerticalFixedSize(for: popup) }
 }}
 
 
@@ -84,8 +81,8 @@ private extension VM.VerticalStack {
 }
 
 // MARK: Popup Padding
-private extension VM.VerticalStack {
-    func _calculatePopupPadding() -> EdgeInsets { .init(
+extension VM.VerticalStack {
+    func calculatePopupPadding() -> EdgeInsets { .init(
         top: calculateVerticalPopupPadding(for: .top),
         leading: calculateLeadingPopupPadding(),
         bottom: calculateVerticalPopupPadding(for: .bottom),
@@ -213,8 +210,8 @@ private extension VM.VerticalStack {
 }
 
 // MARK: Corner Radius
-private extension VM.VerticalStack {
-    func _calculateCornerRadius() -> [PopupAlignment: CGFloat] {
+extension VM.VerticalStack {
+    func calculateCornerRadius() -> [PopupAlignment: CGFloat] {
         let cornerRadiusValue = calculateCornerRadiusValue(getActivePopupConfig())
         return [
             .top: calculateTopCornerRadius(cornerRadiusValue),
@@ -240,8 +237,8 @@ private extension VM.VerticalStack {
 }
 
 // MARK: Fixed Size
-private extension VM.VerticalStack {
-    func _calculateVerticalFixedSize(for popup: AnyPopup) -> Bool { switch popup.config.heightMode {
+extension VM.VerticalStack {
+    func calculateVerticalFixedSize(for popup: AnyPopup) -> Bool { switch popup.config.heightMode {
         case .fullscreen, .large: false
         case .auto: activePopupHeight != calculateLargeScreenHeight()
     }}

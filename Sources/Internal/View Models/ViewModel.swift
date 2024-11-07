@@ -27,9 +27,6 @@ enum VM {}
     // MARK: Methods to Override
     nonisolated func recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { fatalError() }
     func calculateHeightForActivePopup() -> CGFloat? { fatalError() }
-    func calculatePopupPadding() -> EdgeInsets { fatalError() }
-    func calculateCornerRadius() -> [PopupAlignment: CGFloat] { fatalError() }
-    func calculateVerticalFixedSize(for popup: AnyPopup) -> Bool { fatalError() }
 
     // MARK: Initializer
     init<Config: LocalConfig>(_ config: Config.Type) { self.alignment = .init(Config.self) }
