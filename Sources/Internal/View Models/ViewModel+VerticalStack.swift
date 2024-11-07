@@ -31,7 +31,7 @@ extension VM { class VerticalStack: ViewModel {
 private extension VM.VerticalStack {
     func updateGestureTranslation(_ newGestureTranslation: CGFloat) { Task {
         gestureTranslation = newGestureTranslation
-        translationProgress = calculateTranslationProgress()
+        translationProgress = await calculateTranslationProgress()
         activePopupHeight = await calculateHeightForActivePopup()
 
         withAnimation(gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
@@ -299,9 +299,9 @@ private extension VM.VerticalStack {
 
 // MARK: Translation Progress
 private extension VM.VerticalStack {
-    func calculateTranslationProgress() -> CGFloat { guard let activePopupHeight = popups.last?.height else { return 0 }; return switch alignment {
-        case .top: abs(min(gestureTranslation + (popups.last?.dragHeight ?? 0), 0)) / activePopupHeight
-        case .bottom: max(gestureTranslation - (popups.last?.dragHeight ?? 0), 0) / activePopupHeight
+    nonisolated func calculateTranslationProgress() async -> CGFloat { guard let activePopupHeight = await popups.last?.height else { return 0 }; return switch alignment {
+        case .top: await abs(min(gestureTranslation + (popups.last?.dragHeight ?? 0), 0)) / activePopupHeight
+        case .bottom: await max(gestureTranslation - (popups.last?.dragHeight ?? 0), 0) / activePopupHeight
         case .centre: fatalError()
     }}
 }
