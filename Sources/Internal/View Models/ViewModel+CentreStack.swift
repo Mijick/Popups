@@ -13,7 +13,8 @@ import SwiftUI
 
 extension VM { class CentreStack: ViewModel {
     // MARK: Overridden Methods
-    override func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { await recalculatePopupHeight(heightCandidate) }
+    override func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { await _calculatePopupHeight(heightCandidate) }
+    override func calculatePopupPadding() async -> EdgeInsets { await _calculatePopupPadding() }
     override func calculateHeightForActivePopup() async -> CGFloat? { await _calculateHeightForActivePopup() }
 }}
 
@@ -23,9 +24,9 @@ extension VM { class CentreStack: ViewModel {
 
 
 
-// MARK: Recalculate Popup Height
+// MARK: Popup Height
 private extension VM.CentreStack {
-    nonisolated func recalculatePopupHeight(_ heightCandidate: CGFloat) async -> CGFloat {
+    nonisolated func _calculatePopupHeight(_ heightCandidate: CGFloat) async -> CGFloat {
         await min(heightCandidate, calculateLargeScreenHeight())
     }
 }
@@ -38,8 +39,8 @@ private extension VM.CentreStack {
 }
 
 // MARK: Popup Padding
-extension VM.CentreStack {
-    func calculatePopupPadding() -> EdgeInsets { .init(
+private extension VM.CentreStack {
+    nonisolated func _calculatePopupPadding() async -> EdgeInsets { await .init(
         top: calculateVerticalPopupPadding(for: .top),
         leading: calculateLeadingPopupPadding(),
         bottom: calculateVerticalPopupPadding(for: .bottom),
