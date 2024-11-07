@@ -82,15 +82,15 @@ private extension PopupView {
 }
 
 private extension PopupView {
-    func onAppear() {
-        updateViewModels { $0.setup(updatePopupAction: updatePopup, closePopupAction: closePopup) }
-    }
-    func onScreenChange(_ reader: GeometryProxy) {
-        updateViewModels { $0.updateScreenValue(.init(reader)) }
-    }
-    func onPopupsHeightChange(_ p: Any) {
-        updateViewModels { $0.updatePopupsValue(popupManager.stack) }
-    }
+    func onAppear() { Task { @MainActor in
+        await updateViewModels { $0.setup(updatePopupAction: updatePopup, closePopupAction: closePopup) }
+    }}
+    func onScreenChange(_ reader: GeometryProxy) { Task { @MainActor in
+        await updateViewModels { $0.updateScreenValue(.init(reader)) }
+    }}
+    func onPopupsHeightChange(_ p: Any) { Task { @MainActor in
+        await updateViewModels { await $0.updatePopupsValue(popupManager.stack) }
+    }}
     func onStackChange(_ oldStack: [AnyPopup], _ newStack: [AnyPopup]) {
         newStack
             .difference(from: oldStack)
@@ -100,9 +100,9 @@ private extension PopupView {
             }}
         newStack.last?.onFocus()
     }
-    func onKeyboardStateChange(_ isKeyboardActive: Bool) {
-        updateViewModels { $0.updateKeyboardValue(isKeyboardActive) }
-    }
+    func onKeyboardStateChange(_ isKeyboardActive: Bool) { Task { @MainActor in
+        await updateViewModels { $0.updateKeyboardValue(isKeyboardActive) }
+    }}
     func onTap() { if tapOutsideClosesPopup {
         popupManager.stack(.removeLastPopup)
     }}
