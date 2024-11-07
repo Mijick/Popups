@@ -14,7 +14,7 @@ import SwiftUI
 extension VM { class CentreStack: ViewModel {
     // MARK: Overridden Methods
     override func recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { await recalculatePopupHeight(heightCandidate) }
-    override func calculateHeightForActivePopup() -> CGFloat? { _calculateHeightForActivePopup() }
+    override func calculateHeightForActivePopup() async -> CGFloat? { await _calculateHeightForActivePopup() }
 }}
 
 

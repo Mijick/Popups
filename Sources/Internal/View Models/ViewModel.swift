@@ -26,7 +26,7 @@ enum VM {}
 
     // MARK: Methods to Override
     nonisolated func recalculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { fatalError() }
-    func calculateHeightForActivePopup() -> CGFloat? { fatalError() }
+    nonisolated func calculateHeightForActivePopup() async -> CGFloat? { fatalError() }
 
     // MARK: Initializer
     init<Config: LocalConfig>(_ config: Config.Type) { self.alignment = .init(Config.self) }
@@ -42,12 +42,12 @@ extension ViewModel {
 
 // MARK: Update
 extension ViewModel {
-    func updatePopupsValue(_ newPopups: [AnyPopup]) {
+    func updatePopupsValue(_ newPopups: [AnyPopup]) { Task {
         popups = newPopups.filter { $0.config.alignment == alignment }
-        activePopupHeight = calculateHeightForActivePopup()
+        await activePopupHeight = calculateHeightForActivePopup()
 
         withAnimation(.transition) { objectWillChange.send() }
-    }
+    }}
     func updateScreenValue(_ newScreen: Screen) {
         screen = newScreen
 
