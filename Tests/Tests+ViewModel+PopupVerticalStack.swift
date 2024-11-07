@@ -627,7 +627,7 @@ private extension PopupVerticalStackViewModelTests {
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { await $0.t_calculatePopupPadding() },
+            calculatedValue: { await $0.calculatePopupPadding() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
@@ -738,7 +738,7 @@ private extension PopupVerticalStackViewModelTests {
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { $0.t_calculateBodyPadding(for: popups.last!) },
+            calculatedValue: { $0.calculateBodyPadding(for: popups.last!) },
             expectedValueBuilder: { _ in expectedValue }
         )
     }

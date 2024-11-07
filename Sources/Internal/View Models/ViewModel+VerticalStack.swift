@@ -453,8 +453,6 @@ private extension VM.VerticalStack {
 
 // MARK: Methods
 extension VM.VerticalStack {
-    func t_calculatePopupPadding() async -> EdgeInsets { await calculatePopupPadding() }
-    func t_calculateBodyPadding(for popup: AnyPopup) -> EdgeInsets { calculateBodyPadding(for: popup) }
     func t_calculateHeight(heightCandidate: CGFloat, popup: AnyPopup) -> CGFloat { calculateNewPopupHeight(heightCandidate, popup.config) }
 
 
