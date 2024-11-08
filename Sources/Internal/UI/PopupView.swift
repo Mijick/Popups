@@ -85,8 +85,8 @@ private extension PopupView {
     func onAppear() { Task { @MainActor in
         await updateViewModels { $0.setup(updatePopupAction: updatePopup, closePopupAction: closePopup) }
     }}
-    func onScreenChange(_ reader: GeometryProxy) { Task { @MainActor in
-        await updateViewModels { await $0.updateScreenValue(.init(reader)) }
+    func onScreenChange(_ screenReader: GeometryProxy) { Task { @MainActor in
+        await updateViewModels { await $0.updateScreenValue(screenReader) }
     }}
     func onPopupsHeightChange(_ p: Any) { Task { @MainActor in
         await updateViewModels { await $0.updatePopupsValue(popupManager.stack) }

@@ -12,16 +12,22 @@
 import SwiftUI
 
 struct Screen {
-    let height: CGFloat
-    let safeArea: EdgeInsets
+    var height: CGFloat
+    var safeArea: EdgeInsets
+    var isKeyboardActive: Bool
 
 
     init(height: CGFloat = .zero, safeArea: EdgeInsets = .init()) {
         self.height = height
         self.safeArea = safeArea
+        self.isKeyboardActive = false
     }
-    init(_ reader: GeometryProxy) {
-        self.height = reader.size.height + reader.safeAreaInsets.top + reader.safeAreaInsets.bottom
-        self.safeArea = reader.safeAreaInsets
+}
+
+// MARK: Update
+extension Screen {
+    mutating func update(_ screenReader: GeometryProxy) {
+        self.height = screenReader.size.height + screenReader.safeAreaInsets.top + screenReader.safeAreaInsets.bottom
+        self.safeArea = screenReader.safeAreaInsets
     }
 }

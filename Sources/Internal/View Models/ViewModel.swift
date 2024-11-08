@@ -59,8 +59,8 @@ extension ViewModel {
 
         withAnimation(.transition) { objectWillChange.send() }
     }
-    func updateScreenValue(_ newScreen: Screen) async {
-        screen = newScreen
+    func updateScreenValue(_ screenReader: GeometryProxy) async {
+        screen.update(screenReader)
         activePopup.outerPadding = await calculatePopupPadding()
         activePopup.innerPadding = await calculateBodyPadding()
 
