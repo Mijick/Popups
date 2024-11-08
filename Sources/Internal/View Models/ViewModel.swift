@@ -99,9 +99,9 @@ private extension ViewModel {
 
 
 
-protocol VV: ObservableObject {
-    var alignment: PopupAlignment { get }
-    var popups: [AnyPopup] { get }
+protocol VV: ObservableObject { init()
+    var alignment: PopupAlignment { get set }
+    var popups: [AnyPopup] { get set }
     var updatePopupAction: ((AnyPopup) async -> ())! { get set }
     var closePopupAction: ((AnyPopup) async -> ())! { get set }
 
@@ -109,6 +109,30 @@ protocol VV: ObservableObject {
     var translationProgress: CGFloat { get set }
     var activePopup: ActivePopup { get set }
     var screen: Screen { get set }
+
+    init<Config: LocalConfig>(_ config: Config.Type)
+
+
+
+}
+
+
+extension VV {
+    func setup(updatePopupAction: @escaping (AnyPopup) async -> (), closePopupAction: @escaping (AnyPopup) async -> ()) {
+        self.updatePopupAction = updatePopupAction
+        self.closePopupAction = closePopupAction
+    }
+}
+
+extension VV {
+
+}
+
+
+
+
+extension VV {
+    init<Config: LocalConfig>(_ config: Config.Type) { self.init(); self.alignment = .init(Config.self) }
 }
 
 
