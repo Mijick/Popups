@@ -22,11 +22,7 @@ enum VM {}
     // MARK: Subclass Attributes
     var gestureTranslation: CGFloat = 0
     var translationProgress: CGFloat = 0
-    var activePopupHeight: CGFloat? = nil
-    var activePopupCornerRadius: [PopupAlignment: CGFloat] = [.top: 0, .bottom: 0]
-    var activePopupBodyPadding: EdgeInsets = .init()
-    var activePopupPadding: EdgeInsets = .init()
-    var activePopupVerticalFixedSize: Bool = true
+    var activePopup: ActivePopup = .init()
     var screen: Screen = .init()
     var isKeyboardActive: Bool = false
 
@@ -66,15 +62,15 @@ extension ViewModel {
     }
     func updateScreenValue(_ newScreen: Screen) async {
         screen = newScreen
-        activePopupPadding = await calculatePopupPadding()
-        activePopupBodyPadding = await calculateBodyPadding()
+        activePopup.outerPadding = await calculatePopupPadding()
+        activePopup.innerPadding = await calculateBodyPadding()
 
         withAnimation(.transition) { objectWillChange.send() }
     }
     func updateKeyboardValue(_ isActive: Bool) async {
         isKeyboardActive = isActive
-        activePopupPadding = await calculatePopupPadding()
-        activePopupBodyPadding = await calculateBodyPadding()
+        activePopup.outerPadding = await calculatePopupPadding()
+        activePopup.innerPadding = await calculateBodyPadding()
 
         withAnimation(.transition) { objectWillChange.send() }
     }
