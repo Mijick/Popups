@@ -117,7 +117,7 @@ private extension VM.VerticalStack {
         }
     }
     func calculateBottomBodyPadding(popup: AnyPopup) async -> CGFloat {
-        if popup.config.ignoredSafeAreaEdges.contains(.bottom) && !isKeyboardActive { return 0 }
+        if popup.config.ignoredSafeAreaEdges.contains(.bottom) && !screen.isKeyboardActive { return 0 }
 
         return switch alignment {
             case .top: await calculateVerticalPaddingCounterEdge(popupHeight: activePopup.height ?? 0, safeArea: screen.safeArea.bottom)

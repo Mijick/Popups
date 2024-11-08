@@ -24,7 +24,6 @@ enum VM {}
     var translationProgress: CGFloat = 0
     var activePopup: ActivePopup = .init()
     var screen: Screen = .init()
-    var isKeyboardActive: Bool = false
 
     // MARK: Methods to Override
     nonisolated func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { fatalError() }
@@ -68,7 +67,7 @@ extension ViewModel {
         withAnimation(.transition) { objectWillChange.send() }
     }
     func updateKeyboardValue(_ isActive: Bool) async {
-        isKeyboardActive = isActive
+        screen.isKeyboardActive = isActive
         activePopup.outerPadding = await calculatePopupPadding()
         activePopup.innerPadding = await calculateBodyPadding()
 
@@ -105,6 +104,11 @@ protocol VV: ObservableObject {
     var popups: [AnyPopup] { get }
     var updatePopupAction: ((AnyPopup) async -> ())! { get set }
     var closePopupAction: ((AnyPopup) async -> ())! { get set }
+
+    var gestureTranslation: CGFloat { get set }
+    var translationProgress: CGFloat { get set }
+    var activePopup: ActivePopup { get set }
+    var screen: Screen { get set }
 }
 
 
