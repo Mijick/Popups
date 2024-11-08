@@ -323,7 +323,7 @@ extension VM.VerticalStack {
     var maxStackOverlayFactor: CGFloat { 0.48 }
     var stackOffset: CGFloat { GlobalConfigContainer.vertical.isStackingEnabled ? 8 : 0 }
     var dragThreshold: CGFloat { GlobalConfigContainer.vertical.dragThreshold }
-    var dragGestureEnabled: Bool { getActivePopupConfig().isDragGestureEnabled }
+    var dragGestureEnabled: Bool { popups.last?.config.isDragGestureEnabled ?? false }
     var dragTranslationThreshold: CGFloat { 8 }
     var minScaleProgressMultiplier: CGFloat { 0.7 }
 }
@@ -342,7 +342,7 @@ extension VM.VerticalStack {
     }}
 }
 private extension VM.VerticalStack {
-    nonisolated func calculateGestureTranslation(_ value: CGFloat) async -> CGFloat { switch await getActivePopupConfig().dragDetents.isEmpty {
+    nonisolated func calculateGestureTranslation(_ value: CGFloat) async -> CGFloat { switch await popups.last?.config.dragDetents.isEmpty ?? true {
         case true: await calculateGestureTranslationWhenNoDragDetents(value)
         case false: await calculateGestureTranslationWhenDragDetents(value)
     }}

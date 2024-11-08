@@ -84,10 +84,3 @@ private extension ViewModel {
         popups.filter { $0.config.alignment == alignment }
     }
 }
-
-// MARK: Helpers
-extension ViewModel {
-    func getActivePopupConfig() -> AnyPopupConfig {
-        popups.last?.config ?? .init()
-    }
-}
