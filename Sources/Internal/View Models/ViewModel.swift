@@ -55,7 +55,7 @@ extension ViewModel {
         activePopup.outerPadding = await calculatePopupPadding()
         activePopup.height = await calculateHeightForActivePopup()
         activePopup.innerPadding = await calculateBodyPadding()
-        activePopup.cornerRadius = await calculateCornerRadius()
+        activePopup.corners = await calculateCornerRadius()
         activePopup.verticalFixedSize = await calculateVerticalFixedSize()
 
         withAnimation(.transition) { objectWillChange.send() }
@@ -115,6 +115,6 @@ protocol VV: ObservableObject {
     var height: CGFloat? = nil
     var innerPadding: EdgeInsets = .init()
     var outerPadding: EdgeInsets = .init()
-    var cornerRadius: [PopupAlignment: CGFloat] = [.top: 0, .bottom: 0]
+    var corners: [PopupAlignment: CGFloat] = [.top: 0, .bottom: 0]
     var verticalFixedSize: Bool = true
 }

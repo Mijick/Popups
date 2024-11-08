@@ -34,7 +34,7 @@ private extension PopupVerticalStackView {
             .onHeightChange { await viewModel.recalculateAndUpdatePopupHeight($0, popup) }
             .frame(height: viewModel.activePopup.height, alignment: (!viewModel.alignment).toAlignment())
             .frame(maxWidth: .infinity, maxHeight: viewModel.activePopup.height, alignment: (!viewModel.alignment).toAlignment())
-            .background(backgroundColor: getBackgroundColor(for: popup), overlayColor: getStackOverlayColor(for: popup), corners: viewModel.activePopup.cornerRadius)
+            .background(backgroundColor: getBackgroundColor(for: popup), overlayColor: getStackOverlayColor(for: popup), corners: viewModel.activePopup.corners)
             .offset(y: viewModel.calculateOffsetY(for: popup))
             .scaleEffect(x: viewModel.calculateScaleX(for: popup))
             .focusSection_tvOS()
