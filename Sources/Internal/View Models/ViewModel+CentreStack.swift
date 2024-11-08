@@ -19,6 +19,7 @@ extension VM { class CentreStack: ViewModel {
     override func calculateCornerRadius() async -> [PopupAlignment: CGFloat] { await _calculateCornerRadius() }
     override func calculateBodyPadding() async -> EdgeInsets { await _calculateBodyPadding() }
     override func calculateTranslationProgress() async -> CGFloat { await _calculateTranslationProgress() }
+    override func calculateVerticalFixedSize() async -> Bool { false }
 }}
 
 

@@ -19,6 +19,7 @@ extension VM { class VerticalStack: ViewModel {
     override func calculateCornerRadius() async -> [PopupAlignment: CGFloat] { await _calculateCornerRadius() }
     override func calculateBodyPadding() async -> EdgeInsets { await _calculateBodyPadding() }
     override func calculateTranslationProgress() async -> CGFloat { await _calculateTranslationProgress() }
+    override func calculateVerticalFixedSize() async -> Bool { await _calculateVerticalFixedSize() }
 }}
 
 
@@ -219,9 +220,9 @@ private extension VM.VerticalStack {
 
 // MARK: Fixed Size
 extension VM.VerticalStack {
-    func calculateVerticalFixedSize(for popup: AnyPopup) -> Bool { switch popup.config.heightMode {
+    nonisolated func _calculateVerticalFixedSize() async -> Bool { guard let popup = await popups.last else { return true }; return switch popup.config.heightMode {
         case .fullscreen, .large: false
-        case .auto: activePopupHeight != calculateLargeScreenHeight()
+        case .auto: await activePopupHeight != calculateLargeScreenHeight()
     }}
 }
 

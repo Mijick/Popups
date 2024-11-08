@@ -30,7 +30,7 @@ private extension PopupVerticalStackView {
     func createPopup(_ popup: AnyPopup) -> some View {
         popup.body
             .padding(viewModel.activePopupBodyPadding)
-            .fixedSize(horizontal: false, vertical: viewModel.calculateVerticalFixedSize(for: popup))
+            .fixedSize(horizontal: false, vertical: viewModel.activePopupVerticalFixedSize)
             .onHeightChange { await viewModel.recalculateAndUpdatePopupHeight($0, popup) }
             .frame(height: viewModel.activePopupHeight, alignment: (!viewModel.alignment).toAlignment())
             .frame(maxWidth: .infinity, maxHeight: viewModel.activePopupHeight, alignment: (!viewModel.alignment).toAlignment())
