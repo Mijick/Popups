@@ -113,6 +113,15 @@ protocol VV: ObservableObject { init()
     init<Config: LocalConfig>(_ config: Config.Type)
 
 
+    func calculateActivePopupHeight() async -> CGFloat?
+    func calculateActivePopupInnerPadding() async -> EdgeInsets
+    func calculateActivePopupOuterPadding() async -> EdgeInsets
+    func calculateActivePopupCorners() async -> [PopupAlignment: CGFloat]
+    func calculateActivePopupVerticalFixedSize() async -> Bool
+
+    func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat
+    func calculateTranslationProgress() async -> CGFloat
+
 
 }
 
