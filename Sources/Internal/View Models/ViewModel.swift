@@ -20,6 +20,8 @@ enum VM {}
     private(set) var closePopupAction: ((AnyPopup) async -> ())!
 
     // MARK: Subclass Attributes
+    var gestureTranslation: CGFloat = 0
+    var translationProgress: CGFloat = 0
     var activePopupHeight: CGFloat? = nil
     var activePopupCornerRadius: [PopupAlignment: CGFloat] = [.top: 0, .bottom: 0]
     var activePopupBodyPadding: EdgeInsets = .init()
@@ -33,6 +35,7 @@ enum VM {}
     nonisolated func calculateCornerRadius() async -> [PopupAlignment: CGFloat] { fatalError() }
     nonisolated func calculateHeightForActivePopup() async -> CGFloat? { fatalError() }
     nonisolated func calculateBodyPadding() async -> EdgeInsets { fatalError() }
+    nonisolated func calculateTranslationProgress() async -> CGFloat { fatalError()}
 
     // MARK: Initializer
     init<Config: LocalConfig>(_ config: Config.Type) { self.alignment = .init(Config.self) }
@@ -73,11 +76,21 @@ extension ViewModel {
         withAnimation(.transition) { objectWillChange.send() }
     }
     func recalculateAndUpdatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async {
+        guard gestureTranslation == 0 else { return }
+
+
         var newPopup = popup
         newPopup.height = await calculatePopupHeight(heightCandidate, newPopup)
 
         guard newPopup.height != popup.height else { return }
         await updatePopupAction(newPopup)
+    }
+    func updateGestureTranslation(_ newGestureTranslation: CGFloat) async {
+        gestureTranslation = newGestureTranslation
+        translationProgress = await calculateTranslationProgress()
+        activePopupHeight = await calculateHeightForActivePopup()
+
+        withAnimation(gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
     }
 }
 private extension ViewModel {

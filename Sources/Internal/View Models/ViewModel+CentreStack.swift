@@ -18,6 +18,7 @@ extension VM { class CentreStack: ViewModel {
     override func calculateHeightForActivePopup() async -> CGFloat? { await _calculateHeightForActivePopup() }
     override func calculateCornerRadius() async -> [PopupAlignment: CGFloat] { await _calculateCornerRadius() }
     override func calculateBodyPadding() async -> EdgeInsets { await _calculateBodyPadding() }
+    override func calculateTranslationProgress() async -> CGFloat { await _calculateTranslationProgress() }
 }}
 
 
@@ -92,6 +93,11 @@ extension VM.CentreStack {
     func calculateVerticalFixedSize(for popup: AnyPopup) -> Bool {
         activePopupHeight != calculateLargeScreenHeight()
     }
+}
+
+// MARK: Translation Progress
+private extension VM.CentreStack {
+    nonisolated func _calculateTranslationProgress() async -> CGFloat { 0 }
 }
 
 

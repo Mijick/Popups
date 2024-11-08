@@ -12,34 +12,14 @@
 import SwiftUI
 
 extension VM { class VerticalStack: ViewModel {
-    // MARK: Attributes
-    private(set) var gestureTranslation: CGFloat = 0
-    private(set) var translationProgress: CGFloat = 0
-
     // MARK: Overridden Methods
     override func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { await _calculatePopupHeight(heightCandidate, popup) }
     override func calculatePopupPadding() async -> EdgeInsets { await _calculatePopupPadding() }
     override func calculateHeightForActivePopup() async -> CGFloat? { await _calculateHeightForActivePopup() }
     override func calculateCornerRadius() async -> [PopupAlignment: CGFloat] { await _calculateCornerRadius() }
     override func calculateBodyPadding() async -> EdgeInsets { await _calculateBodyPadding() }
+    override func calculateTranslationProgress() async -> CGFloat { await _calculateTranslationProgress() }
 }}
-
-
-
-// MARK: - SETUP & UPDATE
-
-
-
-// MARK: Update
-extension VM.VerticalStack {
-    func updateGestureTranslation(_ newGestureTranslation: CGFloat) async {
-        gestureTranslation = newGestureTranslation
-        translationProgress = await calculateTranslationProgress()
-        activePopupHeight = await calculateHeightForActivePopup()
-
-        withAnimation(gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
-    }
-}
 
 
 
@@ -299,8 +279,8 @@ private extension VM.VerticalStack {
 }
 
 // MARK: Translation Progress
-extension VM.VerticalStack {
-    nonisolated func calculateTranslationProgress() async -> CGFloat { guard let activePopupHeight = await popups.last?.height else { return 0 }; return switch alignment {
+private extension VM.VerticalStack {
+    nonisolated func _calculateTranslationProgress() async -> CGFloat { guard let activePopupHeight = await popups.last?.height else { return 0 }; return switch alignment {
         case .top: await abs(min(gestureTranslation + (popups.last?.dragHeight ?? 0), 0)) / activePopupHeight
         case .bottom: await max(gestureTranslation - (popups.last?.dragHeight ?? 0), 0) / activePopupHeight
         case .centre: fatalError()
