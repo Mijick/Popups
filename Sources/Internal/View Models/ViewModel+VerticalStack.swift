@@ -403,8 +403,8 @@ private extension VM.VerticalStack {
         let currentPopupHeight = activePopupHeight + currentDragHeight
         return currentPopupHeight
     }
-    func calculatePopupTargetHeightsFromDragDetents(_ activePopupHeight: CGFloat) -> [CGFloat] {
-        getActivePopupConfig().dragDetents
+    func calculatePopupTargetHeightsFromDragDetents(_ activePopupHeight: CGFloat) -> [CGFloat] { guard let dragDetents = popups.last?.config.dragDetents else { return [activePopupHeight] }; return
+        dragDetents
             .map { switch $0 {
                 case .height(let targetHeight): min(targetHeight, calculateLargeScreenHeight())
                 case .fraction(let fraction): min(fraction * activePopupHeight, calculateLargeScreenHeight())
