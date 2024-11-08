@@ -76,7 +76,7 @@ private extension VM.VerticalStack {
 private extension VM.VerticalStack {
     nonisolated func calculateVerticalPopupPadding(for edge: PopupAlignment, activePopupConfig: AnyPopupConfig) async -> CGFloat {
         let largeScreenHeight = await calculateLargeScreenHeight(),
-            activePopupHeight = await activePopupHeight ?? 0,
+            activePopupHeight = await activePopup.height ?? 0,
             priorityPopupPaddingValue = await calculatePriorityPopupPaddingValue(for: edge, activePopupConfig: activePopupConfig),
             remainingHeight = largeScreenHeight - activePopupHeight - priorityPopupPaddingValue
 
@@ -120,8 +120,8 @@ private extension VM.VerticalStack {
         if popup.config.ignoredSafeAreaEdges.contains(.bottom) && !isKeyboardActive { return 0 }
 
         return switch alignment {
-            case .top: await calculateVerticalPaddingCounterEdge(popupHeight: activePopupHeight ?? 0, safeArea: screen.safeArea.bottom)
-            case .bottom: await calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.bottom, popupPadding: activePopupPadding.bottom)
+            case .top: await calculateVerticalPaddingCounterEdge(popupHeight: activePopup.height ?? 0, safeArea: screen.safeArea.bottom)
+            case .bottom: await calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.bottom, popupPadding: activePopup.outerPadding.bottom)
             case .centre: fatalError()
         }
     }
@@ -222,7 +222,7 @@ private extension VM.VerticalStack {
 extension VM.VerticalStack {
     nonisolated func _calculateVerticalFixedSize() async -> Bool { guard let popup = await popups.last else { return true }; return switch popup.config.heightMode {
         case .fullscreen, .large: false
-        case .auto: await activePopupHeight != calculateLargeScreenHeight()
+        case .auto: await activePopup.height != calculateLargeScreenHeight()
     }}
 }
 

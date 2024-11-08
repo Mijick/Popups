@@ -52,11 +52,11 @@ extension ViewModel {
     func updatePopupsValue(_ newPopups: [AnyPopup]) async {
         popups = await filterPopups(newPopups)
 
-        activePopupPadding = await calculatePopupPadding()
-        activePopupHeight = await calculateHeightForActivePopup()
-        activePopupBodyPadding = await calculateBodyPadding()
-        activePopupCornerRadius = await calculateCornerRadius()
-        activePopupVerticalFixedSize = await calculateVerticalFixedSize()
+        activePopup.outerPadding = await calculatePopupPadding()
+        activePopup.height = await calculateHeightForActivePopup()
+        activePopup.innerPadding = await calculateBodyPadding()
+        activePopup.cornerRadius = await calculateCornerRadius()
+        activePopup.verticalFixedSize = await calculateVerticalFixedSize()
 
         withAnimation(.transition) { objectWillChange.send() }
     }
@@ -87,7 +87,7 @@ extension ViewModel {
     func updateGestureTranslation(_ newGestureTranslation: CGFloat) async {
         gestureTranslation = newGestureTranslation
         translationProgress = await calculateTranslationProgress()
-        activePopupHeight = await calculateHeightForActivePopup()
+        activePopup.height = await calculateHeightForActivePopup()
 
         withAnimation(gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
     }
@@ -96,4 +96,25 @@ private extension ViewModel {
     nonisolated func filterPopups(_ popups: [AnyPopup]) async -> [AnyPopup] {
         popups.filter { $0.config.alignment == alignment }
     }
+}
+
+
+
+protocol VV: ObservableObject {
+    var alignment: PopupAlignment { get }
+    var popups: [AnyPopup] { get }
+    var updatePopupAction: ((AnyPopup) async -> ())! { get set }
+    var closePopupAction: ((AnyPopup) async -> ())! { get set }
+}
+
+
+
+
+
+@MainActor class ActivePopup {
+    var height: CGFloat? = nil
+    var innerPadding: EdgeInsets = .init()
+    var outerPadding: EdgeInsets = .init()
+    var cornerRadius: [PopupAlignment: CGFloat] = [.top: 0, .bottom: 0]
+    var verticalFixedSize: Bool = true
 }
