@@ -17,6 +17,7 @@ extension VM { class CentreStack: ViewModel {
     override func calculatePopupPadding() async -> EdgeInsets { await _calculatePopupPadding() }
     override func calculateHeightForActivePopup() async -> CGFloat? { await _calculateHeightForActivePopup() }
     override func calculateCornerRadius() async -> [PopupAlignment: CGFloat] { await _calculateCornerRadius() }
+    override func calculateBodyPadding() async -> EdgeInsets { await _calculateBodyPadding() }
 }}
 
 
@@ -64,6 +65,11 @@ private extension VM.CentreStack {
     func calculateTrailingPopupPadding() -> CGFloat {
         getActivePopupConfig().popupPadding.trailing
     }
+}
+
+// MARK: Body Padding
+private extension VM.CentreStack {
+    nonisolated func _calculateBodyPadding() async -> EdgeInsets { .init() }
 }
 
 // MARK: Corner Radius

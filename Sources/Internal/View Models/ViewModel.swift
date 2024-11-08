@@ -50,18 +50,25 @@ extension ViewModel {
 extension ViewModel {
     func updatePopupsValue(_ newPopups: [AnyPopup]) async {
         popups = await filterPopups(newPopups)
+
+        activePopupPadding = await calculatePopupPadding()
+        activePopupBodyPadding = await calculateBodyPadding()
         activePopupHeight = await calculateHeightForActivePopup()
         activePopupCornerRadius = await calculateCornerRadius()
 
         withAnimation(.transition) { objectWillChange.send() }
     }
-    func updateScreenValue(_ newScreen: Screen) {
+    func updateScreenValue(_ newScreen: Screen) async {
         screen = newScreen
+        activePopupPadding = await calculatePopupPadding()
+        activePopupBodyPadding = await calculateBodyPadding()
 
         withAnimation(.transition) { objectWillChange.send() }
     }
-    func updateKeyboardValue(_ isActive: Bool) {
+    func updateKeyboardValue(_ isActive: Bool) async {
         isKeyboardActive = isActive
+        activePopupPadding = await calculatePopupPadding()
+        activePopupBodyPadding = await calculateBodyPadding()
 
         withAnimation(.transition) { objectWillChange.send() }
     }
