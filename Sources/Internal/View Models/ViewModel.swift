@@ -57,8 +57,8 @@ extension ViewModel {
         popups = await filterPopups(newPopups)
 
         activePopupPadding = await calculatePopupPadding()
-        activePopupBodyPadding = await calculateBodyPadding()
         activePopupHeight = await calculateHeightForActivePopup()
+        activePopupBodyPadding = await calculateBodyPadding()
         activePopupCornerRadius = await calculateCornerRadius()
         activePopupVerticalFixedSize = await calculateVerticalFixedSize()
 
