@@ -335,38 +335,38 @@ extension VM.VerticalStack {
 
 // MARK: On Changed
 extension VM.VerticalStack {
-    func onPopupDragGestureChanged(_ value: CGFloat) async { if dragGestureEnabled {
-        let newGestureTranslation = calculateGestureTranslation(value)
+    nonisolated func onPopupDragGestureChanged(_ value: CGFloat) async { if await dragGestureEnabled {
+        let newGestureTranslation = await calculateGestureTranslation(value)
         await updateGestureTranslation(newGestureTranslation)
     }}
 }
 private extension VM.VerticalStack {
-    func calculateGestureTranslation(_ value: CGFloat) -> CGFloat { switch getActivePopupConfig().dragDetents.isEmpty {
-        case true: calculateGestureTranslationWhenNoDragDetents(value)
-        case false: calculateGestureTranslationWhenDragDetents(value)
+    nonisolated func calculateGestureTranslation(_ value: CGFloat) async -> CGFloat { switch await getActivePopupConfig().dragDetents.isEmpty {
+        case true: await calculateGestureTranslationWhenNoDragDetents(value)
+        case false: await calculateGestureTranslationWhenDragDetents(value)
     }}
 }
 private extension VM.VerticalStack {
-    func calculateGestureTranslationWhenNoDragDetents(_ value: CGFloat) -> CGFloat {
-        calculateDragExtremeValue(value, 0)
+    nonisolated func calculateGestureTranslationWhenNoDragDetents(_ value: CGFloat) async -> CGFloat {
+        await calculateDragExtremeValue(value, 0)
     }
-    func calculateGestureTranslationWhenDragDetents(_ value: CGFloat) -> CGFloat { guard value * getDragTranslationMultiplier() > 0, let activePopupHeight = popups.last?.height else { return value }
-        let maxHeight = calculateMaxHeightForDragGesture(activePopupHeight)
-        let dragTranslation = calculateDragTranslation(maxHeight, activePopupHeight)
-        return calculateDragExtremeValue(dragTranslation, value)
+    nonisolated func calculateGestureTranslationWhenDragDetents(_ value: CGFloat) async -> CGFloat { guard await value * getDragTranslationMultiplier() > 0, let activePopupHeight = await popups.last?.height else { return value }
+        let maxHeight = await calculateMaxHeightForDragGesture(activePopupHeight)
+        let dragTranslation = await calculateDragTranslation(maxHeight, activePopupHeight)
+        return await calculateDragExtremeValue(dragTranslation, value)
     }
 }
 private extension VM.VerticalStack {
-    func calculateMaxHeightForDragGesture(_ activePopupHeight: CGFloat) -> CGFloat {
-        let maxHeight1 = (calculatePopupTargetHeightsFromDragDetents(activePopupHeight).max() ?? 0) + dragTranslationThreshold
-        let maxHeight2 = screen.height
+    nonisolated func calculateMaxHeightForDragGesture(_ activePopupHeight: CGFloat) async -> CGFloat {
+        let maxHeight1 = await (calculatePopupTargetHeightsFromDragDetents(activePopupHeight).max() ?? 0) + dragTranslationThreshold
+        let maxHeight2 = await screen.height
         return min(maxHeight1, maxHeight2)
     }
-    func calculateDragTranslation(_ maxHeight: CGFloat, _ activePopupHeight: CGFloat) -> CGFloat {
-        let translation = maxHeight - activePopupHeight - (popups.last?.dragHeight ?? 0)
-        return translation * getDragTranslationMultiplier()
+    nonisolated func calculateDragTranslation(_ maxHeight: CGFloat, _ activePopupHeight: CGFloat) async -> CGFloat {
+        let translation = await maxHeight - activePopupHeight - (popups.last?.dragHeight ?? 0)
+        return await translation * getDragTranslationMultiplier()
     }
-    func calculateDragExtremeValue(_ value1: CGFloat, _ value2: CGFloat) -> CGFloat { switch alignment {
+    nonisolated func calculateDragExtremeValue(_ value1: CGFloat, _ value2: CGFloat) async -> CGFloat { switch alignment {
         case .top: min(value1, value2)
         case .bottom: max(value1, value2)
         case .centre: fatalError()
