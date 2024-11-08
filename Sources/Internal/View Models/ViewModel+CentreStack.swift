@@ -60,10 +60,10 @@ private extension VM.CentreStack {
         return abs(min(paddingCandidate, 0))
     }
     func calculateLeadingPopupPadding() -> CGFloat {
-        getActivePopupConfig().popupPadding.leading
+        popups.last?.config.popupPadding.leading ?? 0
     }
     func calculateTrailingPopupPadding() -> CGFloat {
-        getActivePopupConfig().popupPadding.trailing
+        popups.last?.config.popupPadding.trailing ?? 0
     }
 }
 
@@ -75,8 +75,8 @@ private extension VM.CentreStack {
 // MARK: Corner Radius
 private extension VM.CentreStack {
     nonisolated func _calculateCornerRadius() async -> [PopupAlignment : CGFloat] { await [
-        .top: getActivePopupConfig().cornerRadius,
-        .bottom: getActivePopupConfig().cornerRadius
+        .top: popups.last?.config.cornerRadius ?? 0,
+        .bottom: popups.last?.config.cornerRadius ?? 0
     ]}
 }
 
