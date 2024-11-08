@@ -32,12 +32,12 @@ private extension PopupCentreStackView {
         popup.body
             .fixedSize(horizontal: false, vertical: viewModel.calculateVerticalFixedSize(for: popup))
             .onHeightChange { await viewModel.recalculateAndUpdatePopupHeight($0, popup) }
-            .frame(height: viewModel.activePopupHeight)
-            .frame(maxWidth: .infinity, maxHeight: viewModel.activePopupHeight)
-            .background(backgroundColor: getBackgroundColor(for: popup), overlayColor: .clear, corners: viewModel.activePopupCornerRadius)
+            .frame(height: viewModel.activePopup.height)
+            .frame(maxWidth: .infinity, maxHeight: viewModel.activePopup.height)
+            .background(backgroundColor: getBackgroundColor(for: popup), overlayColor: .clear, corners: viewModel.activePopup.cornerRadius)
             .opacity(viewModel.calculateOpacity(for: popup))
             .focusSection_tvOS()
-            .padding(viewModel.activePopupPadding)
+            .padding(viewModel.activePopup.outerPadding)
             .compositingGroup()
     }
 }
