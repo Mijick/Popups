@@ -375,7 +375,7 @@ private extension VM.VerticalStack {
 
 // MARK: On Ended
 extension VM.VerticalStack {
-    func onPopupDragGestureEnded(_ value: CGFloat) async { if value != 0 {
+    nonisolated func onPopupDragGestureEnded(_ value: CGFloat) async { if value != 0 {
         await dismissLastItemIfNeeded()
         await updateTranslationValues()
     }}
