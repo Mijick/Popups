@@ -29,7 +29,7 @@ private extension PopupVerticalStackView {
 private extension PopupVerticalStackView {
     func createPopup(_ popup: AnyPopup) -> some View {
         popup.body
-            .padding(viewModel.calculateBodyPadding(for: popup))
+            .padding(viewModel.activePopupBodyPadding)
             .fixedSize(horizontal: false, vertical: viewModel.calculateVerticalFixedSize(for: popup))
             .onHeightChange { await viewModel.recalculateAndUpdatePopupHeight($0, popup) }
             .frame(height: viewModel.activePopupHeight, alignment: (!viewModel.alignment).toAlignment())
@@ -38,7 +38,7 @@ private extension PopupVerticalStackView {
             .offset(y: viewModel.calculateOffsetY(for: popup))
             .scaleEffect(x: viewModel.calculateScaleX(for: popup))
             .focusSection_tvOS()
-            .padding(popup.popupPadding)
+            .padding(viewModel.activePopupPadding)
             .transition(transition)
             .zIndex(viewModel.calculateZIndex())
             .compositingGroup()

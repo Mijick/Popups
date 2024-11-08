@@ -22,6 +22,8 @@ enum VM {}
     // MARK: Subclass Attributes
     var activePopupHeight: CGFloat? = nil
     var activePopupCornerRadius: [PopupAlignment: CGFloat] = [.top: 0, .bottom: 0]
+    var activePopupBodyPadding: EdgeInsets = .init()
+    var activePopupPadding: EdgeInsets = .init()
     var screen: Screen = .init()
     var isKeyboardActive: Bool = false
 
@@ -30,6 +32,7 @@ enum VM {}
     nonisolated func calculatePopupPadding() async -> EdgeInsets { fatalError() }
     nonisolated func calculateCornerRadius() async -> [PopupAlignment: CGFloat] { fatalError() }
     nonisolated func calculateHeightForActivePopup() async -> CGFloat? { fatalError() }
+    nonisolated func calculateBodyPadding() async -> EdgeInsets { fatalError() }
 
     // MARK: Initializer
     init<Config: LocalConfig>(_ config: Config.Type) { self.alignment = .init(Config.self) }
@@ -64,7 +67,6 @@ extension ViewModel {
     }
     func recalculateAndUpdatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async {
         var newPopup = popup
-        newPopup.popupPadding = await calculatePopupPadding()
         newPopup.height = await calculatePopupHeight(heightCandidate, newPopup)
 
         await updatePopupAction(newPopup)

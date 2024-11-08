@@ -21,6 +21,7 @@ extension VM { class VerticalStack: ViewModel {
     override func calculatePopupPadding() async -> EdgeInsets { await _calculatePopupPadding() }
     override func calculateHeightForActivePopup() async -> CGFloat? { await _calculateHeightForActivePopup() }
     override func calculateCornerRadius() async -> [PopupAlignment: CGFloat] { await _calculateCornerRadius() }
+    override func calculateBodyPadding() async -> EdgeInsets { await _calculateBodyPadding() }
 }}
 
 
@@ -116,8 +117,8 @@ private extension VM.VerticalStack {
 }
 
 // MARK: Body Padding
-extension VM.VerticalStack {
-    func calculateBodyPadding(for popup: AnyPopup) -> EdgeInsets { .init(
+private extension VM.VerticalStack {
+    nonisolated func _calculateBodyPadding() async -> EdgeInsets { guard let popup = await popups.last else { return .init() }; return await .init(
         top: calculateTopBodyPadding(popup: popup),
         leading: calculateLeadingBodyPadding(popup: popup),
         bottom: calculateBottomBodyPadding(popup: popup),
@@ -225,13 +226,13 @@ private extension VM.VerticalStack {
         case .fullscreen: 0
     }}
     nonisolated func calculateTopCornerRadius(_ cornerRadiusValue: CGFloat, _ activePopup: AnyPopup) async -> CGFloat { switch alignment {
-        case .top: activePopup.popupPadding.top != 0 ? cornerRadiusValue : 0
+        case .top: await activePopupPadding.top != 0 ? cornerRadiusValue : 0
         case .bottom: cornerRadiusValue
         case .centre: fatalError()
     }}
     nonisolated func calculateBottomCornerRadius(_ cornerRadiusValue: CGFloat, _ activePopup: AnyPopup) async -> CGFloat { switch alignment {
         case .top: cornerRadiusValue
-        case .bottom: activePopup.popupPadding.bottom != 0 ? cornerRadiusValue : 0
+        case .bottom: await activePopupPadding.bottom != 0 ? cornerRadiusValue : 0
         case .centre: fatalError()
     }}
 }

@@ -16,7 +16,6 @@ struct AnyPopup: Popup {
     private(set) var config: AnyPopupConfig
     var height: CGFloat? = nil
     var dragHeight: CGFloat? = nil
-    var popupPadding: EdgeInsets = .init()
 
     private var dismissTimer: PopupActionScheduler? = nil
     private var _body: AnyView
