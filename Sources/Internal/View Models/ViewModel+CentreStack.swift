@@ -53,7 +53,7 @@ private extension VM.CentreStack {
 }
 private extension VM.CentreStack {
     func calculateVerticalPopupPadding(for edge: PopupAlignment) -> CGFloat {
-        guard let activePopupHeight,
+        guard let activePopupHeight = activePopup.height,
               isKeyboardActive && edge == .bottom
         else { return 0 }
 
@@ -92,7 +92,7 @@ extension VM.CentreStack {
 // MARK: Fixed Size
 extension VM.CentreStack {
     func calculateVerticalFixedSize(for popup: AnyPopup) -> Bool {
-        activePopupHeight != calculateLargeScreenHeight()
+        activePopup.height != calculateLargeScreenHeight()
     }
 }
 

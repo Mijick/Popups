@@ -111,8 +111,8 @@ private extension VM.VerticalStack {
         if popup.config.ignoredSafeAreaEdges.contains(.top) { return 0 }
 
         return switch alignment {
-            case .top: await calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.top, popupPadding: activePopupPadding.top)
-            case .bottom: await calculateVerticalPaddingCounterEdge(popupHeight: activePopupHeight ?? 0, safeArea: screen.safeArea.top)
+            case .top: await calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.top, popupPadding: activePopup.outerPadding.top)
+            case .bottom: await calculateVerticalPaddingCounterEdge(popupHeight: activePopup.height ?? 0, safeArea: screen.safeArea.top)
             case .centre: fatalError()
         }
     }
@@ -196,8 +196,8 @@ private extension VM.VerticalStack {
 
         let cornerRadiusValue = await calculateCornerRadiusValue(activePopup)
         return await [
-            .top: calculateTopCornerRadius(cornerRadiusValue, activePopup),
-            .bottom: calculateBottomCornerRadius(cornerRadiusValue, activePopup)
+            .top: calculateTopCornerRadius(cornerRadiusValue),
+            .bottom: calculateBottomCornerRadius(cornerRadiusValue)
         ]
     }
 }
