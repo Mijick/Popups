@@ -76,6 +76,7 @@ extension ViewModel {
         var newPopup = popup
         newPopup.height = await calculatePopupHeight(heightCandidate, newPopup)
 
+        guard newPopup.height != popup.height else { return }
         await updatePopupAction(newPopup)
     }
 }

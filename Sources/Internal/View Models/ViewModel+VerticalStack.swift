@@ -436,9 +436,11 @@ private extension VM.VerticalStack {
         targetHeight - activePopupHeight
     }
     func updateDragHeight(_ targetDragHeight: CGFloat) async { if let activePopup = popups.last {
-        await updatePopupAction(activePopup.settingDragHeight(targetDragHeight))
+        var newPopup = activePopup
+        newPopup.dragHeight = targetDragHeight
+        await updatePopupAction(newPopup)
     }}
-    func resetGestureTranslation() async {
+    nonisolated func resetGestureTranslation() async {
         await updateGestureTranslation(0)
     }
     func shouldDismissPopup() -> Bool {
