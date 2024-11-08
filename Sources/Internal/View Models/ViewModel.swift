@@ -21,6 +21,7 @@ enum VM {}
 
     // MARK: Subclass Attributes
     var activePopupHeight: CGFloat? = nil
+    var activePopupCornerRadius: [PopupAlignment: CGFloat] = [.top: 0, .bottom: 0]
     var screen: Screen = .init()
     var isKeyboardActive: Bool = false
 
@@ -47,6 +48,7 @@ extension ViewModel {
     func updatePopupsValue(_ newPopups: [AnyPopup]) async {
         popups = await filterPopups(newPopups)
         activePopupHeight = await calculateHeightForActivePopup()
+        activePopupCornerRadius = await calculateCornerRadius()
 
         withAnimation(.transition) { objectWillChange.send() }
     }
@@ -64,7 +66,6 @@ extension ViewModel {
         var newPopup = popup
         newPopup.popupPadding = await calculatePopupPadding()
         newPopup.height = await calculatePopupHeight(heightCandidate, newPopup)
-        newPopup.cornerRadius = await calculateCornerRadius()
 
         await updatePopupAction(newPopup)
     }
