@@ -100,20 +100,24 @@ private extension ViewModel {
 
 
 
-protocol VV: ObservableObject { init()
+protocol VV: ObservableObject {
+    // MARK: Attributes
     var alignment: PopupAlignment { get set }
     var popups: [AnyPopup] { get set }
-    var updatePopupAction: ((AnyPopup) async -> ())! { get set }
-    var closePopupAction: ((AnyPopup) async -> ())! { get set }
-
     var gestureTranslation: CGFloat { get set }
     var translationProgress: CGFloat { get set }
     var activePopup: ActivePopup { get set }
     var screen: Screen { get set }
 
+    // MARK: Actions
+    var updatePopupAction: ((AnyPopup) async -> ())! { get set }
+    var closePopupAction: ((AnyPopup) async -> ())! { get set }
+
+    // MARK: Initializers
+    init()
     init<Config: LocalConfig>(_ config: Config.Type)
 
-
+    // MARK: Methods
     func calculateActivePopupHeight() async -> CGFloat?
     func calculateActivePopupInnerPadding() async -> EdgeInsets
     func calculateActivePopupOuterPadding() async -> EdgeInsets
@@ -122,8 +126,6 @@ protocol VV: ObservableObject { init()
 
     func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat
     func calculateTranslationProgress() async -> CGFloat
-
-
 }
 
 // MARK: Setup
