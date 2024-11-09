@@ -136,7 +136,7 @@ extension VV {
 
 // MARK: Update
 extension VV where Self.ObjectWillChangePublisher == ObservableObjectPublisher {
-    func updatePopupsValue(_ newPopups: [AnyPopup]) async {
+    @MainActor func updatePopupsValue(_ newPopups: [AnyPopup]) async { Task { @MainActor in
         popups = await filterPopups(newPopups)
 
         activePopup.outerPadding = await calculateActivePopupOuterPadding()
@@ -146,22 +146,22 @@ extension VV where Self.ObjectWillChangePublisher == ObservableObjectPublisher {
         activePopup.verticalFixedSize = await calculateActivePopupVerticalFixedSize()
 
         withAnimation(.transition) { objectWillChange.send() }
-    }
-    func updateScreenValue(_ screenReader: GeometryProxy) async {
+    }}
+    @MainActor func updateScreenValue(_ screenReader: GeometryProxy) async { Task { @MainActor in
         screen.update(screenReader)
         activePopup.outerPadding = await calculateActivePopupOuterPadding()
         activePopup.innerPadding = await calculateActivePopupInnerPadding()
 
         withAnimation(.transition) { objectWillChange.send() }
-    }
-    func updateKeyboardValue(_ isActive: Bool) async {
+    }}
+    @MainActor func updateKeyboardValue(_ isActive: Bool) async { Task { @MainActor in
         screen.isKeyboardActive = isActive
         activePopup.outerPadding = await calculateActivePopupOuterPadding()
         activePopup.innerPadding = await calculateActivePopupInnerPadding()
 
         withAnimation(.transition) { objectWillChange.send() }
-    }
-    func recalculateAndUpdatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async {
+    }}
+    @MainActor func recalculateAndUpdatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async { Task { @MainActor in
         guard gestureTranslation == 0 else { return }
 
 
@@ -170,14 +170,14 @@ extension VV where Self.ObjectWillChangePublisher == ObservableObjectPublisher {
 
         guard newPopup.height != popup.height else { return }
         await updatePopupAction(newPopup)
-    }
-    func updateGestureTranslation(_ newGestureTranslation: CGFloat) async {
+    }}
+    @MainActor func updateGestureTranslation(_ newGestureTranslation: CGFloat) async { Task { @MainActor in
         gestureTranslation = newGestureTranslation
         translationProgress = await calculateTranslationProgress()
         activePopup.height = await calculateActivePopupHeight()
 
         withAnimation(gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
-    }
+    }}
 }
 private extension VV {
     func filterPopups(_ popups: [AnyPopup]) async -> [AnyPopup] {
