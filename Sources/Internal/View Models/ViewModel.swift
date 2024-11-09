@@ -100,7 +100,7 @@ private extension ViewModel {
 
 
 
-protocol VV: ObservableObject {
+protocol VV: ObservableObject where Self.ObjectWillChangePublisher == ObservableObjectPublisher {
     // MARK: Attributes
     var alignment: PopupAlignment { get set }
     var popups: [AnyPopup] { get set }
@@ -137,7 +137,7 @@ extension VV {
 }
 
 // MARK: Update
-extension VV where Self.ObjectWillChangePublisher == ObservableObjectPublisher {
+extension VV {
     @MainActor func updatePopupsValue(_ newPopups: [AnyPopup]) async { Task { @MainActor in
         popups = await filterPopups(newPopups)
 
