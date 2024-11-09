@@ -108,11 +108,11 @@ private extension PopupView {
     }}
 }
 private extension PopupView {
-    func updatePopup(_ popup: AnyPopup) {
-        popupManager.updateStack(popup)
+    nonisolated func updatePopup(_ popup: AnyPopup) async {
+        await popupManager.updateStack(popup)
     }
-    func closePopup(_ popup: AnyPopup) {
-        popupManager.stack(.removePopupInstance(popup))
+    nonisolated func closePopup(_ popup: AnyPopup) async {
+        await popupManager.stack(.removePopupInstance(popup))
     }
     func updateViewModels(_ updateBuilder: @escaping (any ViewModel) async -> ()) async {
         for viewModel in [topStackViewModel, centreStackViewModel, bottomStackViewModel] { Task { @MainActor in await updateBuilder(viewModel as! any ViewModel) }}
