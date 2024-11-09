@@ -11,15 +11,15 @@
 
 import SwiftUI
 
-extension VM { class CentreStack: ViewModel {
-    // MARK: Overridden Methods
-    override func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat { await _calculatePopupHeight(heightCandidate) }
-    override func calculatePopupPadding() async -> EdgeInsets { await _calculatePopupPadding() }
-    override func calculateHeightForActivePopup() async -> CGFloat? { await _calculateHeightForActivePopup() }
-    override func calculateCornerRadius() async -> [PopupAlignment: CGFloat] { await _calculateCornerRadius() }
-    override func calculateBodyPadding() async -> EdgeInsets { await _calculateBodyPadding() }
-    override func calculateTranslationProgress() async -> CGFloat { await _calculateTranslationProgress() }
-    override func calculateVerticalFixedSize() async -> Bool { false }
+extension VM { class CentreStack: VV { required init() {}
+    var alignment: PopupAlignment = .centre
+    var popups: [AnyPopup] = []
+    var gestureTranslation: CGFloat = 0
+    var translationProgress: CGFloat = 0
+    var activePopup: ActivePopup = .init()
+    var screen: Screen = .init()
+    var updatePopupAction: ((AnyPopup) async -> ())!
+    var closePopupAction: ((AnyPopup) async -> ())!
 }}
 
 
@@ -29,9 +29,9 @@ extension VM { class CentreStack: ViewModel {
 
 
 // MARK: Popup Height
-private extension VM.CentreStack {
-    nonisolated func _calculatePopupHeight(_ heightCandidate: CGFloat) async -> CGFloat {
-        await min(heightCandidate, calculateLargeScreenHeight())
+extension VM.CentreStack {
+    func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat {
+        min(heightCandidate, calculateLargeScreenHeight())
     }
 }
 private extension VM.CentreStack {
@@ -42,9 +42,9 @@ private extension VM.CentreStack {
     }
 }
 
-// MARK: Popup Padding
-private extension VM.CentreStack {
-    nonisolated func _calculatePopupPadding() async -> EdgeInsets { await .init(
+// MARK: Outer Padding
+extension VM.CentreStack {
+    func calculateActivePopupOuterPadding() async -> EdgeInsets { await .init(
         top: calculateVerticalPopupPadding(for: .top),
         leading: calculateLeadingPopupPadding(),
         bottom: calculateVerticalPopupPadding(for: .bottom),
@@ -52,8 +52,8 @@ private extension VM.CentreStack {
     )}
 }
 private extension VM.CentreStack {
-    func calculateVerticalPopupPadding(for edge: PopupAlignment) -> CGFloat {
-        guard let activePopupHeight = activePopup.height,
+    func calculateVerticalPopupPadding(for edge: PopupAlignment) async -> CGFloat {
+        guard let activePopupHeight = await activePopup.height,
               screen.isKeyboardActive && edge == .bottom
         else { return 0 }
 
@@ -69,14 +69,14 @@ private extension VM.CentreStack {
     }
 }
 
-// MARK: Body Padding
-private extension VM.CentreStack {
-    nonisolated func _calculateBodyPadding() async -> EdgeInsets { .init() }
+// MARK: Inner Padding
+extension VM.CentreStack {
+    func calculateActivePopupInnerPadding() async -> EdgeInsets { .init() }
 }
 
 // MARK: Corner Radius
-private extension VM.CentreStack {
-    nonisolated func _calculateCornerRadius() async -> [PopupAlignment : CGFloat] { await [
+extension VM.CentreStack {
+    func calculateActivePopupCorners() async -> [PopupAlignment : CGFloat] { [
         .top: popups.last?.config.cornerRadius ?? 0,
         .bottom: popups.last?.config.cornerRadius ?? 0
     ]}
@@ -91,25 +91,19 @@ extension VM.CentreStack {
 
 // MARK: Fixed Size
 extension VM.CentreStack {
-    func calculateVerticalFixedSize(for popup: AnyPopup) -> Bool {
-        activePopup.height != calculateLargeScreenHeight()
+    func calculateActivePopupVerticalFixedSize() async -> Bool {
+        await activePopup.height != calculateLargeScreenHeight()
     }
 }
 
 // MARK: Translation Progress
-private extension VM.CentreStack {
-    nonisolated func _calculateTranslationProgress() async -> CGFloat { 0 }
+extension VM.CentreStack {
+    func calculateTranslationProgress() async -> CGFloat { 0 }
 }
 
-
-
-// MARK: - HELPERS
-
-
-
 // MARK: Active Popup Height
-private extension VM.CentreStack {
-    nonisolated func _calculateHeightForActivePopup() async -> CGFloat? {
-        await popups.last?.height
+extension VM.CentreStack {
+    func calculateActivePopupHeight() async -> CGFloat? {
+        popups.last?.height
     }
 }

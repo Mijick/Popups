@@ -30,7 +30,7 @@ private extension PopupCentreStackView {
 private extension PopupCentreStackView {
     func createPopup(_ popup: AnyPopup) -> some View {
         popup.body
-            .fixedSize(horizontal: false, vertical: viewModel.calculateVerticalFixedSize(for: popup))
+            .fixedSize(horizontal: false, vertical: viewModel.activePopup.verticalFixedSize)
             .onHeightChange { await viewModel.recalculateAndUpdatePopupHeight($0, popup) }
             .frame(height: viewModel.activePopup.height)
             .frame(maxWidth: .infinity, maxHeight: viewModel.activePopup.height)
