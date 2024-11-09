@@ -10,6 +10,7 @@
 
 
 import SwiftUI
+import Combine
 
 enum VM {}
 @MainActor class ViewModel: ObservableObject {
@@ -125,7 +126,7 @@ protocol VV: ObservableObject { init()
 
 }
 
-
+// MARK: Setup
 extension VV {
     func setup(updatePopupAction: @escaping (AnyPopup) async -> (), closePopupAction: @escaping (AnyPopup) async -> ()) {
         self.updatePopupAction = updatePopupAction
@@ -133,8 +134,55 @@ extension VV {
     }
 }
 
-extension VV {
+// MARK: Update
+extension VV where Self.ObjectWillChangePublisher == ObservableObjectPublisher {
+    func updatePopupsValue(_ newPopups: [AnyPopup]) async {
+        popups = await filterPopups(newPopups)
 
+        activePopup.outerPadding = await calculateActivePopupOuterPadding()
+        activePopup.height = await calculateActivePopupHeight()
+        activePopup.innerPadding = await calculateActivePopupInnerPadding()
+        activePopup.corners = await calculateActivePopupCorners()
+        activePopup.verticalFixedSize = await calculateActivePopupVerticalFixedSize()
+
+        withAnimation(.transition) { objectWillChange.send() }
+    }
+    func updateScreenValue(_ screenReader: GeometryProxy) async {
+        screen.update(screenReader)
+        activePopup.outerPadding = await calculateActivePopupOuterPadding()
+        activePopup.innerPadding = await calculateActivePopupInnerPadding()
+
+        withAnimation(.transition) { objectWillChange.send() }
+    }
+    func updateKeyboardValue(_ isActive: Bool) async {
+        screen.isKeyboardActive = isActive
+        activePopup.outerPadding = await calculateActivePopupOuterPadding()
+        activePopup.innerPadding = await calculateActivePopupInnerPadding()
+
+        withAnimation(.transition) { objectWillChange.send() }
+    }
+    func recalculateAndUpdatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async {
+        guard gestureTranslation == 0 else { return }
+
+
+        var newPopup = popup
+        newPopup.height = await calculatePopupHeight(heightCandidate, newPopup)
+
+        guard newPopup.height != popup.height else { return }
+        await updatePopupAction(newPopup)
+    }
+    func updateGestureTranslation(_ newGestureTranslation: CGFloat) async {
+        gestureTranslation = newGestureTranslation
+        translationProgress = await calculateTranslationProgress()
+        activePopup.height = await calculateActivePopupHeight()
+
+        withAnimation(gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
+    }
+}
+private extension VV {
+    func filterPopups(_ popups: [AnyPopup]) async -> [AnyPopup] {
+        popups.filter { $0.config.alignment == alignment }
+    }
 }
 
 
