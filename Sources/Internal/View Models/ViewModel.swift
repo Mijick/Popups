@@ -42,7 +42,7 @@ protocol ViewModel: ObservableObject where Self.ObjectWillChangePublisher == Obs
 }
 
 // MARK: Setup
-extension VV {
+extension ViewModel {
     func setup(updatePopupAction: @escaping (AnyPopup) async -> (), closePopupAction: @escaping (AnyPopup) async -> ()) {
         self.updatePopupAction = updatePopupAction
         self.closePopupAction = closePopupAction
@@ -50,7 +50,7 @@ extension VV {
 }
 
 // MARK: Update
-extension VV {
+extension ViewModel {
     @MainActor func updatePopupsValue(_ newPopups: [AnyPopup]) async { Task { @MainActor in
         popups = await filterPopups(newPopups)
 
@@ -94,7 +94,7 @@ extension VV {
         withAnimation(gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
     }}
 }
-private extension VV {
+private extension ViewModel {
     func filterPopups(_ popups: [AnyPopup]) async -> [AnyPopup] {
         popups.filter { $0.config.alignment == alignment }
     }
@@ -103,7 +103,7 @@ private extension VV {
 
 
 
-extension VV {
+extension ViewModel {
     init<Config: LocalConfig>(_ config: Config.Type) { self.init(); self.alignment = .init(Config.self) }
 }
 
