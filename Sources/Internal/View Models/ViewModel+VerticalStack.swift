@@ -425,7 +425,7 @@ private extension VM.VerticalStack {
     @MainActor func resetGestureTranslation() async {
         await updateGestureTranslation(0)
     }
-    func shouldDismissPopup() -> Bool {
-        translationProgress >= dragThreshold
+    func shouldDismissPopup() async -> Bool {
+        await activePopup.translationProgress >= dragThreshold
     }
 }
