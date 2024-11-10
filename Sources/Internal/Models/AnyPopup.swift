@@ -45,13 +45,12 @@ extension AnyPopup {
 
 // MARK: Update
 extension AnyPopup {
-    nonisolated func settingHeight(_ newHeight: CGFloat?) async -> AnyPopup { await updatedAsync { $0.height = newHeight }}
-    nonisolated func settingDragHeight(_ newDragHeight: CGFloat?) async -> AnyPopup { await updatedAsync { $0.dragHeight = newDragHeight }}
-
-    func settingCustomID(_ customID: String) -> AnyPopup { updated { $0.id = .create(from: customID) }}
-    func settingDismissTimer(_ secondsToDismiss: Double) -> AnyPopup { updated { $0._dismissTimer = .prepare(time: secondsToDismiss) }}
-    func startingDismissTimerIfNeeded(_ popupManager: PopupManager) -> AnyPopup { updated { $0._dismissTimer?.schedule { popupManager.stack(.removePopupInstance(self)) }}}
-    func settingEnvironmentObject(_ environmentObject: some ObservableObject) -> AnyPopup { updated { $0._body = .init(_body.environmentObject(environmentObject)) }}
+    nonisolated func updatedHeight(_ newHeight: CGFloat?) async -> AnyPopup { await updatedAsync { $0.height = newHeight }}
+    nonisolated func updatedDragHeight(_ newDragHeight: CGFloat?) async -> AnyPopup { await updatedAsync { $0.dragHeight = newDragHeight }}
+    func updatedID(_ customID: String) -> AnyPopup { updated { $0.id = .create(from: customID) }}
+    func updatedDismissTimer(_ secondsToDismiss: Double) -> AnyPopup { updated { $0._dismissTimer = .prepare(time: secondsToDismiss) }}
+    func updatedEnvironmentObject(_ environmentObject: some ObservableObject) -> AnyPopup { updated { $0._body = .init(_body.environmentObject(environmentObject)) }}
+    func startDismissTimerIfNeeded(_ popupManager: PopupManager) -> AnyPopup { updated { $0._dismissTimer?.schedule { popupManager.stack(.removePopupInstance(self)) }}}
 }
 private extension AnyPopup {
     func updated(_ customBuilder: (inout AnyPopup) -> ()) -> AnyPopup {

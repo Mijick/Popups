@@ -43,12 +43,12 @@ public extension Popup {
      - important: To dismiss a popup with a custom ID set, use methods ``PopupManager/dismissPopup(_:popupManagerID:)-1atvy`` or ``SwiftUICore/View/dismissPopup(_:popupManagerID:)-55ubm``
      - tip: Useful if you want to display several different popups of the same type.
      */
-    func setCustomID(_ id: String) -> some Popup { AnyPopup(self).settingCustomID(id) }
+    func setCustomID(_ id: String) -> some Popup { AnyPopup(self).updatedID(id) }
 
     /**
      Supplies an observable object to a popup's hierarchy.
      */
-    func setEnvironmentObject<T: ObservableObject>(_ object: T) -> some Popup { AnyPopup(self).settingEnvironmentObject(object) }
+    func setEnvironmentObject<T: ObservableObject>(_ object: T) -> some Popup { AnyPopup(self).updatedEnvironmentObject(object) }
 
     /**
      Dismisses the popup after a specified period of time.
@@ -56,5 +56,5 @@ public extension Popup {
      - Parameters:
         - seconds: Time in seconds after which the popup will be closed.
      */
-    func dismissAfter(_ seconds: Double) -> some Popup { AnyPopup(self).settingDismissTimer(seconds) }
+    func dismissAfter(_ seconds: Double) -> some Popup { AnyPopup(self).updatedDismissTimer(seconds) }
 }
