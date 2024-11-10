@@ -60,15 +60,8 @@ extension ViewModel {
 
         withAnimation(.transition) { objectWillChange.send() }
     }}
-    @MainActor func updateScreenValue(_ screenReader: GeometryProxy) async { Task { @MainActor in
-        screen.update(screenReader)
-        activePopup.outerPadding = await calculateActivePopupOuterPadding()
-        activePopup.innerPadding = await calculateActivePopupInnerPadding()
-
-        withAnimation(.transition) { objectWillChange.send() }
-    }}
-    @MainActor func updateKeyboardValue(_ isActive: Bool) async { Task { @MainActor in
-        screen.isKeyboardActive = isActive
+    @MainActor func updateScreenValue(screenReader: GeometryProxy? = nil, isKeyboardActive: Bool? = nil) async { Task { @MainActor in
+        screen.update(screenReader: screenReader, isKeyboardActive: isKeyboardActive)
         activePopup.outerPadding = await calculateActivePopupOuterPadding()
         activePopup.innerPadding = await calculateActivePopupInnerPadding()
 
