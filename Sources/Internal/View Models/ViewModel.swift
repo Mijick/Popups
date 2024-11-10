@@ -13,7 +13,7 @@ import SwiftUI
 import Combine
 
 enum VM {}
-protocol ViewModel: ObservableObject where Self.ObjectWillChangePublisher == ObservableObjectPublisher {
+protocol ViewModel: ObservableObject where Self.ObjectWillChangePublisher == ObservableObjectPublisher { init()
     // MARK: Attributes
     var alignment: PopupAlignment { get set }
     var popups: [AnyPopup] { get set }
@@ -23,9 +23,6 @@ protocol ViewModel: ObservableObject where Self.ObjectWillChangePublisher == Obs
     // MARK: Actions
     var updatePopupAction: ((AnyPopup) async -> ())! { get set }
     var closePopupAction: ((AnyPopup) async -> ())! { get set }
-
-    // MARK: Initializers
-    init()
 
     // MARK: Methods
     func calculateActivePopupHeight() async -> CGFloat?
