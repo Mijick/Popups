@@ -226,7 +226,7 @@ extension VM.VerticalStack {
 
 // MARK: Z Index
 extension VM.VerticalStack {
-    func calculateZIndex() -> CGFloat {
+    @MainActor func calculateZIndex() -> CGFloat {
         popups.last == nil ? 2137 : .init(popups.count)
     }
 }
