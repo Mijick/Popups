@@ -41,11 +41,11 @@ fileprivate extension View {
 
 // MARK: Hide Keyboard
 extension AnyView {
-    @MainActor static func hideKeyboard() {
+    nonisolated static func hideKeyboard() async {
         #if os(iOS)
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        await UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         #elseif os(macOS)
-        NSApp.keyWindow?.makeFirstResponder(nil)
+        await NSApp.keyWindow?.makeFirstResponder(nil)
         #endif
     }
 }

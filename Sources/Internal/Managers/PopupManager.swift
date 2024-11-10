@@ -47,9 +47,9 @@ extension PopupManager {
     }
 }
 private extension PopupManager {
-    func hideKeyboard() {
-        AnyView.hideKeyboard()
-    }
+    func hideKeyboard() { Task {
+        await AnyView.hideKeyboard()
+    }}
     func perform(_ operation: StackOperation) { switch operation {
         case .insertPopup(let popup): insertPopup(popup)
         case .removeLastPopup: removeLastPopup()
