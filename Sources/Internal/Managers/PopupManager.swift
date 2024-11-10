@@ -34,23 +34,23 @@ extension PopupManager {
 
 // MARK: Available Operations
 extension PopupManager { enum StackOperation {
-    case insertPopup(any Popup)
+    case insertPopup(AnyPopup)
     case removeLastPopup, removePopupInstance(AnyPopup), removeAllPopupsOfType(any Popup.Type), removeAllPopupsWithID(String), removeAllPopups
 }}
 
 // MARK: Perform Operation
 extension PopupManager {
-    func stack(_ operation: StackOperation) { let oldStackCount = stack.count
-        hideKeyboard()
-        perform(operation)
-        reshuffleStackPriority(oldStackCount)
+    func stack(_ operation: StackOperation) async { let oldStackCount = stack.count
+        await hideKeyboard()
+        await perform(operation)
+        await reshuffleStackPriority(oldStackCount)
     }
 }
 private extension PopupManager {
-    func hideKeyboard() { Task {
+    func hideKeyboard() async {
         await AnyView.hideKeyboard()
-    }}
-    func perform(_ operation: StackOperation) { switch operation {
+    }
+    func perform(_ operation: StackOperation) async { switch operation {
         case .insertPopup(let popup): insertPopup(popup)
         case .removeLastPopup: removeLastPopup()
         case .removePopupInstance(let popup): removePopupInstance(popup)
@@ -58,21 +58,17 @@ private extension PopupManager {
         case .removeAllPopupsWithID(let id): removeAllPopupsWithID(id)
         case .removeAllPopups: removeAllPopups()
     }}
-    func reshuffleStackPriority(_ oldStackCount: Int) {
+    func reshuffleStackPriority(_ oldStackCount: Int) async {
         let delayDuration = oldStackCount > stack.count ? Animation.duration : 0
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + delayDuration) { [self] in
-            stackPriority.reshuffle(newPopups: stack)
-        }
+        await Task.sleep(seconds: delayDuration)
+        
+        stackPriority.reshuffle(newPopups: stack)
     }
 }
 private extension PopupManager {
-    func insertPopup(_ popup: any Popup) {
-        let erasedPopup = AnyPopup(popup)
-        let canPopupBeInserted = !stack.contains(where: { $0.id.isSameType(as: erasedPopup.id) })
-
-        if canPopupBeInserted { stack.append(erasedPopup.startDismissTimerIfNeeded(self)) }
-    }
+    func insertPopup(_ erasedPopup: AnyPopup) { if !stack.contains(where: { $0.id.isSameType(as: erasedPopup.id) }) {
+        stack.append(erasedPopup.startDismissTimerIfNeeded(self))
+    }}
     func removeLastPopup() { if !stack.isEmpty {
         stack.removeLast()
     }}

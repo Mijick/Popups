@@ -103,9 +103,9 @@ private extension PopupView {
     func onKeyboardStateChange(_ isKeyboardActive: Bool) { Task { @MainActor in
         await updateViewModels { await $0.updateScreenValue(isKeyboardActive: isKeyboardActive) }
     }}
-    func onTap() { if tapOutsideClosesPopup {
-        popupManager.stack(.removeLastPopup)
-    }}
+    func onTap() { if tapOutsideClosesPopup { Task {
+        await popupManager.stack(.removeLastPopup)
+    }}}
 }
 private extension PopupView {
     nonisolated func updatePopup(_ popup: AnyPopup) async {
