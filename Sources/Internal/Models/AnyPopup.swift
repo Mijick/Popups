@@ -25,11 +25,11 @@ struct AnyPopup: Popup {
 
 
 
-// MARK: - INITIALISE & UPDATE
+// MARK: - INITIALIZE & UPDATE
 
 
 
-// MARK: Initialise
+// MARK: Initialize
 extension AnyPopup {
     init<P: Popup>(_ popup: P) {
         if let popup = popup as? AnyPopup { self = popup }
