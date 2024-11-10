@@ -65,12 +65,10 @@ extension ViewModel {
     @MainActor func recalculateAndUpdatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async { Task { @MainActor in
         guard activePopup.gestureTranslation == 0 else { return }
 
+        let newHeight = await calculatePopupHeight(heightCandidate, popup)
+        guard newHeight != popup.height else { return }
 
-        var newPopup = popup
-        newPopup.height = await calculatePopupHeight(heightCandidate, newPopup)
-
-        guard newPopup.height != popup.height else { return }
-        await updatePopupAction(newPopup)
+        await updatePopupAction(popup.settingHeight(newHeight))
     }}
     @MainActor func updateGestureTranslation(_ newGestureTranslation: CGFloat) async { Task { @MainActor in
         activePopup.gestureTranslation = newGestureTranslation

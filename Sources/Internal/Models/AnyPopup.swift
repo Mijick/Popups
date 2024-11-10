@@ -14,8 +14,8 @@ import SwiftUI
 struct AnyPopup: Popup {
     private(set) var id: PopupID
     private(set) var config: AnyPopupConfig
-    var height: CGFloat? = nil
-    var dragHeight: CGFloat? = nil
+    private(set) var height: CGFloat? = nil
+    private(set) var dragHeight: CGFloat? = nil
 
     private var dismissTimer: PopupActionScheduler? = nil
     private var _body: AnyView
@@ -52,7 +52,7 @@ extension AnyPopup {
     func settingDragHeight(_ newDragHeight: CGFloat?) -> AnyPopup { updatingPopup { $0.dragHeight = newDragHeight }}
     func settingEnvironmentObject(_ environmentObject: some ObservableObject) -> AnyPopup { updatingPopup { $0._body = .init(_body.environmentObject(environmentObject)) }}
 }
-extension AnyPopup {
+private extension AnyPopup {
     func updatingPopup(_ customBuilder: (inout AnyPopup) -> ()) -> AnyPopup {
         var popup = self
         customBuilder(&popup)
