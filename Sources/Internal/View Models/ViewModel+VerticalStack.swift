@@ -31,7 +31,7 @@ extension VM { class VerticalStack: ViewModel { required init() {}
 // MARK: Popup Height
 extension VM.VerticalStack {
     func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat {
-        guard gestureTranslation.isZero else { return popup.height ?? 0 }
+        guard await activePopup.gestureTranslation.isZero else { return popup.height ?? 0 }
 
         let popupHeight = calculateNewPopupHeight(heightCandidate, popup.config)
         return popupHeight
@@ -147,18 +147,18 @@ private extension VM.VerticalStack {
 
 // MARK: Offset Y
 extension VM.VerticalStack {
-    func calculateOffsetY(for popup: AnyPopup) -> CGFloat { switch popup == popups.last {
+    @MainActor func calculateOffsetY(for popup: AnyPopup) -> CGFloat { switch popup == popups.last {
         case true: calculateOffsetForActivePopup()
         case false: calculateOffsetForStackedPopup(popup)
     }}
 }
 private extension VM.VerticalStack {
-    func calculateOffsetForActivePopup() -> CGFloat {
+    @MainActor func calculateOffsetForActivePopup() -> CGFloat {
         let lastPopupDragHeight = popups.last?.dragHeight ?? 0
 
         return switch alignment {
-            case .top: min(gestureTranslation + lastPopupDragHeight, 0)
-            case .bottom: max(gestureTranslation - lastPopupDragHeight, 0)
+            case .top: min(activePopup.gestureTranslation + lastPopupDragHeight, 0)
+            case .bottom: max(activePopup.gestureTranslation - lastPopupDragHeight, 0)
             case .centre: fatalError()
         }
     }
@@ -177,11 +177,11 @@ private extension VM.VerticalStack {
 
 // MARK: Scale X
 extension VM.VerticalStack {
-    func calculateScaleX(for popup: AnyPopup) -> CGFloat {
+    @MainActor func calculateScaleX(for popup: AnyPopup) -> CGFloat {
         guard popup != popups.last else { return 1 }
 
         let invertedIndex = getInvertedIndex(of: popup),
-            remainingTranslationProgress = 1 - translationProgress
+            remainingTranslationProgress = 1 - activePopup.translationProgress
 
         let progressMultiplier = invertedIndex == 1 ? remainingTranslationProgress : max(minScaleProgressMultiplier, remainingTranslationProgress)
         let scaleValue = .init(invertedIndex) * stackScaleFactor * progressMultiplier
@@ -235,11 +235,11 @@ extension VM.VerticalStack {
 
 // MARK: - Stack Overlay Opacity
 extension VM.VerticalStack {
-    func calculateStackOverlayOpacity(for popup: AnyPopup) -> CGFloat {
+    @MainActor func calculateStackOverlayOpacity(for popup: AnyPopup) -> CGFloat {
         guard popup != popups.last else { return 0 }
 
         let invertedIndex = getInvertedIndex(of: popup),
-            remainingTranslationProgress = 1 - translationProgress
+            remainingTranslationProgress = 1 - activePopup.translationProgress
 
         let progressMultiplier = invertedIndex == 1 ? remainingTranslationProgress : max(minStackOverlayProgressMultiplier, remainingTranslationProgress)
         let overlayValue = min(stackOverlayFactor * .init(invertedIndex), maxStackOverlayFactor)
@@ -264,7 +264,7 @@ extension VM.VerticalStack {
         guard let activePopupHeight = popups.last?.height else { return nil }
 
         let activePopupDragHeight = popups.last?.dragHeight ?? 0
-        let popupHeightFromGestureTranslation = activePopupHeight + activePopupDragHeight + gestureTranslation * getDragTranslationMultiplier()
+        let popupHeightFromGestureTranslation = await activePopupHeight + activePopupDragHeight + activePopup.gestureTranslation * getDragTranslationMultiplier()
 
         let newHeightCandidate1 = max(activePopupHeight, popupHeightFromGestureTranslation),
             newHeightCanditate2 = screen.height
@@ -282,8 +282,8 @@ private extension VM.VerticalStack {
 // MARK: Translation Progress
 extension VM.VerticalStack {
     func calculateTranslationProgress() async -> CGFloat { guard let activePopupHeight = popups.last?.height else { return 0 }; return switch alignment {
-        case .top: abs(min(gestureTranslation + (popups.last?.dragHeight ?? 0), 0)) / activePopupHeight
-        case .bottom: max(gestureTranslation - (popups.last?.dragHeight ?? 0), 0) / activePopupHeight
+        case .top: await abs(min(activePopup.gestureTranslation + (popups.last?.dragHeight ?? 0), 0)) / activePopupHeight
+        case .bottom: await max(activePopup.gestureTranslation - (popups.last?.dragHeight ?? 0), 0) / activePopupHeight
         case .centre: fatalError()
     }}
 }
@@ -363,7 +363,7 @@ extension VM.VerticalStack {
     }}}
 }
 private extension VM.VerticalStack {
-    func dismissLastItemIfNeeded() async { if shouldDismissPopup() { if let popup = popups.last {
+    func dismissLastItemIfNeeded() async { if await shouldDismissPopup() { if let popup = popups.last {
         await closePopupAction(popup)
     }}}
     @MainActor func updateTranslationValues() async { if let activePopupHeight = popups.last?.height {
@@ -382,7 +382,7 @@ private extension VM.VerticalStack {
 private extension VM.VerticalStack {
     func calculateCurrentPopupHeight(_ activePopupHeight: CGFloat) async -> CGFloat {
         let activePopupDragHeight = popups.last?.dragHeight ?? 0
-        let currentDragHeight = activePopupDragHeight + gestureTranslation * getDragTranslationMultiplier()
+        let currentDragHeight = await activePopupDragHeight + activePopup.gestureTranslation * getDragTranslationMultiplier()
 
         let currentPopupHeight = activePopupHeight + currentDragHeight
         return currentPopupHeight
@@ -404,14 +404,14 @@ private extension VM.VerticalStack {
         else { return popupTargetHeights.last ?? 0 }
 
         let initialIndex = popupTargetHeights.firstIndex(where: { $0 >= currentPopupHeight }) ?? popupTargetHeights.count - 1,
-            targetIndex = gestureTranslation * getDragTranslationMultiplier() > 0 ? initialIndex : max(0, initialIndex - 1)
+            targetIndex = await activePopup.gestureTranslation * getDragTranslationMultiplier() > 0 ? initialIndex : max(0, initialIndex - 1)
         let previousPopupHeight = (popups.last?.dragHeight ?? 0) + activePopupHeight,
             popupTargetHeight = popupTargetHeights[targetIndex],
             deltaHeight = abs(previousPopupHeight - popupTargetHeight)
         let progress = abs(currentPopupHeight - previousPopupHeight) / deltaHeight
 
         if progress < dragThreshold {
-            let index = gestureTranslation * getDragTranslationMultiplier() > 0 ? max(0, initialIndex - 1) : initialIndex
+            let index = await activePopup.gestureTranslation * getDragTranslationMultiplier() > 0 ? max(0, initialIndex - 1) : initialIndex
             return popupTargetHeights[index]
         }
         return popupTargetHeights[targetIndex]
