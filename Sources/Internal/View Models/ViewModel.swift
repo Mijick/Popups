@@ -26,7 +26,6 @@ protocol ViewModel: ObservableObject where Self.ObjectWillChangePublisher == Obs
 
     // MARK: Initializers
     init()
-    init<Config: LocalConfig>(_ config: Config.Type)
 
     // MARK: Methods
     func calculateActivePopupHeight() async -> CGFloat?
