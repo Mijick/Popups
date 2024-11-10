@@ -27,6 +27,11 @@ public class LocalConfigVertical: LocalConfig { required public init() {}
 }
 
 // MARK: Subclasses & Typealiases
+public extension LocalConfigVertical {
+    class Top: LocalConfigVertical {}
+    class Bottom: LocalConfigVertical {}
+}
+
 /**
  Configures the popup.
  See the list of available methods in ``LocalConfig`` and ``LocalConfig/Vertical``.
@@ -42,10 +47,6 @@ public typealias TopPopupConfig = LocalConfigVertical.Top
 - important: If a certain method is not called here, the popup inherits the configuration from ``GlobalConfigContainer``.
  */
 public typealias BottomPopupConfig = LocalConfigVertical.Bottom
-public extension LocalConfigVertical {
-    class Top: LocalConfigVertical {}
-    class Bottom: LocalConfigVertical {}
-}
 
 
 
