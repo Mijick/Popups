@@ -34,9 +34,9 @@ protocol ViewModel: ObservableObject where Self.ObjectWillChangePublisher == Obs
     func calculateActivePopupOuterPadding() async -> EdgeInsets
     func calculateActivePopupCorners() async -> [PopupAlignment: CGFloat]
     func calculateActivePopupVerticalFixedSize() async -> Bool
+    func calculateActivePopupTranslationProgress() async -> CGFloat
 
     func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat
-    func calculateTranslationProgress() async -> CGFloat
 }
 
 // MARK: Setup
@@ -86,7 +86,7 @@ extension ViewModel {
     }}
     @MainActor func updateGestureTranslation(_ newGestureTranslation: CGFloat) async { Task { @MainActor in
         activePopup.gestureTranslation = newGestureTranslation
-        activePopup.translationProgress = await calculateTranslationProgress()
+        activePopup.translationProgress = await calculateActivePopupTranslationProgress()
         activePopup.height = await calculateActivePopupHeight()
 
         withAnimation(activePopup.gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }

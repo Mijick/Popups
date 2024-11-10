@@ -96,7 +96,7 @@ extension VM.CentreStack {
 
 // MARK: Translation Progress
 extension VM.CentreStack {
-    func calculateTranslationProgress() async -> CGFloat { 0 }
+    func calculateActivePopupTranslationProgress() async -> CGFloat { 0 }
 }
 
 // MARK: Active Popup Height

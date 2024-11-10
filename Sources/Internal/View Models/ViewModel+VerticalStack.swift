@@ -279,7 +279,7 @@ private extension VM.VerticalStack {
 
 // MARK: Translation Progress
 extension VM.VerticalStack {
-    func calculateTranslationProgress() async -> CGFloat { guard let activePopupHeight = popups.last?.height else { return 0 }; return switch alignment {
+    func calculateActivePopupTranslationProgress() async -> CGFloat { guard let activePopupHeight = popups.last?.height else { return 0 }; return switch alignment {
         case .top: await abs(min(activePopup.gestureTranslation + (popups.last?.dragHeight ?? 0), 0)) / activePopupHeight
         case .bottom: await max(activePopup.gestureTranslation - (popups.last?.dragHeight ?? 0), 0) / activePopupHeight
         case .centre: fatalError()

@@ -841,7 +841,7 @@ private extension PopupVerticalStackViewModelTests {
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { await $0.calculateTranslationProgress() },
+            calculatedValue: { await $0.calculateActivePopupTranslationProgress() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
@@ -1001,7 +1001,7 @@ extension PopupVerticalStackViewModelTests {
             popups: popups,
             gestureTranslation: 100,
             calculateForIndex: 1,
-            expectedValueBuilder: { await 1 - $0.stackScaleFactor * 3 * max(1 - $0.calculateTranslationProgress(), $0.minScaleProgressMultiplier) }
+            expectedValueBuilder: { await 1 - $0.stackScaleFactor * 3 * max(1 - $0.calculateActivePopupTranslationProgress(), $0.minScaleProgressMultiplier) }
         )
     }
 }
@@ -1191,7 +1191,7 @@ extension PopupVerticalStackViewModelTests {
             popups: popups,
             gestureTranslation: 241,
             calculateForIndex: 2,
-            expectedValueBuilder: { await (1 - $0.calculateTranslationProgress()) * $0.stackOverlayFactor }
+            expectedValueBuilder: { await (1 - $0.calculateActivePopupTranslationProgress()) * $0.stackOverlayFactor }
         )
     }
 }
