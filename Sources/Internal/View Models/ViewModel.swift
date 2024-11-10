@@ -34,7 +34,6 @@ protocol ViewModel: ObservableObject where Self.ObjectWillChangePublisher == Obs
     func calculateActivePopupCorners() async -> [PopupAlignment: CGFloat]
     func calculateActivePopupVerticalFixedSize() async -> Bool
     func calculateActivePopupTranslationProgress() async -> CGFloat
-
     func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat
 }
 
