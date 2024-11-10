@@ -17,14 +17,14 @@ struct PopupID {
 
 // MARK: Create
 extension PopupID {
-    static func create(from id: String) -> Self {
+    init(_ id: String) {
         let firstComponent = id,
-            secondComponent = separator,
+            secondComponent = Self.separator,
             thirdComponent = String(describing: Date())
-        return .init(rawValue: firstComponent + secondComponent + thirdComponent)
+        self.init(rawValue: firstComponent + secondComponent + thirdComponent)
     }
-    static func create(from popupType: any Popup.Type) -> Self {
-        create(from: .init(describing: popupType))
+    init(_ popupType: any Popup.Type) {
+        self.init(.init(describing: popupType))
     }
 }
 

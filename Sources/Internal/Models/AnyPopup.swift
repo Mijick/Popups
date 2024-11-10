@@ -34,7 +34,7 @@ extension AnyPopup {
     init<P: Popup>(_ popup: P) {
         if let popup = popup as? AnyPopup { self = popup }
         else {
-            self.id = .create(from: P.self)
+            self.id = .init(P.self)
             self.config = .init(popup.configurePopup(config: .init()))
             self._body = .init(popup)
             self._onFocus = popup.onFocus
@@ -47,7 +47,7 @@ extension AnyPopup {
 extension AnyPopup {
     nonisolated func updatedHeight(_ newHeight: CGFloat?) async -> AnyPopup { await updatedAsync { $0.height = newHeight }}
     nonisolated func updatedDragHeight(_ newDragHeight: CGFloat?) async -> AnyPopup { await updatedAsync { $0.dragHeight = newDragHeight }}
-    func updatedID(_ customID: String) -> AnyPopup { updated { $0.id = .create(from: customID) }}
+    func updatedID(_ customID: String) -> AnyPopup { updated { $0.id = .init(customID) }}
     func updatedDismissTimer(_ secondsToDismiss: Double) -> AnyPopup { updated { $0._dismissTimer = .prepare(time: secondsToDismiss) }}
     func updatedEnvironmentObject(_ environmentObject: some ObservableObject) -> AnyPopup { updated { $0._body = .init(_body.environmentObject(environmentObject)) }}
     func startDismissTimerIfNeeded(_ popupManager: PopupManager) -> AnyPopup { updated { $0._dismissTimer?.schedule { popupManager.stack(.removePopupInstance(self)) }}}
@@ -95,7 +95,7 @@ extension AnyPopup: Hashable {
 // MARK: New Object
 extension AnyPopup {
     static func t_createNew(id: String = UUID().uuidString, config: LocalConfig) -> AnyPopup { .init(
-        id: .create(from: id),
+        id: .init(id),
         config: .init(config),
         height: nil,
         dragHeight: nil,
