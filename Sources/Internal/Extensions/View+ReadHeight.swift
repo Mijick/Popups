@@ -14,7 +14,10 @@ import SwiftUI
 extension View {
     func onHeightChange(perform action: @escaping (CGFloat) async -> ()) -> some View { background(
         GeometryReader { proxy in
-            Task { @MainActor in await action(proxy.size.height) }
+            Task { @MainActor in
+                try await Task.sleep(nanoseconds: 10_000_000)
+                await action(proxy.size.height)
+            }
             return Color.clear
         }
     )}
