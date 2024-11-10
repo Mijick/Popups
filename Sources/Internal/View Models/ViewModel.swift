@@ -17,8 +17,6 @@ protocol ViewModel: ObservableObject where Self.ObjectWillChangePublisher == Obs
     // MARK: Attributes
     var alignment: PopupAlignment { get set }
     var popups: [AnyPopup] { get set }
-    var gestureTranslation: CGFloat { get set }
-    var translationProgress: CGFloat { get set }
     var activePopup: ActivePopup { get set }
     var screen: Screen { get set }
 
@@ -77,7 +75,7 @@ extension ViewModel {
         withAnimation(.transition) { objectWillChange.send() }
     }}
     @MainActor func recalculateAndUpdatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async { Task { @MainActor in
-        guard gestureTranslation == 0 else { return }
+        guard activePopup.gestureTranslation == 0 else { return }
 
 
         var newPopup = popup
@@ -87,11 +85,11 @@ extension ViewModel {
         await updatePopupAction(newPopup)
     }}
     @MainActor func updateGestureTranslation(_ newGestureTranslation: CGFloat) async { Task { @MainActor in
-        gestureTranslation = newGestureTranslation
-        translationProgress = await calculateTranslationProgress()
+        activePopup.gestureTranslation = newGestureTranslation
+        activePopup.translationProgress = await calculateTranslationProgress()
         activePopup.height = await calculateActivePopupHeight()
 
-        withAnimation(gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
+        withAnimation(activePopup.gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
     }}
 }
 private extension ViewModel {
@@ -117,4 +115,7 @@ extension ViewModel {
     var outerPadding: EdgeInsets = .init()
     var corners: [PopupAlignment: CGFloat] = [.top: 0, .bottom: 0]
     var verticalFixedSize: Bool = true
+
+    var gestureTranslation: CGFloat = 0
+    var translationProgress: CGFloat = 0
 }
