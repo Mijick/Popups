@@ -14,8 +14,6 @@ import SwiftUI
 extension VM { class VerticalStack: ViewModel { required init() {}
     var alignment: PopupAlignment = .centre
     var popups: [AnyPopup] = []
-    var gestureTranslation: CGFloat = 0
-    var translationProgress: CGFloat = 0
     var activePopup: ActivePopup = .init()
     var screen: Screen = .init()
     var updatePopupAction: ((AnyPopup) async -> ())!
