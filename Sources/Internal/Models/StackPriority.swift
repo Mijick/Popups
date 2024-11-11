@@ -20,21 +20,21 @@ struct StackPriority: Equatable, Sendable {
     private var values: [CGFloat] = [0, 0, 0]
 }
 
-// MARK: Reshuffle
+// MARK: Reshuffled
 extension StackPriority {
-    @MainActor mutating func reshuffle(newPopups: [AnyPopup]) { switch newPopups.last?.config.alignment {
-        case .top: reshuffle(0)
-        case .centre: reshuffle(1)
-        case .bottom: reshuffle(2)
-        default: return
+    func reshuffled(_ newPopups: [AnyPopup]) -> StackPriority { switch newPopups.last?.config.alignment {
+        case .top: reshuffled(0)
+        case .centre: reshuffled(1)
+        case .bottom: reshuffled(2)
+        default: self
     }}
 }
 private extension StackPriority {
-    mutating func reshuffle(_ index: Int) {
-        guard values[index] != maxPriority else { return }
+    func reshuffled(_ index: Int) -> StackPriority {
+        guard values[index] != maxPriority else { return self }
 
         let newValues = values.enumerated().map { $0.offset == index ? maxPriority : $0.element - 2 }
-        values = newValues
+        return .init(values: newValues)
     }
 }
 private extension StackPriority {
