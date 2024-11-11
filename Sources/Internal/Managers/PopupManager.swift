@@ -40,49 +40,60 @@ extension PopupManager { enum StackOperation {
 
 // MARK: Perform Operation
 extension PopupManager {
-    func stack(_ operation: StackOperation) async { let oldStackCount = stack.count
+    func stack(_ operation: StackOperation) async {
         await hideKeyboard()
-        await perform(operation)
-        await reshuffleStackPriority(oldStackCount)
+
+        let oldStack = stack,
+            newStack = await getNewStack(operation),
+            newStackPriority = await getNewStackPriority(newStack)
+
+        await updateStack(newStack)
+        await updateStackPriority(newStackPriority, oldStack.count)
     }
 }
 private extension PopupManager {
-    func hideKeyboard() async {
+    nonisolated func hideKeyboard() async {
         await AnyView.hideKeyboard()
     }
-    func perform(_ operation: StackOperation) async { switch operation {
-        case .insertPopup(let popup): insertPopup(popup)
-        case .removeLastPopup: removeLastPopup()
-        case .removePopupInstance(let popup): removePopupInstance(popup)
-        case .removeAllPopupsOfType(let popupType): removeAllPopupsOfType(popupType)
-        case .removeAllPopupsWithID(let id): removeAllPopupsWithID(id)
-        case .removeAllPopups: removeAllPopups()
+    nonisolated func getNewStack(_ operation: StackOperation) async -> [AnyPopup] { switch operation {
+        case .insertPopup(let popup): await insertedPopup(popup)
+        case .removeLastPopup: await removedLastPopup()
+        case .removePopupInstance(let popup): await removedPopupInstance(popup)
+        case .removeAllPopupsOfType(let popupType): await removedAllPopupsOfType(popupType)
+        case .removeAllPopupsWithID(let id): await removedAllPopupsWithID(id)
+        case .removeAllPopups: await removedAllPopups()
     }}
-    func reshuffleStackPriority(_ oldStackCount: Int) async {
-        let delayDuration = oldStackCount > stack.count ? Animation.duration : 0
+    nonisolated func getNewStackPriority(_ newStack: [AnyPopup]) async -> StackPriority {
+        await stackPriority.reshuffled(newStack)
+    }
+    nonisolated func updateStack(_ newStack: [AnyPopup]) async {
+        Task { @MainActor in stack = newStack }
+    }
+    nonisolated func updateStackPriority(_ newStackPriority: StackPriority, _ oldStackCount: Int) async {
+        let delayDuration = await oldStackCount > stack.count ? Animation.duration : 0
         await Task.sleep(seconds: delayDuration)
-        
-        stackPriority.reshuffle(newPopups: stack)
+
+        Task { @MainActor in stackPriority = newStackPriority }
     }
 }
 private extension PopupManager {
-    func insertPopup(_ erasedPopup: AnyPopup) { if !stack.contains(where: { $0.id.isSameType(as: erasedPopup.id) }) {
-        stack.append(erasedPopup.startDismissTimerIfNeeded(self))
+    nonisolated func insertedPopup(_ erasedPopup: AnyPopup) async -> [AnyPopup] { await stack.modified(if: await !stack.contains { $0.id.isSameType(as: erasedPopup.id) }) {
+        $0.append(await erasedPopup.startDismissTimerIfNeeded(self))
     }}
-    func removeLastPopup() { if !stack.isEmpty {
-        stack.removeLast()
+    nonisolated func removedLastPopup() async -> [AnyPopup] { await stack.modified(if: !stack.isEmpty) {
+        $0.removeLast()
     }}
-    func removePopupInstance(_ popup: AnyPopup) {
-        stack.removeAll(where: { $0.id.isSameInstance(as: popup) })
-    }
-    func removeAllPopupsOfType(_ popupType: any Popup.Type) {
-        stack.removeAll(where: { $0.id.isSameType(as: popupType) })
-    }
-    func removeAllPopupsWithID(_ id: String) {
-        stack.removeAll(where: { $0.id.isSameType(as: id) })
-    }
-    func removeAllPopups() {
-        stack.removeAll()
+    nonisolated func removedPopupInstance(_ popup: AnyPopup) async -> [AnyPopup] { await stack.modified {
+        $0.removeAll { $0.id.isSameInstance(as: popup) }
+    }}
+    nonisolated func removedAllPopupsOfType(_ popupType: any Popup.Type) async -> [AnyPopup] { await stack.modified {
+        $0.removeAll { $0.id.isSameType(as: popupType) }
+    }}
+    nonisolated func removedAllPopupsWithID(_ id: String) async -> [AnyPopup] { await stack.modified {
+        $0.removeAll { $0.id.isSameType(as: id) }
+    }}
+    nonisolated func removedAllPopups() async -> [AnyPopup] {
+        []
     }
 }
 
