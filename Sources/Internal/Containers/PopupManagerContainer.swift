@@ -12,7 +12,7 @@
 import Foundation
 
 actor PopupManagerContainer {
-    nonisolated(unsafe) static private(set) var instances: [PopupManager] = []
+    static private(set) var instances: [PopupManager] = []
 }
 
 // MARK: Register
