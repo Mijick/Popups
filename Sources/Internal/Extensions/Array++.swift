@@ -10,5 +10,9 @@
 
 
 extension Array {
-    @inlinable func appending(_ newElement: Element) -> Self { self + [newElement] }
+    func modified(if value: Bool = true, _ builder: (inout [Element]) async -> ()) async -> [Element] { guard value else { return self }
+        var array = self
+        await builder(&array)
+        return array
+    }
 }

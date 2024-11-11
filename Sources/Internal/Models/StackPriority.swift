@@ -11,7 +11,7 @@
 
 import Foundation
 
-struct StackPriority: Equatable {
+struct StackPriority: Equatable, Sendable {
     var top: CGFloat { values[0] }
     var centre: CGFloat { values[1] }
     var bottom: CGFloat { values[2] }
