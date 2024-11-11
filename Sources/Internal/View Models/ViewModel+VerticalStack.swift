@@ -89,7 +89,7 @@ private extension VM.VerticalStack {
     }
 }
 private extension VM.VerticalStack {
-    nonisolated func calculatePriorityPopupPaddingValue(for edge: PopupAlignment, activePopupConfig: AnyPopupConfig) async -> CGFloat { switch edge == alignment {
+    func calculatePriorityPopupPaddingValue(for edge: PopupAlignment, activePopupConfig: AnyPopupConfig) async -> CGFloat { switch edge == alignment {
         case true: 0
         case false: activePopupConfig.popupPadding[!edge]
     }}
