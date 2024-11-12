@@ -31,10 +31,85 @@ extension VM { class VerticalStack: ViewModel { required init() {}
 
 
 // MARK: Inner Padding
+extension VM.VerticalStack {
+    func calculateActivePopupInnerPadding() async -> EdgeInsets { guard let popup = popups.last else { return .init() }; return await .init(
+        top: calculateTopBodyPadding(popup: popup),
+        leading: calculateLeadingBodyPadding(popup: popup),
+        bottom: calculateBottomBodyPadding(popup: popup),
+        trailing: calculateTrailingBodyPadding(popup: popup)
+    )}
+}
+private extension VM.VerticalStack {
+    func calculateTopBodyPadding(popup: AnyPopup) async -> CGFloat {
+        if popup.config.ignoredSafeAreaEdges.contains(.top) { return 0 }
 
+        return switch alignment {
+            case .top: await calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.top, popupPadding: activePopup.outerPadding.top)
+            case .bottom: await calculateVerticalPaddingCounterEdge(popupHeight: activePopup.height ?? 0, safeArea: screen.safeArea.top)
+            case .centre: fatalError()
+        }
+    }
+    func calculateBottomBodyPadding(popup: AnyPopup) async -> CGFloat {
+        if popup.config.ignoredSafeAreaEdges.contains(.bottom) && !screen.isKeyboardActive { return 0 }
 
+        return switch alignment {
+            case .top: await calculateVerticalPaddingCounterEdge(popupHeight: activePopup.height ?? 0, safeArea: screen.safeArea.bottom)
+            case .bottom: await calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.bottom, popupPadding: activePopup.outerPadding.bottom)
+            case .centre: fatalError()
+        }
+    }
+    func calculateLeadingBodyPadding(popup: AnyPopup) -> CGFloat { switch popup.config.ignoredSafeAreaEdges.contains(.leading) {
+        case true: 0
+        case false: screen.safeArea.leading
+    }}
+    func calculateTrailingBodyPadding(popup: AnyPopup) async -> CGFloat { switch popup.config.ignoredSafeAreaEdges.contains(.trailing) {
+        case true: 0
+        case false: screen.safeArea.trailing
+    }}
+}
+private extension VM.VerticalStack {
+    func calculateVerticalPaddingCounterEdge(popupHeight: CGFloat, safeArea: CGFloat) -> CGFloat {
+        let paddingValueCandidate = safeArea + popupHeight - screen.height
+        return max(paddingValueCandidate, 0)
+    }
+    func calculateVerticalPaddingAdhereEdge(safeAreaHeight: CGFloat, popupPadding: CGFloat) -> CGFloat {
+        let paddingValueCandidate = safeAreaHeight - popupPadding
+        return max(paddingValueCandidate, 0)
+    }
+}
 
 // MARK: Outer Padding
+extension VM.VerticalStack {
+    func calculateActivePopupOuterPadding() async -> EdgeInsets { guard let activePopupConfig = popups.last?.config else { return .init() }; return await .init(
+        top: calculateVerticalPopupPadding(for: .top, activePopupConfig: activePopupConfig),
+        leading: calculateLeadingPopupPadding(activePopupConfig: activePopupConfig),
+        bottom: calculateVerticalPopupPadding(for: .bottom, activePopupConfig: activePopupConfig),
+        trailing: calculateTrailingPopupPadding(activePopupConfig: activePopupConfig)
+    )}
+}
+private extension VM.VerticalStack {
+    func calculateVerticalPopupPadding(for edge: PopupAlignment, activePopupConfig: AnyPopupConfig) async -> CGFloat {
+        let largeScreenHeight = calculateLargeScreenHeight(),
+            activePopupHeight = await activePopup.height ?? 0,
+            priorityPopupPaddingValue = await calculatePriorityPopupPaddingValue(for: edge, activePopupConfig: activePopupConfig),
+            remainingHeight = largeScreenHeight - activePopupHeight - priorityPopupPaddingValue
+
+        let popupPaddingCandidate = min(remainingHeight, activePopupConfig.popupPadding[edge])
+        return max(popupPaddingCandidate, 0)
+    }
+    func calculateLeadingPopupPadding(activePopupConfig: AnyPopupConfig) -> CGFloat {
+        activePopupConfig.popupPadding.leading
+    }
+    func calculateTrailingPopupPadding(activePopupConfig: AnyPopupConfig) -> CGFloat {
+        activePopupConfig.popupPadding.trailing
+    }
+}
+private extension VM.VerticalStack {
+    func calculatePriorityPopupPaddingValue(for edge: PopupAlignment, activePopupConfig: AnyPopupConfig) async -> CGFloat { switch edge == alignment {
+        case true: 0
+        case false: activePopupConfig.popupPadding[!edge]
+    }}
+}
 
 
 // MARK: Corners
@@ -102,85 +177,10 @@ private extension VM.VerticalStack {
 
 
 // MARK: Outer Padding
-extension VM.VerticalStack {
-    func calculateActivePopupOuterPadding() async -> EdgeInsets { guard let activePopupConfig = popups.last?.config else { return .init() }; return await .init(
-        top: calculateVerticalPopupPadding(for: .top, activePopupConfig: activePopupConfig),
-        leading: calculateLeadingPopupPadding(activePopupConfig: activePopupConfig),
-        bottom: calculateVerticalPopupPadding(for: .bottom, activePopupConfig: activePopupConfig),
-        trailing: calculateTrailingPopupPadding(activePopupConfig: activePopupConfig)
-    )}
-}
-private extension VM.VerticalStack {
-    func calculateVerticalPopupPadding(for edge: PopupAlignment, activePopupConfig: AnyPopupConfig) async -> CGFloat {
-        let largeScreenHeight = calculateLargeScreenHeight(),
-            activePopupHeight = await activePopup.height ?? 0,
-            priorityPopupPaddingValue = await calculatePriorityPopupPaddingValue(for: edge, activePopupConfig: activePopupConfig),
-            remainingHeight = largeScreenHeight - activePopupHeight - priorityPopupPaddingValue
 
-        let popupPaddingCandidate = min(remainingHeight, activePopupConfig.popupPadding[edge])
-        return max(popupPaddingCandidate, 0)
-    }
-    func calculateLeadingPopupPadding(activePopupConfig: AnyPopupConfig) -> CGFloat {
-        activePopupConfig.popupPadding.leading
-    }
-    func calculateTrailingPopupPadding(activePopupConfig: AnyPopupConfig) -> CGFloat {
-        activePopupConfig.popupPadding.trailing
-    }
-}
-private extension VM.VerticalStack {
-    func calculatePriorityPopupPaddingValue(for edge: PopupAlignment, activePopupConfig: AnyPopupConfig) async -> CGFloat { switch edge == alignment {
-        case true: 0
-        case false: activePopupConfig.popupPadding[!edge]
-    }}
-}
 
 // MARK: Inner Padding
-extension VM.VerticalStack {
-    func calculateActivePopupInnerPadding() async -> EdgeInsets { guard let popup = popups.last else { return .init() }; return await .init(
-        top: calculateTopBodyPadding(popup: popup),
-        leading: calculateLeadingBodyPadding(popup: popup),
-        bottom: calculateBottomBodyPadding(popup: popup),
-        trailing: calculateTrailingBodyPadding(popup: popup)
-    )}
-}
-private extension VM.VerticalStack {
-    func calculateTopBodyPadding(popup: AnyPopup) async -> CGFloat {
-        if popup.config.ignoredSafeAreaEdges.contains(.top) { return 0 }
 
-        return switch alignment {
-            case .top: await calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.top, popupPadding: activePopup.outerPadding.top)
-            case .bottom: await calculateVerticalPaddingCounterEdge(popupHeight: activePopup.height ?? 0, safeArea: screen.safeArea.top)
-            case .centre: fatalError()
-        }
-    }
-    func calculateBottomBodyPadding(popup: AnyPopup) async -> CGFloat {
-        if popup.config.ignoredSafeAreaEdges.contains(.bottom) && !screen.isKeyboardActive { return 0 }
-
-        return switch alignment {
-            case .top: await calculateVerticalPaddingCounterEdge(popupHeight: activePopup.height ?? 0, safeArea: screen.safeArea.bottom)
-            case .bottom: await calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.bottom, popupPadding: activePopup.outerPadding.bottom)
-            case .centre: fatalError()
-        }
-    }
-    func calculateLeadingBodyPadding(popup: AnyPopup) -> CGFloat { switch popup.config.ignoredSafeAreaEdges.contains(.leading) {
-        case true: 0
-        case false: screen.safeArea.leading
-    }}
-    func calculateTrailingBodyPadding(popup: AnyPopup) async -> CGFloat { switch popup.config.ignoredSafeAreaEdges.contains(.trailing) {
-        case true: 0
-        case false: screen.safeArea.trailing
-    }}
-}
-private extension VM.VerticalStack {
-    func calculateVerticalPaddingCounterEdge(popupHeight: CGFloat, safeArea: CGFloat) -> CGFloat {
-        let paddingValueCandidate = safeArea + popupHeight - screen.height
-        return max(paddingValueCandidate, 0)
-    }
-    func calculateVerticalPaddingAdhereEdge(safeAreaHeight: CGFloat, popupPadding: CGFloat) -> CGFloat {
-        let paddingValueCandidate = safeAreaHeight - popupPadding
-        return max(paddingValueCandidate, 0)
-    }
-}
 
 // MARK: Offset Y
 extension VM.VerticalStack {
