@@ -77,19 +77,19 @@ private extension PopupManager {
     }
 }
 private extension PopupManager {
-    nonisolated func insertedPopup(_ erasedPopup: AnyPopup) async -> [AnyPopup] { await stack.modified(if: await !stack.contains { $0.id.isSameType(as: erasedPopup.id) }) {
+    nonisolated func insertedPopup(_ erasedPopup: AnyPopup) async -> [AnyPopup] { await stack.modifiedAsync(if: await !stack.contains { $0.id.isSameType(as: erasedPopup.id) }) {
         $0.append(await erasedPopup.startDismissTimerIfNeeded(self))
     }}
-    nonisolated func removedLastPopup() async -> [AnyPopup] { await stack.modified(if: !stack.isEmpty) {
+    nonisolated func removedLastPopup() async -> [AnyPopup] { await stack.modifiedAsync(if: !stack.isEmpty) {
         $0.removeLast()
     }}
-    nonisolated func removedPopupInstance(_ popup: AnyPopup) async -> [AnyPopup] { await stack.modified {
+    nonisolated func removedPopupInstance(_ popup: AnyPopup) async -> [AnyPopup] { await stack.modifiedAsync {
         $0.removeAll { $0.id.isSameInstance(as: popup) }
     }}
-    nonisolated func removedAllPopupsOfType(_ popupType: any Popup.Type) async -> [AnyPopup] { await stack.modified {
+    nonisolated func removedAllPopupsOfType(_ popupType: any Popup.Type) async -> [AnyPopup] { await stack.modifiedAsync {
         $0.removeAll { $0.id.isSameType(as: popupType) }
     }}
-    nonisolated func removedAllPopupsWithID(_ id: String) async -> [AnyPopup] { await stack.modified {
+    nonisolated func removedAllPopupsWithID(_ id: String) async -> [AnyPopup] { await stack.modifiedAsync {
         $0.removeAll { $0.id.isSameType(as: id) }
     }}
     nonisolated func removedAllPopups() async -> [AnyPopup] {

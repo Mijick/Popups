@@ -11,9 +11,14 @@
 
 // MARK: Modified
 extension Array {
-    func modified(if value: Bool = true, _ builder: (inout [Element]) async -> ()) async -> [Element] { guard value else { return self }
+    func modifiedAsync(if value: Bool = true, _ builder: (inout [Element]) async -> ()) async -> [Element] { guard value else { return self }
         var array = self
         await builder(&array)
+        return array
+    }
+    func modified(if value: Bool = true, _ builder: (inout [Element]) -> ()) -> [Element] { guard value else { return self }
+        var array = self
+        builder(&array)
         return array
     }
 }
