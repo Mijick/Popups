@@ -171,17 +171,6 @@ private extension VM.VerticalStack {
 
 
 
-
-
-
-
-
-// MARK: Outer Padding
-
-
-// MARK: Inner Padding
-
-
 // MARK: Offset Y
 extension VM.VerticalStack {
     @MainActor func calculateOffsetY(for popup: AnyPopup) -> CGFloat { switch popup == popups.last {
@@ -225,6 +214,14 @@ extension VM.VerticalStack {
         return 1 - scaleValue
     }
 }
+
+
+
+
+
+
+
+
 
 // MARK: Corner Radius
 extension VM.VerticalStack {
