@@ -22,7 +22,7 @@ extension VM { class CentreStack: ViewModel { required init() {}
 
 
 
-// MARK: - METHODS (ACTIVE POPUP)
+// MARK: - METHODS / VIEW MODEL / ACTIVE POPUP
 
 
 
@@ -87,7 +87,7 @@ extension VM.CentreStack {
 
 
 
-// MARK: - METHODS (SELECTED POPUP)
+// MARK: - METHODS / VIEW MODEL / SELECTED POPUP
 
 
 
@@ -104,6 +104,12 @@ private extension VM.CentreStack {
         return fullscreenHeight - safeAreaHeight
     }
 }
+
+
+
+// MARK: - METHODS / VIEW
+
+
 
 // MARK: Opacity
 extension VM.CentreStack {
