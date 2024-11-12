@@ -29,10 +29,9 @@ extension VM { class VerticalStack: ViewModel { required init() {}
 // MARK: Height
 extension VM.VerticalStack {
     func calculateActivePopupHeight() async -> CGFloat? {
-        guard let activePopupHeight = popups.last?.height else { return nil }
+        guard let activePopupHeight = popups.last?.height, let activePopupDragHeight = popups.last?.dragHeight else { return nil }
 
-        let activePopupDragHeight = popups.last?.dragHeight ?? 0,
-            popupHeightFromGestureTranslation = activePopupHeight + activePopupDragHeight + activePopup.gestureTranslation * getDragTranslationMultiplier()
+        let popupHeightFromGestureTranslation = activePopupHeight + activePopupDragHeight + activePopup.gestureTranslation * getDragTranslationMultiplier()
 
         let newHeightCandidate = max(activePopupHeight, popupHeightFromGestureTranslation)
         return min(newHeightCandidate, screen.height)
