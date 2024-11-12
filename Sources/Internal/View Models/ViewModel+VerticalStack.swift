@@ -44,8 +44,8 @@ private extension VM.VerticalStack {
         if popup.config.ignoredSafeAreaEdges.contains(.top) { return 0 }
 
         return switch alignment {
-            case .top: await calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.top, popupOuterPadding: activePopup.outerPadding.top)
-            case .bottom: await calculateVerticalPaddingCounterEdge(popupHeight: activePopup.height ?? 0, safeArea: screen.safeArea.top)
+            case .top: await calculateVerticalInnerPaddingAdhereEdge(safeAreaHeight: screen.safeArea.top, popupOuterPadding: activePopup.outerPadding.top)
+            case .bottom: await calculateVerticalInnerPaddingCounterEdge(popupHeight: activePopup.height ?? 0, safeArea: screen.safeArea.top)
             case .centre: fatalError()
         }
     }
@@ -53,8 +53,8 @@ private extension VM.VerticalStack {
         if popup.config.ignoredSafeAreaEdges.contains(.bottom) && !screen.isKeyboardActive { return 0 }
 
         return switch alignment {
-            case .top: await calculateVerticalPaddingCounterEdge(popupHeight: activePopup.height ?? 0, safeArea: screen.safeArea.bottom)
-            case .bottom: await calculateVerticalPaddingAdhereEdge(safeAreaHeight: screen.safeArea.bottom, popupOuterPadding: activePopup.outerPadding.bottom)
+            case .top: await calculateVerticalInnerPaddingCounterEdge(popupHeight: activePopup.height ?? 0, safeArea: screen.safeArea.bottom)
+            case .bottom: await calculateVerticalInnerPaddingAdhereEdge(safeAreaHeight: screen.safeArea.bottom, popupOuterPadding: activePopup.outerPadding.bottom)
             case .centre: fatalError()
         }
     }
@@ -68,11 +68,11 @@ private extension VM.VerticalStack {
     }}
 }
 private extension VM.VerticalStack {
-    func calculateVerticalPaddingCounterEdge(popupHeight: CGFloat, safeArea: CGFloat) -> CGFloat {
+    func calculateVerticalInnerPaddingCounterEdge(popupHeight: CGFloat, safeArea: CGFloat) -> CGFloat {
         let paddingValueCandidate = safeArea + popupHeight - screen.height
         return max(paddingValueCandidate, 0)
     }
-    func calculateVerticalPaddingAdhereEdge(safeAreaHeight: CGFloat, popupOuterPadding: CGFloat) -> CGFloat {
+    func calculateVerticalInnerPaddingAdhereEdge(safeAreaHeight: CGFloat, popupOuterPadding: CGFloat) -> CGFloat {
         let paddingValueCandidate = safeAreaHeight - popupOuterPadding
         return max(paddingValueCandidate, 0)
     }
