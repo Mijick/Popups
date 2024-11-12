@@ -52,8 +52,8 @@ extension ViewModel {
     @MainActor func updatePopupsValue(_ newPopups: [AnyPopup]) async { Task { @MainActor in
         popups = await filterPopups(newPopups)
 
-        activePopup.outerPadding = await calculateActivePopupOuterPadding()
         activePopup.height = await calculateActivePopupHeight()
+        activePopup.outerPadding = await calculateActivePopupOuterPadding()
         activePopup.innerPadding = await calculateActivePopupInnerPadding()
         activePopup.corners = await calculateActivePopupCorners()
         activePopup.verticalFixedSize = await calculateActivePopupVerticalFixedSize()
