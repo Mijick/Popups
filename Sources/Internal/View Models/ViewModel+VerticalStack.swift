@@ -54,18 +54,6 @@ extension VM { class VerticalStack: ViewModel { required init() {}
 
 
 // MARK: Height
-
-
-
-
-
-// MARK: - METHODS / VIEW
-
-
-
-
-
-// MARK: Popup Height
 extension VM.VerticalStack {
     func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat {
         guard await activePopup.gestureTranslation.isZero else { return popup.height ?? 0 }
@@ -100,6 +88,18 @@ private extension VM.VerticalStack {
         return stackedItemsHeight
     }
 }
+
+
+
+
+// MARK: - METHODS / VIEW
+
+
+
+
+
+
+
 
 // MARK: Outer Padding
 extension VM.VerticalStack {
