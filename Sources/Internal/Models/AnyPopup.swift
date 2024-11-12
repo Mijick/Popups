@@ -15,7 +15,7 @@ struct AnyPopup: Popup {
     private(set) var id: PopupID
     private(set) var config: AnyPopupConfig
     private(set) var height: CGFloat? = nil
-    private(set) var dragHeight: CGFloat? = nil
+    private(set) var dragHeight: CGFloat = 0
 
     private var _dismissTimer: PopupActionScheduler? = nil
     private var _body: AnyView
@@ -46,7 +46,7 @@ extension AnyPopup {
 // MARK: Update
 extension AnyPopup {
     nonisolated func updatedHeight(_ newHeight: CGFloat?) async -> AnyPopup { await updatedAsync { $0.height = newHeight }}
-    nonisolated func updatedDragHeight(_ newDragHeight: CGFloat?) async -> AnyPopup { await updatedAsync { $0.dragHeight = newDragHeight }}
+    nonisolated func updatedDragHeight(_ newDragHeight: CGFloat) async -> AnyPopup { await updatedAsync { $0.dragHeight = newDragHeight }}
     func updatedID(_ customID: String) -> AnyPopup { updated { $0.id = .init(customID) }}
     func updatedDismissTimer(_ secondsToDismiss: Double) -> AnyPopup { updated { $0._dismissTimer = .prepare(time: secondsToDismiss) }}
     func updatedEnvironmentObject(_ environmentObject: some ObservableObject) -> AnyPopup { updated { $0._body = .init(_body.environmentObject(environmentObject)) }}
@@ -98,7 +98,7 @@ extension AnyPopup {
         id: .init(id),
         config: .init(config),
         height: nil,
-        dragHeight: nil,
+        dragHeight: 0,
         _dismissTimer: nil,
         _body: .init(EmptyView()),
         _onFocus: {},
