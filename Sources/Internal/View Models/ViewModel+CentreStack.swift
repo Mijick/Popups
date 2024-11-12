@@ -22,7 +22,7 @@ extension VM { class CentreStack: ViewModel { required init() {}
 
 
 
-// MARK: - VIEW METHODS (ACTIVE POPUP)
+// MARK: - METHODS (ACTIVE POPUP)
 
 
 
@@ -87,12 +87,11 @@ extension VM.CentreStack {
 
 
 
+// MARK: - METHODS (SELECTED POPUP)
 
 
 
-
-
-// MARK: Popup Height
+// MARK: Height
 extension VM.CentreStack {
     func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat {
         min(heightCandidate, calculateLargeScreenHeight())
@@ -105,7 +104,6 @@ private extension VM.CentreStack {
         return fullscreenHeight - safeAreaHeight
     }
 }
-
 
 // MARK: Opacity
 extension VM.CentreStack {
