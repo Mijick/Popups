@@ -98,7 +98,7 @@ private extension ViewModel {
 
 
 
-@MainActor class ActivePopup {
+struct ActivePopup: Sendable {
     var height: CGFloat? = nil
     var innerPadding: EdgeInsets = .init()
     var outerPadding: EdgeInsets = .init()
