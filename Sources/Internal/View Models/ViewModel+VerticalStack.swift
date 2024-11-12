@@ -22,7 +22,46 @@ extension VM { class VerticalStack: ViewModel { required init() {}
 
 
 
-// MARK: - VIEW METHODS
+// MARK: - METHODS / VIEW MODEL / ACTIVE POPUP
+
+
+
+// MARK: Height
+
+
+
+// MARK: Inner Padding
+
+
+
+// MARK: Outer Padding
+
+
+// MARK: Corners
+
+
+// MARK: Vertical Fixed Size
+
+
+// MARK: Translation Progress
+
+
+
+
+
+// MARK: - METHODS / VIEW MODEL / SELECTED POPUP
+
+
+
+// MARK: Height
+
+
+
+
+
+// MARK: - METHODS / VIEW
+
+
 
 
 
