@@ -31,12 +31,11 @@ extension VM.VerticalStack {
     func calculateActivePopupHeight() async -> CGFloat? {
         guard let activePopupHeight = popups.last?.height else { return nil }
 
-        let activePopupDragHeight = popups.last?.dragHeight ?? 0
-        let popupHeightFromGestureTranslation = activePopupHeight + activePopupDragHeight + activePopup.gestureTranslation * getDragTranslationMultiplier()
+        let activePopupDragHeight = popups.last?.dragHeight ?? 0,
+            popupHeightFromGestureTranslation = activePopupHeight + activePopupDragHeight + activePopup.gestureTranslation * getDragTranslationMultiplier()
 
-        let newHeightCandidate1 = max(activePopupHeight, popupHeightFromGestureTranslation),
-            newHeightCanditate2 = screen.height
-        return min(newHeightCandidate1, newHeightCanditate2)
+        let newHeightCandidate = max(activePopupHeight, popupHeightFromGestureTranslation)
+        return min(newHeightCandidate, screen.height)
     }
 }
 private extension VM.VerticalStack {
