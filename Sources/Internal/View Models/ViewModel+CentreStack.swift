@@ -22,7 +22,35 @@ extension VM { class CentreStack: ViewModel { required init() {}
 
 
 
-// MARK: - VIEW METHODS
+// MARK: - VIEW METHODS (ACTIVE POPUP)
+
+
+
+// MARK: Height
+
+
+
+// MARK: Inner Padding
+
+
+// MARK: Outer Padding
+
+
+// MARK: Corners
+
+
+
+// MARK: Vertical Fixed Size
+
+
+
+// MARK: Translation Progress
+
+
+
+
+
+
 
 
 
