@@ -34,6 +34,11 @@ protocol ViewModel: ObservableObject where Self.ObjectWillChangePublisher == Obs
     func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat
 }
 
+// MARK: Initializer
+extension ViewModel {
+    init<Config: LocalConfig>(_ config: Config.Type) { self.init(); self.alignment = .init(Config.self) }
+}
+
 // MARK: Setup
 extension ViewModel {
     func setup(updatePopupAction: @escaping (AnyPopup) async -> (), closePopupAction: @escaping (AnyPopup) async -> ()) {
@@ -87,9 +92,7 @@ private extension ViewModel {
 
 
 
-extension ViewModel {
-    init<Config: LocalConfig>(_ config: Config.Type) { self.init(); self.alignment = .init(Config.self) }
-}
+
 
 
 
@@ -101,7 +104,6 @@ extension ViewModel {
     var outerPadding: EdgeInsets = .init()
     var corners: [PopupAlignment: CGFloat] = [.top: 0, .bottom: 0]
     var verticalFixedSize: Bool = true
-
     var gestureTranslation: CGFloat = 0
     var translationProgress: CGFloat = 0
 }
