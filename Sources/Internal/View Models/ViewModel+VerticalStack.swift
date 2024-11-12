@@ -158,10 +158,21 @@ private extension VM.VerticalStack {
 }
 
 // MARK: Vertical Fixed Size
-
+extension VM.VerticalStack {
+    func calculateActivePopupVerticalFixedSize() async -> Bool { guard let popup = popups.last else { return true }; return switch popup.config.heightMode {
+        case .fullscreen, .large: false
+        case .auto: await activePopup.height != calculateLargeScreenHeight()
+    }}
+}
 
 // MARK: Translation Progress
-
+extension VM.VerticalStack {
+    func calculateActivePopupTranslationProgress() async -> CGFloat { guard let activePopupHeight = popups.last?.height else { return 0 }; return switch alignment {
+        case .top: await abs(min(activePopup.gestureTranslation + (popups.last?.dragHeight ?? 0), 0)) / activePopupHeight
+        case .bottom: await max(activePopup.gestureTranslation - (popups.last?.dragHeight ?? 0), 0) / activePopupHeight
+        case .centre: fatalError()
+    }}
+}
 
 
 
@@ -257,25 +268,6 @@ extension VM.VerticalStack {
     }
 }
 
-
-
-
-
-
-
-
-
-// MARK: Corner Radius
-
-
-// MARK: Fixed Size
-extension VM.VerticalStack {
-    func calculateActivePopupVerticalFixedSize() async -> Bool { guard let popup = popups.last else { return true }; return switch popup.config.heightMode {
-        case .fullscreen, .large: false
-        case .auto: await activePopup.height != calculateLargeScreenHeight()
-    }}
-}
-
 // MARK: Z Index
 extension VM.VerticalStack {
     @MainActor func calculateZIndex() -> CGFloat {
@@ -298,9 +290,6 @@ extension VM.VerticalStack {
         return max(opacity, 0)
     }
 }
-private extension VM.VerticalStack {
-    var minStackOverlayProgressMultiplier: CGFloat { 0.6 }
-}
 
 
 
@@ -308,17 +297,9 @@ private extension VM.VerticalStack {
 
 
 
-// MARK: Active Popup Height
-
 
 // MARK: Translation Progress
-extension VM.VerticalStack {
-    func calculateActivePopupTranslationProgress() async -> CGFloat { guard let activePopupHeight = popups.last?.height else { return 0 }; return switch alignment {
-        case .top: await abs(min(activePopup.gestureTranslation + (popups.last?.dragHeight ?? 0), 0)) / activePopupHeight
-        case .bottom: await max(activePopup.gestureTranslation - (popups.last?.dragHeight ?? 0), 0) / activePopupHeight
-        case .centre: fatalError()
-    }}
-}
+
 
 // MARK: Others
 extension VM.VerticalStack {
@@ -339,6 +320,7 @@ extension VM.VerticalStack {
     var dragGestureEnabled: Bool { popups.last?.config.isDragGestureEnabled ?? false }
     var dragTranslationThreshold: CGFloat { 8 }
     var minScaleProgressMultiplier: CGFloat { 0.7 }
+    var minStackOverlayProgressMultiplier: CGFloat { 0.6 }
 }
 
 
