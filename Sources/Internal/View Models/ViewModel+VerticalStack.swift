@@ -344,9 +344,7 @@ extension VM.VerticalStack {
 }
 private extension VM.VerticalStack {
     func dismissLastItemIfNeeded() async {
-        guard let popup = popups.last,
-              activePopup.translationProgress >= dragThreshold
-        else { return }
+        guard activePopup.translationProgress >= dragThreshold, let popup = popups.last else { return }
 
         await closePopupAction(popup)
     }
