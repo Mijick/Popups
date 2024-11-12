@@ -176,7 +176,6 @@ extension VM.VerticalStack {
 
 
 
-
 // MARK: - METHODS / VIEW MODEL / SELECTED POPUP
 
 
@@ -216,7 +215,6 @@ private extension VM.VerticalStack {
         return stackedItemsHeight
     }
 }
-
 
 
 
@@ -297,11 +295,7 @@ extension VM.VerticalStack {
 
 
 
-
-// MARK: Translation Progress
-
-
-// MARK: Others
+// MARK: Inverted Index
 extension VM.VerticalStack {
     func getInvertedIndex(of popup: AnyPopup) -> Int {
         let index = popups.firstIndex(of: popup) ?? 0
