@@ -33,14 +33,9 @@ extension VM.CentreStack {
     }
 }
 
-// MARK: Inner Padding
-extension VM.CentreStack {
-    func calculateActivePopupInnerPadding() async -> EdgeInsets { .init() }
-}
-
 // MARK: Outer Padding
 extension VM.CentreStack {
-    func calculateActivePopupOuterPadding() async -> EdgeInsets { await .init(
+    func calculateActivePopupOuterPadding() async -> EdgeInsets { .init(
         top: calculateVerticalPopupPadding(for: .top),
         leading: calculateLeadingPopupPadding(),
         bottom: calculateVerticalPopupPadding(for: .bottom),
@@ -48,8 +43,8 @@ extension VM.CentreStack {
     )}
 }
 private extension VM.CentreStack {
-    func calculateVerticalPopupPadding(for edge: PopupAlignment) async -> CGFloat {
-        guard let activePopupHeight = await activePopup.height,
+    func calculateVerticalPopupPadding(for edge: PopupAlignment) -> CGFloat {
+        guard let activePopupHeight = activePopup.height,
               screen.isKeyboardActive && edge == .bottom
         else { return 0 }
 
@@ -65,6 +60,11 @@ private extension VM.CentreStack {
     }
 }
 
+// MARK: Inner Padding
+extension VM.CentreStack {
+    func calculateActivePopupInnerPadding() async -> EdgeInsets { .init() }
+}
+
 // MARK: Corners
 extension VM.CentreStack {
     func calculateActivePopupCorners() async -> [PopupAlignment : CGFloat] { [
@@ -76,7 +76,7 @@ extension VM.CentreStack {
 // MARK: Vertical Fixed Size
 extension VM.CentreStack {
     func calculateActivePopupVerticalFixedSize() async -> Bool {
-        await activePopup.height != calculateLargeScreenHeight()
+        activePopup.height != calculateLargeScreenHeight()
     }
 }
 

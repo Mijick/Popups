@@ -26,8 +26,8 @@ protocol ViewModel: ObservableObject where Self.ObjectWillChangePublisher == Obs
 
     // MARK: Methods
     func calculateActivePopupHeight() async -> CGFloat?
-    func calculateActivePopupInnerPadding() async -> EdgeInsets
     func calculateActivePopupOuterPadding() async -> EdgeInsets
+    func calculateActivePopupInnerPadding() async -> EdgeInsets
     func calculateActivePopupCorners() async -> [PopupAlignment: CGFloat]
     func calculateActivePopupVerticalFixedSize() async -> Bool
     func calculateActivePopupTranslationProgress() async -> CGFloat
