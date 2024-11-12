@@ -128,9 +128,7 @@ private extension VM.VerticalStack {
 
 // MARK: Corners
 extension VM.VerticalStack {
-    func calculateActivePopupCorners() async -> [PopupAlignment: CGFloat] {
-        guard let activePopup = popups.last else { return [:] }
-
+    func calculateActivePopupCorners() async -> [PopupAlignment: CGFloat] { guard let activePopup = popups.last else { return [.top: 0, .bottom: 0] }
         let cornerRadiusValue = calculateCornerRadiusValue(activePopup)
         return [
             .top: calculateTopCornerRadius(cornerRadiusValue),
