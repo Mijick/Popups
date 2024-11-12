@@ -228,7 +228,7 @@ extension VM.VerticalStack {
     }}
 }
 private extension VM.VerticalStack {
-    @MainActor func calculateOffsetForActivePopup() -> CGFloat {
+    func calculateOffsetForActivePopup() -> CGFloat {
         let lastPopupDragHeight = popups.last?.dragHeight ?? 0
 
         return switch alignment {
