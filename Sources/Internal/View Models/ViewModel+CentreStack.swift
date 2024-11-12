@@ -27,45 +27,15 @@ extension VM { class CentreStack: ViewModel { required init() {}
 
 
 // MARK: Height
-
-
-
-// MARK: Inner Padding
-
-
-// MARK: Outer Padding
-
-
-// MARK: Corners
-
-
-
-// MARK: Vertical Fixed Size
-
-
-
-// MARK: Translation Progress
-
-
-
-
-
-
-
-
-
-// MARK: Popup Height
 extension VM.CentreStack {
-    func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat {
-        min(heightCandidate, calculateLargeScreenHeight())
+    func calculateActivePopupHeight() async -> CGFloat? {
+        popups.last?.height
     }
 }
-private extension VM.CentreStack {
-    func calculateLargeScreenHeight() -> CGFloat {
-        let fullscreenHeight = screen.height,
-            safeAreaHeight = screen.safeArea.top + screen.safeArea.bottom
-        return fullscreenHeight - safeAreaHeight
-    }
+
+// MARK: Inner Padding
+extension VM.CentreStack {
+    func calculateActivePopupInnerPadding() async -> EdgeInsets { .init() }
 }
 
 // MARK: Outer Padding
@@ -95,12 +65,7 @@ private extension VM.CentreStack {
     }
 }
 
-// MARK: Inner Padding
-extension VM.CentreStack {
-    func calculateActivePopupInnerPadding() async -> EdgeInsets { .init() }
-}
-
-// MARK: Corner Radius
+// MARK: Corners
 extension VM.CentreStack {
     func calculateActivePopupCorners() async -> [PopupAlignment : CGFloat] { [
         .top: popups.last?.config.cornerRadius ?? 0,
@@ -108,14 +73,7 @@ extension VM.CentreStack {
     ]}
 }
 
-// MARK: Opacity
-extension VM.CentreStack {
-    func calculateOpacity(for popup: AnyPopup) -> CGFloat {
-        popups.last == popup ? 1 : 0
-    }
-}
-
-// MARK: Fixed Size
+// MARK: Vertical Fixed Size
 extension VM.CentreStack {
     func calculateActivePopupVerticalFixedSize() async -> Bool {
         await activePopup.height != calculateLargeScreenHeight()
@@ -127,9 +85,31 @@ extension VM.CentreStack {
     func calculateActivePopupTranslationProgress() async -> CGFloat { 0 }
 }
 
-// MARK: Active Popup Height
+
+
+
+
+
+
+
+// MARK: Popup Height
 extension VM.CentreStack {
-    func calculateActivePopupHeight() async -> CGFloat? {
-        popups.last?.height
+    func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat {
+        min(heightCandidate, calculateLargeScreenHeight())
+    }
+}
+private extension VM.CentreStack {
+    func calculateLargeScreenHeight() -> CGFloat {
+        let fullscreenHeight = screen.height,
+            safeAreaHeight = screen.safeArea.top + screen.safeArea.bottom
+        return fullscreenHeight - safeAreaHeight
+    }
+}
+
+
+// MARK: Opacity
+extension VM.CentreStack {
+    func calculateOpacity(for popup: AnyPopup) -> CGFloat {
+        popups.last == popup ? 1 : 0
     }
 }
