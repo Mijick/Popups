@@ -240,7 +240,7 @@ private extension VM.VerticalStack {
         }
     }
     func calculateOffsetForStackedPopup(_ popup: AnyPopup) -> CGFloat {
-        let invertedIndex = getInvertedIndex(of: popup)
+        let invertedIndex = popups.getInvertedIndex(of: popup)
         let offsetValue = stackOffset * .init(invertedIndex)
         let alignmentMultiplier = switch alignment {
             case .top: 1.0
@@ -257,7 +257,7 @@ extension VM.VerticalStack {
     @MainActor func calculateScaleX(for popup: AnyPopup) -> CGFloat {
         guard popup != popups.last else { return 1 }
 
-        let invertedIndex = getInvertedIndex(of: popup),
+        let invertedIndex = popups.getInvertedIndex(of: popup),
             remainingTranslationProgress = 1 - activePopup.translationProgress
 
         let progressMultiplier = invertedIndex == 1 ? remainingTranslationProgress : max(minScaleProgressMultiplier, remainingTranslationProgress)
@@ -278,7 +278,7 @@ extension VM.VerticalStack {
     @MainActor func calculateStackOverlayOpacity(for popup: AnyPopup) -> CGFloat {
         guard popup != popups.last else { return 0 }
 
-        let invertedIndex = getInvertedIndex(of: popup),
+        let invertedIndex = popups.getInvertedIndex(of: popup),
             remainingTranslationProgress = 1 - activePopup.translationProgress
 
         let progressMultiplier = invertedIndex == 1 ? remainingTranslationProgress : max(minStackOverlayProgressMultiplier, remainingTranslationProgress)
@@ -287,34 +287,6 @@ extension VM.VerticalStack {
         let opacity = overlayValue * progressMultiplier
         return max(opacity, 0)
     }
-}
-
-
-
-// MARK: - HELPERS
-
-
-
-// MARK: Inverted Index
-extension VM.VerticalStack {
-    func getInvertedIndex(of popup: AnyPopup) -> Int {
-        let index = popups.firstIndex(of: popup) ?? 0
-        let invertedIndex = popups.count - 1 - index
-        return invertedIndex
-    }
-}
-
-// MARK: Attributes
-extension VM.VerticalStack {
-    var stackScaleFactor: CGFloat { 0.025 }
-    var stackOverlayFactor: CGFloat { 0.1 }
-    var maxStackOverlayFactor: CGFloat { 0.48 }
-    var stackOffset: CGFloat { GlobalConfigContainer.vertical.isStackingEnabled ? 8 : 0 }
-    var dragThreshold: CGFloat { GlobalConfigContainer.vertical.dragThreshold }
-    var dragGestureEnabled: Bool { popups.last?.config.isDragGestureEnabled ?? false }
-    var dragTranslationThreshold: CGFloat { 8 }
-    var minScaleProgressMultiplier: CGFloat { 0.7 }
-    var minStackOverlayProgressMultiplier: CGFloat { 0.6 }
 }
 
 
@@ -436,4 +408,19 @@ private extension VM.VerticalStack {
     func shouldDismissPopup() async -> Bool {
         await activePopup.translationProgress >= dragThreshold
     }
+}
+
+
+
+// MARK: - ATTRIBUTES
+extension VM.VerticalStack {
+    var stackScaleFactor: CGFloat { 0.025 }
+    var stackOverlayFactor: CGFloat { 0.1 }
+    var maxStackOverlayFactor: CGFloat { 0.48 }
+    var stackOffset: CGFloat { GlobalConfigContainer.vertical.isStackingEnabled ? 8 : 0 }
+    var dragThreshold: CGFloat { GlobalConfigContainer.vertical.dragThreshold }
+    var dragGestureEnabled: Bool { popups.last?.config.isDragGestureEnabled ?? false }
+    var dragTranslationThreshold: CGFloat { 8 }
+    var minScaleProgressMultiplier: CGFloat { 0.7 }
+    var minStackOverlayProgressMultiplier: CGFloat { 0.6 }
 }
