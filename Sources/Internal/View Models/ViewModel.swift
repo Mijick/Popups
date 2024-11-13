@@ -98,7 +98,24 @@ extension ViewModel {
 
 // MARK: Helpers
 private extension ViewModel {
-
+    func filteredPopups(_ popups: [AnyPopup]) async -> [AnyPopup] {
+        popups.filter { $0.config.alignment == alignment }
+    }
+    func updatedScreenProperties(_ screenReader: GeometryProxy?, _ isKeyboardActive: Bool?) async -> Screen {
+        let height = if let screenReader { screenReader.size.height + screenReader.safeAreaInsets.top + screenReader.safeAreaInsets.bottom } else { screen.height },
+            safeArea = screenReader?.safeAreaInsets ?? screen.safeArea,
+            isKeyboardActive = isKeyboardActive ?? screen.isKeyboardActive
+        return .init(height: height, safeArea: safeArea, isKeyboardActive: isKeyboardActive)
+    }
+}
+private extension ViewModel {
+    func updateActivePopupProperties() async {
+        activePopup.height = await calculateActivePopupHeight()
+        activePopup.outerPadding = await calculateActivePopupOuterPadding()
+        activePopup.innerPadding = await calculateActivePopupInnerPadding()
+        activePopup.corners = await calculateActivePopupCorners()
+        activePopup.verticalFixedSize = await calculateActivePopupVerticalFixedSize()
+    }
 }
 
 
@@ -122,29 +139,6 @@ extension ViewModel {
 
         withAnimation(activePopup.gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
     }}
-}
-private extension ViewModel {
-    func filteredPopups(_ popups: [AnyPopup]) async -> [AnyPopup] {
-        popups.filter { $0.config.alignment == alignment }
-    }
-    func updatedScreenProperties(_ screenReader: GeometryProxy?, _ isKeyboardActive: Bool?) async -> Screen {
-        let height = if let screenReader { screenReader.size.height + screenReader.safeAreaInsets.top + screenReader.safeAreaInsets.bottom } else { screen.height },
-            safeArea = screenReader?.safeAreaInsets ?? screen.safeArea,
-            isKeyboardActive = isKeyboardActive ?? screen.isKeyboardActive
-        return .init(height: height, safeArea: safeArea, isKeyboardActive: isKeyboardActive)
-    }
-
-
-    
-
-
-    func updateActivePopupProperties() async {
-        activePopup.height = await calculateActivePopupHeight()
-        activePopup.outerPadding = await calculateActivePopupOuterPadding()
-        activePopup.innerPadding = await calculateActivePopupInnerPadding()
-        activePopup.corners = await calculateActivePopupCorners()
-        activePopup.verticalFixedSize = await calculateActivePopupVerticalFixedSize()
-    }
 }
 
 
