@@ -353,36 +353,22 @@ private extension VM.VerticalStack {
         case false: return
     }}
     func calculateTargetDragHeight(_ activePopupHeight: CGFloat) async -> CGFloat {
-        let currentPopupHeight = await calculateCurrentPopupHeight(activePopupHeight)
-        let popupTargetHeights = await calculatePopupTargetHeightsFromDragDetents(activePopupHeight)
-        let targetHeight = await calculateTargetPopupHeight(currentPopupHeight, popupTargetHeights)
-        let targetDragHeight = await calculateTargetDragHeight(targetHeight, activePopupHeight)
+        let currentPopupHeight = calculateCurrentPopupHeight(activePopupHeight)
+        let popupTargetHeights = calculatePopupTargetHeightsFromDragDetents(activePopupHeight)
+        let targetHeight = calculateTargetPopupHeight(currentPopupHeight, popupTargetHeights)
+        let targetDragHeight = calculateTargetDragHeight(targetHeight, activePopupHeight)
         return targetDragHeight
     }
-
-
-    @MainActor func updateTranslationValues() async { if let activePopupHeight = popups.last?.height {
-        Task {
-            let currentPopupHeight = await calculateCurrentPopupHeight(activePopupHeight)
-            let popupTargetHeights = await calculatePopupTargetHeightsFromDragDetents(activePopupHeight)
-            let targetHeight = await calculateTargetPopupHeight(currentPopupHeight, popupTargetHeights)
-            let targetDragHeight = await calculateTargetDragHeight(targetHeight, activePopupHeight)
-
-            await updateGestureTranslation(0)
-            await updateDragHeight(targetDragHeight)
-        }
-
-    }}
 }
 private extension VM.VerticalStack {
-    func calculateCurrentPopupHeight(_ activePopupHeight: CGFloat) async -> CGFloat {
+    func calculateCurrentPopupHeight(_ activePopupHeight: CGFloat) -> CGFloat {
         let activePopupDragHeight = popups.last?.dragHeight ?? 0
         let currentDragHeight = activePopupDragHeight + activePopup.gestureTranslation * getDragTranslationMultiplier()
 
         let currentPopupHeight = activePopupHeight + currentDragHeight
         return currentPopupHeight
     }
-    func calculatePopupTargetHeightsFromDragDetents(_ activePopupHeight: CGFloat) async -> [CGFloat] { guard let dragDetents = popups.last?.config.dragDetents else { return [activePopupHeight] }; return
+    func calculatePopupTargetHeightsFromDragDetents(_ activePopupHeight: CGFloat) -> [CGFloat] { guard let dragDetents = popups.last?.config.dragDetents else { return [activePopupHeight] }; return
         dragDetents
             .map { switch $0 {
                 case .height(let targetHeight): min(targetHeight, calculateLargeScreenHeight())
@@ -393,7 +379,7 @@ private extension VM.VerticalStack {
             .modified { $0.append(activePopupHeight) }
             .sorted(by: <)
     }
-    func calculateTargetPopupHeight(_ currentPopupHeight: CGFloat, _ popupTargetHeights: [CGFloat]) async -> CGFloat {
+    func calculateTargetPopupHeight(_ currentPopupHeight: CGFloat, _ popupTargetHeights: [CGFloat]) -> CGFloat {
         guard let activePopupHeight = popups.last?.height,
               currentPopupHeight < screen.height
         else { return popupTargetHeights.last ?? 0 }
@@ -411,7 +397,7 @@ private extension VM.VerticalStack {
         }
         return popupTargetHeights[targetIndex]
     }
-    func calculateTargetDragHeight(_ targetHeight: CGFloat, _ activePopupHeight: CGFloat) async -> CGFloat {
+    func calculateTargetDragHeight(_ targetHeight: CGFloat, _ activePopupHeight: CGFloat) -> CGFloat {
         targetHeight - activePopupHeight
     }
     @MainActor func updateDragHeight(_ targetDragHeight: CGFloat) async { if let activePopup = popups.last {
