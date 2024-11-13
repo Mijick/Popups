@@ -81,7 +81,13 @@ extension ViewModel {
 
 // MARK: Gesture Translation
 extension ViewModel {
+    @MainActor func updateGestureTranslation(_ newGestureTranslation: CGFloat) async { Task {
+        activePopup.gestureTranslation = newGestureTranslation
+        activePopup.translationProgress = await calculateActivePopupTranslationProgress()
+        activePopup.height = await calculateActivePopupHeight()
 
+        withAnimation(activePopup.gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
+    }}
 }
 
 // MARK: Popup Height
@@ -124,25 +130,6 @@ private extension ViewModel {
         activePopup.verticalFixedSize = await calculateActivePopupVerticalFixedSize()
     }
 }
-
-
-
-// MARK: Update
-extension ViewModel {
-
-
-
-    @MainActor func updateGestureTranslation(_ newGestureTranslation: CGFloat) async { Task { @MainActor in
-        activePopup.gestureTranslation = newGestureTranslation
-        activePopup.translationProgress = await calculateActivePopupTranslationProgress()
-        activePopup.height = await calculateActivePopupHeight()
-
-        withAnimation(activePopup.gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
-    }}
-}
-
-
-
 
 
 
