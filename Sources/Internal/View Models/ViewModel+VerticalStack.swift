@@ -370,8 +370,8 @@ private extension VM.VerticalStack {
         guard let activePopupHeight = activePopup.height else { return 0 }
 
         let currentPopupHeight = calculateCurrentPopupHeight(activePopupHeight: activePopupHeight, activePopupDragHeight: activePopup.dragHeight)
-        let popupTargetHeights = calculatePopupTargetHeightsFromDragDetents(activePopupHeight: activePopupHeight, activePopupConfig: activePopup.config)
-        let targetHeight = calculateTargetPopupHeight(currentPopupHeight, popupTargetHeights)
+        let popupTargetHeights = calculatePopupTargetHeightsFromDragDetents(activePopupHeight, activePopup.config)
+        let targetHeight = calculateTargetPopupHeight(activePopupHeight: activePopupHeight, activePopupDragHeight: activePopup.dragHeight, currentPopupHeight: currentPopupHeight, popupTargetHeights: popupTargetHeights)
         let targetDragHeight = calculateTargetDragHeight(targetHeight, activePopupHeight)
         return targetDragHeight
     }
@@ -393,12 +393,12 @@ private extension VM.VerticalStack {
             .modified { $0.append(activePopupHeight) }
             .sorted(by: <)
     }
-    func calculateTargetPopupHeight(_ currentPopupHeight: CGFloat, _ popupTargetHeights: [CGFloat]) -> CGFloat {
-        guard let activePopupHeight = popups.last?.height, currentPopupHeight < screen.height else { return popupTargetHeights.last ?? 0 }
+    func calculateTargetPopupHeight(activePopupHeight: CGFloat, activePopupDragHeight: CGFloat, currentPopupHeight: CGFloat, popupTargetHeights: [CGFloat]) -> CGFloat {
+        guard currentPopupHeight < screen.height else { return popupTargetHeights.last ?? 0 }
 
         let initialIndex = popupTargetHeights.firstIndex { $0 >= currentPopupHeight } ?? popupTargetHeights.count - 1,
             targetIndex = activePopup.gestureTranslation * getDragTranslationMultiplier() > 0 ? initialIndex : max(0, initialIndex - 1)
-        let previousPopupHeight = (popups.last?.dragHeight ?? 0) + activePopupHeight,
+        let previousPopupHeight = activePopupDragHeight + activePopupHeight,
             popupTargetHeight = popupTargetHeights[targetIndex],
             deltaHeight = abs(previousPopupHeight - popupTargetHeight)
         let progress = abs(currentPopupHeight - previousPopupHeight) / deltaHeight
