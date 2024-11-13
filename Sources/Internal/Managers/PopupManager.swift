@@ -40,10 +40,10 @@ extension PopupManager { enum StackOperation {
 
 // MARK: Perform Operation
 extension PopupManager {
-    nonisolated func stack(_ operation: StackOperation) { Task {
+    func stack(_ operation: StackOperation) { Task {
         await hideKeyboard()
 
-        let oldStack = await stack,
+        let oldStack = stack,
             newStack = await getNewStack(operation),
             newStackPriority = await getNewStackPriority(newStack)
 
