@@ -381,11 +381,9 @@ private extension VM.VerticalStack {
             .sorted(by: <)
     }
     func calculateTargetPopupHeight(_ currentPopupHeight: CGFloat, _ popupTargetHeights: [CGFloat]) -> CGFloat {
-        guard let activePopupHeight = popups.last?.height,
-              currentPopupHeight < screen.height
-        else { return popupTargetHeights.last ?? 0 }
+        guard let activePopupHeight = popups.last?.height, currentPopupHeight < screen.height else { return popupTargetHeights.last ?? 0 }
 
-        let initialIndex = popupTargetHeights.firstIndex(where: { $0 >= currentPopupHeight }) ?? popupTargetHeights.count - 1,
+        let initialIndex = popupTargetHeights.firstIndex { $0 >= currentPopupHeight } ?? popupTargetHeights.count - 1,
             targetIndex = activePopup.gestureTranslation * getDragTranslationMultiplier() > 0 ? initialIndex : max(0, initialIndex - 1)
         let previousPopupHeight = (popups.last?.dragHeight ?? 0) + activePopupHeight,
             popupTargetHeight = popupTargetHeights[targetIndex],
