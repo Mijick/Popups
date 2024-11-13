@@ -71,7 +71,7 @@ extension ViewModel {
 
 // MARK: Screen
 extension ViewModel {
-    @MainActor func updateScreenValue(screenReader: GeometryProxy? = nil, isKeyboardActive: Bool? = nil) async { Task {
+    @MainActor func updateScreen(screenReader: GeometryProxy? = nil, isKeyboardActive: Bool? = nil) async { Task {
         screen = await updatedScreenProperties(screenReader, isKeyboardActive)
         await updateActivePopupProperties()
 
