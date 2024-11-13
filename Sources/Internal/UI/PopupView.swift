@@ -89,7 +89,7 @@ private extension PopupView {
         await updateViewModels { await $0.updateScreenValue(screenReader: screenReader) }
     }}
     func onPopupsHeightChange(_ p: Any) { Task { @MainActor in
-        await updateViewModels { await $0.updatePopupsValue(popupManager.stack) }
+        await updateViewModels { await $0.updatePopups(popupManager.stack) }
     }}
     func onStackChange(_ oldStack: [AnyPopup], _ newStack: [AnyPopup]) {
         newStack

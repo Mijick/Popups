@@ -61,7 +61,12 @@ extension ViewModel {
 
 // MARK: Popups
 extension ViewModel {
+    @MainActor func updatePopups(_ newPopups: [AnyPopup]) async { Task {
+        popups = await filteredPopups(newPopups)
+        await updateActivePopupProperties()
 
+        withAnimation(.transition) { objectWillChange.send() }
+    }}
 }
 
 // MARK: Screen
@@ -92,12 +97,7 @@ private extension ViewModel {
 
 // MARK: Update
 extension ViewModel {
-    @MainActor func updatePopupsValue(_ newPopups: [AnyPopup]) async { Task { @MainActor in
-        popups = await filteredPopups(newPopups)
-        await updateActivePopupProperties()
 
-        withAnimation(.transition) { objectWillChange.send() }
-    }}
     @MainActor func updateScreenValue(screenReader: GeometryProxy? = nil, isKeyboardActive: Bool? = nil) async { Task { @MainActor in
         screen = await updatedScreenProperties(screenReader, isKeyboardActive)
         await updateActivePopupProperties()

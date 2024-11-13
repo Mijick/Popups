@@ -33,13 +33,13 @@ private extension PopupVerticalStackViewModelTests {
         var popups = viewModel.popups
         popups[index] = popup
 
-        await viewModel.updatePopupsValue(popups)
+        await viewModel.updatePopups(popups)
     }}
     func closePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.popups.firstIndex(of: popup) {
         var popups = viewModel.popups
         popups.remove(at: index)
 
-        await viewModel.updatePopupsValue(popups)
+        await viewModel.updatePopups(popups)
     }}
 }
 
@@ -52,7 +52,7 @@ private extension PopupVerticalStackViewModelTests {
 // MARK: Inverted Index
 extension PopupVerticalStackViewModelTests {
     func test_getInvertedIndex_1() async {
-        await bottomViewModel.updatePopupsValue([
+        await bottomViewModel.updatePopups([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 150)
         ])
 
@@ -62,7 +62,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_getInvertedIndex_2() async {
-        await bottomViewModel.updatePopupsValue([
+        await bottomViewModel.updatePopups([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 150),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 150),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 150),
@@ -132,7 +132,7 @@ extension PopupVerticalStackViewModelTests {
 }
 private extension PopupVerticalStackViewModelTests {
     func appendPopupsAndCheckPopups(viewModel: ViewModel, popups: [AnyPopup], updatedPopup: AnyPopup, expectedValue: (height: CGFloat?, dragHeight: CGFloat?)) async {
-        await viewModel.updatePopupsValue(popups)
+        await viewModel.updatePopups(popups)
         await viewModel.updatePopupAction(updatedPopup)
 
         if let index = viewModel.popups.firstIndex(of: updatedPopup) {
@@ -463,7 +463,7 @@ private extension PopupVerticalStackViewModelTests {
 // MARK: Offset
 extension PopupVerticalStackViewModelTests {
     func test_calculateOffsetY_withZeroGestureTranslation_fivePopupsStacked_thirdElement() async {
-        await bottomViewModel.updatePopupsValue([
+        await bottomViewModel.updatePopups([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 120),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 240),
@@ -477,7 +477,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculateOffsetY_withZeroGestureTranslation_fivePopupsStacked_lastElement() async {
-        await bottomViewModel.updatePopupsValue([
+        await bottomViewModel.updatePopups([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 120),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 240),
@@ -491,7 +491,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculateOffsetY_withNegativeGestureTranslation_dragHeight_onePopupStacked() async {
-        await bottomViewModel.updatePopupsValue([
+        await bottomViewModel.updatePopups([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 100)
         ])
         await bottomViewModel.updateGestureTranslation(-100)
@@ -502,7 +502,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculateOffsetY_withPositiveGestureTranslation_dragHeight_twoPopupsStacked_firstElement() async {
-        await bottomViewModel.updatePopupsValue([
+        await bottomViewModel.updatePopups([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 249),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
@@ -514,7 +514,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculateOffsetY_withPositiveGestureTranslation_dragHeight_twoPopupsStacked_lastElement() async {
-        await bottomViewModel.updatePopupsValue([
+        await bottomViewModel.updatePopups([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 249),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
@@ -526,7 +526,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculateOffsetY_withStackingDisabled() async {
-        await bottomViewModel.updatePopupsValue([
+        await bottomViewModel.updatePopups([
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 249),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
@@ -538,7 +538,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculateOffsetY_withPopupsHaveTopAlignment_1() async {
-        await topViewModel.updatePopupsValue([
+        await topViewModel.updatePopups([
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 249),
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
@@ -549,7 +549,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculateOffsetY_withPopupsHaveTopAlignment_2() async {
-        await topViewModel.updatePopupsValue([
+        await topViewModel.updatePopups([
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 350, popupDragHeight: 249),
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
@@ -1296,7 +1296,7 @@ extension PopupVerticalStackViewModelTests {
 }
 private extension PopupVerticalStackViewModelTests {
     func appendPopupsAndCheckGestureTranslationOnChange(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat, gestureTranslation: CGFloat)) async {
-        await viewModel.updatePopupsValue(popups)
+        await viewModel.updatePopups(popups)
         await updatePopups(viewModel)
         await viewModel.onPopupDragGestureChanged(gestureValue)
 
@@ -1466,7 +1466,7 @@ extension PopupVerticalStackViewModelTests {
 }
 private extension PopupVerticalStackViewModelTests {
     func appendPopupsAndCheckGestureTranslationOnEnd(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat?, shouldPopupBeDismissed: Bool)) async {
-        await viewModel.updatePopupsValue(popups)
+        await viewModel.updatePopups(popups)
         await updatePopups(viewModel)
         await viewModel.updateGestureTranslation(gestureValue)
         await viewModel.onPopupDragGestureEnded(gestureValue)
@@ -1492,7 +1492,7 @@ private extension PopupVerticalStackViewModelTests {
             .settingDragHeight(popupDragHeight)
     }
     func appendPopupsAndPerformChecks<Value: Equatable & Sendable>(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, calculatedValue: @escaping (ViewModel) async -> (Value), expectedValueBuilder: @escaping (ViewModel) async -> Value) async {
-        await viewModel.updatePopupsValue(popups)
+        await viewModel.updatePopups(popups)
         await updatePopups(viewModel)
         await viewModel.updateGestureTranslation(gestureTranslation)
 
