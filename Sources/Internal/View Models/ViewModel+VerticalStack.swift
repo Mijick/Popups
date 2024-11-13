@@ -352,11 +352,11 @@ private extension VM.VerticalStack {
 // MARK: On Ended
 extension VM.VerticalStack {
     @MainActor func onPopupDragGestureEnded(_ value: CGFloat) async { Task {
-        guard value != 0, let activePopup = popups.last, let activePopupHeight = activePopup.height else { return }
+        guard value != 0, let activePopup = popups.last else { return }
 
         await dismissLastPopupIfNeeded(activePopup)
 
-        let targetDragHeight = await calculateTargetDragHeight(activePopupHeight)
+        let targetDragHeight = await calculateTargetDragHeight(activePopup)
         await updateGestureTranslation(0)
         await updateDragHeight(targetDragHeight, activePopup)
     }}
@@ -366,24 +366,24 @@ private extension VM.VerticalStack {
         case true: await closePopupAction(popup)
         case false: return
     }}
-    func calculateTargetDragHeight(_ activePopupHeight: CGFloat) async -> CGFloat {
-        let currentPopupHeight = calculateCurrentPopupHeight(activePopupHeight)
-        let popupTargetHeights = calculatePopupTargetHeightsFromDragDetents(activePopupHeight)
+    func calculateTargetDragHeight(_ activePopup: AnyPopup) async -> CGFloat {
+        guard let activePopupHeight = activePopup.height else { return 0 }
+
+        let currentPopupHeight = calculateCurrentPopupHeight(activePopupHeight: activePopupHeight, activePopupDragHeight: activePopup.dragHeight)
+        let popupTargetHeights = calculatePopupTargetHeightsFromDragDetents(activePopupHeight: activePopupHeight, activePopupConfig: activePopup.config)
         let targetHeight = calculateTargetPopupHeight(currentPopupHeight, popupTargetHeights)
         let targetDragHeight = calculateTargetDragHeight(targetHeight, activePopupHeight)
         return targetDragHeight
     }
 }
 private extension VM.VerticalStack {
-    func calculateCurrentPopupHeight(_ activePopupHeight: CGFloat) -> CGFloat {
-        let activePopupDragHeight = popups.last?.dragHeight ?? 0
+    func calculateCurrentPopupHeight(activePopupHeight: CGFloat, activePopupDragHeight: CGFloat) -> CGFloat {
         let currentDragHeight = activePopupDragHeight + activePopup.gestureTranslation * getDragTranslationMultiplier()
-
         let currentPopupHeight = activePopupHeight + currentDragHeight
         return currentPopupHeight
     }
-    func calculatePopupTargetHeightsFromDragDetents(_ activePopupHeight: CGFloat) -> [CGFloat] { guard let dragDetents = popups.last?.config.dragDetents else { return [activePopupHeight] }; return
-        dragDetents
+    func calculatePopupTargetHeightsFromDragDetents(activePopupHeight: CGFloat, activePopupConfig: AnyPopupConfig) -> [CGFloat] {
+        activePopupConfig.dragDetents
             .map { switch $0 {
                 case .height(let targetHeight): min(targetHeight, calculateLargeScreenHeight())
                 case .fraction(let fraction): min(fraction * activePopupHeight, calculateLargeScreenHeight())
