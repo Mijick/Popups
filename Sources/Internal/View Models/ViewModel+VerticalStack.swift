@@ -320,9 +320,9 @@ private extension VM.VerticalStack {
 }
 private extension VM.VerticalStack {
     func calculateMaxHeightForDragGesture(_ activePopupHeight: CGFloat) -> CGFloat {
-        let maxHeight1 = (calculatePopupTargetHeightsFromDragDetents(activePopupHeight).max() ?? 0) + dragTranslationThreshold
-        let maxHeight2 = screen.height
-        return min(maxHeight1, maxHeight2)
+        let maxDragDetent = calculatePopupTargetHeightsFromDragDetents(activePopupHeight).max() ?? 0
+        let maxHeightCandidate = maxDragDetent + dragTranslationThreshold
+        return min(maxHeightCandidate, screen.height)
     }
     func calculateDragTranslation(_ maxHeight: CGFloat, _ activePopupHeight: CGFloat) -> CGFloat {
         let translation = maxHeight - activePopupHeight - (popups.last?.dragHeight ?? 0)
