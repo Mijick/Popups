@@ -86,7 +86,14 @@ extension ViewModel {
 
 // MARK: Popup Height
 extension ViewModel {
+    @MainActor func updatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async { Task {
+        guard activePopup.gestureTranslation == 0 else { return }
 
+        let newHeight = await calculatePopupHeight(heightCandidate, popup)
+        if newHeight != popup.height {
+            await updatePopupAction(popup.updatedHeight(newHeight))
+        }
+    }}
 }
 
 // MARK: Popup Drag Height
@@ -124,14 +131,7 @@ private extension ViewModel {
 extension ViewModel {
 
 
-    @MainActor func updatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async { Task {
-        guard activePopup.gestureTranslation == 0 else { return }
 
-        let newHeight = await calculatePopupHeight(heightCandidate, popup)
-        if newHeight != popup.height {
-            await updatePopupAction(popup.updatedHeight(newHeight))
-        }
-    }}
     @MainActor func updateGestureTranslation(_ newGestureTranslation: CGFloat) async { Task { @MainActor in
         activePopup.gestureTranslation = newGestureTranslation
         activePopup.translationProgress = await calculateActivePopupTranslationProgress()
