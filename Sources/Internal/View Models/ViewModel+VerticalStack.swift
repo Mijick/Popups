@@ -325,7 +325,8 @@ private extension VM.VerticalStack {
         return min(maxHeightCandidate, screen.height)
     }
     func calculateDragTranslation(_ maxHeight: CGFloat, _ activePopupHeight: CGFloat) -> CGFloat {
-        let translation = maxHeight - activePopupHeight - (popups.last?.dragHeight ?? 0)
+        let activePopupDragHeight = popups.last?.dragHeight ?? 0
+        let translation = maxHeight - activePopupHeight - activePopupDragHeight
         return translation * getDragTranslationMultiplier()
     }
     func calculateDragExtremeValue(_ value1: CGFloat, _ value2: CGFloat) -> CGFloat { switch alignment {
