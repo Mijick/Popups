@@ -1511,7 +1511,7 @@ private extension PopupVerticalStackViewModelTests {
         isDragGestureEnabled: dragGestureEnabled
     )}
     func updatePopups(_ viewModel: ViewModel) async {
-        for popup in viewModel.popups { await viewModel.recalculateAndUpdatePopupHeight(popup.height!, popup) }
+        for popup in viewModel.popups { await viewModel.updatePopupHeight(popup.height!, popup) }
     }
 }
 

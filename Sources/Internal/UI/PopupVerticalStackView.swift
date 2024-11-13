@@ -31,7 +31,7 @@ private extension PopupVerticalStackView {
         popup.body
             .padding(viewModel.activePopup.innerPadding)
             .fixedSize(horizontal: false, vertical: viewModel.activePopup.verticalFixedSize)
-            .onHeightChange { await viewModel.recalculateAndUpdatePopupHeight($0, popup) }
+            .onHeightChange { await viewModel.updatePopupHeight($0, popup) }
             .frame(height: viewModel.activePopup.height, alignment: (!viewModel.alignment).toAlignment())
             .frame(maxWidth: .infinity, maxHeight: viewModel.activePopup.height, alignment: (!viewModel.alignment).toAlignment())
             .background(backgroundColor: getBackgroundColor(for: popup), overlayColor: getStackOverlayColor(for: popup), corners: viewModel.activePopup.corners)
