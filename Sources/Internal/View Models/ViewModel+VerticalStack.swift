@@ -413,18 +413,3 @@ private extension VM.VerticalStack {
         targetHeight - activePopupHeight
     }
 }
-
-
-
-// MARK: - ATTRIBUTES
-extension VM.VerticalStack {
-    var stackScaleFactor: CGFloat { 0.025 }
-    var stackOverlayFactor: CGFloat { 0.1 }
-    var maxStackOverlayFactor: CGFloat { 0.48 }
-    var stackOffset: CGFloat { GlobalConfigContainer.vertical.isStackingEnabled ? 8 : 0 }
-    var dragThreshold: CGFloat { GlobalConfigContainer.vertical.dragThreshold }
-    var dragGestureEnabled: Bool { popups.last?.config.isDragGestureEnabled ?? false }
-    var dragTranslationThreshold: CGFloat { 8 }
-    var minScaleProgressMultiplier: CGFloat { 0.7 }
-    var minStackOverlayProgressMultiplier: CGFloat { 0.6 }
-}
