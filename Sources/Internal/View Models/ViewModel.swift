@@ -82,6 +82,9 @@ extension ViewModel {
 
         withAnimation(activePopup.gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
     }}
+    @MainActor func updateDragHeight(_ targetDragHeight: CGFloat, _ popup: AnyPopup) async {
+        await updatePopupAction(popup.updatedDragHeight(targetDragHeight))
+    }
 }
 private extension ViewModel {
     func filterPopups(_ popups: [AnyPopup]) async -> [AnyPopup] {
