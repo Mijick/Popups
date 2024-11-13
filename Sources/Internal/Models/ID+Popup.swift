@@ -17,14 +17,14 @@ struct PopupID {
 
 // MARK: Create
 extension PopupID {
-    init(_ id: String) {
+    init(_ id: String) async {
         let firstComponent = id,
             secondComponent = Self.separator,
             thirdComponent = String(describing: Date())
         self.init(rawValue: firstComponent + secondComponent + thirdComponent)
     }
-    init(_ popupType: any Popup.Type) {
-        self.init(.init(describing: popupType))
+    init(_ popupType: any Popup.Type) async {
+        await self.init(.init(describing: popupType))
     }
 }
 
