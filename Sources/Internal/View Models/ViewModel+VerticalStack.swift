@@ -358,7 +358,7 @@ extension VM.VerticalStack {
 
         let targetDragHeight = await calculateTargetDragHeight(activePopup)
         await updateGestureTranslation(0)
-        await updateDragHeight(targetDragHeight, activePopup)
+        await updatePopupDragHeight(targetDragHeight, activePopup)
     }}
 }
 private extension VM.VerticalStack {

@@ -79,7 +79,7 @@ extension ViewModel {
     }}
 }
 
-// MARK: Gesture
+// MARK: Gesture Translation
 extension ViewModel {
 
 }
@@ -91,7 +91,9 @@ extension ViewModel {
 
 // MARK: Popup Drag Height
 extension ViewModel {
-
+    @MainActor func updatePopupDragHeight(_ targetDragHeight: CGFloat, _ popup: AnyPopup) async { Task {
+        await updatePopupAction(popup.updatedDragHeight(targetDragHeight))
+    }}
 }
 
 // MARK: Helpers
@@ -120,9 +122,6 @@ extension ViewModel {
 
         withAnimation(activePopup.gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
     }}
-    @MainActor func updateDragHeight(_ targetDragHeight: CGFloat, _ popup: AnyPopup) async {
-        await updatePopupAction(popup.updatedDragHeight(targetDragHeight))
-    }
 }
 private extension ViewModel {
     func filteredPopups(_ popups: [AnyPopup]) async -> [AnyPopup] {
