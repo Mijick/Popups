@@ -14,7 +14,7 @@ import SwiftUI
 extension VM { class CentreStack: ViewModel { required init() {}
     var alignment: PopupAlignment = .centre
     var popups: [AnyPopup] = []
-    var activePopup: ActivePopup = .init()
+    var activePopupProperties: ActivePopupProperties = .init()
     var screen: Screen = .init()
     var updatePopupAction: ((AnyPopup) async -> ())!
     var closePopupAction: ((AnyPopup) async -> ())!
@@ -44,7 +44,7 @@ extension VM.CentreStack {
 }
 private extension VM.CentreStack {
     func calculateVerticalPopupPadding(for edge: PopupAlignment) -> CGFloat {
-        guard let activePopupHeight = activePopup.height, screen.isKeyboardActive && edge == .bottom else { return 0 }
+        guard let activePopupHeight = activePopupProperties.height, screen.isKeyboardActive && edge == .bottom else { return 0 }
 
         let remainingHeight = screen.height - activePopupHeight
         let paddingCandidate = (remainingHeight / 2 - screen.safeArea.bottom) * 2
@@ -74,7 +74,7 @@ extension VM.CentreStack {
 // MARK: Vertical Fixed Size
 extension VM.CentreStack {
     func calculateActivePopupVerticalFixedSize() async -> Bool {
-        activePopup.height != calculateLargeScreenHeight()
+        activePopupProperties.height != calculateLargeScreenHeight()
     }
 }
 

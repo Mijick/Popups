@@ -30,14 +30,14 @@ private extension PopupCentreStackView {
 private extension PopupCentreStackView {
     func createPopup(_ popup: AnyPopup) -> some View {
         popup.body
-            .fixedSize(horizontal: false, vertical: viewModel.activePopup.verticalFixedSize)
+            .fixedSize(horizontal: false, vertical: viewModel.activePopupProperties.verticalFixedSize)
             .onHeightChange { await viewModel.updatePopupHeight($0, popup) }
-            .frame(height: viewModel.activePopup.height)
-            .frame(maxWidth: .infinity, maxHeight: viewModel.activePopup.height)
-            .background(backgroundColor: getBackgroundColor(for: popup), overlayColor: .clear, corners: viewModel.activePopup.corners)
+            .frame(height: viewModel.activePopupProperties.height)
+            .frame(maxWidth: .infinity, maxHeight: viewModel.activePopupProperties.height)
+            .background(backgroundColor: getBackgroundColor(for: popup), overlayColor: .clear, corners: viewModel.activePopupProperties.corners)
             .opacity(viewModel.calculateOpacity(for: popup))
             .focusSection_tvOS()
-            .padding(viewModel.activePopup.outerPadding)
+            .padding(viewModel.activePopupProperties.outerPadding)
             .compositingGroup()
     }
 }

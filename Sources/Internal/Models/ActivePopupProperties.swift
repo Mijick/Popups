@@ -1,5 +1,5 @@
 //
-//  ActivePopup.swift of MijickPopups
+//  ActivePopupProperties.swift of MijickPopups
 //
 //  Created by Tomasz Kurylik. Sending ❤️ from Kraków!
 //    - Mail: tomasz.kurylik@mijick.com
@@ -11,7 +11,7 @@
 
 import SwiftUI
 
-struct ActivePopup: Sendable {
+struct ActivePopupProperties: Sendable {
     var height: CGFloat? = nil
     var innerPadding: EdgeInsets = .init()
     var outerPadding: EdgeInsets = .init()

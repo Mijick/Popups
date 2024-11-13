@@ -17,7 +17,7 @@ protocol ViewModel: ObservableObject where Self.ObjectWillChangePublisher == Obs
     // MARK: Attributes
     var alignment: PopupAlignment { get set }
     var popups: [AnyPopup] { get set }
-    var activePopup: ActivePopup { get set }
+    var activePopupProperties: ActivePopupProperties { get set }
     var screen: Screen { get set }
 
     // MARK: Actions
@@ -84,14 +84,14 @@ extension ViewModel {
     @MainActor func updateGestureTranslation(_ newGestureTranslation: CGFloat) async { Task {
         await updateActivePopupPropertiesOnGestureTranslationChange(newGestureTranslation)
 
-        withAnimation(activePopup.gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
+        withAnimation(activePopupProperties.gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
     }}
 }
 
 // MARK: Popup Height
 extension ViewModel {
     @MainActor func updatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async { Task {
-        guard activePopup.gestureTranslation == 0 else { return }
+        guard activePopupProperties.gestureTranslation == 0 else { return }
 
         let newHeight = await calculatePopupHeight(heightCandidate, popup)
         if newHeight != popup.height {
@@ -121,15 +121,15 @@ private extension ViewModel {
 }
 private extension ViewModel {
     func updateActivePopupProperties() async {
-        activePopup.height = await calculateActivePopupHeight()
-        activePopup.outerPadding = await calculateActivePopupOuterPadding()
-        activePopup.innerPadding = await calculateActivePopupInnerPadding()
-        activePopup.corners = await calculateActivePopupCorners()
-        activePopup.verticalFixedSize = await calculateActivePopupVerticalFixedSize()
+        activePopupProperties.height = await calculateActivePopupHeight()
+        activePopupProperties.outerPadding = await calculateActivePopupOuterPadding()
+        activePopupProperties.innerPadding = await calculateActivePopupInnerPadding()
+        activePopupProperties.corners = await calculateActivePopupCorners()
+        activePopupProperties.verticalFixedSize = await calculateActivePopupVerticalFixedSize()
     }
     func updateActivePopupPropertiesOnGestureTranslationChange(_ newGestureTranslation: CGFloat) async {
-        activePopup.gestureTranslation = newGestureTranslation
-        activePopup.translationProgress = await calculateActivePopupTranslationProgress()
-        activePopup.height = await calculateActivePopupHeight()
+        activePopupProperties.gestureTranslation = newGestureTranslation
+        activePopupProperties.translationProgress = await calculateActivePopupTranslationProgress()
+        activePopupProperties.height = await calculateActivePopupHeight()
     }
 }

@@ -29,16 +29,16 @@ private extension PopupVerticalStackView {
 private extension PopupVerticalStackView {
     func createPopup(_ popup: AnyPopup) -> some View {
         popup.body
-            .padding(viewModel.activePopup.innerPadding)
-            .fixedSize(horizontal: false, vertical: viewModel.activePopup.verticalFixedSize)
+            .padding(viewModel.activePopupProperties.innerPadding)
+            .fixedSize(horizontal: false, vertical: viewModel.activePopupProperties.verticalFixedSize)
             .onHeightChange { await viewModel.updatePopupHeight($0, popup) }
-            .frame(height: viewModel.activePopup.height, alignment: (!viewModel.alignment).toAlignment())
-            .frame(maxWidth: .infinity, maxHeight: viewModel.activePopup.height, alignment: (!viewModel.alignment).toAlignment())
-            .background(backgroundColor: getBackgroundColor(for: popup), overlayColor: getStackOverlayColor(for: popup), corners: viewModel.activePopup.corners)
+            .frame(height: viewModel.activePopupProperties.height, alignment: (!viewModel.alignment).toAlignment())
+            .frame(maxWidth: .infinity, maxHeight: viewModel.activePopupProperties.height, alignment: (!viewModel.alignment).toAlignment())
+            .background(backgroundColor: getBackgroundColor(for: popup), overlayColor: getStackOverlayColor(for: popup), corners: viewModel.activePopupProperties.corners)
             .offset(y: viewModel.calculateOffsetY(for: popup))
             .scaleEffect(x: viewModel.calculateScaleX(for: popup))
             .focusSection_tvOS()
-            .padding(viewModel.activePopup.outerPadding)
+            .padding(viewModel.activePopupProperties.outerPadding)
             .transition(transition)
             .zIndex(viewModel.calculateZIndex())
             .compositingGroup()
