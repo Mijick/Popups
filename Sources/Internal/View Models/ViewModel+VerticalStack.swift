@@ -342,10 +342,9 @@ extension VM.VerticalStack {
 
         await dismissLastPopupIfNeeded(activePopup)
 
-
-
-
-        await updateTranslationValues()
+        let targetDragHeight = await calculateTargetDragHeight(activePopupHeight)
+        await updateGestureTranslation(0)
+        await updateDragHeight(targetDragHeight)
     }}
 }
 private extension VM.VerticalStack {
@@ -353,6 +352,13 @@ private extension VM.VerticalStack {
         case true: await closePopupAction(popup)
         case false: return
     }}
+    func calculateTargetDragHeight(_ activePopupHeight: CGFloat) async -> CGFloat {
+        let currentPopupHeight = await calculateCurrentPopupHeight(activePopupHeight)
+        let popupTargetHeights = await calculatePopupTargetHeightsFromDragDetents(activePopupHeight)
+        let targetHeight = await calculateTargetPopupHeight(currentPopupHeight, popupTargetHeights)
+        let targetDragHeight = await calculateTargetDragHeight(targetHeight, activePopupHeight)
+        return targetDragHeight
+    }
 
 
     @MainActor func updateTranslationValues() async { if let activePopupHeight = popups.last?.height {
