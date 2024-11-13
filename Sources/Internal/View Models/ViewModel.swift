@@ -34,7 +34,13 @@ protocol ViewModel: ObservableObject where Self.ObjectWillChangePublisher == Obs
     func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat
 }
 
-// MARK: Initializer
+
+
+// MARK: - INIT & SETUP
+
+
+
+// MARK: Initialize
 extension ViewModel {
     init<Config: LocalConfig>(_ config: Config.Type) { self.init(); self.alignment = .init(Config.self) }
 }
@@ -46,6 +52,43 @@ extension ViewModel {
         self.closePopupAction = closePopupAction
     }
 }
+
+
+
+// MARK: MARK: UPDATE
+
+
+
+// MARK: Popups
+extension ViewModel {
+
+}
+
+// MARK: Screen
+extension ViewModel {
+}
+
+// MARK: Gesture
+extension ViewModel {
+
+}
+
+// MARK: Popup Height
+extension ViewModel {
+
+}
+
+// MARK: Popup Drag Height
+extension ViewModel {
+
+}
+
+// MARK: Helpers
+private extension ViewModel {
+    
+}
+
+
 
 // MARK: Update
 extension ViewModel {
