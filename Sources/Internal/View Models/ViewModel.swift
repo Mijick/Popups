@@ -41,7 +41,7 @@ extension ViewModel {
 
 // MARK: Setup
 extension ViewModel {
-    func setup(updatePopupAction: @escaping (AnyPopup) async -> (), closePopupAction: @escaping (AnyPopup) async -> ()) {
+    @MainActor func setup(updatePopupAction: @escaping (AnyPopup) async -> (), closePopupAction: @escaping (AnyPopup) async -> ()) {
         self.updatePopupAction = updatePopupAction
         self.closePopupAction = closePopupAction
     }
