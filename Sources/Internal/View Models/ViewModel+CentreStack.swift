@@ -44,9 +44,7 @@ extension VM.CentreStack {
 }
 private extension VM.CentreStack {
     func calculateVerticalPopupPadding(for edge: PopupAlignment) -> CGFloat {
-        guard let activePopupHeight = activePopup.height,
-              screen.isKeyboardActive && edge == .bottom
-        else { return 0 }
+        guard let activePopupHeight = activePopup.height, screen.isKeyboardActive && edge == .bottom else { return 0 }
 
         let remainingHeight = screen.height - activePopupHeight
         let paddingCandidate = (remainingHeight / 2 - screen.safeArea.bottom) * 2
