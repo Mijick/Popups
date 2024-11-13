@@ -338,8 +338,9 @@ private extension VM.VerticalStack {
 // MARK: On Ended
 extension VM.VerticalStack {
     @MainActor func onPopupDragGestureEnded(_ value: CGFloat) async { Task {
-        guard value != 0, await !closePopupIfNeeded() else { return }
+        guard value != 0, let activePopup = popups.last, let activePopupHeight = activePopup.height else { return }
 
+        await dismissLastPopupIfNeeded(activePopup)
 
 
 
@@ -348,12 +349,10 @@ extension VM.VerticalStack {
     }}
 }
 private extension VM.VerticalStack {
-    func closePopupIfNeeded() async -> Bool {
-        guard activePopup.translationProgress >= dragThreshold else { return false }
-
-        if let popup = popups.last { await closePopupAction(popup) }
-        return true
-    }
+    func dismissLastPopupIfNeeded(_ popup: AnyPopup) async { switch activePopup.translationProgress >= dragThreshold {
+        case true: await closePopupAction(popup)
+        case false: return
+    }}
 
 
     @MainActor func updateTranslationValues() async { if let activePopupHeight = popups.last?.height {
