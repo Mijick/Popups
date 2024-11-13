@@ -337,17 +337,16 @@ private extension VM.VerticalStack {
 
 // MARK: On Ended
 extension VM.VerticalStack {
-    @MainActor func onPopupDragGestureEnded(_ value: CGFloat) async { Task { @MainActor in if value != 0 {
-        await dismissLastItemIfNeeded()
+    @MainActor func onPopupDragGestureEnded(_ value: CGFloat) async { Task { @MainActor in
+        if value == 0 { return }
+        if let popup = popups.last, activePopup.translationProgress >= dragThreshold { return await closePopupAction(popup) }
+
+
+
         await updateTranslationValues()
-    }}}
+    }}
 }
 private extension VM.VerticalStack {
-    func dismissLastItemIfNeeded() async {
-        guard activePopup.translationProgress >= dragThreshold, let popup = popups.last else { return }
-
-        await closePopupAction(popup)
-    }
     @MainActor func updateTranslationValues() async { if let activePopupHeight = popups.last?.height {
         Task {
             let currentPopupHeight = await calculateCurrentPopupHeight(activePopupHeight)
