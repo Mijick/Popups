@@ -71,6 +71,12 @@ extension ViewModel {
 
 // MARK: Screen
 extension ViewModel {
+    @MainActor func updateScreenValue(screenReader: GeometryProxy? = nil, isKeyboardActive: Bool? = nil) async { Task {
+        screen = await updatedScreenProperties(screenReader, isKeyboardActive)
+        await updateActivePopupProperties()
+
+        withAnimation(.transition) { objectWillChange.send() }
+    }}
 }
 
 // MARK: Gesture
@@ -98,12 +104,7 @@ private extension ViewModel {
 // MARK: Update
 extension ViewModel {
 
-    @MainActor func updateScreenValue(screenReader: GeometryProxy? = nil, isKeyboardActive: Bool? = nil) async { Task { @MainActor in
-        screen = await updatedScreenProperties(screenReader, isKeyboardActive)
-        await updateActivePopupProperties()
 
-        withAnimation(.transition) { objectWillChange.send() }
-    }}
     @MainActor func recalculateAndUpdatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async { Task { @MainActor in
         guard activePopup.gestureTranslation == 0 else { return }
 
