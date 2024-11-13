@@ -359,6 +359,9 @@ private extension VM.VerticalStack {
         let targetDragHeight = calculateTargetDragHeight(targetHeight, activePopupHeight)
         return targetDragHeight
     }
+    @MainActor func updateDragHeight(_ targetDragHeight: CGFloat) async { if let activePopup = popups.last {
+        await updatePopupAction(activePopup.updatedDragHeight(targetDragHeight))
+    }}
 }
 private extension VM.VerticalStack {
     func calculateCurrentPopupHeight(_ activePopupHeight: CGFloat) -> CGFloat {
@@ -400,9 +403,6 @@ private extension VM.VerticalStack {
     func calculateTargetDragHeight(_ targetHeight: CGFloat, _ activePopupHeight: CGFloat) -> CGFloat {
         targetHeight - activePopupHeight
     }
-    @MainActor func updateDragHeight(_ targetDragHeight: CGFloat) async { if let activePopup = popups.last {
-        await updatePopupAction(activePopup.updatedDragHeight(targetDragHeight))
-    }}
 }
 
 
