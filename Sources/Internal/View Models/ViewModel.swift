@@ -99,7 +99,7 @@ extension ViewModel {
         withAnimation(.transition) { objectWillChange.send() }
     }}
     @MainActor func updateScreenValue(screenReader: GeometryProxy? = nil, isKeyboardActive: Bool? = nil) async { Task { @MainActor in
-        screen.update(screenReader: screenReader, isKeyboardActive: isKeyboardActive)
+        screen = await updatedScreenProperties(screenReader, isKeyboardActive)
         await updateActivePopupProperties()
 
         withAnimation(.transition) { objectWillChange.send() }
@@ -127,6 +127,17 @@ private extension ViewModel {
     func filteredPopups(_ popups: [AnyPopup]) async -> [AnyPopup] {
         popups.filter { $0.config.alignment == alignment }
     }
+    func updatedScreenProperties(_ screenReader: GeometryProxy?, _ isKeyboardActive: Bool?) async -> Screen {
+        let height = if let screenReader { screenReader.size.height + screenReader.safeAreaInsets.top + screenReader.safeAreaInsets.bottom } else { screen.height },
+            safeArea = screenReader?.safeAreaInsets ?? screen.safeArea,
+            isKeyboardActive = isKeyboardActive ?? screen.isKeyboardActive
+        return .init(height: height, safeArea: safeArea, isKeyboardActive: isKeyboardActive)
+    }
+
+
+    
+
+
     func updateActivePopupProperties() async {
         activePopup.height = await calculateActivePopupHeight()
         activePopup.outerPadding = await calculateActivePopupOuterPadding()
@@ -135,8 +146,6 @@ private extension ViewModel {
         activePopup.verticalFixedSize = await calculateActivePopupVerticalFixedSize()
     }
 }
-
-
 
 
 

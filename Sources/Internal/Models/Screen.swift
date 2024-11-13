@@ -11,28 +11,15 @@
 
 import SwiftUI
 
-struct Screen {
-    private(set) var height: CGFloat
-    private(set) var safeArea: EdgeInsets
-    private(set) var isKeyboardActive: Bool
+struct Screen: Sendable {
+    let height: CGFloat
+    let safeArea: EdgeInsets
+    let isKeyboardActive: Bool
 
 
     init(height: CGFloat = .zero, safeArea: EdgeInsets = .init(), isKeyboardActive: Bool = false) {
         self.height = height
         self.safeArea = safeArea
         self.isKeyboardActive = isKeyboardActive
-    }
-}
-
-// MARK: Update
-extension Screen {
-    mutating func update(screenReader: GeometryProxy?, isKeyboardActive: Bool?) {
-        if let screenReader {
-            self.height = screenReader.size.height + screenReader.safeAreaInsets.top + screenReader.safeAreaInsets.bottom
-            self.safeArea = screenReader.safeAreaInsets
-        }
-        if let isKeyboardActive {
-            self.isKeyboardActive = isKeyboardActive
-        }
     }
 }
