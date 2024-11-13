@@ -51,19 +51,13 @@ extension ViewModel {
 extension ViewModel {
     @MainActor func updatePopupsValue(_ newPopups: [AnyPopup]) async { Task { @MainActor in
         popups = await filterPopups(newPopups)
-
-        activePopup.height = await calculateActivePopupHeight()
-        activePopup.outerPadding = await calculateActivePopupOuterPadding()
-        activePopup.innerPadding = await calculateActivePopupInnerPadding()
-        activePopup.corners = await calculateActivePopupCorners()
-        activePopup.verticalFixedSize = await calculateActivePopupVerticalFixedSize()
+        await aa()
 
         withAnimation(.transition) { objectWillChange.send() }
     }}
     @MainActor func updateScreenValue(screenReader: GeometryProxy? = nil, isKeyboardActive: Bool? = nil) async { Task { @MainActor in
         screen.update(screenReader: screenReader, isKeyboardActive: isKeyboardActive)
-        activePopup.outerPadding = await calculateActivePopupOuterPadding()
-        activePopup.innerPadding = await calculateActivePopupInnerPadding()
+        await aa()
 
         withAnimation(.transition) { objectWillChange.send() }
     }}
@@ -89,6 +83,13 @@ extension ViewModel {
 private extension ViewModel {
     func filterPopups(_ popups: [AnyPopup]) async -> [AnyPopup] {
         popups.filter { $0.config.alignment == alignment }
+    }
+    func aa() async {
+        activePopup.height = await calculateActivePopupHeight()
+        activePopup.outerPadding = await calculateActivePopupOuterPadding()
+        activePopup.innerPadding = await calculateActivePopupInnerPadding()
+        activePopup.corners = await calculateActivePopupCorners()
+        activePopup.verticalFixedSize = await calculateActivePopupVerticalFixedSize()
     }
 }
 
