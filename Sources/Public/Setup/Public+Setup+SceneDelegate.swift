@@ -17,7 +17,7 @@ import SwiftUI
 
  - tip:  Recommended initialization way when using the framework with standard Apple sheets.
 
- ## Usage Example
+ ## Usage
  ```swift
  @main struct App_Main: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
