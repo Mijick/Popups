@@ -106,7 +106,7 @@ private extension PopupManager {
 // MARK: Fetch
 extension PopupManager {
     nonisolated static func fetchInstance(id: PopupManagerID) async -> PopupManager? {
-        let managerObject = PopupManagerContainer.instances.first(where: { $0.id == id })
+        let managerObject = await PopupManagerContainer.instances.first(where: { $0.id == id })
         await logNoInstanceErrorIfNeeded(managerObject: managerObject, popupManagerID: id)
         return managerObject
     }

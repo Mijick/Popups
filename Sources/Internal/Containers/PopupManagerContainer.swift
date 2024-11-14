@@ -11,7 +11,7 @@
 
 import Foundation
 
-actor PopupManagerContainer {
+@MainActor class PopupManagerContainer {
     static private(set) var instances: [PopupManager] = []
 }
 
