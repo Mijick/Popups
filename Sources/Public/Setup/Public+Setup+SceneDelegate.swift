@@ -15,7 +15,7 @@ import SwiftUI
 /**
  Registers the framework to work in your application. Works on iOS only.
 
- - tip:  Recommended initialisation way when using the framework with standard Apple sheets.
+ - tip:  Recommended initialization way when using the framework with standard Apple sheets.
 
  ## Usage Example
  ```swift

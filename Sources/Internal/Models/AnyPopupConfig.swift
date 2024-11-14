@@ -27,7 +27,7 @@ struct AnyPopupConfig: LocalConfig, Sendable { init() {}
     var isDragGestureEnabled: Bool = false
 }
 
-// MARK: Initialization
+// MARK: Initialize
 extension AnyPopupConfig {
     init<Config: LocalConfig>(_ config: Config) {
         self.alignment = .init(Config.self)

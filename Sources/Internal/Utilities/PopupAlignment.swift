@@ -15,7 +15,10 @@ enum PopupAlignment {
     case top
     case center
     case bottom
+}
 
+// MARK: Initialize
+extension PopupAlignment {
     init(_ config: LocalConfig.Type) { switch config.self {
         case is TopPopupConfig.Type: self = .top
         case is CentrePopupConfig.Type: self = .center
