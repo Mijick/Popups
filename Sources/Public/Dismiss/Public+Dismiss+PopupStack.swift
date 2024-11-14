@@ -13,8 +13,7 @@ import Foundation
 
 public extension PopupStack {
     /**
-     Removes the currently active popup from the stack.
-     Makes the next popup in the stack the new active popup.
+     Dismisses the currently active popup.
 
      - Parameters:
         - popupStackID: The identifier for which the popup was presented. For more information, see ``Popup/present(popupStackID:)``.
@@ -24,7 +23,7 @@ public extension PopupStack {
     @MainActor static func dismissLastPopup(popupStackID: PopupStackID = .shared) async { await fetch(id: popupStackID)?.modify(.removeLastPopup) }
 
     /**
-     Removes all popups with the specified identifier from the stack.
+     Dismisses all popups with the specified identifier.
 
      - Parameters:
         - id: Identifier of the popup located on the stack.
@@ -35,7 +34,7 @@ public extension PopupStack {
     @MainActor static func dismissPopup(_ id: String, popupStackID: PopupStackID = .shared) async { await fetch(id: popupStackID)?.modify(.removeAllPopupsWithID(id)) }
 
     /**
-     Removes all popups of the provided type from the stack.
+     Dismisses all popups of the provided type.
 
      - Parameters:
         - type: Type of the popup located on the stack.
@@ -47,7 +46,7 @@ public extension PopupStack {
     @MainActor static func dismissPopup<P: Popup>(_ type: P.Type, popupStackID: PopupStackID = .shared) async { await fetch(id: popupStackID)?.modify(.removeAllPopupsOfType(type)) }
 
     /**
-     Removes all popups from the stack.
+     Dismisses all the popups.
 
      - Parameters:
         - popupStackID: The identifier for which the popup was presented. For more information, see ``Popup/present(popupStackID:)``.
