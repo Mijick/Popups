@@ -158,7 +158,7 @@ extension PopupStackTests {
 extension PopupStackTests {
     func test_dismissLastPopup_withNoPopupsOnStack() {
         registerNewInstanceAndPresentPopups(popups: [])
-        PopupStack.dismissLastPopup(popupManagerID: defaultPopupManagerID)
+        PopupStack.dismissLastPopup(popupStackID: defaultPopupStackID)
 
         let popupsOnStack = getPopupsForActiveInstance()
         XCTAssertEqual(popupsOnStack.count, 0)
@@ -257,19 +257,19 @@ extension PopupStackTests {
 // MARK: Methods
 private extension PopupStackTests {
     func registerNewInstanceAndPresentPopups(popups: [any Popup]) {
-        register(stackIDs: [defaultPopupManagerID])
+        register(stackIDs: [defaultPopupStackID])
         popups.forEach { $0.present(popupManagerID: defaultPopupManagerID) }
     }
     func getPopupsForActiveInstance() async -> [AnyPopup] {
         await PopupStack
-            .fetch(id: defaultPopupManagerID)?
+            .fetch(id: defaultPopupStackID)?
             .popups ?? []
     }
 }
 
 // MARK: Variables
 private extension PopupStackTests {
-    var defaultPopupManagerID: PopupStackID { .staremiasto }
+    var defaultPopupStackID: PopupStackID { .staremiasto }
 }
 
 // MARK: Popup Manager Identifiers
