@@ -122,14 +122,14 @@ extension PopupStackTests {
         let popupsOnStack = await getPopupsForActiveInstance()
         XCTAssertEqual(popupsOnStack.count, 2)
     }
-    func test_presentPopup_withCustomID() {
+    func test_presentPopup_withCustomID() async {
         registerNewInstanceAndPresentPopups(popups: [
-            AnyPopup.t_createNew(id: "2137", config: LocalConfigVertical.Bottom()).setCustomID("1"),
-            AnyPopup.t_createNew(id: "2137", config: LocalConfigVertical.Bottom()),
-            AnyPopup.t_createNew(id: "2137", config: LocalConfigVertical.Bottom()).setCustomID("3")
+            await AnyPopup(TestBottomPopup1()),
+            await AnyPopup(TestBottomPopup1().setCustomID("2137")),
+            await AnyPopup(TestBottomPopup1().setCustomID("I Pan Paweł oczywiście")),
         ])
 
-        let popupsOnStack = getPopupsForActiveInstance()
+        let popupsOnStack = await getPopupsForActiveInstance()
         XCTAssertEqual(popupsOnStack.count, 3)
     }
     func test_presentPopup_withDismissAfter() async {
