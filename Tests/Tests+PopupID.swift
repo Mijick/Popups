@@ -70,12 +70,19 @@ extension PopupIDTests {
     }
     func test_isSameType_4() async {
         let popupID1 = await AnyPopup(TestTopPopup().setCustomID("2137")).id,
+            popupID2 = "2137"
+
+        let result = popupID1.isSameType(as: popupID2)
+        XCTAssertEqual(result, true)
+    }
+    func test_isSameType_5() async {
+        let popupID1 = await AnyPopup(TestTopPopup().setCustomID("2137")).id,
             popupID2 = await AnyPopup(TestTopPopup()).id
 
         let result = popupID1.isSameType(as: popupID2)
         XCTAssertEqual(result, false)
     }
-    func test_isSameType_5() async {
+    func test_isSameType_6() async {
         let popupID1 = await PopupID(TestTopPopup.self)
         await Task.sleep(seconds: 1)
         let popupID2 = await PopupID(TestTopPopup.self)
