@@ -1,5 +1,5 @@
 //
-//  PopupCentreStackView.swift of MijickPopups
+//  PopupCenterStackView.swift of MijickPopups
 //
 //  Created by Tomasz Kurylik. Sending ❤️ from Kraków!
 //    - Mail: tomasz.kurylik@mijick.com
@@ -11,7 +11,7 @@
 
 import SwiftUI
 
-struct PopupCentreStackView: View {
+struct PopupCenterStackView: View {
     @ObservedObject var viewModel: VM.CentreStack
 
     
@@ -22,12 +22,12 @@ struct PopupCentreStackView: View {
             .frame(maxWidth: .infinity, maxHeight: viewModel.screen.height)
     }
 }
-private extension PopupCentreStackView {
+private extension PopupCenterStackView {
     func createPopupStack() -> some View {
         ForEach(viewModel.popups, id: \.self, content: createPopup)
     }
 }
-private extension PopupCentreStackView {
+private extension PopupCenterStackView {
     func createPopup(_ popup: AnyPopup) -> some View {
         popup.body
             .fixedSize(horizontal: false, vertical: viewModel.activePopupProperties.verticalFixedSize)
@@ -42,9 +42,9 @@ private extension PopupCentreStackView {
     }
 }
 
-private extension PopupCentreStackView {
+private extension PopupCenterStackView {
     func getBackgroundColor(for popup: AnyPopup) -> Color { popup.config.backgroundColor }
 }
-private extension PopupCentreStackView {
+private extension PopupCenterStackView {
     var transition: AnyTransition { .scale(scale: 1.1).combined(with: .opacity) }
 }
