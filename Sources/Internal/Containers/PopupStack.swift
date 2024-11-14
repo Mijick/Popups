@@ -82,7 +82,7 @@ private extension PopupStack {
         $0.removeLast()
     }}
     nonisolated func removedPopup(_ popup: AnyPopup) async -> [AnyPopup] { await popups.modifiedAsync {
-        $0.removeAll { $0.id.isSameInstance(as: popup) }
+        $0.removeAll { $0.id.isSame(as: popup) }
     }}
     nonisolated func removedAllPopupsOfType(_ popupType: any Popup.Type) async -> [AnyPopup] { await popups.modifiedAsync {
         $0.removeAll { $0.id.isSameType(as: popupType) }
