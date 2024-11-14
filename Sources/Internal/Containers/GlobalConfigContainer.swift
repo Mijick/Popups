@@ -10,6 +10,6 @@
 
 
 public actor GlobalConfigContainer {
-    static var center: GlobalConfigCentre = .init()
+    static var center: GlobalConfigCenter = .init()
     static var vertical: GlobalConfigVertical = .init()
 }

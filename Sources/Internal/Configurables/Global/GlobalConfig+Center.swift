@@ -1,5 +1,5 @@
 //
-//  GlobalConfig+Centre.swift of MijickPopups
+//  GlobalConfig+Center.swift of MijickPopups
 //
 //  Created by Tomasz Kurylik. Sending ❤️ from Kraków!
 //    - Mail: tomasz.kurylik@mijick.com
@@ -11,7 +11,7 @@
 
 import SwiftUI
 
-public final class GlobalConfigCentre: GlobalConfig { required public init() {}
+public final class GlobalConfigCenter: GlobalConfig { required public init() {}
     // MARK: Active Variables
     public var popupPadding: EdgeInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
     public var cornerRadius: CGFloat = 24

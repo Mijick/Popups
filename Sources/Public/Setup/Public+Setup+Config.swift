@@ -12,7 +12,7 @@
 import SwiftUI
 
 // MARK: Centre
-public extension GlobalConfigCentre {
+public extension GlobalConfigCenter {
     /**
      Distance of the entire popup (including its background) from the horizontal edges of the screen.
 
