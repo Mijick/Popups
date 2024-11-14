@@ -190,34 +190,34 @@ extension PopupStackTests {
         let popupsOnStackAfter = await getPopupsForActiveStack()
         XCTAssertEqual([popups[0], popups[1]], popupsOnStackAfter)
     }
-    func test_dismissPopupWithType_whenPopupNotOnStack() {
-        let popups: [AnyPopup] = [
+    func test_dismissPopupWithType_whenPopupNotOnStack() async {
+        let popups: [AnyPopup] = await [
             .init(TestTopPopup()),
-            .init(TestBottomPopup())
+            .init(TestBottomPopup1())
         ]
         await registerNewStackAndPresent(popups: popups)
 
-        let popupsOnStackBefore = getPopupsForActiveStack()
+        let popupsOnStackBefore = await getPopupsForActiveStack()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
-        PopupStack.dismissPopup(TestCenterPopup.self, popupManagerID: defaultPopupManagerID)
+        await PopupStack.dismissPopup(TestCenterPopup.self, popupStackID: defaultPopupStackID)
 
-        let popupsOnStackAfter = getPopupsForActiveStack()
+        let popupsOnStackAfter = await getPopupsForActiveStack()
         XCTAssertEqual(popups, popupsOnStackAfter)
     }
-    func test_dismissPopupWithType_whenPopupHasCustomID() {
-        let popups: [AnyPopup] = [
+    func test_dismissPopupWithType_whenPopupHasCustomID() async {
+        let popups: [AnyPopup] = await [
             .init(TestTopPopup().setCustomID("2137")),
-            .init(TestBottomPopup())
+            .init(TestBottomPopup1())
         ]
         await registerNewStackAndPresent(popups: popups)
 
-        let popupsOnStackBefore = getPopupsForActiveStack()
+        let popupsOnStackBefore = await getPopupsForActiveStack()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
-        PopupStack.dismissPopup(TestTopPopup.self, popupManagerID: defaultPopupManagerID)
+        await PopupStack.dismissPopup(TestTopPopup.self, popupStackID: defaultPopupStackID)
 
-        let popupsOnStackAfter = getPopupsForActiveStack()
+        let popupsOnStackAfter = await getPopupsForActiveStack()
         XCTAssertEqual(popups, popupsOnStackAfter)
     }
     func test_dismissPopupWithID_whenPopupHasCustomID() {
