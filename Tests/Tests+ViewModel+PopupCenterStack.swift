@@ -26,13 +26,13 @@ private extension PopupCenterStackViewModelTests {
         var popups = viewModel.popups
         popups[index] = popup
 
-        await viewModel.updatePopupsValue(popups)
+        await viewModel.updatePopups(popups)
     }}
     func closePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.popups.firstIndex(of: popup) {
         var popups = viewModel.popups
         popups.remove(at: index)
 
-        await viewModel.updatePopupsValue(popups)
+        await viewModel.updatePopups(popups)
     }}
 }
 
@@ -237,7 +237,7 @@ private extension PopupCenterStackViewModelTests {
         return AnyPopup.t_createNew(config: config).settingHeight(popupHeight)
     }
     func appendPopupsAndPerformChecks<Value: Equatable & Sendable>(popups: [AnyPopup], isKeyboardActive: Bool, calculatedValue: @escaping (ViewModel) async -> (Value), expectedValueBuilder: @escaping (ViewModel) async -> Value) async {
-        await viewModel.updatePopupsValue(popups)
+        await viewModel.updatePopups(popups)
         await updatePopups(viewModel)
         viewModel.updateKeyboardValue(isKeyboardActive)
         viewModel.updateScreenValue(isKeyboardActive ? screenWithKeyboard : screen)
@@ -255,7 +255,7 @@ private extension PopupCenterStackViewModelTests {
         return config
     }
     func updatePopups(_ viewModel: ViewModel) async {
-        for popup in viewModel.popups { await viewModel.recalculateAndUpdatePopupHeight(popup.height!, popup) }
+        for popup in viewModel.popups { await viewModel.updatePopupHeight(popup.height!, popup) }
     }
 }
 

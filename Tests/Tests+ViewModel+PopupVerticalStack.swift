@@ -1472,7 +1472,7 @@ private extension PopupVerticalStackViewModelTests {
         await viewModel.onPopupDragGestureEnded(gestureValue)
 
         XCTAssertEqual(viewModel.popups.count, expectedValues.shouldPopupBeDismissed ? 0 : 1)
-        XCTAssertEqual(viewModel.activePopupHeight, expectedValues.popupHeight)
+        XCTAssertEqual(viewModel.activePopupProperties.height, expectedValues.popupHeight)
     }
 }
 
