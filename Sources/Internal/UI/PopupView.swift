@@ -67,7 +67,7 @@ private extension PopupView {
         PopupVerticalStackView(viewModel: topStackViewModel).zIndex(popupManager.stackPriority.top)
     }
     func createCentrePopupStackView() -> some View {
-        PopupCentreStackView(viewModel: centreStackViewModel).zIndex(popupManager.stackPriority.centre)
+        PopupCentreStackView(viewModel: centreStackViewModel).zIndex(popupManager.stackPriority.center)
     }
     func createBottomPopupStackView() -> some View {
         PopupVerticalStackView(viewModel: bottomStackViewModel).zIndex(popupManager.stackPriority.bottom)

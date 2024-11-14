@@ -12,7 +12,7 @@
 import SwiftUI
 
 extension VM { class CentreStack: ViewModel { required init() {}
-    var alignment: PopupAlignment = .centre
+    var alignment: PopupAlignment = .center
     var popups: [AnyPopup] = []
     var activePopupProperties: ActivePopupProperties = .init()
     var screen: Screen = .init()

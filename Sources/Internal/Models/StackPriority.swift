@@ -13,7 +13,7 @@ import Foundation
 
 struct StackPriority: Equatable, Sendable {
     var top: CGFloat { values[0] }
-    var centre: CGFloat { values[1] }
+    var center: CGFloat { values[1] }
     var bottom: CGFloat { values[2] }
     var overlay: CGFloat { 1 }
 
@@ -24,7 +24,7 @@ struct StackPriority: Equatable, Sendable {
 extension StackPriority {
     func reshuffled(_ newPopups: [AnyPopup]) -> StackPriority { switch newPopups.last?.config.alignment {
         case .top: reshuffled(0)
-        case .centre: reshuffled(1)
+        case .center: reshuffled(1)
         case .bottom: reshuffled(2)
         default: self
     }}

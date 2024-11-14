@@ -13,12 +13,12 @@ import SwiftUI
 
 enum PopupAlignment {
     case top
-    case centre
+    case center
     case bottom
 
     init(_ config: LocalConfig.Type) { switch config.self {
         case is TopPopupConfig.Type: self = .top
-        case is CentrePopupConfig.Type: self = .centre
+        case is CentrePopupConfig.Type: self = .center
         case is BottomPopupConfig.Type: self = .bottom
         default: fatalError()
     }}
@@ -28,7 +28,7 @@ enum PopupAlignment {
 extension PopupAlignment {
     static prefix func !(lhs: Self) -> Self { switch lhs {
         case .top: .bottom
-        case .centre: .centre
+        case .center: .center
         case .bottom: .top
     }}
 }
@@ -37,12 +37,12 @@ extension PopupAlignment {
 extension PopupAlignment {
     func toEdge() -> Edge { switch self {
         case .top: .top
-        case .centre: .bottom
+        case .center: .bottom
         case .bottom: .bottom
     }}
     func toAlignment() -> Alignment { switch self {
         case .top: .top
-        case .centre: .center
+        case .center: .center
         case .bottom: .bottom
     }}
 }
