@@ -18,7 +18,7 @@ struct PopupView: View {
 
     @ObservedObject var stack: PopupStack
     private let topStackViewModel: VM.VerticalStack = .init(TopPopupConfig.self)
-    private let centreStackViewModel: VM.CenterStack = .init(CenterPopupConfig.self)
+    private let centerStackViewModel: VM.CenterStack = .init(CenterPopupConfig.self)
     private let bottomStackViewModel: VM.VerticalStack = .init(BottomPopupConfig.self)
 
 
@@ -51,7 +51,7 @@ private extension PopupView {
         ZStack {
             createOverlayView()
             createTopPopupStackView()
-            createCentrePopupStackView()
+            createCenterPopupStackView()
             createBottomPopupStackView()
         }
     }
@@ -66,8 +66,8 @@ private extension PopupView {
     func createTopPopupStackView() -> some View {
         PopupVerticalStackView(viewModel: topStackViewModel).zIndex(stack.priority.top)
     }
-    func createCentrePopupStackView() -> some View {
-        PopupCenterStackView(viewModel: centreStackViewModel).zIndex(stack.priority.center)
+    func createCenterPopupStackView() -> some View {
+        PopupCenterStackView(viewModel: centerStackViewModel).zIndex(stack.priority.center)
     }
     func createBottomPopupStackView() -> some View {
         PopupVerticalStackView(viewModel: bottomStackViewModel).zIndex(stack.priority.bottom)
@@ -115,7 +115,7 @@ private extension PopupView {
         await stack.modify(.removePopup(popup))
     }
     func updateViewModels(_ updateBuilder: @escaping (any ViewModel) async -> ()) async {
-        for viewModel in [topStackViewModel, centreStackViewModel, bottomStackViewModel] { Task { @MainActor in await updateBuilder(viewModel as! any ViewModel) }}
+        for viewModel in [topStackViewModel, centerStackViewModel, bottomStackViewModel] { Task { @MainActor in await updateBuilder(viewModel as! any ViewModel) }}
     }
 }
 private extension PopupView {
