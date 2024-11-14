@@ -260,8 +260,8 @@ private extension PopupStackTests {
         registerNewInstances(popupManagerIds: [defaultPopupManagerID])
         popups.forEach { $0.present(popupManagerID: defaultPopupManagerID) }
     }
-    func getPopupsForActiveInstance() -> [AnyPopup] {
-        PopupStack
+    func getPopupsForActiveInstance() async -> [AnyPopup] {
+        await PopupStack
             .fetch(id: defaultPopupManagerID)?
             .popups ?? []
     }
