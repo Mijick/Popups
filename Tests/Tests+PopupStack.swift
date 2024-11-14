@@ -174,20 +174,20 @@ extension PopupStackTests {
         let popupsOnStack = await getPopupsForActiveInstance()
         XCTAssertEqual(popupsOnStack.count, 2)
     }
-    func test_dismissPopupWithType_whenPopupOnStack() {
-        let popups: [AnyPopup] = [
+    func test_dismissPopupWithType_whenPopupOnStack() async {
+        let popups: [AnyPopup] = await [
             .init(TestTopPopup()),
             .init(TestCenterPopup()),
-            .init(TestBottomPopup())
+            .init(TestBottomPopup1())
         ]
         registerNewInstanceAndPresentPopups(popups: popups)
 
-        let popupsOnStackBefore = getPopupsForActiveInstance()
+        let popupsOnStackBefore = await getPopupsForActiveInstance()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
-        PopupStack.dismissPopup(TestBottomPopup.self, popupManagerID: defaultPopupManagerID)
+        await PopupStack.dismissPopup(TestBottomPopup1.self, popupStackID: defaultPopupStackID)
 
-        let popupsOnStackAfter = getPopupsForActiveInstance()
+        let popupsOnStackAfter = await getPopupsForActiveInstance()
         XCTAssertEqual([popups[0], popups[1]], popupsOnStackAfter)
     }
     func test_dismissPopupWithType_whenPopupNotOnStack() {
