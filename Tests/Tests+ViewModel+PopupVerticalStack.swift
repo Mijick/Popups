@@ -562,86 +562,86 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 
-// MARK: Popup Padding
+// MARK: Outer Padding
 extension PopupVerticalStackViewModelTests {
-    func test_calculatePopupPadding_withAutoHeightMode_whenLessThanScreen() async {
+    func test_calculateOuterPadding_withAutoHeightMode_whenLessThanScreen() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 344, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
         ]
 
-        await appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckOuterPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 12, leading: 17, bottom: 33, trailing: 17)
         )
     }
-    func test_calculatePopupPadding_withAutoHeightMode_almostLikeScreen_onlyOnePaddingShouldBeNonZero() async {
+    func test_calculateOuterPadding_withAutoHeightMode_almostLikeScreen_onlyOnePaddingShouldBeNonZero() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 877, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
         ]
 
-        await appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckOuterPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 0, leading: 17, bottom: 23, trailing: 17)
         )
     }
-    func test_calculatePopupPadding_withAutoHeightMode_almostLikeScreen_bothPaddingsShouldBeNonZero() async {
+    func test_calculateOuterPadding_withAutoHeightMode_almostLikeScreen_bothPaddingsShouldBeNonZero() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 861, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
         ]
 
-        await appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckOuterPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 6, leading: 17, bottom: 33, trailing: 17)
         )
     }
-    func test_calculatePopupPadding_withAutoHeightMode_almostLikeScreen_topPopupsAlignment() async {
+    func test_calculateOuterPadding_withAutoHeightMode_almostLikeScreen_topPopupsAlignment() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 911, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
         ]
 
-        await appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckOuterPadding(
             viewModel: topViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 12, leading: 17, bottom: 27, trailing: 17)
         )
     }
-    func test_calculatePopupPadding_withAutoHeightMode_whenBiggerThanScreen() async {
+    func test_calculateOuterPadding_withAutoHeightMode_whenBiggerThanScreen() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 1100, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
         ]
 
-        await appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckOuterPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 0, leading: 17, bottom: 0, trailing: 17)
         )
     }
-    func test_calculatePopupPadding_withLargeHeightMode() async {
+    func test_calculateOuterPadding_withLargeHeightMode() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .large, popupHeight: 344, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
         ]
 
-        await appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckOuterPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
             expectedValue: .init(top: 0, leading: 17, bottom: 0, trailing: 17)
         )
     }
-    func test_calculatePopupPadding_withFullscreenHeightMode() async {
+    func test_calculateOuterPadding_withFullscreenHeightMode() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 344, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
         ]
 
-        await appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckOuterPadding(
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
@@ -650,12 +650,12 @@ extension PopupVerticalStackViewModelTests {
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckPopupPadding(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: EdgeInsets) async {
+    func appendPopupsAndCheckOuterPadding(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: EdgeInsets) async {
         await appendPopupsAndPerformChecks(
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { await $0.calculatePopupPadding() },
+            calculatedValue: { await $0.calculateActivePopupOuterPadding() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
