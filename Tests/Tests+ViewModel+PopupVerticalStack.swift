@@ -83,9 +83,9 @@ extension PopupVerticalStackViewModelTests {
         let popups = [
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 0)
         ]
-        let updatedPopup = popups[0]
-            .settingHeight(100)
-            .settingDragHeight(100)
+        let updatedPopup = await popups[0]
+            .updatedHeight(100)
+            .updatedDragHeight(100)
 
         await appendPopupsAndCheckPopups(
             viewModel: bottomViewModel,
@@ -102,7 +102,7 @@ extension PopupVerticalStackViewModelTests {
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 15),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 2137)
         ]
-        let updatedPopup = popups[2].settingHeight(1371)
+        let updatedPopup = await popups[2].updatedHeight(1371)
 
         await appendPopupsAndCheckPopups(
             viewModel: bottomViewModel,
@@ -120,7 +120,7 @@ extension PopupVerticalStackViewModelTests {
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 2137),
             createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 77)
         ]
-        let updatedPopup = popups[4].settingHeight(nil)
+        let updatedPopup = await popups[4].updatedHeight(nil)
 
         await appendPopupsAndCheckPopups(
             viewModel: bottomViewModel,
@@ -932,7 +932,7 @@ private extension PopupVerticalStackViewModelTests {
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { await $0.calculateCornerRadius() },
+            calculatedValue: { await $0.calculateActivePopupCorners() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
@@ -1300,8 +1300,8 @@ private extension PopupVerticalStackViewModelTests {
         await updatePopups(viewModel)
         await viewModel.onPopupDragGestureChanged(gestureValue)
 
-        XCTAssertEqual(viewModel.activePopupHeight, expectedValues.popupHeight)
-        XCTAssertEqual(viewModel.gestureTranslation, expectedValues.gestureTranslation)
+        XCTAssertEqual(viewModel.activePopupProperties.height, expectedValues.popupHeight)
+        XCTAssertEqual(viewModel.activePopupProperties.gestureTranslation, expectedValues.gestureTranslation)
     }
 }
 
