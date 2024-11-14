@@ -56,7 +56,7 @@ public extension Popup {
  - ``Popup/onFocus()-6krqs``
  - ``Popup/onDismiss()-3bufs``
  
- # Usage Example
+ ## Usage
  ```swift
  struct TopPopupExample: TopPopup {
     func onFocus() { print("Popup is now active") }
@@ -74,6 +74,7 @@ public extension Popup {
  ![TopPopup](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/top-popup.png?raw=true)
 */
 public protocol TopPopup: Popup { associatedtype Config = TopPopupConfig }
+public typealias TopPopupConfig = LocalConfigVertical.Top
 
 /**
  The view to be displayed as a Center popup.
@@ -83,7 +84,7 @@ public protocol TopPopup: Popup { associatedtype Config = TopPopupConfig }
  - ``Popup/onFocus()-loq5``
  - ``Popup/onDismiss()-3bufs``
  
- # Usage Example
+ ## Usage
  ```swift
  struct CenterPopupExample: CenterPopup {
     func onFocus() { print("Popup is now active") }
@@ -100,6 +101,7 @@ public protocol TopPopup: Popup { associatedtype Config = TopPopupConfig }
  ![CenterPopup](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/centre-popup.png?raw=true)
  */
 public protocol CenterPopup: Popup { associatedtype Config = CenterPopupConfig }
+public typealias CenterPopupConfig = LocalConfigCenter
 
 /**
  The view to be displayed as a Bottom popup.
@@ -109,7 +111,7 @@ public protocol CenterPopup: Popup { associatedtype Config = CenterPopupConfig }
  - ``Popup/onFocus()-loq5``
  - ``Popup/onDismiss()-254h8``
  
- # Usage Example
+ ## Usage
  ```swift
  struct BottomPopupExample: BottomPopup {
     func onFocus() { print("Popup is now active") }
@@ -127,3 +129,4 @@ public protocol CenterPopup: Popup { associatedtype Config = CenterPopupConfig }
  ![BottomPopup](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/bottom-popup.png?raw=true)
  */
 public protocol BottomPopup: Popup { associatedtype Config = BottomPopupConfig }
+public typealias BottomPopupConfig = LocalConfigVertical.Bottom
