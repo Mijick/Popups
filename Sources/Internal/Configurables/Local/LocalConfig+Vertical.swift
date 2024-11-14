@@ -26,31 +26,8 @@ public class LocalConfigVertical: LocalConfig { required public init() {}
     public var isDragGestureEnabled: Bool = GlobalConfigContainer.vertical.isDragGestureEnabled
 }
 
-// MARK: Subclasses & Typealiases
+// MARK: Subclasses
 public extension LocalConfigVertical {
     class Top: LocalConfigVertical {}
     class Bottom: LocalConfigVertical {}
 }
-
-
-
-
-
-// MARK: - TESTS
-#if DEBUG
-
-
-
-extension LocalConfigVertical {
-    static func t_createNew<C: LocalConfigVertical>(popupPadding: EdgeInsets, cornerRadius: CGFloat, ignoredSafeAreaEdges: Edge.Set, heightMode: HeightMode, dragDetents: [DragDetent], isDragGestureEnabled: Bool) -> C {
-        let config = C()
-        config.popupPadding = popupPadding
-        config.cornerRadius = cornerRadius
-        config.ignoredSafeAreaEdges = ignoredSafeAreaEdges
-        config.heightMode = heightMode
-        config.dragDetents = dragDetents
-        config.isDragGestureEnabled = isDragGestureEnabled
-        return config
-    }
-}
-#endif
