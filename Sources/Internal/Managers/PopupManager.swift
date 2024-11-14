@@ -105,14 +105,14 @@ private extension PopupManager {
 
 // MARK: Fetch
 extension PopupManager {
-    static func fetchInstance(id: PopupManagerID) -> PopupManager? {
+    nonisolated static func fetchInstance(id: PopupManagerID) async -> PopupManager? {
         let managerObject = PopupManagerContainer.instances.first(where: { $0.id == id })
-        logNoInstanceErrorIfNeeded(managerObject: managerObject, popupManagerID: id)
+        await logNoInstanceErrorIfNeeded(managerObject: managerObject, popupManagerID: id)
         return managerObject
     }
 }
 private extension PopupManager {
-    static func logNoInstanceErrorIfNeeded(managerObject: PopupManager?, popupManagerID: PopupManagerID) { if managerObject == nil {
+    nonisolated static func logNoInstanceErrorIfNeeded(managerObject: PopupManager?, popupManagerID: PopupManagerID) async { if managerObject == nil {
         Logger.log(
             level: .fault,
             message: "PopupManager instance (\(popupManagerID.rawValue)) must be registered before use. More details can be found in the documentation."
