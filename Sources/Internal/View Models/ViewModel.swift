@@ -71,8 +71,8 @@ extension ViewModel {
 
 // MARK: Screen
 extension ViewModel {
-    @MainActor func updateScreen(screenReader: GeometryProxy? = nil, isKeyboardActive: Bool? = nil) async { Task {
-        screen = await updatedScreenProperties(screenReader, isKeyboardActive)
+    @MainActor func updateScreen(screenHeight: CGFloat? = nil, screenSafeArea: EdgeInsets? = nil, isKeyboardActive: Bool? = nil) async { Task {
+        screen = await updatedScreenProperties(screenHeight, screenSafeArea, isKeyboardActive)
         await updateActivePopupProperties()
 
         withAnimation(.transition) { objectWillChange.send() }
@@ -112,12 +112,11 @@ private extension ViewModel {
     func filteredPopups(_ popups: [AnyPopup]) async -> [AnyPopup] {
         popups.filter { $0.config.alignment == alignment }
     }
-    func updatedScreenProperties(_ screenReader: GeometryProxy?, _ isKeyboardActive: Bool?) async -> Screen {
-        let height = if let screenReader { screenReader.size.height + screenReader.safeAreaInsets.top + screenReader.safeAreaInsets.bottom } else { screen.height },
-            safeArea = screenReader?.safeAreaInsets ?? screen.safeArea,
-            isKeyboardActive = isKeyboardActive ?? screen.isKeyboardActive
-        return .init(height: height, safeArea: safeArea, isKeyboardActive: isKeyboardActive)
-    }
+    func updatedScreenProperties(_ screenHeight: CGFloat?, _ screenSafeArea: EdgeInsets?, _ isKeyboardActive: Bool?) async -> Screen { .init(
+        height: screenHeight ?? screen.height,
+        safeArea: screenSafeArea ?? screen.safeArea,
+        isKeyboardActive: isKeyboardActive ?? screen.isKeyboardActive
+    )}
 }
 private extension ViewModel {
     func updateActivePopupProperties() async {
