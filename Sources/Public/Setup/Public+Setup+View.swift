@@ -44,7 +44,7 @@ public extension View {
      */
     func registerPopups(id: PopupStackID = .shared, configBuilder: @escaping (GlobalConfigContainer) -> GlobalConfigContainer = { $0 }) -> some View {
         #if os(tvOS)
-        PopupView(rootView: self, popupManager: .registerInstance(id: id)).onAppear { _ = configBuilder(.init()) }
+        PopupView(rootView: self, stack: .registerStack(id: id)).onAppear { _ = configBuilder(.init()) }
         #else
         self
             .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -25,7 +25,7 @@ struct PopupView: View {
     var body: some View {
         #if os(tvOS)
         AnyView(rootView)
-            .disabled(!popupManager.stack.isEmpty)
+            .disabled(!stack.popups.isEmpty)
             .overlay(createBody())
         #else
         createBody()
