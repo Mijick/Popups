@@ -56,7 +56,6 @@ private extension AnyPopup {
         return popup
     }
 }
-
 extension AnyPopup {
     func updatedDismissTimer(_ secondsToDismiss: Double) -> AnyPopup { updated { $0._dismissTimer = .prepare(time: secondsToDismiss) }}
     func updatedEnvironmentObject(_ environmentObject: some ObservableObject) -> AnyPopup { updated { $0._body = .init(_body.environmentObject(environmentObject)) }}
@@ -100,14 +99,7 @@ extension AnyPopup: Hashable {
 // MARK: New Object
 extension AnyPopup {
     static func t_createNew(id: String = UUID().uuidString, config: LocalConfig) async -> AnyPopup { await .init(
-        id: .init(id),
-        config: .init(config),
-        height: nil,
-        dragHeight: 0,
-        _dismissTimer: nil,
-        _body: .init(EmptyView()),
-        _onFocus: {},
-        _onDismiss: {}
+        id: .init(id), config: .init(config), height: nil, dragHeight: 0, _dismissTimer: nil, _body: .init(EmptyView()), _onFocus: {}, _onDismiss: {}
     )}
 }
 #endif
