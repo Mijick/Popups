@@ -1029,7 +1029,6 @@ extension PopupVerticalStackViewModelTests {
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
-            calculateForIndex: 1,
             expectedValue: true
         )
     }
@@ -1043,7 +1042,6 @@ extension PopupVerticalStackViewModelTests {
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
-            calculateForIndex: 1,
             expectedValue: false
         )
     }
@@ -1058,7 +1056,6 @@ extension PopupVerticalStackViewModelTests {
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
-            calculateForIndex: 2,
             expectedValue: false
         )
     }
@@ -1075,18 +1072,17 @@ extension PopupVerticalStackViewModelTests {
             viewModel: bottomViewModel,
             popups: popups,
             gestureTranslation: 0,
-            calculateForIndex: 4,
             expectedValue: false
         )
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckVerticalFixedSize(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, calculateForIndex index: Int, expectedValue: Bool) async {
+    func appendPopupsAndCheckVerticalFixedSize(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, expectedValue: Bool) async {
         await appendPopupsAndPerformChecks(
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { $0.calculateVerticalFixedSize(for: $0.popups[index]) },
+            calculatedValue: { await $0.calculateActivePopupVerticalFixedSize() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
