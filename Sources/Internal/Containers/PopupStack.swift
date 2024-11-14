@@ -56,7 +56,7 @@ private extension PopupStack {
     nonisolated func getNewPopups(_ operation: StackOperation) async -> [AnyPopup] { switch operation {
         case .insertPopup(let popup): await insertedPopup(popup)
         case .removeLastPopup: await removedLastPopup()
-        case .removePopup(let popup): await removedPopupInstance(popup)
+        case .removePopup(let popup): await removedPopup(popup)
         case .removeAllPopupsOfType(let popupType): await removedAllPopupsOfType(popupType)
         case .removeAllPopupsWithID(let id): await removedAllPopupsWithID(id)
         case .removeAllPopups: await removedAllPopups()
@@ -81,7 +81,7 @@ private extension PopupStack {
     nonisolated func removedLastPopup() async -> [AnyPopup] { await popups.modifiedAsync(if: !popups.isEmpty) {
         $0.removeLast()
     }}
-    nonisolated func removedPopupInstance(_ popup: AnyPopup) async -> [AnyPopup] { await popups.modifiedAsync {
+    nonisolated func removedPopup(_ popup: AnyPopup) async -> [AnyPopup] { await popups.modifiedAsync {
         $0.removeAll { $0.id.isSameInstance(as: popup) }
     }}
     nonisolated func removedAllPopupsOfType(_ popupType: any Popup.Type) async -> [AnyPopup] { await popups.modifiedAsync {
