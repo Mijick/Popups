@@ -454,7 +454,7 @@ private extension PopupVerticalStackViewModelTests {
             viewModel: viewModel,
             popups: popups,
             gestureTranslation: gestureTranslation,
-            calculatedValue: { $0.activePopupHeight },
+            calculatedValue: { $0.activePopupProperties.height },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
