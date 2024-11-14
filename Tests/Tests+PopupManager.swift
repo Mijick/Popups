@@ -63,7 +63,7 @@ extension PopupStackTests {
 }
 private extension PopupStackTests {
     func registerNewInstances(popupManagerIds: [PopupStackID]) {
-        popupManagerIds.forEach { _ = PopupStack.registerInstance(id: $0) }
+        popupManagerIds.forEach { _ = PopupStack.registerStack(id: $0) }
     }
     func getRegisteredInstances() -> [PopupStackID] {
         PopupStackContainer.instances.map(\.id)
@@ -263,7 +263,7 @@ private extension PopupStackTests {
     func getPopupsForActiveInstance() -> [AnyPopup] {
         PopupStack
             .fetchInstance(id: defaultPopupManagerID)?
-            .stack ?? []
+            .popups ?? []
     }
 }
 

@@ -13,7 +13,7 @@ import SwiftUI
 
 @MainActor public class PopupStack: ObservableObject {
     let id: PopupStackID
-    @Published private(set) var stack: [AnyPopup] = []
+    @Published private(set) var popups: [AnyPopup] = []
     @Published private(set) var priority: StackPriority = .init()
 
     private init(id: PopupStackID) { self.id = id }
@@ -21,8 +21,8 @@ import SwiftUI
 
 // MARK: Update
 extension PopupStack {
-    func updateStack(_ popup: AnyPopup) { if let index = stack.firstIndex(of: popup) {
-        stack[index] = popup
+    func update(popup: AnyPopup) { if let index = popups.firstIndex(of: popup) {
+        popups[index] = popup
     }}
 }
 
@@ -77,19 +77,19 @@ private extension PopupStack {
     }
 }
 private extension PopupStack {
-    nonisolated func insertedPopup(_ erasedPopup: AnyPopup) async -> [AnyPopup] { await stack.modifiedAsync(if: await !stack.contains { $0.id.isSameType(as: erasedPopup.id) }) {
+    nonisolated func insertedPopup(_ erasedPopup: AnyPopup) async -> [AnyPopup] { await popups.modifiedAsync(if: await !popups.contains { $0.id.isSameType(as: erasedPopup.id) }) {
         $0.append(await erasedPopup.startDismissTimerIfNeeded(self))
     }}
-    nonisolated func removedLastPopup() async -> [AnyPopup] { await stack.modifiedAsync(if: !stack.isEmpty) {
+    nonisolated func removedLastPopup() async -> [AnyPopup] { await popups.modifiedAsync(if: !popups.isEmpty) {
         $0.removeLast()
     }}
-    nonisolated func removedPopupInstance(_ popup: AnyPopup) async -> [AnyPopup] { await stack.modifiedAsync {
+    nonisolated func removedPopupInstance(_ popup: AnyPopup) async -> [AnyPopup] { await popups.modifiedAsync {
         $0.removeAll { $0.id.isSameInstance(as: popup) }
     }}
-    nonisolated func removedAllPopupsOfType(_ popupType: any Popup.Type) async -> [AnyPopup] { await stack.modifiedAsync {
+    nonisolated func removedAllPopupsOfType(_ popupType: any Popup.Type) async -> [AnyPopup] { await popups.modifiedAsync {
         $0.removeAll { $0.id.isSameType(as: popupType) }
     }}
-    nonisolated func removedAllPopupsWithID(_ id: String) async -> [AnyPopup] { await stack.modifiedAsync {
+    nonisolated func removedAllPopupsWithID(_ id: String) async -> [AnyPopup] { await popups.modifiedAsync {
         $0.removeAll { $0.id.isSameType(as: id) }
     }}
     nonisolated func removedAllPopups() async -> [AnyPopup] {
@@ -122,7 +122,7 @@ private extension PopupStack {
 
 // MARK: Register
 extension PopupStack {
-    static func registerInstance(id: PopupStackID) -> PopupStack {
+    static func registerStack(id: PopupStackID) -> PopupStack {
         let instanceToRegister = PopupStack(id: id)
         let registeredInstance = PopupStackContainer.register(popupManager: instanceToRegister)
         return registeredInstance

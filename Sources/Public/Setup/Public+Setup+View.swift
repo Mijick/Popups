@@ -48,7 +48,7 @@ public extension View {
         #else
         self
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .overlay(PopupView(popupManager: .registerInstance(id: id)), alignment: .top)
+            .overlay(PopupView(stack: .registerStack(id: id)), alignment: .top)
             .onAppear { _ = configBuilder(.init()) }
         #endif
     }

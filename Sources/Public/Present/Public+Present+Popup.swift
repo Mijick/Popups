@@ -32,7 +32,7 @@ public extension Popup {
      
      - Warning: To present multiple popups of the same type, set a unique identifier using the method ``Popup/setCustomID(_:)``.
      */
-    @MainActor func present(popupManagerID: PopupStackID = .shared) async { await PopupStack.fetchInstance(id: popupManagerID)?.stack(.insertPopup(.init(self))) }
+    @MainActor func present(popupManagerID: PopupStackID = .shared) async { await PopupStack.fetchInstance(id: popupManagerID)?.modify(.insertPopup(.init(self))) }
 }
 
 // MARK: Configure Popup

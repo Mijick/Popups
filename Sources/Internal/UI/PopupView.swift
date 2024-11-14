@@ -16,7 +16,7 @@ struct PopupView: View {
     let rootView: any View
     #endif
 
-    @ObservedObject var popupManager: PopupStack
+    @ObservedObject var stack: PopupStack
     private let topStackViewModel: VM.VerticalStack = .init(TopPopupConfig.self)
     private let centreStackViewModel: VM.CentreStack = .init(CentrePopupConfig.self)
     private let bottomStackViewModel: VM.VerticalStack = .init(BottomPopupConfig.self)
@@ -41,8 +41,8 @@ private extension PopupView {
                 .onChange(of: reader.size) { _ in onScreenChange(reader) }
         }
         .onAppear(perform: onAppear)
-        .onChange(of: popupManager.stack.map { [$0.height, $0.dragHeight] }, perform: onPopupsHeightChange)
-        .onChange(of: popupManager.stack) { [oldValue = popupManager.stack] newValue in onStackChange(oldValue, newValue) }
+        .onChange(of: stack.popups.map { [$0.height, $0.dragHeight] }, perform: onPopupsHeightChange)
+        .onChange(of: stack.popups) { [oldValue = stack.popups] newValue in onStackChange(oldValue, newValue) }
         .onKeyboardStateChange(perform: onKeyboardStateChange)
     }
 }
@@ -59,22 +59,22 @@ private extension PopupView {
 private extension PopupView {
     func createOverlayView() -> some View {
         getOverlayColor()
-            .zIndex(popupManager.priority.overlay)
-            .animation(.linear, value: popupManager.stack)
+            .zIndex(stack.priority.overlay)
+            .animation(.linear, value: stack.popups)
             .onTapGesture(perform: onTap)
     }
     func createTopPopupStackView() -> some View {
-        PopupVerticalStackView(viewModel: topStackViewModel).zIndex(popupManager.priority.top)
+        PopupVerticalStackView(viewModel: topStackViewModel).zIndex(stack.priority.top)
     }
     func createCentrePopupStackView() -> some View {
-        PopupCentreStackView(viewModel: centreStackViewModel).zIndex(popupManager.priority.center)
+        PopupCentreStackView(viewModel: centreStackViewModel).zIndex(stack.priority.center)
     }
     func createBottomPopupStackView() -> some View {
-        PopupVerticalStackView(viewModel: bottomStackViewModel).zIndex(popupManager.priority.bottom)
+        PopupVerticalStackView(viewModel: bottomStackViewModel).zIndex(stack.priority.bottom)
     }
 }
 private extension PopupView {
-    func getOverlayColor() -> Color { switch popupManager.stack.last?.config.overlayColor {
+    func getOverlayColor() -> Color { switch stack.popups.last?.config.overlayColor {
         case .some(let color) where color == .clear: .black.opacity(0.0000000000001)
         case .some(let color): color
         case nil: .clear
@@ -89,7 +89,7 @@ private extension PopupView {
         await updateViewModels { await $0.updateScreen(screenReader: screenReader) }
     }}
     func onPopupsHeightChange(_ p: Any) { Task { @MainActor in
-        await updateViewModels { await $0.updatePopups(popupManager.stack) }
+        await updateViewModels { await $0.updatePopups(stack.popups) }
     }}
     func onStackChange(_ oldStack: [AnyPopup], _ newStack: [AnyPopup]) {
         newStack
@@ -104,20 +104,20 @@ private extension PopupView {
         await updateViewModels { await $0.updateScreen(isKeyboardActive: isKeyboardActive) }
     }}
     func onTap() { if tapOutsideClosesPopup {
-        popupManager.stack(.removeLastPopup)
+        stack.modify(.removeLastPopup)
     }}
 }
 private extension PopupView {
     nonisolated func updatePopup(_ popup: AnyPopup) async {
-        await popupManager.updateStack(popup)
+        await stack.update(popup: popup)
     }
     nonisolated func closePopup(_ popup: AnyPopup) async {
-        await popupManager.stack(.removePopupInstance(popup))
+        await stack.modify(.removePopupInstance(popup))
     }
     func updateViewModels(_ updateBuilder: @escaping (any ViewModel) async -> ()) async {
         for viewModel in [topStackViewModel, centreStackViewModel, bottomStackViewModel] { Task { @MainActor in await updateBuilder(viewModel as! any ViewModel) }}
     }
 }
 private extension PopupView {
-    var tapOutsideClosesPopup: Bool { popupManager.stack.last?.config.isTapOutsideToDismissEnabled ?? false }
+    var tapOutsideClosesPopup: Bool { stack.popups.last?.config.isTapOutsideToDismissEnabled ?? false }
 }
