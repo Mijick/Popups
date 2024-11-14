@@ -17,7 +17,7 @@ import SwiftUI
     @ObservedObject private var viewModel: ViewModel = .init(CenterPopupConfig.self)
 
     override func setUp() async throws {
-        viewModel.updateScreenValue(screen)
+        await viewModel.updateScreen(screenHeight: screen.height, screenSafeArea: screen.safeArea)
         viewModel.setup(updatePopupAction: { [self] in await updatePopupAction(viewModel, $0) }, closePopupAction: { [self] in await closePopupAction(viewModel, $0) })
     }
 }
@@ -237,8 +237,7 @@ private extension PopupCenterStackViewModelTests {
     func appendPopupsAndPerformChecks<Value: Equatable & Sendable>(popups: [AnyPopup], isKeyboardActive: Bool, calculatedValue: @escaping (ViewModel) async -> (Value), expectedValueBuilder: @escaping (ViewModel) async -> Value) async {
         await viewModel.updatePopups(popups)
         await updatePopups(viewModel)
-        viewModel.updateKeyboardValue(isKeyboardActive)
-        viewModel.updateScreenValue(isKeyboardActive ? screenWithKeyboard : screen)
+        await viewModel.updateScreen(screenHeight: isKeyboardActive ? screenWithKeyboard.height : screen.height, screenSafeArea: isKeyboardActive ? screenWithKeyboard.safeArea : screen.safeArea, isKeyboardActive: isKeyboardActive)
 
         let calculatedValue = await calculatedValue(viewModel)
         let expectedValue = await expectedValueBuilder(viewModel)
