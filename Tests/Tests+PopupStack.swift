@@ -164,14 +164,14 @@ extension PopupStackTests {
         XCTAssertEqual(popupsOnStack.count, 0)
     }
     func test_dismissLastPopup_withThreePopupsOnStack() async {
-        registerNewInstanceAndPresentPopups(popups: [
-            AnyPopup.t_createNew(config: LocalConfigVertical.Bottom()),
-            AnyPopup.t_createNew(config: LocalConfigVertical.Bottom()),
-            AnyPopup.t_createNew(config: LocalConfigVertical.Bottom())
+        await registerNewInstanceAndPresentPopups(popups: [
+            AnyPopup(TestBottomPopup1()),
+            AnyPopup(TestBottomPopup2()),
+            AnyPopup(TestBottomPopup3())
         ])
-        PopupStack.dismissLastPopup(popupManagerID: defaultPopupManagerID)
+        await PopupStack.dismissLastPopup(popupStackID: defaultPopupStackID)
 
-        let popupsOnStack = getPopupsForActiveInstance()
+        let popupsOnStack = await getPopupsForActiveInstance()
         XCTAssertEqual(popupsOnStack.count, 2)
     }
     func test_dismissPopupWithType_whenPopupOnStack() {
@@ -289,6 +289,12 @@ private struct TestTopPopup: TopPopup {
 private struct TestCenterPopup: CenterPopup {
     var body: some View { EmptyView() }
 }
-private struct TestBottomPopup: BottomPopup {
+private struct TestBottomPopup1: BottomPopup {
+    var body: some View { EmptyView() }
+}
+private struct TestBottomPopup2: BottomPopup {
+    var body: some View { EmptyView() }
+}
+private struct TestBottomPopup3: BottomPopup {
     var body: some View { EmptyView() }
 }
