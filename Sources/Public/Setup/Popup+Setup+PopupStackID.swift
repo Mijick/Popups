@@ -31,7 +31,7 @@
  }
  ```
 
- - important: Use methods like ``SwiftUICore/View/dismissLastPopup(popupManagerID:)`` or ``Popup/present(popupManagerID:)`` only with a registered PopupStackID.
+ - important: Use methods like ``SwiftUICore/View/dismissLastPopup(popupStackID:)`` or ``Popup/present(popupStackID:)`` only with a registered PopupStackID.
  - tip: The main use case where you might need to register a different PopupStackID is when your application has multiple windows - for example, on macOS, iPad or visionOS.
  */
 public struct PopupStackID: Equatable, Sendable {

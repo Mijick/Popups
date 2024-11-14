@@ -16,7 +16,7 @@ public extension View {
      Registers the framework to work in your application.
 
      - Parameters:
-        - id: It is possible to register multiple managers (for different windows); especially useful in a macOS or iPad implementation. Read more in ``PopupStackID``.
+        - id: It is possible to register multiple stacks (for different windows); especially useful in a macOS or iPad implementation. Read more in ``PopupStackID``.
         - configBuilder: Default configuration for all popups. Use the ``Popup/configurePopup(config:)-98ha0`` method to change the configuration for a specific popup. See the list of available methods in ``GlobalConfig``.
 
 
