@@ -12,7 +12,7 @@
 import SwiftUI
 
 struct PopupCenterStackView: View {
-    @ObservedObject var viewModel: VM.CentreStack
+    @ObservedObject var viewModel: VM.CenterStack
 
     
     var body: some View {

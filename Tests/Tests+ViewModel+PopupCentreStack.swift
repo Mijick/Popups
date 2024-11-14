@@ -273,5 +273,5 @@ private extension PopupCentreStackViewModelTests {
 
 // MARK: Typealiases
 private extension PopupCentreStackViewModelTests {
-    typealias ViewModel = VM.CentreStack
+    typealias ViewModel = VM.CenterStack
 }

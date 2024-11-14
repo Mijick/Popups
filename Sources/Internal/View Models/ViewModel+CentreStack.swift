@@ -1,5 +1,5 @@
 //
-//  ViewModel+CentreStack.swift of MijickPopups
+//  ViewModel+CenterStack.swift of MijickPopups
 //
 //  Created by Tomasz Kurylik. Sending ❤️ from Kraków!
 //    - Mail: tomasz.kurylik@mijick.com
@@ -11,7 +11,7 @@
 
 import SwiftUI
 
-extension VM { class CentreStack: ViewModel { required init() {}
+extension VM { class CenterStack: ViewModel { required init() {}
     var alignment: PopupAlignment = .center
     var popups: [AnyPopup] = []
     var activePopupProperties: ActivePopupProperties = .init()
@@ -27,14 +27,14 @@ extension VM { class CentreStack: ViewModel { required init() {}
 
 
 // MARK: Height
-extension VM.CentreStack {
+extension VM.CenterStack {
     func calculateActivePopupHeight() async -> CGFloat? {
         popups.last?.height
     }
 }
 
 // MARK: Outer Padding
-extension VM.CentreStack {
+extension VM.CenterStack {
     func calculateActivePopupOuterPadding() async -> EdgeInsets { .init(
         top: calculateVerticalPopupPadding(for: .top),
         leading: calculateLeadingPopupPadding(),
@@ -42,7 +42,7 @@ extension VM.CentreStack {
         trailing: calculateTrailingPopupPadding()
     )}
 }
-private extension VM.CentreStack {
+private extension VM.CenterStack {
     func calculateVerticalPopupPadding(for edge: PopupAlignment) -> CGFloat {
         guard let activePopupHeight = activePopupProperties.height, screen.isKeyboardActive && edge == .bottom else { return 0 }
 
@@ -59,12 +59,12 @@ private extension VM.CentreStack {
 }
 
 // MARK: Inner Padding
-extension VM.CentreStack {
+extension VM.CenterStack {
     func calculateActivePopupInnerPadding() async -> EdgeInsets { .init() }
 }
 
 // MARK: Corners
-extension VM.CentreStack {
+extension VM.CenterStack {
     func calculateActivePopupCorners() async -> [PopupAlignment : CGFloat] { [
         .top: popups.last?.config.cornerRadius ?? 0,
         .bottom: popups.last?.config.cornerRadius ?? 0
@@ -72,14 +72,14 @@ extension VM.CentreStack {
 }
 
 // MARK: Vertical Fixed Size
-extension VM.CentreStack {
+extension VM.CenterStack {
     func calculateActivePopupVerticalFixedSize() async -> Bool {
         activePopupProperties.height != calculateLargeScreenHeight()
     }
 }
 
 // MARK: Translation Progress
-extension VM.CentreStack {
+extension VM.CenterStack {
     func calculateActivePopupTranslationProgress() async -> CGFloat { 0 }
 }
 
@@ -90,12 +90,12 @@ extension VM.CentreStack {
 
 
 // MARK: Height
-extension VM.CentreStack {
+extension VM.CenterStack {
     func calculatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async -> CGFloat {
         min(heightCandidate, calculateLargeScreenHeight())
     }
 }
-private extension VM.CentreStack {
+private extension VM.CenterStack {
     func calculateLargeScreenHeight() -> CGFloat {
         let fullscreenHeight = screen.height,
             safeAreaHeight = screen.safeArea.top + screen.safeArea.bottom
@@ -110,7 +110,7 @@ private extension VM.CentreStack {
 
 
 // MARK: Opacity
-extension VM.CentreStack {
+extension VM.CenterStack {
     func calculateOpacity(for popup: AnyPopup) -> CGFloat {
         popups.last == popup ? 1 : 0
     }
