@@ -32,13 +32,11 @@ extension PopupStack {
 
 
 
-// MARK: Available Operations
+// MARK: Stack Operations
 extension PopupStack { enum StackOperation {
     case insertPopup(AnyPopup)
     case removeLastPopup, removePopupInstance(AnyPopup), removeAllPopupsOfType(any Popup.Type), removeAllPopupsWithID(String), removeAllPopups
 }}
-
-// MARK: Perform Operation
 extension PopupStack {
     func modify(_ operation: StackOperation) { Task {
         await hideKeyboard()
@@ -123,8 +121,8 @@ private extension PopupStack {
 // MARK: Register
 extension PopupStack {
     static func registerStack(id: PopupStackID) -> PopupStack {
-        let instanceToRegister = PopupStack(id: id)
-        let registeredInstance = PopupStackContainer.register(popupManager: instanceToRegister)
-        return registeredInstance
+        let stackToRegister = PopupStack(id: id)
+        let registeredStack = PopupStackContainer.register(stack: stackToRegister)
+        return registeredStack
     }
 }

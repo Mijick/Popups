@@ -12,20 +12,20 @@
 import Foundation
 
 @MainActor class PopupStackContainer {
-    static private(set) var instances: [PopupStack] = []
+    static private(set) var stacks: [PopupStack] = []
 }
 
 // MARK: Register
 extension PopupStackContainer {
-    static func register(popupManager: PopupStack) -> PopupStack {
-        if let alreadyRegisteredInstance = instances.first(where: { $0.id == popupManager.id }) { return alreadyRegisteredInstance }
+    static func register(stack: PopupStack) -> PopupStack {
+        if let alreadyRegisteredStack = stacks.first(where: { $0.id == stack.id }) { return alreadyRegisteredStack }
 
-        instances.append(popupManager)
-        return popupManager
+        stacks.append(stack)
+        return stack
     }
 }
 
 // MARK: Clean
 extension PopupStackContainer {
-    static func clean() { instances = [] }
+    static func clean() { stacks = [] }
 }
