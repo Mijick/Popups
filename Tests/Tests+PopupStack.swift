@@ -27,13 +27,13 @@ import SwiftUI
 
 // MARK: Register
 extension PopupStackTests {
-    func test_register_withNoStacksToRegister() {
+    func test_registerStack_withNoStacksToRegister() {
         let popupStacksIDs: [PopupStackID] = []
 
         register(stackIDs: popupStacksIDs)
         XCTAssertEqual(popupStacksIDs, getRegisteredStacks())
     }
-    func test_register_withUniqueStacksToRegister() {
+    func test_registerStack_withUniqueStacksToRegister() {
         let popupStacksIDs: [PopupStackID] = [
             .staremiasto,
             .grzegorzki,
@@ -44,7 +44,7 @@ extension PopupStackTests {
         register(stackIDs: popupStacksIDs)
         XCTAssertEqual(popupStacksIDs, getRegisteredStacks())
     }
-    func test_register_withRepeatingStacksToRegister() {
+    func test_registerStack_withRepeatingStacksToRegister() {
         let popupStacksIDs: [PopupStackID] = [
             .staremiasto,
             .grzegorzki,
@@ -72,11 +72,11 @@ private extension PopupStackTests {
 
 // MARK: Fetch
 extension PopupStackTests {
-    func test_getInstance_whenNoInstancesAreRegistered() {
-        let managerInstance = PopupStack.fetch(id: .bronowice)
-        XCTAssertNil(managerInstance)
+    func test_fetchStack_whenNoStacksAreRegistered() async {
+        let stack = await PopupStack.fetch(id: .bronowice)
+        XCTAssertNil(stack)
     }
-    func test_getInstance_whenInstanceIsNotRegistered() {
+    func test_fetchStack_whenStackIsNotRegistered() async {
         register(stackIDs: [
             .krowodrza,
             .staremiasto,
@@ -85,8 +85,8 @@ extension PopupStackTests {
             .grzegorzki
         ])
 
-        let managerInstance = PopupStack.fetch(id: .bronowice)
-        XCTAssertNil(managerInstance)
+        let stack = await PopupStack.fetch(id: .bronowice)
+        XCTAssertNil(stack)
     }
     func test_getInstance_whenInstanceIsRegistered() {
         register(stackIDs: [
