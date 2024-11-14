@@ -12,8 +12,8 @@
 import SwiftUI
 
 /**
- The view to be displayed as a popup. It may appear in one of three positions (see **Usage Examples** section).
- # Optional Methods
+ The view to be displayed as a popup. It may appear in one of three positions (see **Usage** section).
+ ## Optional Methods
  - ``configurePopup(config:)-3ze4``
  - ``onFocus()-6krqs``
  - ``onDismiss()-254h8``
@@ -23,7 +23,7 @@ public protocol Popup: View {
 
     /**
      Configures the popup.
-     See the list of available methods in ``LocalConfig`` and ``LocalConfig/Vertical``.
+     See the list of available methods in ``LocalConfigCenter`` and ``LocalConfigVertical``.
 
     - important: If a certain method is not called here, the popup inherits the configuration from ``GlobalConfigContainer``.
      */
