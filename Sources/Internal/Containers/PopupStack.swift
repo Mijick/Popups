@@ -35,7 +35,7 @@ extension PopupStack {
 // MARK: Stack Operations
 extension PopupStack { enum StackOperation {
     case insertPopup(AnyPopup)
-    case removeLastPopup, removePopupInstance(AnyPopup), removeAllPopupsOfType(any Popup.Type), removeAllPopupsWithID(String), removeAllPopups
+    case removeLastPopup, removePopup(AnyPopup), removeAllPopupsOfType(any Popup.Type), removeAllPopupsWithID(String), removeAllPopups
 }}
 extension PopupStack {
     func modify(_ operation: StackOperation) { Task {
@@ -56,7 +56,7 @@ private extension PopupStack {
     nonisolated func getNewPopups(_ operation: StackOperation) async -> [AnyPopup] { switch operation {
         case .insertPopup(let popup): await insertedPopup(popup)
         case .removeLastPopup: await removedLastPopup()
-        case .removePopupInstance(let popup): await removedPopupInstance(popup)
+        case .removePopup(let popup): await removedPopupInstance(popup)
         case .removeAllPopupsOfType(let popupType): await removedAllPopupsOfType(popupType)
         case .removeAllPopupsWithID(let id): await removedAllPopupsWithID(id)
         case .removeAllPopups: await removedAllPopups()
