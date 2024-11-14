@@ -30,7 +30,7 @@ extension PopupStackTests {
     func test_registerStack_withNoStacksToRegister() {
         let popupStacksIDs: [PopupStackID] = []
 
-        register(stackIDs: popupStacksIDs)
+        registerStacks(ids: popupStacksIDs)
         XCTAssertEqual(popupStacksIDs, getRegisteredStacks())
     }
     func test_registerStack_withUniqueStacksToRegister() {
@@ -41,7 +41,7 @@ extension PopupStackTests {
             .bronowice
         ]
 
-        register(stackIDs: popupStacksIDs)
+        registerStacks(ids: popupStacksIDs)
         XCTAssertEqual(popupStacksIDs, getRegisteredStacks())
     }
     func test_registerStack_withRepeatingStacksToRegister() {
@@ -56,14 +56,14 @@ extension PopupStackTests {
             .krowodrza
         ]
 
-        register(stackIDs: popupStacksIDs)
+        registerStacks(ids: popupStacksIDs)
         XCTAssertNotEqual(popupStacksIDs, getRegisteredStacks())
         XCTAssertEqual(getRegisteredStacks().count, 6)
     }
 }
 private extension PopupStackTests {
-    func register(stackIDs: [PopupStackID]) {
-        stackIDs.forEach { _ = PopupStack.registerStack(id: $0) }
+    func registerStacks(ids: [PopupStackID]) {
+        ids.forEach { _ = PopupStack.registerStack(id: $0) }
     }
     func getRegisteredStacks() -> [PopupStackID] {
         PopupStackContainer.stacks.map(\.id)
@@ -77,7 +77,7 @@ extension PopupStackTests {
         XCTAssertNil(stack)
     }
     func test_fetchStack_whenStackIsNotRegistered() async {
-        register(stackIDs: [
+        registerStacks(ids: [
             .krowodrza,
             .staremiasto,
             .pradnikczerwony,
@@ -89,7 +89,7 @@ extension PopupStackTests {
         XCTAssertNil(stack)
     }
     func test_fetchStack_whenStackIsRegistered() async {
-        register(stackIDs: [
+        registerStacks(ids: [
             .krowodrza,
             .staremiasto,
             .grzegorzki
@@ -257,7 +257,7 @@ extension PopupStackTests {
 // MARK: Methods
 private extension PopupStackTests {
     func registerNewStackAndPresent(popups: [any Popup]) async {
-        register(stackIDs: [defaultPopupStackID])
+        registerStacks(ids: [defaultPopupStackID])
         for popup in popups { await popup.present(popupStackID: defaultPopupStackID) }
     }
     func getPopupsForActiveStack() async -> [AnyPopup] {
