@@ -15,7 +15,7 @@ public extension GlobalConfigContainer {
      Use the ``Popup/configurePopup(config:)-98ha0`` method to change the configuration for a specific popup.
      See the list of available methods in ``GlobalConfig``.
      */
-    nonisolated func centre(_ builder: (GlobalConfigCentre) -> GlobalConfigCentre) -> Self { Self.centre = builder(.init()); return self }
+    nonisolated func centre(_ builder: (GlobalConfigCentre) -> GlobalConfigCentre) -> Self { Self.center = builder(.init()); return self }
 
     /**
      Default configuration for all top and bottom popups.

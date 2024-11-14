@@ -13,17 +13,17 @@ import SwiftUI
 
 public class LocalConfigCentre: LocalConfig { required public init() {}
     // MARK: Active Variables
-    public var popupPadding: EdgeInsets = GlobalConfigContainer.centre.popupPadding
-    public var cornerRadius: CGFloat = GlobalConfigContainer.centre.cornerRadius
-    public var backgroundColor: Color = GlobalConfigContainer.centre.backgroundColor
-    public var overlayColor: Color = GlobalConfigContainer.centre.overlayColor
-    public var isTapOutsideToDismissEnabled: Bool = GlobalConfigContainer.centre.isTapOutsideToDismissEnabled
+    public var popupPadding: EdgeInsets = GlobalConfigContainer.center.popupPadding
+    public var cornerRadius: CGFloat = GlobalConfigContainer.center.cornerRadius
+    public var backgroundColor: Color = GlobalConfigContainer.center.backgroundColor
+    public var overlayColor: Color = GlobalConfigContainer.center.overlayColor
+    public var isTapOutsideToDismissEnabled: Bool = GlobalConfigContainer.center.isTapOutsideToDismissEnabled
 
     // MARK: Inactive Variables
-    public var ignoredSafeAreaEdges: Edge.Set = GlobalConfigContainer.centre.ignoredSafeAreaEdges
-    public var heightMode: HeightMode = GlobalConfigContainer.centre.heightMode
-    public var dragDetents: [DragDetent] = GlobalConfigContainer.centre.dragDetents
-    public var isDragGestureEnabled: Bool = GlobalConfigContainer.centre.isDragGestureEnabled
+    public var ignoredSafeAreaEdges: Edge.Set = GlobalConfigContainer.center.ignoredSafeAreaEdges
+    public var heightMode: HeightMode = GlobalConfigContainer.center.heightMode
+    public var dragDetents: [DragDetent] = GlobalConfigContainer.center.dragDetents
+    public var isDragGestureEnabled: Bool = GlobalConfigContainer.center.isDragGestureEnabled
 }
 
 // MARK: Typealias
