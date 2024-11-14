@@ -36,7 +36,7 @@ protocol ViewModel: ObservableObject where Self.ObjectWillChangePublisher == Obs
 
 
 
-// MARK: - INIT & SETUP
+// MARK: - INITIALIZE & SETUP
 
 
 
@@ -55,7 +55,7 @@ extension ViewModel {
 
 
 
-// MARK: MARK: UPDATE
+// MARK: UPDATE
 
 
 
