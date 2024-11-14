@@ -31,21 +31,21 @@ extension PopupStackTests {
         let popupStacksIDs: [PopupStackID] = []
 
         register(stackIDs: popupStacksIDs)
-        XCTAssertEqual(popupStacksIDs, getRegisteredInstances())
+        XCTAssertEqual(popupStacksIDs, getRegisteredStacks())
     }
-    func test_registerNewInstance_withUniqueInstancesToRegister() {
-        let popupManagerIds: [PopupStackID] = [
+    func test_register_withUniqueStacksToRegister() {
+        let popupStacksIDs: [PopupStackID] = [
             .staremiasto,
             .grzegorzki,
             .krowodrza,
             .bronowice
         ]
 
-        register(stackIDs: popupManagerIds)
-        XCTAssertEqual(popupManagerIds, getRegisteredInstances())
+        register(stackIDs: popupStacksIDs)
+        XCTAssertEqual(popupStacksIDs, getRegisteredStacks())
     }
-    func test_registerNewInstance_withRepeatingInstancesToRegister() {
-        let popupManagerIds: [PopupStackID] = [
+    func test_register_withRepeatingStacksToRegister() {
+        let popupStacksIDs: [PopupStackID] = [
             .staremiasto,
             .grzegorzki,
             .krowodrza,
@@ -56,16 +56,16 @@ extension PopupStackTests {
             .krowodrza
         ]
 
-        register(stackIDs: popupManagerIds)
-        XCTAssertNotEqual(popupManagerIds, getRegisteredInstances())
-        XCTAssertEqual(getRegisteredInstances().count, 6)
+        register(stackIDs: popupStacksIDs)
+        XCTAssertNotEqual(popupStacksIDs, getRegisteredStacks())
+        XCTAssertEqual(getRegisteredStacks().count, 6)
     }
 }
 private extension PopupStackTests {
     func register(stackIDs: [PopupStackID]) {
         stackIDs.forEach { _ = PopupStack.registerStack(id: $0) }
     }
-    func getRegisteredInstances() -> [PopupStackID] {
+    func getRegisteredStacks() -> [PopupStackID] {
         PopupStackContainer.stacks.map(\.id)
     }
 }
