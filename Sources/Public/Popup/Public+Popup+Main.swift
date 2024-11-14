@@ -108,9 +108,7 @@ public extension Popup {
  - ``Popup/onFocus()-6krqs``
  - ``Popup/onDismiss()-3bufs``
  
- # Usage Examples
-
- ## TopPopup
+ # Usage Example
  ```swift
  struct TopPopupExample: TopPopup {
     func onFocus() { print("Popup is now active") }
@@ -137,9 +135,7 @@ public protocol TopPopup: Popup { associatedtype Config = TopPopupConfig }
  - ``Popup/onFocus()-loq5``
  - ``Popup/onDismiss()-3bufs``
  
- # Usage Examples
-
- ## CentrePopup
+ # Usage Example
  ```swift
  struct CentrePopupExample: CentrePopup {
     func onFocus() { print("Popup is now active") }
@@ -165,9 +161,7 @@ public protocol CentrePopup: Popup { associatedtype Config = CentrePopupConfig }
  - ``Popup/onFocus()-loq5``
  - ``Popup/onDismiss()-254h8``
  
- # Usage Examples
-
- ## BottomPopup
+ # Usage Example
  ```swift
  struct BottomPopupExample: BottomPopup {
     func onFocus() { print("Popup is now active") }
