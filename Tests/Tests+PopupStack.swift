@@ -61,14 +61,6 @@ extension PopupStackTests {
         XCTAssertEqual(getRegisteredStacks().count, 6)
     }
 }
-private extension PopupStackTests {
-    func registerStacks(ids: [PopupStackID]) {
-        ids.forEach { _ = PopupStack.registerStack(id: $0) }
-    }
-    func getRegisteredStacks() -> [PopupStackID] {
-        PopupStackContainer.stacks.map(\.id)
-    }
-}
 
 // MARK: Fetch
 extension PopupStackTests {
@@ -264,6 +256,14 @@ private extension PopupStackTests {
         await PopupStack
             .fetch(id: defaultPopupStackID)?
             .popups ?? []
+    }
+}
+private extension PopupStackTests {
+    func registerStacks(ids: [PopupStackID]) {
+        ids.forEach { _ = PopupStack.registerStack(id: $0) }
+    }
+    func getRegisteredStacks() -> [PopupStackID] {
+        PopupStackContainer.stacks.map(\.id)
     }
 }
 
