@@ -36,11 +36,11 @@ extension PopupIDTests {
     func test_createPopupID_2() {
         let dateString = String(describing: Date())
 
-        let popupID = PopupID.create(from: TestCentrePopup.self)
+        let popupID = PopupID.create(from: TestCenterPopup.self)
         let idComponents = popupID.rawValue.components(separatedBy: "/{}/")
 
         XCTAssertEqual(idComponents.count, 2)
-        XCTAssertEqual(idComponents[0], "TestCentrePopup")
+        XCTAssertEqual(idComponents[0], "TestCenterPopup")
         XCTAssertEqual(idComponents[1], dateString)
     }
 }
@@ -89,7 +89,7 @@ extension PopupIDTests {
 extension PopupIDTests {
     func test_isSame_1() {
         let popupID = PopupID.create(from: TestTopPopup.self),
-            popup = AnyPopup(TestCentrePopup())
+            popup = AnyPopup(TestCenterPopup())
 
         let result = popupID.isSame(as: popup)
         XCTAssertEqual(result, false)
@@ -121,7 +121,7 @@ extension PopupIDTests {
 private struct TestTopPopup: TopPopup {
     var body: some View { EmptyView() }
 }
-private struct TestCentrePopup: CentrePopup {
+private struct TestCenterPopup: CenterPopup {
     var body: some View { EmptyView() }
 }
 private struct TestBottomPopup: BottomPopup {

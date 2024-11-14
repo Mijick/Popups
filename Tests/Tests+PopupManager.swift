@@ -177,7 +177,7 @@ extension PopupStackTests {
     func test_dismissPopupWithType_whenPopupOnStack() {
         let popups: [AnyPopup] = [
             .init(TestTopPopup()),
-            .init(TestCentrePopup()),
+            .init(TestCenterPopup()),
             .init(TestBottomPopup())
         ]
         registerNewInstanceAndPresentPopups(popups: popups)
@@ -200,7 +200,7 @@ extension PopupStackTests {
         let popupsOnStackBefore = getPopupsForActiveInstance()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
-        PopupStack.dismissPopup(TestCentrePopup.self, popupManagerID: defaultPopupManagerID)
+        PopupStack.dismissPopup(TestCenterPopup.self, popupManagerID: defaultPopupManagerID)
 
         let popupsOnStackAfter = getPopupsForActiveInstance()
         XCTAssertEqual(popups, popupsOnStackAfter)
@@ -286,7 +286,7 @@ private extension PopupStackID {
 private struct TestTopPopup: TopPopup {
     var body: some View { EmptyView() }
 }
-private struct TestCentrePopup: CentrePopup {
+private struct TestCenterPopup: CenterPopup {
     var body: some View { EmptyView() }
 }
 private struct TestBottomPopup: BottomPopup {

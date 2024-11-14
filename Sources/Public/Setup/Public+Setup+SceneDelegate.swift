@@ -41,7 +41,7 @@ import SwiftUI
                 .tapOutsideToDismissPopup(true)
                 .cornerRadius(32)
             }
-            .centre { $0
+            .center { $0
                 .tapOutsideToDismissPopup(false)
                 .backgroundColor(.white)
             }

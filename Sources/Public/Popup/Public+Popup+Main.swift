@@ -85,7 +85,7 @@ public protocol TopPopup: Popup { associatedtype Config = TopPopupConfig }
  
  # Usage Example
  ```swift
- struct CentrePopupExample: CentrePopup {
+ struct CenterPopupExample: CenterPopup {
     func onFocus() { print("Popup is now active") }
     func onDismiss() { print("Popup was dismissed") }
     func configurePopup(config: CenterPopupConfig) -> CenterPopupConfig { config
@@ -97,9 +97,9 @@ public protocol TopPopup: Popup { associatedtype Config = TopPopupConfig }
     }
  }
  ```
- ![CentrePopup](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/centre-popup.png?raw=true)
+ ![CenterPopup](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/centre-popup.png?raw=true)
  */
-public protocol CentrePopup: Popup { associatedtype Config = CenterPopupConfig }
+public protocol CenterPopup: Popup { associatedtype Config = CenterPopupConfig }
 
 /**
  The view to be displayed as a Bottom popup.
