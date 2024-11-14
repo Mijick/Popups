@@ -236,14 +236,14 @@ extension PopupStackTests {
         XCTAssertEqual([popups[1]], popupsOnStackAfter)
     }
     func test_dismissAllPopups() async {
-        registerNewInstanceAndPresentPopups(popups: [
-            AnyPopup.t_createNew(config: LocalConfigVertical.Bottom()),
-            AnyPopup.t_createNew(config: LocalConfigVertical.Bottom()),
-            AnyPopup.t_createNew(config: LocalConfigVertical.Bottom())
+        await registerNewStackAndPresent(popups: [
+            AnyPopup(TestBottomPopup1()),
+            AnyPopup(TestBottomPopup2()),
+            AnyPopup(TestBottomPopup3())
         ])
-        PopupStack.dismissAllPopups(popupManagerID: defaultPopupManagerID)
+        await PopupStack.dismissAllPopups(popupStackID: defaultPopupStackID)
 
-        let popupsOnStack = getPopupsForActiveStack()
+        let popupsOnStack = await getPopupsForActiveStack()
         XCTAssertEqual(popupsOnStack.count, 0)
     }
 }
