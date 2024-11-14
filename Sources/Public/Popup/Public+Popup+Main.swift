@@ -88,7 +88,7 @@ public protocol TopPopup: Popup { associatedtype Config = TopPopupConfig }
  struct CentrePopupExample: CentrePopup {
     func onFocus() { print("Popup is now active") }
     func onDismiss() { print("Popup was dismissed") }
-    func configurePopup(config: CentrePopupConfig) -> CentrePopupConfig { config
+    func configurePopup(config: CenterPopupConfig) -> CenterPopupConfig { config
         .cornerRadius(44)
         .tapOutsideToDismissPopup(true)
     }
@@ -99,7 +99,7 @@ public protocol TopPopup: Popup { associatedtype Config = TopPopupConfig }
  ```
  ![CentrePopup](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/centre-popup.png?raw=true)
  */
-public protocol CentrePopup: Popup { associatedtype Config = CentrePopupConfig }
+public protocol CentrePopup: Popup { associatedtype Config = CenterPopupConfig }
 
 /**
  The view to be displayed as a Bottom popup.

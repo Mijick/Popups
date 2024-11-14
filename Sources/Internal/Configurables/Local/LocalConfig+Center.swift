@@ -1,5 +1,5 @@
 //
-//  LocalConfig+Centre.swift of MijickPopups
+//  LocalConfig+Center.swift of MijickPopups
 //
 //  Created by Tomasz Kurylik. Sending ❤️ from Kraków!
 //    - Mail: tomasz.kurylik@mijick.com
@@ -11,7 +11,7 @@
 
 import SwiftUI
 
-public class LocalConfigCentre: LocalConfig { required public init() {}
+public class LocalConfigCenter: LocalConfig { required public init() {}
     // MARK: Active Variables
     public var popupPadding: EdgeInsets = GlobalConfigContainer.center.popupPadding
     public var cornerRadius: CGFloat = GlobalConfigContainer.center.cornerRadius

@@ -27,7 +27,7 @@ public typealias TopPopupConfig = LocalConfigVertical.Top
 
  - important: If a certain method is not called here, the popup inherits the configuration from ``GlobalConfigContainer``.
  */
-public typealias CentrePopupConfig = LocalConfigCentre
+public typealias CenterPopupConfig = LocalConfigCenter
 
 
 

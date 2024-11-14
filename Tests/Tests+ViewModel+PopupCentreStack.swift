@@ -14,7 +14,7 @@ import SwiftUI
 @testable import MijickPopups
 
 @MainActor final class PopupCentreStackViewModelTests: XCTestCase {
-    @ObservedObject private var viewModel: ViewModel = .init(CentrePopupConfig.self)
+    @ObservedObject private var viewModel: ViewModel = .init(CenterPopupConfig.self)
 
     override func setUp() async throws {
         viewModel.updateScreenValue(screen)
@@ -248,8 +248,8 @@ private extension PopupCentreStackViewModelTests {
     }
 }
 private extension PopupCentreStackViewModelTests {
-    func getConfigForPopupHeightTests(cornerRadius: CGFloat, popupPadding: EdgeInsets) -> CentrePopupConfig {
-        var config = CentrePopupConfig()
+    func getConfigForPopupHeightTests(cornerRadius: CGFloat, popupPadding: EdgeInsets) -> CenterPopupConfig {
+        var config = CenterPopupConfig()
         config.cornerRadius = cornerRadius
         config.popupPadding = popupPadding
         return config

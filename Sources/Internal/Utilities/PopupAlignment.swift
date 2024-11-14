@@ -21,7 +21,7 @@ enum PopupAlignment {
 extension PopupAlignment {
     init(_ config: LocalConfig.Type) { switch config.self {
         case is TopPopupConfig.Type: self = .top
-        case is CentrePopupConfig.Type: self = .center
+        case is CenterPopupConfig.Type: self = .center
         case is BottomPopupConfig.Type: self = .bottom
         default: fatalError()
     }}
