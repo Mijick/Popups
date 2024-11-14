@@ -102,24 +102,24 @@ extension PopupStackTests {
 
 // MARK: Present Popup
 extension PopupStackTests {
-    func test_presentPopup_withThreePopupsToBePresented() {
+    func test_presentPopup_withThreePopupsToBePresented() async {
         registerNewInstanceAndPresentPopups(popups: [
-            AnyPopup.t_createNew(config: LocalConfigVertical.Bottom()),
-            AnyPopup.t_createNew(config: LocalConfigVertical.Bottom()),
-            AnyPopup.t_createNew(config: LocalConfigVertical.Bottom())
+            await AnyPopup(TestBottomPopup1()),
+            await AnyPopup(TestBottomPopup2()),
+            await AnyPopup(TestBottomPopup3())
         ])
 
-        let popupsOnStack = getPopupsForActiveInstance()
+        let popupsOnStack = await getPopupsForActiveInstance()
         XCTAssertEqual(popupsOnStack.count, 3)
     }
-    func test_presentPopup_withPopupsWithSameID() {
+    func test_presentPopup_withPopupsWithSameID() async {
         registerNewInstanceAndPresentPopups(popups: [
-            AnyPopup.t_createNew(id: "2137", config: LocalConfigVertical.Bottom()),
-            AnyPopup.t_createNew(id: "2137", config: LocalConfigVertical.Bottom()),
-            AnyPopup.t_createNew(id: "2331", config: LocalConfigVertical.Bottom())
+            await AnyPopup(TestBottomPopup1()),
+            await AnyPopup(TestBottomPopup1()),
+            await AnyPopup(TestBottomPopup1()),
         ])
 
-        let popupsOnStack = getPopupsForActiveInstance()
+        let popupsOnStack = await getPopupsForActiveInstance()
         XCTAssertEqual(popupsOnStack.count, 2)
     }
     func test_presentPopup_withCustomID() {
