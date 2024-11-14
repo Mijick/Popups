@@ -43,19 +43,19 @@ extension PopupStack {
     func modify(_ operation: StackOperation) { Task {
         await hideKeyboard()
 
-        let oldStack = popups,
-            newStack = await getNewStack(operation),
-            newPriority = await getNewStackPriority(newStack)
+        let oldPopups = popups,
+            newPopups = await getNewPopups(operation),
+            newPriority = await getNewPriority(newPopups)
 
-        await updateStack(newStack)
-        await updatePriority(newPriority, oldStack.count)
+        await updatePopups(newPopups)
+        await updatePriority(newPriority, oldPopups.count)
     }}
 }
 private extension PopupStack {
     nonisolated func hideKeyboard() async {
         await AnyView.hideKeyboard()
     }
-    nonisolated func getNewStack(_ operation: StackOperation) async -> [AnyPopup] { switch operation {
+    nonisolated func getNewPopups(_ operation: StackOperation) async -> [AnyPopup] { switch operation {
         case .insertPopup(let popup): await insertedPopup(popup)
         case .removeLastPopup: await removedLastPopup()
         case .removePopupInstance(let popup): await removedPopupInstance(popup)
@@ -63,14 +63,14 @@ private extension PopupStack {
         case .removeAllPopupsWithID(let id): await removedAllPopupsWithID(id)
         case .removeAllPopups: await removedAllPopups()
     }}
-    nonisolated func getNewStackPriority(_ newStack: [AnyPopup]) async -> StackPriority {
-        await priority.reshuffled(newStack)
+    nonisolated func getNewPriority(_ newPopups: [AnyPopup]) async -> StackPriority {
+        await priority.reshuffled(newPopups)
     }
-    nonisolated func updateStack(_ newStack: [AnyPopup]) async {
-        Task { @MainActor in popups = newStack }
+    nonisolated func updatePopups(_ newPopups: [AnyPopup]) async {
+        Task { @MainActor in popups = newPopups }
     }
-    nonisolated func updatePriority(_ newPriority: StackPriority, _ oldStackCount: Int) async {
-        let delayDuration = await oldStackCount > popups.count ? Animation.duration : 0
+    nonisolated func updatePriority(_ newPriority: StackPriority, _ oldPopupsCount: Int) async {
+        let delayDuration = await oldPopupsCount > popups.count ? Animation.duration : 0
         await Task.sleep(seconds: delayDuration)
 
         Task { @MainActor in priority = newPriority }
