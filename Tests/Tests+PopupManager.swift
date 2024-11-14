@@ -73,7 +73,7 @@ private extension PopupStackTests {
 // MARK: Get Instance
 extension PopupStackTests {
     func test_getInstance_whenNoInstancesAreRegistered() {
-        let managerInstance = PopupStack.fetchInstance(id: .bronowice)
+        let managerInstance = PopupStack.fetch(id: .bronowice)
         XCTAssertNil(managerInstance)
     }
     func test_getInstance_whenInstanceIsNotRegistered() {
@@ -85,7 +85,7 @@ extension PopupStackTests {
             .grzegorzki
         ])
 
-        let managerInstance = PopupStack.fetchInstance(id: .bronowice)
+        let managerInstance = PopupStack.fetch(id: .bronowice)
         XCTAssertNil(managerInstance)
     }
     func test_getInstance_whenInstanceIsRegistered() {
@@ -95,7 +95,7 @@ extension PopupStackTests {
             .grzegorzki
         ])
 
-        let managerInstance = PopupStack.fetchInstance(id: .grzegorzki)
+        let managerInstance = PopupStack.fetch(id: .grzegorzki)
         XCTAssertNotNil(managerInstance)
     }
 }
@@ -262,7 +262,7 @@ private extension PopupStackTests {
     }
     func getPopupsForActiveInstance() -> [AnyPopup] {
         PopupStack
-            .fetchInstance(id: defaultPopupManagerID)?
+            .fetch(id: defaultPopupManagerID)?
             .popups ?? []
     }
 }

@@ -91,14 +91,14 @@ extension PopupIDTests {
         let popupID = PopupID.create(from: TestTopPopup.self),
             popup = AnyPopup(TestCentrePopup())
 
-        let result = popupID.isSameInstance(as: popup)
+        let result = popupID.isSame(as: popup)
         XCTAssertEqual(result, false)
     }
     func test_isSameInstance_2() {
         let popupID = PopupID.create(from: TestTopPopup.self),
             popup = AnyPopup(TestTopPopup())
 
-        let result = popupID.isSameInstance(as: popup)
+        let result = popupID.isSame(as: popup)
         XCTAssertEqual(result, true)
     }
     func test_isSameInstance_3() async {
@@ -106,7 +106,7 @@ extension PopupIDTests {
         await Task.sleep(seconds: 1)
         let popup = AnyPopup(TestTopPopup())
 
-        let result = popupID.isSameInstance(as: popup)
+        let result = popupID.isSame(as: popup)
         XCTAssertEqual(result, false)
     }
 }
