@@ -12,14 +12,7 @@
 import SwiftUI
 
 struct Screen: Sendable {
-    let height: CGFloat
-    let safeArea: EdgeInsets
-    let isKeyboardActive: Bool
-
-
-    init(height: CGFloat = .zero, safeArea: EdgeInsets = .init(), isKeyboardActive: Bool = false) {
-        self.height = height
-        self.safeArea = safeArea
-        self.isKeyboardActive = isKeyboardActive
-    }
+    var height: CGFloat = .zero
+    var safeArea: EdgeInsets = .init()
+    var isKeyboardActive: Bool = false
 }
