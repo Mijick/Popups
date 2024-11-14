@@ -248,10 +248,12 @@ private extension PopupCentreStackViewModelTests {
     }
 }
 private extension PopupCentreStackViewModelTests {
-    func getConfigForPopupHeightTests(cornerRadius: CGFloat, popupPadding: EdgeInsets) -> CentrePopupConfig { .t_createNew(
-        popupPadding: popupPadding,
-        cornerRadius: cornerRadius
-    )}
+    func getConfigForPopupHeightTests(cornerRadius: CGFloat, popupPadding: EdgeInsets) -> CentrePopupConfig {
+        var config = CentrePopupConfig()
+        config.cornerRadius = cornerRadius
+        config.popupPadding = popupPadding
+        return config
+    }
     func updatePopups(_ viewModel: ViewModel) async {
         for popup in viewModel.popups { await viewModel.recalculateAndUpdatePopupHeight(popup.height!, popup) }
     }

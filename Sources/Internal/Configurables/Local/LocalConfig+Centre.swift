@@ -34,20 +34,3 @@ public class LocalConfigCentre: LocalConfig { required public init() {}
 - important: If a certain method is not called here, the popup inherits the configuration from ``GlobalConfigContainer``.
  */
 public typealias CentrePopupConfig = LocalConfigCentre
-
-
-
-// MARK: - TESTS
-#if DEBUG
-
-
-
-extension LocalConfigCentre {
-    static func t_createNew(popupPadding: EdgeInsets, cornerRadius: CGFloat) -> LocalConfigCentre {
-        let config = LocalConfigCentre()
-        config.popupPadding = popupPadding
-        config.cornerRadius = cornerRadius
-        return config
-    }
-}
-#endif
