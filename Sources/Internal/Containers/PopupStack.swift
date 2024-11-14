@@ -40,10 +40,10 @@ extension PopupStack { enum StackOperation {
 
 // MARK: Perform Operation
 extension PopupStack {
-    func stack(_ operation: StackOperation) { Task {
+    func modify(_ operation: StackOperation) { Task {
         await hideKeyboard()
 
-        let oldStack = stack,
+        let oldStack = popups,
             newStack = await getNewStack(operation),
             newPriority = await getNewStackPriority(newStack)
 
@@ -67,10 +67,10 @@ private extension PopupStack {
         await priority.reshuffled(newStack)
     }
     nonisolated func updateStack(_ newStack: [AnyPopup]) async {
-        Task { @MainActor in stack = newStack }
+        Task { @MainActor in popups = newStack }
     }
     nonisolated func updatePriority(_ newPriority: StackPriority, _ oldStackCount: Int) async {
-        let delayDuration = await oldStackCount > stack.count ? Animation.duration : 0
+        let delayDuration = await oldStackCount > popups.count ? Animation.duration : 0
         await Task.sleep(seconds: delayDuration)
 
         Task { @MainActor in priority = newPriority }
