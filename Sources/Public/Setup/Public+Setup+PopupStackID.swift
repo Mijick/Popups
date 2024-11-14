@@ -12,7 +12,7 @@
 /**
  A set of identifiers to be registered.
 
- # Usage Example
+ ## Usage
  ```swift
  @main struct App_Main: App {
     var body: some Scene {
