@@ -88,18 +88,3 @@ extension AnyPopup: Hashable {
     nonisolated static func ==(lhs: AnyPopup, rhs: AnyPopup) -> Bool { lhs.id.isSame(as: rhs) }
     nonisolated func hash(into hasher: inout Hasher) { hasher.combine(id.rawValue) }
 }
-
-
-
-// MARK: - TESTS
-#if DEBUG
-
-
-
-// MARK: New Object
-extension AnyPopup {
-    static func t_createNew(id: String = UUID().uuidString, config: LocalConfig) async -> AnyPopup { await .init(
-        id: .init(id), config: .init(config), height: nil, dragHeight: 0, _dismissTimer: nil, _body: .init(EmptyView()), _onFocus: {}, _onDismiss: {}
-    )}
-}
-#endif
