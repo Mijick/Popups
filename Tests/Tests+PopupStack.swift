@@ -25,13 +25,13 @@ import SwiftUI
 
 
 
-// MARK: Register New Instance
+// MARK: Register
 extension PopupStackTests {
-    func test_registerNewInstance_withNoInstancesToRegister() {
-        let popupManagerIds: [PopupStackID] = []
+    func test_register_withNoStacksToRegister() {
+        let popupStacksIDs: [PopupStackID] = []
 
-        registerNewInstances(popupManagerIds: popupManagerIds)
-        XCTAssertEqual(popupManagerIds, getRegisteredInstances())
+        register(stackIDs: popupStacksIDs)
+        XCTAssertEqual(popupStacksIDs, getRegisteredInstances())
     }
     func test_registerNewInstance_withUniqueInstancesToRegister() {
         let popupManagerIds: [PopupStackID] = [
@@ -41,7 +41,7 @@ extension PopupStackTests {
             .bronowice
         ]
 
-        registerNewInstances(popupManagerIds: popupManagerIds)
+        register(stackIDs: popupManagerIds)
         XCTAssertEqual(popupManagerIds, getRegisteredInstances())
     }
     func test_registerNewInstance_withRepeatingInstancesToRegister() {
@@ -56,28 +56,28 @@ extension PopupStackTests {
             .krowodrza
         ]
 
-        registerNewInstances(popupManagerIds: popupManagerIds)
+        register(stackIDs: popupManagerIds)
         XCTAssertNotEqual(popupManagerIds, getRegisteredInstances())
         XCTAssertEqual(getRegisteredInstances().count, 6)
     }
 }
 private extension PopupStackTests {
-    func registerNewInstances(popupManagerIds: [PopupStackID]) {
-        popupManagerIds.forEach { _ = PopupStack.registerStack(id: $0) }
+    func register(stackIDs: [PopupStackID]) {
+        stackIDs.forEach { _ = PopupStack.registerStack(id: $0) }
     }
     func getRegisteredInstances() -> [PopupStackID] {
         PopupStackContainer.stacks.map(\.id)
     }
 }
 
-// MARK: Get Instance
+// MARK: Fetch
 extension PopupStackTests {
     func test_getInstance_whenNoInstancesAreRegistered() {
         let managerInstance = PopupStack.fetch(id: .bronowice)
         XCTAssertNil(managerInstance)
     }
     func test_getInstance_whenInstanceIsNotRegistered() {
-        registerNewInstances(popupManagerIds: [
+        register(stackIDs: [
             .krowodrza,
             .staremiasto,
             .pradnikczerwony,
@@ -89,7 +89,7 @@ extension PopupStackTests {
         XCTAssertNil(managerInstance)
     }
     func test_getInstance_whenInstanceIsRegistered() {
-        registerNewInstances(popupManagerIds: [
+        register(stackIDs: [
             .krowodrza,
             .staremiasto,
             .grzegorzki
@@ -257,7 +257,7 @@ extension PopupStackTests {
 // MARK: Methods
 private extension PopupStackTests {
     func registerNewInstanceAndPresentPopups(popups: [any Popup]) {
-        registerNewInstances(popupManagerIds: [defaultPopupManagerID])
+        register(stackIDs: [defaultPopupManagerID])
         popups.forEach { $0.present(popupManagerID: defaultPopupManagerID) }
     }
     func getPopupsForActiveInstance() async -> [AnyPopup] {
