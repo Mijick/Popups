@@ -25,12 +25,3 @@ public class LocalConfigCentre: LocalConfig { required public init() {}
     public var dragDetents: [DragDetent] = GlobalConfigContainer.center.dragDetents
     public var isDragGestureEnabled: Bool = GlobalConfigContainer.center.isDragGestureEnabled
 }
-
-// MARK: Typealias
-/**
- Configures the popup.
- See the list of available methods in ``LocalConfig``.
-
-- important: If a certain method is not called here, the popup inherits the configuration from ``GlobalConfigContainer``.
- */
-public typealias CentrePopupConfig = LocalConfigCentre

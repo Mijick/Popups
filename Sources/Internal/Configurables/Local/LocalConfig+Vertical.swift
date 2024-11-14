@@ -32,21 +32,7 @@ public extension LocalConfigVertical {
     class Bottom: LocalConfigVertical {}
 }
 
-/**
- Configures the popup.
- See the list of available methods in ``LocalConfig`` and ``LocalConfig/Vertical``.
 
-- important: If a certain method is not called here, the popup inherits the configuration from ``GlobalConfigContainer``.
- */
-public typealias TopPopupConfig = LocalConfigVertical.Top
-
-/**
- Configures the popup.
- See the list of available methods in ``LocalConfig`` and ``LocalConfig/Vertical``.
-
-- important: If a certain method is not called here, the popup inherits the configuration from ``GlobalConfigContainer``.
- */
-public typealias BottomPopupConfig = LocalConfigVertical.Bottom
 
 
 
