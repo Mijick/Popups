@@ -57,7 +57,7 @@ extension PopupVerticalStackViewModelTests {
         ])
 
         XCTAssertEqual(
-            bottomViewModel.getInvertedIndex(of: bottomViewModel.popups[0]),
+            bottomViewModel.popups.getInvertedIndex(of: bottomViewModel.popups[0]),
             0
         )
     }
@@ -71,7 +71,7 @@ extension PopupVerticalStackViewModelTests {
         ])
 
         XCTAssertEqual(
-            bottomViewModel.getInvertedIndex(of: bottomViewModel.popups[3]),
+            bottomViewModel.popups.getInvertedIndex(of: bottomViewModel.popups[3]),
             1
         )
     }
