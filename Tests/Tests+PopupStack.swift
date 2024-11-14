@@ -103,53 +103,53 @@ extension PopupStackTests {
 // MARK: Present Popup
 extension PopupStackTests {
     func test_presentPopup_withThreePopupsToBePresented() async {
-        registerNewInstanceAndPresentPopups(popups: [
+        await registerNewStackAndPresent(popups: [
             await AnyPopup(TestBottomPopup1()),
             await AnyPopup(TestBottomPopup2()),
             await AnyPopup(TestBottomPopup3())
         ])
 
-        let popupsOnStack = await getPopupsForActiveInstance()
+        let popupsOnStack = await getPopupsForActiveStack()
         XCTAssertEqual(popupsOnStack.count, 3)
     }
     func test_presentPopup_withPopupsWithSameID() async {
-        registerNewInstanceAndPresentPopups(popups: [
+        await registerNewStackAndPresent(popups: [
             await AnyPopup(TestBottomPopup1()),
             await AnyPopup(TestBottomPopup1()),
             await AnyPopup(TestBottomPopup1()),
         ])
 
-        let popupsOnStack = await getPopupsForActiveInstance()
+        let popupsOnStack = await getPopupsForActiveStack()
         XCTAssertEqual(popupsOnStack.count, 2)
     }
     func test_presentPopup_withCustomID() async {
-        registerNewInstanceAndPresentPopups(popups: [
+        await registerNewStackAndPresent(popups: [
             await AnyPopup(TestBottomPopup1()),
             await AnyPopup(TestBottomPopup1().setCustomID("2137")),
             await AnyPopup(TestBottomPopup1().setCustomID("I Pan Paweł oczywiście")),
         ])
 
-        let popupsOnStack = await getPopupsForActiveInstance()
+        let popupsOnStack = await getPopupsForActiveStack()
         XCTAssertEqual(popupsOnStack.count, 3)
     }
     func test_presentPopup_withDismissAfter() async {
-        registerNewInstanceAndPresentPopups(popups: [
+        await registerNewStackAndPresent(popups: [
             await AnyPopup(TestBottomPopup1()),
             await AnyPopup(TestBottomPopup1()).dismissAfter(0.7),
             await AnyPopup(TestBottomPopup1()).dismissAfter(1.5),
         ])
 
-        let popupsOnStack1 = await getPopupsForActiveInstance()
+        let popupsOnStack1 = await getPopupsForActiveStack()
         XCTAssertEqual(popupsOnStack1.count, 3)
 
         await Task.sleep(seconds: 1)
 
-        let popupsOnStack2 = await getPopupsForActiveInstance()
+        let popupsOnStack2 = await getPopupsForActiveStack()
         XCTAssertEqual(popupsOnStack2.count, 2)
 
         await Task.sleep(seconds: 1)
 
-        let popupsOnStack3 = await getPopupsForActiveInstance()
+        let popupsOnStack3 = await getPopupsForActiveStack()
         XCTAssertEqual(popupsOnStack3.count, 1)
     }
 }
@@ -157,21 +157,21 @@ extension PopupStackTests {
 // MARK: Dismiss Popup
 extension PopupStackTests {
     func test_dismissLastPopup_withNoPopupsOnStack() async {
-        registerNewInstanceAndPresentPopups(popups: [])
+        await registerNewStackAndPresent(popups: [])
         await PopupStack.dismissLastPopup(popupStackID: defaultPopupStackID)
 
-        let popupsOnStack = await getPopupsForActiveInstance()
+        let popupsOnStack = await getPopupsForActiveStack()
         XCTAssertEqual(popupsOnStack.count, 0)
     }
     func test_dismissLastPopup_withThreePopupsOnStack() async {
-        await registerNewInstanceAndPresentPopups(popups: [
+        await registerNewStackAndPresent(popups: [
             AnyPopup(TestBottomPopup1()),
             AnyPopup(TestBottomPopup2()),
             AnyPopup(TestBottomPopup3())
         ])
         await PopupStack.dismissLastPopup(popupStackID: defaultPopupStackID)
 
-        let popupsOnStack = await getPopupsForActiveInstance()
+        let popupsOnStack = await getPopupsForActiveStack()
         XCTAssertEqual(popupsOnStack.count, 2)
     }
     func test_dismissPopupWithType_whenPopupOnStack() async {
@@ -180,14 +180,14 @@ extension PopupStackTests {
             .init(TestCenterPopup()),
             .init(TestBottomPopup1())
         ]
-        registerNewInstanceAndPresentPopups(popups: popups)
+        await registerNewStackAndPresent(popups: popups)
 
-        let popupsOnStackBefore = await getPopupsForActiveInstance()
+        let popupsOnStackBefore = await getPopupsForActiveStack()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
         await PopupStack.dismissPopup(TestBottomPopup1.self, popupStackID: defaultPopupStackID)
 
-        let popupsOnStackAfter = await getPopupsForActiveInstance()
+        let popupsOnStackAfter = await getPopupsForActiveStack()
         XCTAssertEqual([popups[0], popups[1]], popupsOnStackAfter)
     }
     func test_dismissPopupWithType_whenPopupNotOnStack() {
@@ -195,14 +195,14 @@ extension PopupStackTests {
             .init(TestTopPopup()),
             .init(TestBottomPopup())
         ]
-        registerNewInstanceAndPresentPopups(popups: popups)
+        await registerNewStackAndPresent(popups: popups)
 
-        let popupsOnStackBefore = getPopupsForActiveInstance()
+        let popupsOnStackBefore = getPopupsForActiveStack()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
         PopupStack.dismissPopup(TestCenterPopup.self, popupManagerID: defaultPopupManagerID)
 
-        let popupsOnStackAfter = getPopupsForActiveInstance()
+        let popupsOnStackAfter = getPopupsForActiveStack()
         XCTAssertEqual(popups, popupsOnStackAfter)
     }
     func test_dismissPopupWithType_whenPopupHasCustomID() {
@@ -210,14 +210,14 @@ extension PopupStackTests {
             .init(TestTopPopup().setCustomID("2137")),
             .init(TestBottomPopup())
         ]
-        registerNewInstanceAndPresentPopups(popups: popups)
+        await registerNewStackAndPresent(popups: popups)
 
-        let popupsOnStackBefore = getPopupsForActiveInstance()
+        let popupsOnStackBefore = getPopupsForActiveStack()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
         PopupStack.dismissPopup(TestTopPopup.self, popupManagerID: defaultPopupManagerID)
 
-        let popupsOnStackAfter = getPopupsForActiveInstance()
+        let popupsOnStackAfter = getPopupsForActiveStack()
         XCTAssertEqual(popups, popupsOnStackAfter)
     }
     func test_dismissPopupWithID_whenPopupHasCustomID() {
@@ -225,14 +225,14 @@ extension PopupStackTests {
             .init(TestTopPopup().setCustomID("2137")),
             .init(TestBottomPopup())
         ]
-        registerNewInstanceAndPresentPopups(popups: popups)
+        await registerNewStackAndPresent(popups: popups)
 
-        let popupsOnStackBefore = getPopupsForActiveInstance()
+        let popupsOnStackBefore = getPopupsForActiveStack()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
         PopupStack.dismissPopup("2137", popupManagerID: defaultPopupManagerID)
 
-        let popupsOnStackAfter = getPopupsForActiveInstance()
+        let popupsOnStackAfter = getPopupsForActiveStack()
         XCTAssertEqual([popups[1]], popupsOnStackAfter)
     }
     func test_dismissAllPopups() {
@@ -243,7 +243,7 @@ extension PopupStackTests {
         ])
         PopupStack.dismissAllPopups(popupManagerID: defaultPopupManagerID)
 
-        let popupsOnStack = getPopupsForActiveInstance()
+        let popupsOnStack = getPopupsForActiveStack()
         XCTAssertEqual(popupsOnStack.count, 0)
     }
 }
@@ -256,11 +256,11 @@ extension PopupStackTests {
 
 // MARK: Methods
 private extension PopupStackTests {
-    func registerNewInstanceAndPresentPopups(popups: [any Popup]) {
+    func registerNewStackAndPresent(popups: [any Popup]) async {
         register(stackIDs: [defaultPopupStackID])
-        popups.forEach { $0.present(popupManagerID: defaultPopupManagerID) }
+        for popup in popups { await popup.present(popupStackID: defaultPopupStackID) }
     }
-    func getPopupsForActiveInstance() async -> [AnyPopup] {
+    func getPopupsForActiveStack() async -> [AnyPopup] {
         await PopupStack
             .fetch(id: defaultPopupStackID)?
             .popups ?? []
