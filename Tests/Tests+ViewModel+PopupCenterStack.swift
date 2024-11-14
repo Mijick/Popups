@@ -138,7 +138,7 @@ private extension PopupCenterStackViewModelTests {
         await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: false,
-            calculatedValue: { await $0.calculateCornerRadius() },
+            calculatedValue: { await $0.calculateActivePopupCorners() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
@@ -195,7 +195,6 @@ extension PopupCenterStackViewModelTests {
 
         await appendPopupsAndCheckVerticalFixedSize(
             popups: popups,
-            calculateForIndex: 2,
             expectedValue: true
         )
     }
@@ -208,17 +207,16 @@ extension PopupCenterStackViewModelTests {
 
         await appendPopupsAndCheckVerticalFixedSize(
             popups: popups,
-            calculateForIndex: 2,
             expectedValue: false
         )
     }
 }
 private extension PopupCenterStackViewModelTests {
-    func appendPopupsAndCheckVerticalFixedSize(popups: [AnyPopup], calculateForIndex index: Int, expectedValue: Bool) async {
+    func appendPopupsAndCheckVerticalFixedSize(popups: [AnyPopup], expectedValue: Bool) async {
         await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: false,
-            calculatedValue: { $0.calculateVerticalFixedSize(for: $0.popups[index]) },
+            calculatedValue: { await $0.calculateActivePopupVerticalFixedSize() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
