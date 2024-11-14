@@ -1,5 +1,5 @@
 //
-//  Tests+PopupManager.swift of MijickPopups
+//  Tests+PopupStack.swift of MijickPopups
 //
 //  Created by Tomasz Kurylik. Sending ❤️ from Kraków!
 //    - Mail: tomasz.kurylik@mijick.com
@@ -13,9 +13,9 @@ import XCTest
 import SwiftUI
 @testable import MijickPopups
 
-@MainActor final class PopupManagerTests: XCTestCase {
+@MainActor final class PopupStackTests: XCTestCase {
     override func setUp() async throws {
-        PopupManagerContainer.clean()
+        PopupStackContainer.clean()
     }
 }
 
@@ -26,15 +26,15 @@ import SwiftUI
 
 
 // MARK: Register New Instance
-extension PopupManagerTests {
+extension PopupStackTests {
     func test_registerNewInstance_withNoInstancesToRegister() {
-        let popupManagerIds: [PopupManagerID] = []
+        let popupManagerIds: [PopupStackID] = []
 
         registerNewInstances(popupManagerIds: popupManagerIds)
         XCTAssertEqual(popupManagerIds, getRegisteredInstances())
     }
     func test_registerNewInstance_withUniqueInstancesToRegister() {
-        let popupManagerIds: [PopupManagerID] = [
+        let popupManagerIds: [PopupStackID] = [
             .staremiasto,
             .grzegorzki,
             .krowodrza,
@@ -45,7 +45,7 @@ extension PopupManagerTests {
         XCTAssertEqual(popupManagerIds, getRegisteredInstances())
     }
     func test_registerNewInstance_withRepeatingInstancesToRegister() {
-        let popupManagerIds: [PopupManagerID] = [
+        let popupManagerIds: [PopupStackID] = [
             .staremiasto,
             .grzegorzki,
             .krowodrza,
@@ -61,19 +61,19 @@ extension PopupManagerTests {
         XCTAssertEqual(getRegisteredInstances().count, 6)
     }
 }
-private extension PopupManagerTests {
-    func registerNewInstances(popupManagerIds: [PopupManagerID]) {
-        popupManagerIds.forEach { _ = PopupManager.registerInstance(id: $0) }
+private extension PopupStackTests {
+    func registerNewInstances(popupManagerIds: [PopupStackID]) {
+        popupManagerIds.forEach { _ = PopupStack.registerInstance(id: $0) }
     }
-    func getRegisteredInstances() -> [PopupManagerID] {
-        PopupManagerContainer.instances.map(\.id)
+    func getRegisteredInstances() -> [PopupStackID] {
+        PopupStackContainer.instances.map(\.id)
     }
 }
 
 // MARK: Get Instance
-extension PopupManagerTests {
+extension PopupStackTests {
     func test_getInstance_whenNoInstancesAreRegistered() {
-        let managerInstance = PopupManager.fetchInstance(id: .bronowice)
+        let managerInstance = PopupStack.fetchInstance(id: .bronowice)
         XCTAssertNil(managerInstance)
     }
     func test_getInstance_whenInstanceIsNotRegistered() {
@@ -85,7 +85,7 @@ extension PopupManagerTests {
             .grzegorzki
         ])
 
-        let managerInstance = PopupManager.fetchInstance(id: .bronowice)
+        let managerInstance = PopupStack.fetchInstance(id: .bronowice)
         XCTAssertNil(managerInstance)
     }
     func test_getInstance_whenInstanceIsRegistered() {
@@ -95,13 +95,13 @@ extension PopupManagerTests {
             .grzegorzki
         ])
 
-        let managerInstance = PopupManager.fetchInstance(id: .grzegorzki)
+        let managerInstance = PopupStack.fetchInstance(id: .grzegorzki)
         XCTAssertNotNil(managerInstance)
     }
 }
 
 // MARK: Present Popup
-extension PopupManagerTests {
+extension PopupStackTests {
     func test_presentPopup_withThreePopupsToBePresented() {
         registerNewInstanceAndPresentPopups(popups: [
             AnyPopup.t_createNew(config: LocalConfigVertical.Bottom()),
@@ -155,10 +155,10 @@ extension PopupManagerTests {
 }
 
 // MARK: Dismiss Popup
-extension PopupManagerTests {
+extension PopupStackTests {
     func test_dismissLastPopup_withNoPopupsOnStack() {
         registerNewInstanceAndPresentPopups(popups: [])
-        PopupManager.dismissLastPopup(popupManagerID: defaultPopupManagerID)
+        PopupStack.dismissLastPopup(popupManagerID: defaultPopupManagerID)
 
         let popupsOnStack = getPopupsForActiveInstance()
         XCTAssertEqual(popupsOnStack.count, 0)
@@ -169,7 +169,7 @@ extension PopupManagerTests {
             AnyPopup.t_createNew(config: LocalConfigVertical.Bottom()),
             AnyPopup.t_createNew(config: LocalConfigVertical.Bottom())
         ])
-        PopupManager.dismissLastPopup(popupManagerID: defaultPopupManagerID)
+        PopupStack.dismissLastPopup(popupManagerID: defaultPopupManagerID)
 
         let popupsOnStack = getPopupsForActiveInstance()
         XCTAssertEqual(popupsOnStack.count, 2)
@@ -185,7 +185,7 @@ extension PopupManagerTests {
         let popupsOnStackBefore = getPopupsForActiveInstance()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
-        PopupManager.dismissPopup(TestBottomPopup.self, popupManagerID: defaultPopupManagerID)
+        PopupStack.dismissPopup(TestBottomPopup.self, popupManagerID: defaultPopupManagerID)
 
         let popupsOnStackAfter = getPopupsForActiveInstance()
         XCTAssertEqual([popups[0], popups[1]], popupsOnStackAfter)
@@ -200,7 +200,7 @@ extension PopupManagerTests {
         let popupsOnStackBefore = getPopupsForActiveInstance()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
-        PopupManager.dismissPopup(TestCentrePopup.self, popupManagerID: defaultPopupManagerID)
+        PopupStack.dismissPopup(TestCentrePopup.self, popupManagerID: defaultPopupManagerID)
 
         let popupsOnStackAfter = getPopupsForActiveInstance()
         XCTAssertEqual(popups, popupsOnStackAfter)
@@ -215,7 +215,7 @@ extension PopupManagerTests {
         let popupsOnStackBefore = getPopupsForActiveInstance()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
-        PopupManager.dismissPopup(TestTopPopup.self, popupManagerID: defaultPopupManagerID)
+        PopupStack.dismissPopup(TestTopPopup.self, popupManagerID: defaultPopupManagerID)
 
         let popupsOnStackAfter = getPopupsForActiveInstance()
         XCTAssertEqual(popups, popupsOnStackAfter)
@@ -230,7 +230,7 @@ extension PopupManagerTests {
         let popupsOnStackBefore = getPopupsForActiveInstance()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
-        PopupManager.dismissPopup("2137", popupManagerID: defaultPopupManagerID)
+        PopupStack.dismissPopup("2137", popupManagerID: defaultPopupManagerID)
 
         let popupsOnStackAfter = getPopupsForActiveInstance()
         XCTAssertEqual([popups[1]], popupsOnStackAfter)
@@ -241,7 +241,7 @@ extension PopupManagerTests {
             AnyPopup.t_createNew(config: LocalConfigVertical.Bottom()),
             AnyPopup.t_createNew(config: LocalConfigVertical.Bottom())
         ])
-        PopupManager.dismissAllPopups(popupManagerID: defaultPopupManagerID)
+        PopupStack.dismissAllPopups(popupManagerID: defaultPopupManagerID)
 
         let popupsOnStack = getPopupsForActiveInstance()
         XCTAssertEqual(popupsOnStack.count, 0)
@@ -255,25 +255,25 @@ extension PopupManagerTests {
 
 
 // MARK: Methods
-private extension PopupManagerTests {
+private extension PopupStackTests {
     func registerNewInstanceAndPresentPopups(popups: [any Popup]) {
         registerNewInstances(popupManagerIds: [defaultPopupManagerID])
         popups.forEach { $0.present(popupManagerID: defaultPopupManagerID) }
     }
     func getPopupsForActiveInstance() -> [AnyPopup] {
-        PopupManager
+        PopupStack
             .fetchInstance(id: defaultPopupManagerID)?
             .stack ?? []
     }
 }
 
 // MARK: Variables
-private extension PopupManagerTests {
-    var defaultPopupManagerID: PopupManagerID { .staremiasto }
+private extension PopupStackTests {
+    var defaultPopupManagerID: PopupStackID { .staremiasto }
 }
 
 // MARK: Popup Manager Identifiers
-private extension PopupManagerID {
+private extension PopupStackID {
     static let staremiasto: Self = .init(rawValue: "staremiasto")
     static let grzegorzki: Self = .init(rawValue: "grzegorzki")
     static let pradnikczerwony: Self = .init(rawValue: "pradnikczerwony")

@@ -1,5 +1,5 @@
 //
-//  Public+Dismiss+PopupManager.swift of MijickPopups
+//  Public+Dismiss+PopupStack.swift of MijickPopups
 //
 //  Created by Tomasz Kurylik. Sending ❤️ from Kraków!
 //    - Mail: tomasz.kurylik@mijick.com
@@ -11,7 +11,7 @@
 
 import Foundation
 
-public extension PopupManager {
+public extension PopupStack {
     /**
      Removes the currently active popup from the stack.
      Makes the next popup in the stack the new active popup.
@@ -21,7 +21,7 @@ public extension PopupManager {
 
      - Important: Make sure you use the correct **popupManagerID** from which you want to remove the popup.
      */
-    @MainActor static func dismissLastPopup(popupManagerID: PopupManagerID = .shared) async { await fetchInstance(id: popupManagerID)?.stack(.removeLastPopup) }
+    @MainActor static func dismissLastPopup(popupManagerID: PopupStackID = .shared) async { await fetchInstance(id: popupManagerID)?.stack(.removeLastPopup) }
 
     /**
      Removes all popups with the specified identifier from the stack.
@@ -32,7 +32,7 @@ public extension PopupManager {
 
      - Important: Make sure you use the correct **popupManagerID** from which you want to remove the popup.
      */
-    @MainActor static func dismissPopup(_ id: String, popupManagerID: PopupManagerID = .shared) async { await fetchInstance(id: popupManagerID)?.stack(.removeAllPopupsWithID(id)) }
+    @MainActor static func dismissPopup(_ id: String, popupManagerID: PopupStackID = .shared) async { await fetchInstance(id: popupManagerID)?.stack(.removeAllPopupsWithID(id)) }
 
     /**
      Removes all popups of the provided type from the stack.
@@ -44,7 +44,7 @@ public extension PopupManager {
      - Important: If a custom ID (``Popup/setCustomID(_:)``) is set for the popup, use the ``dismissPopup(_:popupManagerID:)-1atvy`` method instead.
      - Important: Make sure you use the correct **popupManagerID** from which you want to remove the popup.
      */
-    @MainActor static func dismissPopup<P: Popup>(_ type: P.Type, popupManagerID: PopupManagerID = .shared) async { await fetchInstance(id: popupManagerID)?.stack(.removeAllPopupsOfType(type)) }
+    @MainActor static func dismissPopup<P: Popup>(_ type: P.Type, popupManagerID: PopupStackID = .shared) async { await fetchInstance(id: popupManagerID)?.stack(.removeAllPopupsOfType(type)) }
 
     /**
      Removes all popups from the stack.
@@ -54,5 +54,5 @@ public extension PopupManager {
 
      - Important: Make sure you use the correct **popupManagerID** from which you want to remove the popups.
      */
-    @MainActor static func dismissAllPopups(popupManagerID: PopupManagerID = .shared) async { await fetchInstance(id: popupManagerID)?.stack(.removeAllPopups) }
+    @MainActor static func dismissAllPopups(popupManagerID: PopupStackID = .shared) async { await fetchInstance(id: popupManagerID)?.stack(.removeAllPopups) }
 }

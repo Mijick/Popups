@@ -59,7 +59,7 @@ private extension AnyPopup {
 extension AnyPopup {
     func updatedDismissTimer(_ secondsToDismiss: Double) -> AnyPopup { updated { $0._dismissTimer = .prepare(time: secondsToDismiss) }}
     func updatedEnvironmentObject(_ environmentObject: some ObservableObject) -> AnyPopup { updated { $0._body = .init(_body.environmentObject(environmentObject)) }}
-    func startDismissTimerIfNeeded(_ popupManager: PopupManager) -> AnyPopup { updated { $0._dismissTimer?.schedule { popupManager.stack(.removePopupInstance(self)) }}}
+    func startDismissTimerIfNeeded(_ popupManager: PopupStack) -> AnyPopup { updated { $0._dismissTimer?.schedule { popupManager.stack(.removePopupInstance(self)) }}}
 }
 private extension AnyPopup {
     func updated(_ customBuilder: (inout AnyPopup) -> ()) -> AnyPopup {

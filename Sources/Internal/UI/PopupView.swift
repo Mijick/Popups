@@ -16,7 +16,7 @@ struct PopupView: View {
     let rootView: any View
     #endif
 
-    @ObservedObject var popupManager: PopupManager
+    @ObservedObject var popupManager: PopupStack
     private let topStackViewModel: VM.VerticalStack = .init(TopPopupConfig.self)
     private let centreStackViewModel: VM.CentreStack = .init(CentrePopupConfig.self)
     private let bottomStackViewModel: VM.VerticalStack = .init(BottomPopupConfig.self)
@@ -59,18 +59,18 @@ private extension PopupView {
 private extension PopupView {
     func createOverlayView() -> some View {
         getOverlayColor()
-            .zIndex(popupManager.stackPriority.overlay)
+            .zIndex(popupManager.priority.overlay)
             .animation(.linear, value: popupManager.stack)
             .onTapGesture(perform: onTap)
     }
     func createTopPopupStackView() -> some View {
-        PopupVerticalStackView(viewModel: topStackViewModel).zIndex(popupManager.stackPriority.top)
+        PopupVerticalStackView(viewModel: topStackViewModel).zIndex(popupManager.priority.top)
     }
     func createCentrePopupStackView() -> some View {
-        PopupCentreStackView(viewModel: centreStackViewModel).zIndex(popupManager.stackPriority.center)
+        PopupCentreStackView(viewModel: centreStackViewModel).zIndex(popupManager.priority.center)
     }
     func createBottomPopupStackView() -> some View {
-        PopupVerticalStackView(viewModel: bottomStackViewModel).zIndex(popupManager.stackPriority.bottom)
+        PopupVerticalStackView(viewModel: bottomStackViewModel).zIndex(popupManager.priority.bottom)
     }
 }
 private extension PopupView {

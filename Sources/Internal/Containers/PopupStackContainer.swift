@@ -1,5 +1,5 @@
 //
-//  PopupManagerContainer.swift of MijickPopups
+//  PopupStackContainer.swift of MijickPopups
 //
 //  Created by Tomasz Kurylik. Sending ❤️ from Kraków!
 //    - Mail: tomasz.kurylik@mijick.com
@@ -11,13 +11,13 @@
 
 import Foundation
 
-@MainActor class PopupManagerContainer {
-    static private(set) var instances: [PopupManager] = []
+@MainActor class PopupStackContainer {
+    static private(set) var instances: [PopupStack] = []
 }
 
 // MARK: Register
-extension PopupManagerContainer {
-    static func register(popupManager: PopupManager) -> PopupManager {
+extension PopupStackContainer {
+    static func register(popupManager: PopupStack) -> PopupStack {
         if let alreadyRegisteredInstance = instances.first(where: { $0.id == popupManager.id }) { return alreadyRegisteredInstance }
 
         instances.append(popupManager)
@@ -26,6 +26,6 @@ extension PopupManagerContainer {
 }
 
 // MARK: Clean
-extension PopupManagerContainer {
+extension PopupStackContainer {
     static func clean() { instances = [] }
 }

@@ -1,5 +1,5 @@
 //
-//  Popup+Setup+PopupManagerID.swift of MijickPopups
+//  Popup+Setup+PopupStackID.swift of MijickPopups
 //
 //  Created by Tomasz Kurylik. Sending ❤️ from Kraków!
 //    - Mail: tomasz.kurylik@mijick.com
@@ -25,22 +25,22 @@
     }
  }
 
- extension PopupManagerID {
+ extension PopupStackID {
     static let custom1: Self = .init(rawValue: "custom1")
     static let custom2: Self = .init(rawValue: "custom2")
  }
  ```
 
- - important: Use methods like ``SwiftUICore/View/dismissLastPopup(popupManagerID:)`` or ``Popup/present(popupManagerID:)`` only with a registered PopupManagerID.
- - tip: The main use case where you might need to register a different PopupManagerID is when your application has multiple windows - for example, on macOS, iPad or visionOS.
+ - important: Use methods like ``SwiftUICore/View/dismissLastPopup(popupManagerID:)`` or ``Popup/present(popupManagerID:)`` only with a registered PopupStackID.
+ - tip: The main use case where you might need to register a different PopupStackID is when your application has multiple windows - for example, on macOS, iPad or visionOS.
  */
-public struct PopupManagerID: Equatable, Sendable {
+public struct PopupStackID: Equatable, Sendable {
     let rawValue: String
 
     public init(rawValue: String) { self.rawValue = rawValue }
 }
 
 // MARK: Default Instance
-public extension PopupManagerID {
+public extension PopupStackID {
     static let shared: Self = .init(rawValue: "shared")
 }

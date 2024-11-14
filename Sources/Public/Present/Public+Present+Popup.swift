@@ -20,10 +20,10 @@ public extension Popup {
 
      - Important: The **popupManagerID** must be registered prior to use. For more information see ``SwiftUICore/View/registerPopups(id:configBuilder:)``.
      - Important: The methods
-     ``PopupManager/dismissLastPopup(popupManagerID:)``,
-     ``PopupManager/dismissPopup(_:popupManagerID:)-1atvy``,
-     ``PopupManager/dismissPopup(_:popupManagerID:)-6l2c2``,
-     ``PopupManager/dismissAllPopups(popupManagerID:)``,
+     ``PopupStack/dismissLastPopup(popupManagerID:)``,
+     ``PopupStack/dismissPopup(_:popupManagerID:)-1atvy``,
+     ``PopupStack/dismissPopup(_:popupManagerID:)-6l2c2``,
+     ``PopupStack/dismissAllPopups(popupManagerID:)``,
      ``SwiftUICore/View/dismissLastPopup(popupManagerID:)``,
      ``SwiftUICore/View/dismissPopup(_:popupManagerID:)-55ubm``,
      ``SwiftUICore/View/dismissPopup(_:popupManagerID:)-9mkd5``,
@@ -32,7 +32,7 @@ public extension Popup {
      
      - Warning: To present multiple popups of the same type, set a unique identifier using the method ``Popup/setCustomID(_:)``.
      */
-    @MainActor func present(popupManagerID: PopupManagerID = .shared) async { await PopupManager.fetchInstance(id: popupManagerID)?.stack(.insertPopup(.init(self))) }
+    @MainActor func present(popupManagerID: PopupStackID = .shared) async { await PopupStack.fetchInstance(id: popupManagerID)?.stack(.insertPopup(.init(self))) }
 }
 
 // MARK: Configure Popup
@@ -40,7 +40,7 @@ public extension Popup {
     /**
      Sets the custom ID for the selected popup.
 
-     - important: To dismiss a popup with a custom ID set, use methods ``PopupManager/dismissPopup(_:popupManagerID:)-1atvy`` or ``SwiftUICore/View/dismissPopup(_:popupManagerID:)-55ubm``
+     - important: To dismiss a popup with a custom ID set, use methods ``PopupStack/dismissPopup(_:popupManagerID:)-1atvy`` or ``SwiftUICore/View/dismissPopup(_:popupManagerID:)-55ubm``
      - tip: Useful if you want to display several different popups of the same type.
      */
     @MainActor func setCustomID(_ id: String) async -> some Popup { await AnyPopup(self).updatedID(id) }
