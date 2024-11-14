@@ -104,16 +104,16 @@ private extension PopupStack {
 // MARK: Fetch
 extension PopupStack {
     nonisolated static func fetchInstance(id: PopupStackID) async -> PopupStack? {
-        let managerObject = await PopupStackContainer.instances.first(where: { $0.id == id })
-        await logNoInstanceErrorIfNeeded(managerObject: managerObject, popupManagerID: id)
-        return managerObject
+        let stackInstance = await PopupStackContainer.stacks.first(where: { $0.id == id })
+        await logNoInstanceErrorIfNeeded(stack: stackInstance, popupStackID: id)
+        return stackInstance
     }
 }
 private extension PopupStack {
-    nonisolated static func logNoInstanceErrorIfNeeded(managerObject: PopupStack?, popupManagerID: PopupStackID) async { if managerObject == nil {
+    nonisolated static func logNoInstanceErrorIfNeeded(stack: PopupStack?, popupStackID: PopupStackID) async { if stack == nil {
         Logger.log(
             level: .fault,
-            message: "PopupManager instance (\(popupManagerID.rawValue)) must be registered before use. More details can be found in the documentation."
+            message: "PopupStack (\(popupStackID.rawValue)) must be registered before use. More details can be found in the documentation."
         )
     }}
 }
