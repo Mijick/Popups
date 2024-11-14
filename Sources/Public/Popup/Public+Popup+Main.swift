@@ -76,7 +76,7 @@ public extension Popup {
 public protocol TopPopup: Popup { associatedtype Config = TopPopupConfig }
 
 /**
- The view to be displayed as a Centre popup.
+ The view to be displayed as a Center popup.
  
  # Optional Methods
  - ``Popup/configurePopup(config:)-3ze4``
