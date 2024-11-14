@@ -42,55 +42,55 @@ private extension PopupCenterStackViewModelTests {
 
 
 
-// MARK: Popup Padding
+// MARK: Outer Padding
 extension PopupCenterStackViewModelTests {
-    func test_calculatePopupPadding_withKeyboardHidden_whenCustomPaddingNotSet() async {
+    func test_calculateOuterPadding_withKeyboardHidden_whenCustomPaddingNotSet() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 350),
             createPopupInstanceForPopupHeightTests(popupHeight: 72),
             createPopupInstanceForPopupHeightTests(popupHeight: 400)
         ]
 
-        await appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckOuterPadding(
             popups: popups,
             isKeyboardActive: false,
             expectedValue: .init()
         )
     }
-    func test_calculatePopupPadding_withKeyboardHidden_whenCustomPaddingSet() async {
+    func test_calculateOuterPadding_withKeyboardHidden_whenCustomPaddingSet() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 350),
             createPopupInstanceForPopupHeightTests(popupHeight: 72, popupPadding: .init(top: 0, leading: 11, bottom: 0, trailing: 11)),
             createPopupInstanceForPopupHeightTests(popupHeight: 400, popupPadding: .init(top: 0, leading: 16, bottom: 0, trailing: 16))
         ]
 
-        await appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckOuterPadding(
             popups: popups,
             isKeyboardActive: false,
             expectedValue: .init(top: 0, leading: 16, bottom: 0, trailing: 16)
         )
     }
-    func test_calculatePopupPadding_withKeyboardShown_whenKeyboardNotOverlapingPopup() async {
+    func test_calculateOuterPadding_withKeyboardShown_whenKeyboardNotOverlapingPopup() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 350),
             createPopupInstanceForPopupHeightTests(popupHeight: 72, popupPadding: .init(top: 0, leading: 11, bottom: 0, trailing: 11)),
             createPopupInstanceForPopupHeightTests(popupHeight: 400, popupPadding: .init(top: 0, leading: 16, bottom: 0, trailing: 16))
         ]
 
-        await appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckOuterPadding(
             popups: popups,
             isKeyboardActive: true,
             expectedValue: .init(top: 0, leading: 16, bottom: 0, trailing: 16)
         )
     }
-    func test_calculatePopupPadding_withKeyboardShown_whenKeyboardOverlapingPopup() async {
+    func test_calculateOuterPadding_withKeyboardShown_whenKeyboardOverlapingPopup() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 350),
             createPopupInstanceForPopupHeightTests(popupHeight: 72, popupPadding: .init(top: 0, leading: 11, bottom: 0, trailing: 11)),
             createPopupInstanceForPopupHeightTests(popupHeight: 1000, popupPadding: .init(top: 0, leading: 16, bottom: 0, trailing: 16))
         ]
 
-        await appendPopupsAndCheckPopupPadding(
+        await appendPopupsAndCheckOuterPadding(
             popups: popups,
             isKeyboardActive: true,
             expectedValue: .init(top: 0, leading: 16, bottom: 250, trailing: 16)
@@ -98,11 +98,11 @@ extension PopupCenterStackViewModelTests {
     }
 }
 private extension PopupCenterStackViewModelTests {
-    func appendPopupsAndCheckPopupPadding(popups: [AnyPopup], isKeyboardActive: Bool, expectedValue: EdgeInsets) async {
+    func appendPopupsAndCheckOuterPadding(popups: [AnyPopup], isKeyboardActive: Bool, expectedValue: EdgeInsets) async {
         await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: isKeyboardActive,
-            calculatedValue: { await $0.calculatePopupPadding() },
+            calculatedValue: { await $0.calculateActivePopupOuterPadding() },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
