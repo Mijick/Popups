@@ -1,5 +1,5 @@
 //
-//  Tests+ViewModel+PopupCentreStack.swift of MijickPopups
+//  Tests+ViewModel+PopupCenterStack.swift of MijickPopups
 //
 //  Created by Tomasz Kurylik. Sending ❤️ from Kraków!
 //    - Mail: tomasz.kurylik@mijick.com
@@ -13,7 +13,7 @@ import XCTest
 import SwiftUI
 @testable import MijickPopups
 
-@MainActor final class PopupCentreStackViewModelTests: XCTestCase {
+@MainActor final class PopupCenterStackViewModelTests: XCTestCase {
     @ObservedObject private var viewModel: ViewModel = .init(CenterPopupConfig.self)
 
     override func setUp() async throws {
@@ -21,7 +21,7 @@ import SwiftUI
         viewModel.setup(updatePopupAction: { [self] in await updatePopupAction(viewModel, $0) }, closePopupAction: { [self] in await closePopupAction(viewModel, $0) })
     }
 }
-private extension PopupCentreStackViewModelTests {
+private extension PopupCenterStackViewModelTests {
     func updatePopupAction(_ viewModel: ViewModel, _ popup: AnyPopup) async { if let index = viewModel.popups.firstIndex(of: popup) {
         var popups = viewModel.popups
         popups[index] = popup
@@ -43,7 +43,7 @@ private extension PopupCentreStackViewModelTests {
 
 
 // MARK: Popup Padding
-extension PopupCentreStackViewModelTests {
+extension PopupCenterStackViewModelTests {
     func test_calculatePopupPadding_withKeyboardHidden_whenCustomPaddingNotSet() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 350),
@@ -97,7 +97,7 @@ extension PopupCentreStackViewModelTests {
         )
     }
 }
-private extension PopupCentreStackViewModelTests {
+private extension PopupCenterStackViewModelTests {
     func appendPopupsAndCheckPopupPadding(popups: [AnyPopup], isKeyboardActive: Bool, expectedValue: EdgeInsets) async {
         await appendPopupsAndPerformChecks(
             popups: popups,
@@ -109,7 +109,7 @@ private extension PopupCentreStackViewModelTests {
 }
 
 // MARK: Corner Radius
-extension PopupCentreStackViewModelTests {
+extension PopupCenterStackViewModelTests {
     func test_calculateCornerRadius_withCornerRadiusZero() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 234, cornerRadius: 20),
@@ -133,7 +133,7 @@ extension PopupCentreStackViewModelTests {
         )
     }
 }
-private extension PopupCentreStackViewModelTests {
+private extension PopupCenterStackViewModelTests {
     func appendPopupsAndCheckCornerRadius(popups: [AnyPopup], expectedValue: [MijickPopups.PopupAlignment: CGFloat]) async {
         await appendPopupsAndPerformChecks(
             popups: popups,
@@ -145,7 +145,7 @@ private extension PopupCentreStackViewModelTests {
 }
 
 // MARK: Opacity
-extension PopupCentreStackViewModelTests {
+extension PopupCenterStackViewModelTests {
     func test_calculatePopupOpacity_1() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 350),
@@ -173,7 +173,7 @@ extension PopupCentreStackViewModelTests {
         )
     }
 }
-private extension PopupCentreStackViewModelTests {
+private extension PopupCenterStackViewModelTests {
     func appendPopupsAndCheckOpacity(popups: [AnyPopup], calculateForIndex index: Int, expectedValue: CGFloat) async {
         await appendPopupsAndPerformChecks(
             popups: popups,
@@ -185,7 +185,7 @@ private extension PopupCentreStackViewModelTests {
 }
 
 // MARK: Vertical Fixed Size
-extension PopupCentreStackViewModelTests {
+extension PopupCenterStackViewModelTests {
     func test_calculateVerticalFixedSize_withHeightSmallerThanScreen() async {
         let popups = [
             createPopupInstanceForPopupHeightTests(popupHeight: 350),
@@ -213,7 +213,7 @@ extension PopupCentreStackViewModelTests {
         )
     }
 }
-private extension PopupCentreStackViewModelTests {
+private extension PopupCenterStackViewModelTests {
     func appendPopupsAndCheckVerticalFixedSize(popups: [AnyPopup], calculateForIndex index: Int, expectedValue: Bool) async {
         await appendPopupsAndPerformChecks(
             popups: popups,
@@ -231,7 +231,7 @@ private extension PopupCentreStackViewModelTests {
 
 
 // MARK: Methods
-private extension PopupCentreStackViewModelTests {
+private extension PopupCenterStackViewModelTests {
     func createPopupInstanceForPopupHeightTests(popupHeight: CGFloat, popupPadding: EdgeInsets = .init(), cornerRadius: CGFloat = 0) -> AnyPopup {
         let config = getConfigForPopupHeightTests(cornerRadius: cornerRadius, popupPadding: popupPadding)
         return AnyPopup.t_createNew(config: config).settingHeight(popupHeight)
@@ -247,7 +247,7 @@ private extension PopupCentreStackViewModelTests {
         XCTAssertEqual(calculatedValue, expectedValue)
     }
 }
-private extension PopupCentreStackViewModelTests {
+private extension PopupCenterStackViewModelTests {
     func getConfigForPopupHeightTests(cornerRadius: CGFloat, popupPadding: EdgeInsets) -> CenterPopupConfig {
         var config = CenterPopupConfig()
         config.cornerRadius = cornerRadius
@@ -260,7 +260,7 @@ private extension PopupCentreStackViewModelTests {
 }
 
 // MARK: Screen
-private extension PopupCentreStackViewModelTests {
+private extension PopupCenterStackViewModelTests {
     var screen: Screen { .init(
         height: 1000,
         safeArea: .init(top: 100, leading: 20, bottom: 50, trailing: 30)
@@ -272,6 +272,6 @@ private extension PopupCentreStackViewModelTests {
 }
 
 // MARK: Typealiases
-private extension PopupCentreStackViewModelTests {
+private extension PopupCenterStackViewModelTests {
     typealias ViewModel = VM.CenterStack
 }
