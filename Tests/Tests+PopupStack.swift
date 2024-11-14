@@ -156,14 +156,14 @@ extension PopupStackTests {
 
 // MARK: Dismiss Popup
 extension PopupStackTests {
-    func test_dismissLastPopup_withNoPopupsOnStack() {
+    func test_dismissLastPopup_withNoPopupsOnStack() async {
         registerNewInstanceAndPresentPopups(popups: [])
-        PopupStack.dismissLastPopup(popupStackID: defaultPopupStackID)
+        await PopupStack.dismissLastPopup(popupStackID: defaultPopupStackID)
 
-        let popupsOnStack = getPopupsForActiveInstance()
+        let popupsOnStack = await getPopupsForActiveInstance()
         XCTAssertEqual(popupsOnStack.count, 0)
     }
-    func test_dismissLastPopup_withThreePopupsOnStack() {
+    func test_dismissLastPopup_withThreePopupsOnStack() async {
         registerNewInstanceAndPresentPopups(popups: [
             AnyPopup.t_createNew(config: LocalConfigVertical.Bottom()),
             AnyPopup.t_createNew(config: LocalConfigVertical.Bottom()),
