@@ -74,11 +74,7 @@ private extension PopupView {
     }
 }
 private extension PopupView {
-    func getOverlayColor() -> Color { switch stack.popups.last?.config.overlayColor {
-        case .some(let color) where color == .clear: .black.opacity(0.0000000000001)
-        case .some(let color): color
-        case nil: .clear
-    }}
+    func getOverlayColor() -> Color { stack.popups.last?.config.overlayColor ?? .clear }
 }
 
 private extension PopupView {
