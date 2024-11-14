@@ -51,7 +51,7 @@ public extension Popup {
 /**
  The view to be displayed as a Top popup.
  
- # Optional Methods
+ ## Optional Methods
  - ``Popup/configurePopup(config:)-98ha0``
  - ``Popup/onFocus()-6krqs``
  - ``Popup/onDismiss()-3bufs``
@@ -79,7 +79,7 @@ public typealias TopPopupConfig = LocalConfigVertical.Top
 /**
  The view to be displayed as a Center popup.
  
- # Optional Methods
+ ## Optional Methods
  - ``Popup/configurePopup(config:)-3ze4``
  - ``Popup/onFocus()-loq5``
  - ``Popup/onDismiss()-3bufs``
