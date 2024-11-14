@@ -272,7 +272,7 @@ private extension PopupStackTests {
     var defaultPopupStackID: PopupStackID { .staremiasto }
 }
 
-// MARK: Popup Manager Identifiers
+// MARK: Popup Stack Identifiers
 private extension PopupStackID {
     static let staremiasto: Self = .init(rawValue: "staremiasto")
     static let grzegorzki: Self = .init(rawValue: "grzegorzki")
