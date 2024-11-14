@@ -40,7 +40,7 @@ public struct PopupStackID: Equatable, Sendable {
     public init(rawValue: String) { self.rawValue = rawValue }
 }
 
-// MARK: Default Instance
+// MARK: Default ID
 public extension PopupStackID {
     static let shared: Self = .init(rawValue: "shared")
 }
