@@ -32,7 +32,7 @@ extension PopupStack {
 
 
 
-// MARK: Stack Operations
+// MARK: Modify
 extension PopupStack { enum StackOperation {
     case insertPopup(AnyPopup)
     case removeLastPopup, removePopup(AnyPopup), removeAllPopupsOfType(any Popup.Type), removeAllPopupsWithID(String), removeAllPopups
@@ -97,7 +97,7 @@ private extension PopupStack {
 
 
 
-// MARK: - INSTACE OPERATIONS
+// MARK: - STACK CONTAINER OPERATIONS
 
 
 
