@@ -48,6 +48,16 @@ extension AnyPopup {
     nonisolated func updatedHeight(_ newHeight: CGFloat?) async -> AnyPopup { await updatedAsync { $0.height = newHeight }}
     nonisolated func updatedDragHeight(_ newDragHeight: CGFloat) async -> AnyPopup { await updatedAsync { $0.dragHeight = newDragHeight }}
     nonisolated func updatedID(_ customID: String) async -> AnyPopup { await updatedAsync { $0.id = await .init(customID) }}
+}
+private extension AnyPopup {
+    nonisolated func updatedAsync(_ customBuilder: (inout AnyPopup) async -> ()) async -> AnyPopup {
+        var popup = self
+        await customBuilder(&popup)
+        return popup
+    }
+}
+
+extension AnyPopup {
     func updatedDismissTimer(_ secondsToDismiss: Double) -> AnyPopup { updated { $0._dismissTimer = .prepare(time: secondsToDismiss) }}
     func updatedEnvironmentObject(_ environmentObject: some ObservableObject) -> AnyPopup { updated { $0._body = .init(_body.environmentObject(environmentObject)) }}
     func startDismissTimerIfNeeded(_ popupManager: PopupManager) -> AnyPopup { updated { $0._dismissTimer?.schedule { popupManager.stack(.removePopupInstance(self)) }}}
@@ -56,11 +66,6 @@ private extension AnyPopup {
     func updated(_ customBuilder: (inout AnyPopup) -> ()) -> AnyPopup {
         var popup = self
         customBuilder(&popup)
-        return popup
-    }
-    nonisolated func updatedAsync(_ customBuilder: (inout AnyPopup) async -> ()) async -> AnyPopup {
-        var popup = self
-        await customBuilder(&popup)
         return popup
     }
 }
