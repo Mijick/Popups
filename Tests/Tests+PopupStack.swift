@@ -88,15 +88,15 @@ extension PopupStackTests {
         let stack = await PopupStack.fetch(id: .bronowice)
         XCTAssertNil(stack)
     }
-    func test_getInstance_whenInstanceIsRegistered() {
+    func test_fetchStack_whenStackIsRegistered() async {
         register(stackIDs: [
             .krowodrza,
             .staremiasto,
             .grzegorzki
         ])
 
-        let managerInstance = PopupStack.fetch(id: .grzegorzki)
-        XCTAssertNotNil(managerInstance)
+        let stack = await PopupStack.fetch(id: .grzegorzki)
+        XCTAssertNotNil(stack)
     }
 }
 
