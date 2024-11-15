@@ -239,6 +239,8 @@ private extension PopupCenterStackViewModelTests {
         await updatePopups(viewModel)
         await viewModel.updateScreen(screenHeight: isKeyboardActive ? screenWithKeyboard.height : screen.height, screenSafeArea: isKeyboardActive ? screenWithKeyboard.safeArea : screen.safeArea, isKeyboardActive: isKeyboardActive)
 
+        await Task.sleep(seconds: 0.1)
+
         let calculatedValue = await calculatedValue(viewModel)
         let expectedValue = await expectedValueBuilder(viewModel)
         XCTAssertEqual(calculatedValue, expectedValue)
