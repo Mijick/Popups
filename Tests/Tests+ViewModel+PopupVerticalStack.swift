@@ -18,13 +18,13 @@ import SwiftUI
     @ObservedObject private var bottomViewModel: ViewModel = .init(BottomPopupConfig.self)
 
     override func setUp() async throws {
-        setup(topViewModel)
-        setup(bottomViewModel)
+        await setup(topViewModel)
+        await setup(bottomViewModel)
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func setup(_ viewModel: ViewModel) {
-        viewModel.updateScreenValue(screen)
+    func setup(_ viewModel: ViewModel) async {
+        await viewModel.updateScreen(screenHeight: screen.height, screenSafeArea: screen.safeArea)
         viewModel.setup(updatePopupAction: { await self.updatePopupAction(viewModel, $0) }, closePopupAction: { await self.closePopupAction(viewModel, $0) })
     }
 }
