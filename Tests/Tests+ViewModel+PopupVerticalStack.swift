@@ -1503,7 +1503,13 @@ private extension PopupVerticalStackViewModelTests {
         case .center: fatalError()
     }}
     func updatePopups(_ viewModel: ViewModel) async {
-        for popup in viewModel.popups { await viewModel.updatePopupHeight(popup.height!, popup) }
+        for popup in viewModel.popups {
+            await viewModel.updatePopupHeight(popup.height!, popup)
+            await waitForResults()
+        }
+    }
+    func waitForResults() async {
+        await Task.sleep(seconds: 0.01)
     }
 }
 
