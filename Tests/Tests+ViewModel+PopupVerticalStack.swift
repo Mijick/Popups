@@ -1306,7 +1306,9 @@ private extension PopupVerticalStackViewModelTests {
     func appendPopupsAndCheckGestureTranslationOnChange(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat, gestureTranslation: CGFloat)) async {
         await viewModel.updatePopups(popups)
         await updatePopups(viewModel)
+        await waitForResults()
         await viewModel.onPopupDragGestureChanged(gestureValue)
+        await waitForResults()
 
         XCTAssertEqual(viewModel.activePopupProperties.height, expectedValues.popupHeight)
         XCTAssertEqual(viewModel.activePopupProperties.gestureTranslation, expectedValues.gestureTranslation)
