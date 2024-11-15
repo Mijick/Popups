@@ -1483,13 +1483,17 @@ private extension PopupVerticalStackViewModelTests {
     func createPopupInstanceForPopupHeightTests(alignment: PopupAlignment, heightMode: HeightMode, popupHeight: CGFloat, popupDragHeight: CGFloat = 0, ignoredSafeAreaEdges: Edge.Set = [], popupPadding: EdgeInsets = .init(), cornerRadius: CGFloat = 0, dragGestureEnabled: Bool = true, dragDetents: [DragDetent] = []) async -> AnyPopup {
         let popup = getTestPopup(alignment, heightMode, popupHeight, popupDragHeight, ignoredSafeAreaEdges, popupPadding, cornerRadius, dragGestureEnabled, dragDetents)
         return await AnyPopup(popup)
+            .updatedID(UUID().uuidString)
             .updatedHeight(popupHeight)
             .updatedDragHeight(popupDragHeight)
     }
-    func appendPopupsAndPerformChecks<Value: Equatable & Sendable>(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, calculatedValue: @escaping (ViewModel) async -> (Value), expectedValueBuilder: @escaping (ViewModel) async -> Value) async {
+    func appendPopupsAndPerformChecks<Value: Equatable & Sendable>(viewModel: ViewModel, popups: [AnyPopup], gestureTranslation: CGFloat, calculatedValue: @escaping (ViewModel) async -> Value, expectedValueBuilder: @escaping (ViewModel) async -> Value) async {
         await viewModel.updatePopups(popups)
+        await waitForResults()
         await updatePopups(viewModel)
+        await waitForResults()
         await viewModel.updateGestureTranslation(gestureTranslation)
+        await waitForResults()
 
         let calculatedValue = await calculatedValue(viewModel)
         let expectedValue = await expectedValueBuilder(viewModel)
