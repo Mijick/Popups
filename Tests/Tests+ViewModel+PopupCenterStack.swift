@@ -108,33 +108,33 @@ private extension PopupCenterStackViewModelTests {
     }
 }
 
-// MARK: Corner Radius
+// MARK: Corners
 extension PopupCenterStackViewModelTests {
-    func test_calculateCornerRadius_withCornerRadiusZero() async {
+    func test_calculateCorners_withCornerRadiusZero() async {
         let popups = await [
             createPopupInstanceForPopupHeightTests(popupHeight: 234, cornerRadius: 20),
             createPopupInstanceForPopupHeightTests(popupHeight: 234, cornerRadius: 0),
         ]
 
-        await appendPopupsAndCheckCornerRadius(
+        await appendPopupsAndCheckCorners(
             popups: popups,
             expectedValue: [.top: 0, .bottom: 0]
         )
     }
-    func test_calculateCornerRadius_withCornerRadiusNonZero() async {
+    func test_calculateCorners_withCornerRadiusNonZero() async {
         let popups = await [
             createPopupInstanceForPopupHeightTests(popupHeight: 234, cornerRadius: 20),
             createPopupInstanceForPopupHeightTests(popupHeight: 234, cornerRadius: 24),
         ]
 
-        await appendPopupsAndCheckCornerRadius(
+        await appendPopupsAndCheckCorners(
             popups: popups,
             expectedValue: [.top: 24, .bottom: 24]
         )
     }
 }
 private extension PopupCenterStackViewModelTests {
-    func appendPopupsAndCheckCornerRadius(popups: [AnyPopup], expectedValue: [MijickPopups.PopupAlignment: CGFloat]) async {
+    func appendPopupsAndCheckCorners(popups: [AnyPopup], expectedValue: [MijickPopups.PopupAlignment: CGFloat]) async {
         await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: false,
