@@ -250,7 +250,10 @@ extension PopupStackTests {
 private extension PopupStackTests {
     func registerNewStackAndPresent(popups: [any Popup]) async {
         registerStacks(ids: [defaultPopupStackID])
-        for popup in popups { await popup.present(popupStackID: defaultPopupStackID) }
+        for popup in popups {
+            await popup.present(popupStackID: defaultPopupStackID)
+            await Task.sleep(seconds: 0.01)
+        }
     }
     func getPopupsForDefaultStack() async -> [AnyPopup] {
         await PopupStack
