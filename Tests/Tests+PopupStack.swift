@@ -150,7 +150,7 @@ extension PopupStackTests {
 extension PopupStackTests {
     func test_dismissLastPopup_withNoPopupsOnStack() async {
         await registerNewStackAndPresent(popups: [])
-        await PopupStack.dismissLastPopup(popupStackID: defaultPopupStackID)
+        await performAction { await PopupStack.dismissLastPopup(popupStackID: defaultPopupStackID) }
 
         let popupsOnStack = await getPopupsForDefaultStack()
         XCTAssertEqual(popupsOnStack.count, 0)
@@ -161,7 +161,7 @@ extension PopupStackTests {
             AnyPopup(TestBottomPopup2()),
             AnyPopup(TestBottomPopup3())
         ])
-        await PopupStack.dismissLastPopup(popupStackID: defaultPopupStackID)
+        await performAction { await PopupStack.dismissLastPopup(popupStackID: defaultPopupStackID) }
 
         let popupsOnStack = await getPopupsForDefaultStack()
         XCTAssertEqual(popupsOnStack.count, 2)
@@ -177,7 +177,7 @@ extension PopupStackTests {
         let popupsOnStackBefore = await getPopupsForDefaultStack()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
-        await PopupStack.dismissPopup(TestBottomPopup1.self, popupStackID: defaultPopupStackID)
+        await performAction { await PopupStack.dismissPopup(TestBottomPopup1.self, popupStackID: defaultPopupStackID) }
 
         let popupsOnStackAfter = await getPopupsForDefaultStack()
         XCTAssertEqual([popups[0], popups[1]], popupsOnStackAfter)
@@ -192,7 +192,7 @@ extension PopupStackTests {
         let popupsOnStackBefore = await getPopupsForDefaultStack()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
-        await PopupStack.dismissPopup(TestCenterPopup.self, popupStackID: defaultPopupStackID)
+        await performAction { await PopupStack.dismissPopup(TestCenterPopup.self, popupStackID: defaultPopupStackID) }
 
         let popupsOnStackAfter = await getPopupsForDefaultStack()
         XCTAssertEqual(popups, popupsOnStackAfter)
@@ -207,7 +207,7 @@ extension PopupStackTests {
         let popupsOnStackBefore = await getPopupsForDefaultStack()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
-        await PopupStack.dismissPopup(TestTopPopup.self, popupStackID: defaultPopupStackID)
+        await performAction { await PopupStack.dismissPopup(TestTopPopup.self, popupStackID: defaultPopupStackID) }
 
         let popupsOnStackAfter = await getPopupsForDefaultStack()
         XCTAssertEqual(popups, popupsOnStackAfter)
@@ -222,7 +222,7 @@ extension PopupStackTests {
         let popupsOnStackBefore = await getPopupsForDefaultStack()
         XCTAssertEqual(popups, popupsOnStackBefore)
 
-        await PopupStack.dismissPopup("2137", popupStackID: defaultPopupStackID)
+        await performAction { await PopupStack.dismissPopup("2137", popupStackID: defaultPopupStackID) }
 
         let popupsOnStackAfter = await getPopupsForDefaultStack()
         XCTAssertEqual([popups[1]], popupsOnStackAfter)
@@ -233,7 +233,7 @@ extension PopupStackTests {
             AnyPopup(TestBottomPopup2()),
             AnyPopup(TestBottomPopup3())
         ])
-        await PopupStack.dismissAllPopups(popupStackID: defaultPopupStackID)
+        await performAction { await PopupStack.dismissAllPopups(popupStackID: defaultPopupStackID) }
 
         let popupsOnStack = await getPopupsForDefaultStack()
         XCTAssertEqual(popupsOnStack.count, 0)
@@ -254,6 +254,10 @@ private extension PopupStackTests {
             await popup.present(popupStackID: defaultPopupStackID)
             await Task.sleep(seconds: 0.01)
         }
+    }
+    func performAction(_ action: () async -> ()) async {
+        await action()
+        await Task.sleep(seconds: 0.01)
     }
     func getPopupsForDefaultStack() async -> [AnyPopup] {
         await PopupStack
