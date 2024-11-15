@@ -1530,7 +1530,7 @@ private struct TestTopPopup: TopPopup {
     let dragGestureEnabled: Bool
 
 
-    func configurePopup(config: LocalConfigVertical) -> LocalConfigVertical { config
+    func configurePopup(config: TopPopupConfig) -> TopPopupConfig { config
         .popupTopPadding(popupPadding.top)
         .popupBottomPadding(popupPadding.bottom)
         .popupHorizontalPadding(popupPadding.leading)
@@ -1551,7 +1551,7 @@ private struct TestBottomPopup: BottomPopup {
     let dragGestureEnabled: Bool
 
 
-    func configurePopup(config: LocalConfigVertical) -> LocalConfigVertical { config
+    func configurePopup(config: BottomPopupConfig) -> BottomPopupConfig { config
         .popupTopPadding(popupPadding.top)
         .popupBottomPadding(popupPadding.bottom)
         .popupHorizontalPadding(popupPadding.leading)
@@ -1563,3 +1563,6 @@ private struct TestBottomPopup: BottomPopup {
     }
     var body: some View { EmptyView() }
 }
+
+// MARK: Others
+extension VM.VerticalStack: @unchecked Sendable {}
