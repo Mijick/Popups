@@ -1531,7 +1531,7 @@ private extension PopupVerticalStackViewModelTests {
         }
     }
     func waitForResults() async {
-        await Task.sleep(seconds: 0.03)
+        await Task.sleep(seconds: 0.06)
     }
 }
 

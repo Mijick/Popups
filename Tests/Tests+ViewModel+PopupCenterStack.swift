@@ -251,7 +251,7 @@ private extension PopupCenterStackViewModelTests {
         for popup in viewModel.popups { await viewModel.updatePopupHeight(popup.height!, popup) }
     }
     func waitForResults() async {
-        await Task.sleep(seconds: 0.03)
+        await Task.sleep(seconds: 0.06)
     }
 }
 
