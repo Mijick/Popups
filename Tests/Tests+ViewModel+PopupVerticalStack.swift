@@ -55,6 +55,7 @@ extension PopupVerticalStackViewModelTests {
         await bottomViewModel.updatePopups([
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 150)
         ])
+        await waitForResults()
 
         XCTAssertEqual(
             bottomViewModel.popups.getInvertedIndex(of: bottomViewModel.popups[0]),
@@ -69,6 +70,7 @@ extension PopupVerticalStackViewModelTests {
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 150),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 150)
         ])
+        await waitForResults()
 
         XCTAssertEqual(
             bottomViewModel.popups.getInvertedIndex(of: bottomViewModel.popups[3]),
@@ -470,6 +472,7 @@ extension PopupVerticalStackViewModelTests {
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 670),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 310)
         ])
+        await waitForResults()
 
         XCTAssertEqual(
             bottomViewModel.calculateOffsetY(for: bottomViewModel.popups[2]),
@@ -495,6 +498,7 @@ extension PopupVerticalStackViewModelTests {
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 350, popupDragHeight: 100)
         ])
         await bottomViewModel.updateGestureTranslation(-100)
+        await waitForResults()
 
         XCTAssertEqual(
             bottomViewModel.calculateOffsetY(for: bottomViewModel.popups[0]),
@@ -507,6 +511,7 @@ extension PopupVerticalStackViewModelTests {
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
         await bottomViewModel.updateGestureTranslation(100)
+        await waitForResults()
 
         XCTAssertEqual(
             bottomViewModel.calculateOffsetY(for: bottomViewModel.popups[0]),
@@ -519,6 +524,7 @@ extension PopupVerticalStackViewModelTests {
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
         await bottomViewModel.updateGestureTranslation(100)
+        await waitForResults()
 
         XCTAssertEqual(
             bottomViewModel.calculateOffsetY(for: bottomViewModel.popups[1]),
@@ -531,6 +537,7 @@ extension PopupVerticalStackViewModelTests {
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
         GlobalConfigContainer.vertical.isStackingEnabled = false
+        await waitForResults()
 
         XCTAssertEqual(
             bottomViewModel.calculateOffsetY(for: bottomViewModel.popups[0]),
@@ -554,6 +561,7 @@ extension PopupVerticalStackViewModelTests {
             createPopupInstanceForPopupHeightTests(alignment: .top, heightMode: .auto, popupHeight: 133, popupDragHeight: 21)
         ])
         await topViewModel.updateGestureTranslation(-100)
+        await waitForResults()
 
         XCTAssertEqual(
             topViewModel.calculateOffsetY(for: topViewModel.popups[1]),
