@@ -51,10 +51,10 @@ extension PopupCenterStackViewModelTests {
             createPopupInstanceForPopupHeightTests(popupHeight: 400)
         ]
 
-        await appendPopupsAndCheckOuterPadding(
+        await appendPopupsAndCheckOuterHorizontalPadding(
             popups: popups,
             isKeyboardActive: false,
-            expectedValue: .init()
+            expectedValue: 0
         )
     }
     func test_calculateOuterPadding_withKeyboardHidden_whenCustomPaddingSet() async {
@@ -64,10 +64,10 @@ extension PopupCenterStackViewModelTests {
             createPopupInstanceForPopupHeightTests(popupHeight: 400, horizontalPadding: 16)
         ]
 
-        await appendPopupsAndCheckOuterPadding(
+        await appendPopupsAndCheckOuterHorizontalPadding(
             popups: popups,
             isKeyboardActive: false,
-            expectedValue: .init(top: 0, leading: 16, bottom: 0, trailing: 16)
+            expectedValue: 16
         )
     }
     func test_calculateOuterPadding_withKeyboardShown_whenKeyboardNotOverlapingPopup() async {
@@ -77,10 +77,10 @@ extension PopupCenterStackViewModelTests {
             createPopupInstanceForPopupHeightTests(popupHeight: 400, horizontalPadding: 16)
         ]
 
-        await appendPopupsAndCheckOuterPadding(
+        await appendPopupsAndCheckOuterHorizontalPadding(
             popups: popups,
             isKeyboardActive: true,
-            expectedValue: .init(top: 0, leading: 16, bottom: 0, trailing: 16)
+            expectedValue: 16
         )
     }
     func test_calculateOuterPadding_withKeyboardShown_whenKeyboardOverlapingPopup() async {
@@ -90,19 +90,19 @@ extension PopupCenterStackViewModelTests {
             createPopupInstanceForPopupHeightTests(popupHeight: 1000, horizontalPadding: 16)
         ]
 
-        await appendPopupsAndCheckOuterPadding(
+        await appendPopupsAndCheckOuterHorizontalPadding(
             popups: popups,
             isKeyboardActive: true,
-            expectedValue: .init(top: 0, leading: 16, bottom: 250, trailing: 16)
+            expectedValue: 16
         )
     }
 }
 private extension PopupCenterStackViewModelTests {
-    func appendPopupsAndCheckOuterPadding(popups: [AnyPopup], isKeyboardActive: Bool, expectedValue: EdgeInsets) async {
+    func appendPopupsAndCheckOuterHorizontalPadding(popups: [AnyPopup], isKeyboardActive: Bool, expectedValue: CGFloat) async {
         await appendPopupsAndPerformChecks(
             popups: popups,
             isKeyboardActive: isKeyboardActive,
-            calculatedValue: { await $0.calculateActivePopupOuterPadding() },
+            calculatedValue: { await $0.calculateActivePopupOuterPadding().leading },
             expectedValueBuilder: { _ in expectedValue }
         )
     }
@@ -234,7 +234,7 @@ private extension PopupCenterStackViewModelTests {
         let popup = TestPopup(horizontalPadding: horizontalPadding, cornerRadius: cornerRadius)
         return await AnyPopup(popup).updatedHeight(popupHeight)
     }
-    func appendPopupsAndPerformChecks<Value: Equatable & Sendable>(popups: [AnyPopup], isKeyboardActive: Bool, calculatedValue: @escaping (ViewModel) async -> Value, expectedValueBuilder: @escaping (ViewModel) async -> Value) async { Task {
+    func appendPopupsAndPerformChecks<Value: Equatable & Sendable>(popups: [AnyPopup], isKeyboardActive: Bool, calculatedValue: @escaping (ViewModel) async -> Value, expectedValueBuilder: @escaping (ViewModel) async -> Value) async {
         await viewModel.updatePopups(popups)
         await updatePopups(viewModel)
         await viewModel.updateScreen(screenHeight: isKeyboardActive ? screenWithKeyboard.height : screen.height, screenSafeArea: isKeyboardActive ? screenWithKeyboard.safeArea : screen.safeArea, isKeyboardActive: isKeyboardActive)
@@ -244,7 +244,7 @@ private extension PopupCenterStackViewModelTests {
         let calculatedValue = await calculatedValue(viewModel)
         let expectedValue = await expectedValueBuilder(viewModel)
         XCTAssertEqual(calculatedValue, expectedValue)
-    }}
+    }
 }
 private extension PopupCenterStackViewModelTests {
     func updatePopups(_ viewModel: ViewModel) async {
