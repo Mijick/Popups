@@ -254,7 +254,7 @@ private extension PopupStackTests {
     }
     func performAction(_ action: () async -> ()) async {
         await action()
-        await Task.sleep(seconds: 0.01)
+        await Task.sleep(seconds: 0.03)
     }
     func getPopupsForDefaultStack() async -> [AnyPopup] {
         await PopupStack
