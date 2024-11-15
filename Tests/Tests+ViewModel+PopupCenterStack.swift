@@ -236,10 +236,13 @@ private extension PopupCenterStackViewModelTests {
     }
     func appendPopupsAndPerformChecks<Value: Equatable & Sendable>(popups: [AnyPopup], isKeyboardActive: Bool, calculatedValue: @escaping (ViewModel) async -> Value, expectedValueBuilder: @escaping (ViewModel) async -> Value) async {
         await viewModel.updatePopups(popups)
-        await updatePopups(viewModel)
+
+        await Task.sleep(seconds: 0.01)
+
+        await updatePopups()
         await viewModel.updateScreen(screenHeight: isKeyboardActive ? screenWithKeyboard.height : screen.height, screenSafeArea: isKeyboardActive ? screenWithKeyboard.safeArea : screen.safeArea, isKeyboardActive: isKeyboardActive)
 
-        await Task.sleep(seconds: 0.1)
+        await Task.sleep(seconds: 0.01)
 
         let calculatedValue = await calculatedValue(viewModel)
         let expectedValue = await expectedValueBuilder(viewModel)
@@ -247,7 +250,7 @@ private extension PopupCenterStackViewModelTests {
     }
 }
 private extension PopupCenterStackViewModelTests {
-    func updatePopups(_ viewModel: ViewModel) async {
+    func updatePopups() async {
         for popup in viewModel.popups { await viewModel.updatePopupHeight(popup.height!, popup) }
     }
 }
