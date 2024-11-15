@@ -638,7 +638,7 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateOuterPadding_withFullscreenHeightMode() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(alignment: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 344, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 344, popupPadding: .init(top: 12, leading: 17, bottom: 33, trailing: 17))
         ]
 
         await appendPopupsAndCheckOuterPadding(
