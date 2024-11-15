@@ -665,7 +665,7 @@ private extension PopupVerticalStackViewModelTests {
 extension PopupVerticalStackViewModelTests {
     func test_calculateInnerPadding_withDefaultSettings() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 350)
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 350)
         ]
 
         await appendPopupsAndCheckInnerPadding(
@@ -677,7 +677,7 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateInnerPadding_withIgnoringSafeArea_bottom() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 200, ignoredSafeAreaEdges: .bottom)
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 200, ignoredSafeAreaEdges: .bottom)
         ]
 
         await appendPopupsAndCheckInnerPadding(
@@ -689,7 +689,7 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateInnerPadding_withIgnoringSafeArea_all() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 1200, ignoredSafeAreaEdges: .all)
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 1200, ignoredSafeAreaEdges: .all)
         ]
 
         await appendPopupsAndCheckInnerPadding(
@@ -701,7 +701,7 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateInnerPadding_withPopupPadding() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 1200, popupPadding: .init(top: 21, leading: 12, bottom: 37, trailing: 12))
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 1200, popupPadding: .init(top: 21, leading: 12, bottom: 37, trailing: 12))
         ]
 
         await appendPopupsAndCheckInnerPadding(
@@ -713,7 +713,7 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateInnerPadding_withFullscreenHeightMode_ignoringSafeArea_top() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 100, ignoredSafeAreaEdges: .top)
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 100, ignoredSafeAreaEdges: .top)
         ]
 
         await appendPopupsAndCheckInnerPadding(
@@ -725,7 +725,7 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateInnerPadding_withGestureTranslation() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 800)
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 800)
         ]
 
         await appendPopupsAndCheckInnerPadding(
@@ -737,7 +737,7 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateInnerPadding_withGestureTranslation_dragHeight() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300, popupDragHeight: 700)
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 300, popupDragHeight: 700)
         ]
 
         await appendPopupsAndCheckInnerPadding(
@@ -749,7 +749,7 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateInnerPadding_withGestureTranslation_dragHeight_topPopupsAlignment() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 300, popupDragHeight: 700)
+            createPopupInstanceForPopupHeightTests(alignment: .top, heightMode: .auto, popupHeight: 300, popupDragHeight: 700)
         ]
 
         await appendPopupsAndCheckInnerPadding(
@@ -776,7 +776,7 @@ private extension PopupVerticalStackViewModelTests {
 extension PopupVerticalStackViewModelTests {
     func test_calculateTranslationProgress_withNoGestureTranslation() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300)
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 300)
         ]
 
         await appendPopupsAndCheckTranslationProgress(
@@ -788,7 +788,7 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateTranslationProgress_withPositiveGestureTranslation() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300)
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 300)
         ]
 
         await appendPopupsAndCheckTranslationProgress(
@@ -800,7 +800,7 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateTranslationProgress_withPositiveGestureTranslation_dragHeight() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300, popupDragHeight: 120)
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 300, popupDragHeight: 120)
         ]
 
         await appendPopupsAndCheckTranslationProgress(
@@ -812,7 +812,7 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateTranslationProgress_withNegativeGestureTranslation() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300)
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 300)
         ]
 
         await appendPopupsAndCheckTranslationProgress(
@@ -824,7 +824,7 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateTranslationProgress_withNegativeGestureTranslation_whenTopPopupsAlignment() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 300)
+            createPopupInstanceForPopupHeightTests(alignment: .top, heightMode: .auto, popupHeight: 300)
         ]
 
         await appendPopupsAndCheckTranslationProgress(
@@ -851,8 +851,8 @@ private extension PopupVerticalStackViewModelTests {
 extension PopupVerticalStackViewModelTests {
     func test_calculateCornerRadius_withTwoPopupsStacked() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300, cornerRadius: 1),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300, cornerRadius: 12)
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 300, cornerRadius: 1),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 300, cornerRadius: 12)
         ]
 
         await appendPopupsAndCheckCornerRadius(
@@ -864,8 +864,8 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateCornerRadius_withPopupPadding_bottom_first() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300, popupPadding: .init(top: 0, leading: 0, bottom: 12, trailing: 0), cornerRadius: 1),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300, cornerRadius: 12)
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 300, popupPadding: .init(top: 0, leading: 0, bottom: 12, trailing: 0), cornerRadius: 1),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 300, cornerRadius: 12)
         ]
 
         await appendPopupsAndCheckCornerRadius(
@@ -877,8 +877,8 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateCornerRadius_withPopupPadding_bottom_last() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300, cornerRadius: 1),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300, popupPadding: .init(top: 0, leading: 0, bottom: 12, trailing: 0), cornerRadius: 12)
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 300, cornerRadius: 1),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 300, popupPadding: .init(top: 0, leading: 0, bottom: 12, trailing: 0), cornerRadius: 12)
         ]
 
         await appendPopupsAndCheckCornerRadius(
@@ -890,8 +890,8 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateCornerRadius_withPopupPadding_all() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300, cornerRadius: 1),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 300, popupPadding: .init(top: 12, leading: 24, bottom: 12, trailing: 24), cornerRadius: 12)
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 300, cornerRadius: 1),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 300, popupPadding: .init(top: 12, leading: 24, bottom: 12, trailing: 24), cornerRadius: 12)
         ]
 
         await appendPopupsAndCheckCornerRadius(
@@ -903,7 +903,7 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateCornerRadius_fullscreen() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 300, cornerRadius: 13)
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 300, cornerRadius: 13)
         ]
 
         await appendPopupsAndCheckCornerRadius(
@@ -915,7 +915,7 @@ extension PopupVerticalStackViewModelTests {
     }
     func test_calculateCornerRadius_whenPopupsHaveTopAlignment() async {
         let popups = await [
-            createPopupInstanceForPopupHeightTests(type: TopPopupConfig.self, heightMode: .auto, popupHeight: 300, cornerRadius: 12)
+            createPopupInstanceForPopupHeightTests(alignment: .top, heightMode: .auto, popupHeight: 300, cornerRadius: 12)
         ]
 
         await appendPopupsAndCheckCornerRadius(
