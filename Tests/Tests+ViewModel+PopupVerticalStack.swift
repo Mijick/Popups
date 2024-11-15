@@ -80,7 +80,7 @@ extension PopupVerticalStackViewModelTests {
 // MARK: Update Popup
 extension PopupVerticalStackViewModelTests {
     func test_updatePopup_1() async {
-        let popups = [
+        let popups = await [
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 0)
         ]
         let updatedPopup = await popups[0]
@@ -95,7 +95,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_updatePopup_2() async {
-        let popups = [
+        let popups = await [
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 50),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 25),
@@ -112,7 +112,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_updatePopup_3() async {
-        let popups = [
+        let popups = await [
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 50),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 25),
@@ -145,7 +145,7 @@ private extension PopupVerticalStackViewModelTests {
 // MARK: Popup Height
 extension PopupVerticalStackViewModelTests {
     func test_calculatePopupHeight_withAutoHeightMode_whenLessThanScreen_onePopupStacked() async {
-        let popups = [
+        let popups = await [
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 150)
         ]
 
@@ -157,7 +157,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculatePopupHeight_withAutoHeightMode_whenLessThanScreen_fourPopupsStacked() async {
-        let popups = [
+        let popups = await [
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 150),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 200),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 300),
@@ -172,7 +172,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculatePopupHeight_withAutoHeightMode_whenBiggerThanScreen_onePopupStacked() async {
-        let popups = [
+        let popups = await [
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 2000)
         ]
 
@@ -184,7 +184,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculatePopupHeight_withAutoHeightMode_whenBiggerThanScreen_fivePopupStacked() async {
-        let popups = [
+        let popups = await [
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 150),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 200),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 300),
@@ -200,7 +200,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculatePopupHeight_withLargeHeightMode_whenOnePopupStacked() async {
-        let popups = [
+        let popups = await [
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .large, popupHeight: 100)
         ]
 
@@ -212,7 +212,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculatePopupHeight_withLargeHeightMode_whenThreePopupStacked() async {
-        let popups = [
+        let popups = await [
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .large, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .large, popupHeight: 700),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .large, popupHeight: 1000)
@@ -226,7 +226,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculatePopupHeight_withFullscreenHeightMode_whenOnePopupStacked() async {
-        let popups = [
+        let popups = await [
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 100)
         ]
 
@@ -238,7 +238,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculatePopupHeight_withFullscreenHeightMode_whenThreePopupsStacked() async {
-        let popups = [
+        let popups = await [
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 2000),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 3000)
@@ -252,7 +252,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculatePopupHeight_withLargeHeightMode_whenThreePopupsStacked_popupPadding() async {
-        let popups = [
+        let popups = await [
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 2000),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .large, popupHeight: 3000, popupPadding: .init(top: 33, leading: 15, bottom: 21, trailing: 15))
@@ -266,7 +266,7 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculatePopupHeight_withFullscreenHeightMode_whenThreePopupsStacked_popupPadding() async {
-        let popups = [
+        let popups = await [
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 100),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 2000),
             createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 3000, popupPadding: .init(top: 33, leading: 15, bottom: 21, trailing: 15))
