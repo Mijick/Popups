@@ -1091,10 +1091,10 @@ private extension PopupVerticalStackViewModelTests {
 // MARK: Stack Overlay Opacity
 extension PopupVerticalStackViewModelTests {
     func test_calculateStackOverlayOpacity_withThreePopupsStacked_whenNoGestureTranslation_last() async {
-        let popups = [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 1360),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 233),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 512)
+        let popups = await [
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 1360),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 233),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 512)
         ]
 
         await appendPopupsAndCheckStackOverlayOpacity(
@@ -1106,11 +1106,11 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculateStackOverlayOpacity_withFourPopupsStacked_whenNoGestureTranslation_second() async {
-        let popups = [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 1360),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 233),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 512),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 812)
+        let popups = await [
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 1360),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 233),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 512),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 812)
         ]
 
         await appendPopupsAndCheckStackOverlayOpacity(
@@ -1122,11 +1122,11 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculateStackOverlayOpacity_withFourPopupsStacked_whenGestureTranslationIsNegative_last() async {
-        let popups = [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 1360),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 233),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 512),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 812)
+        let popups = await [
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 1360),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 233),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 512),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 812)
         ]
 
         await appendPopupsAndCheckStackOverlayOpacity(
@@ -1138,17 +1138,17 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculateStackOverlayOpacity_withTenPopupsStacked_whenGestureTranslationIsNegative_first() async {
-        let popups = [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 55),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 233),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 512),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 812),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 34),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 664),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 754),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 357),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 1234),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 356)
+        let popups = await [
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 55),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 233),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 512),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 812),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 34),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 664),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 754),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 357),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 1234),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 356)
         ]
 
         await appendPopupsAndCheckStackOverlayOpacity(
@@ -1160,10 +1160,10 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculateStackOverlayOpacity_withThreePopupsStacked_whenGestureTranslationIsPositive_last() async {
-        let popups = [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 1360),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 233),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 512)
+        let popups = await [
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 1360),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 233),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 512)
         ]
 
         await appendPopupsAndCheckStackOverlayOpacity(
@@ -1175,11 +1175,11 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculateStackOverlayOpacity_withFourPopupsStacked_whenGestureTranslationIsPositive_nextToLast() async {
-        let popups = [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 1360),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 233),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 512),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 343)
+        let popups = await [
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 1360),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 233),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 512),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 343)
         ]
 
         await appendPopupsAndCheckStackOverlayOpacity(
