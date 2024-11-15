@@ -280,3 +280,6 @@ private struct TestPopup: CenterPopup {
     }
     var body: some View { EmptyView() }
 }
+
+// MARK: Others
+extension VM.CenterStack: @unchecked Sendable {}
