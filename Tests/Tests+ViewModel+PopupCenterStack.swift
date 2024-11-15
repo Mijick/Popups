@@ -234,7 +234,7 @@ private extension PopupCenterStackViewModelTests {
         let popup = TestPopup(horizontalPadding: horizontalPadding, cornerRadius: cornerRadius)
         return await AnyPopup(popup).updatedHeight(popupHeight)
     }
-    func appendPopupsAndPerformChecks<Value: Equatable & Sendable>(popups: [AnyPopup], isKeyboardActive: Bool, calculatedValue: @MainActor @escaping (ViewModel) async -> Value, expectedValueBuilder: @MainActor @escaping (ViewModel) async -> Value) async {
+    func appendPopupsAndPerformChecks<Value: Equatable & Sendable>(popups: [AnyPopup], isKeyboardActive: Bool, calculatedValue: @escaping (ViewModel) async -> Value, expectedValueBuilder: @escaping (ViewModel) async -> Value) async { Task {
         await viewModel.updatePopups(popups)
         await updatePopups(viewModel)
         await viewModel.updateScreen(screenHeight: isKeyboardActive ? screenWithKeyboard.height : screen.height, screenSafeArea: isKeyboardActive ? screenWithKeyboard.safeArea : screen.safeArea, isKeyboardActive: isKeyboardActive)
@@ -242,7 +242,7 @@ private extension PopupCenterStackViewModelTests {
         let calculatedValue = await calculatedValue(viewModel)
         let expectedValue = await expectedValueBuilder(viewModel)
         XCTAssertEqual(calculatedValue, expectedValue)
-    }
+    }}
 }
 private extension PopupCenterStackViewModelTests {
     func updatePopups(_ viewModel: ViewModel) async {
