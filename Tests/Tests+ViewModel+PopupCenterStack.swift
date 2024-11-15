@@ -231,7 +231,7 @@ private extension PopupCenterStackViewModelTests {
 // MARK: Methods
 private extension PopupCenterStackViewModelTests {
     func createPopupInstanceForPopupHeightTests(popupHeight: CGFloat, horizontalPadding: CGFloat = 0, cornerRadius: CGFloat = 0) async -> AnyPopup {
-        let popup = TestPopup(horizontalPadding: horizontalPadding, cornerRadius: cornerRadius)
+        let popup = await TestPopup(horizontalPadding: horizontalPadding, cornerRadius: cornerRadius).setCustomID(UUID().uuidString)
         return await AnyPopup(popup).updatedHeight(popupHeight)
     }
     func appendPopupsAndPerformChecks<Value: Equatable & Sendable>(popups: [AnyPopup], isKeyboardActive: Bool, calculatedValue: @escaping (ViewModel) async -> Value, expectedValueBuilder: @escaping (ViewModel) async -> Value) async {
