@@ -1020,9 +1020,9 @@ private extension PopupVerticalStackViewModelTests {
 // MARK: Fixed Size
 extension PopupVerticalStackViewModelTests {
     func test_calculateFixedSize_withAutoHeightMode_whenLessThanScreen_twoPopupsStacked() async {
-        let popups = [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 1360),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 123)
+        let popups = await [
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 1360),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 123)
         ]
 
         await appendPopupsAndCheckVerticalFixedSize(
@@ -1033,9 +1033,9 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculateFixedSize_withAutoHeightMode_whenBiggerThanScreen_twoPopupsStacked() async {
-        let popups = [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 1360),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 1223)
+        let popups = await [
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 1360),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 1223)
         ]
 
         await appendPopupsAndCheckVerticalFixedSize(
@@ -1046,10 +1046,10 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculateFixedSize_withLargeHeightMode_threePopupsStacked() async {
-        let popups = [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 1360),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 1223),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .large, popupHeight: 1223)
+        let popups = await [
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 1360),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 1223),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .large, popupHeight: 1223)
         ]
 
         await appendPopupsAndCheckVerticalFixedSize(
@@ -1060,12 +1060,12 @@ extension PopupVerticalStackViewModelTests {
         )
     }
     func test_calculateFixedSize_withFullscreenHeightMode_fivePopupsStacked() async {
-        let popups = [
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 1360),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 1223),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .large, popupHeight: 1223),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .auto, popupHeight: 1223),
-            createPopupInstanceForPopupHeightTests(type: BottomPopupConfig.self, heightMode: .fullscreen, popupHeight: 1223)
+        let popups = await [
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 1360),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 1223),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .large, popupHeight: 1223),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .auto, popupHeight: 1223),
+            createPopupInstanceForPopupHeightTests(alignment: .bottom, heightMode: .fullscreen, popupHeight: 1223)
         ]
 
         await appendPopupsAndCheckVerticalFixedSize(
