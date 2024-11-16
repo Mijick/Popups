@@ -278,7 +278,7 @@ extension VM.VerticalStack {
             remainingTranslationProgress = 1 - activePopupProperties.translationProgress
 
         let progressMultiplier = invertedIndex == 1 ? remainingTranslationProgress : max(minStackOverlayProgressMultiplier, remainingTranslationProgress)
-        let overlayValue = min(stackOverlayFactor * .init(invertedIndex), maxStackOverlayFactor)
+        let overlayValue = stackOverlayFactor * .init(invertedIndex)
 
         let opacity = overlayValue * progressMultiplier
         return max(opacity, 0)
@@ -296,6 +296,7 @@ extension VM.VerticalStack {
     var dragTranslationThreshold: CGFloat { 8 }
     var minScaleProgressMultiplier: CGFloat { 0.7 }
     var minStackOverlayProgressMultiplier: CGFloat { 0.6 }
+    var maxNumberOfVisiblePopups: Int { 3 }
 }
 
 
