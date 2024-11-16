@@ -287,9 +287,8 @@ extension VM.VerticalStack {
 
 // MARK: Attributes
 extension VM.VerticalStack {
-    var stackScaleFactor: CGFloat { 0.025 }
-    var stackOverlayFactor: CGFloat { 0.1 }
-    var maxStackOverlayFactor: CGFloat { 0.48 }
+    var stackScaleFactor: CGFloat { 0.03 }
+    var stackOverlayFactor: CGFloat { 0.2 }
     var stackOffset: CGFloat { GlobalConfigContainer.vertical.isStackingEnabled ? 8 : 0 }
     var dragThreshold: CGFloat { GlobalConfigContainer.vertical.dragThreshold }
     var dragGestureEnabled: Bool { popups.last?.config.isDragGestureEnabled ?? false }
