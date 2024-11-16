@@ -218,6 +218,13 @@ private extension VM.VerticalStack {
 
 
 
+// MARK: Is Popup Active
+extension VM.VerticalStack {
+    @MainActor func isPopupActive(_ popup: AnyPopup) -> Bool {
+        popups.getInvertedIndex(of: popup) < maxNumberOfVisiblePopups
+    }
+}
+
 // MARK: Offset Y
 extension VM.VerticalStack {
     @MainActor func calculateOffsetY(for popup: AnyPopup) -> CGFloat { switch popup == popups.last {
