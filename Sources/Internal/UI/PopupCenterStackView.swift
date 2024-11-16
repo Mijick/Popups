@@ -30,6 +30,7 @@ private extension PopupCenterStackView {
 private extension PopupCenterStackView {
     func createPopup(_ popup: AnyPopup) -> some View {
         popup.body
+            .compositingGroup()
             .fixedSize(horizontal: false, vertical: viewModel.activePopupProperties.verticalFixedSize)
             .onHeightChange { await viewModel.updatePopupHeight($0, popup) }
             .frame(height: viewModel.activePopupProperties.height)
@@ -38,7 +39,6 @@ private extension PopupCenterStackView {
             .opacity(viewModel.calculateOpacity(for: popup))
             .focusSection_tvOS()
             .padding(viewModel.activePopupProperties.outerPadding)
-            .compositingGroup()
     }
 }
 

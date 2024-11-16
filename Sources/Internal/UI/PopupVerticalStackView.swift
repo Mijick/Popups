@@ -29,6 +29,7 @@ private extension PopupVerticalStackView {
 private extension PopupVerticalStackView {
     @ViewBuilder func createPopup(_ popup: AnyPopup) -> some View { if viewModel.isPopupActive(popup) {
         popup.body
+            .compositingGroup()
             .padding(viewModel.activePopupProperties.innerPadding)
             .fixedSize(horizontal: false, vertical: viewModel.activePopupProperties.verticalFixedSize)
             .onHeightChange { await viewModel.updatePopupHeight($0, popup) }
@@ -41,7 +42,6 @@ private extension PopupVerticalStackView {
             .padding(viewModel.activePopupProperties.outerPadding)
             .transition(transition)
             .zIndex(viewModel.calculateZIndex())
-            .compositingGroup()
     }}
 }
 
