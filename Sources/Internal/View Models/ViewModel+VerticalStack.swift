@@ -205,9 +205,10 @@ private extension VM.VerticalStack {
 }
 private extension VM.VerticalStack {
     func calculateStackHeight() -> CGFloat {
-        let numberOfStackedItems = max(popups.count - 1, 0)
+        let numberOfStackedItems = max(popups.count - 1, 0),
+            numberOfVisibleItems = min(numberOfStackedItems, maxNumberOfVisiblePopups)
 
-        let stackedItemsHeight = stackOffset * .init(numberOfStackedItems)
+        let stackedItemsHeight = stackOffset * .init(numberOfVisibleItems)
         return stackedItemsHeight
     }
 }
@@ -294,7 +295,7 @@ extension VM.VerticalStack {
 
 // MARK: Attributes
 extension VM.VerticalStack {
-    var stackScaleFactor: CGFloat { 0.03 }
+    var stackScaleFactor: CGFloat { 0.025 }
     var stackOverlayFactor: CGFloat { 0.2 }
     var stackOffset: CGFloat { GlobalConfigContainer.vertical.isStackingEnabled ? 8 : 0 }
     var dragThreshold: CGFloat { GlobalConfigContainer.vertical.dragThreshold }
