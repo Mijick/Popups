@@ -13,7 +13,7 @@ import SwiftUI
 import Combine
 
 enum VM {}
-protocol ViewModel: ObservableObject where Self.ObjectWillChangePublisher == ObservableObjectPublisher { init()
+@MainActor protocol ViewModel: ObservableObject where Self.ObjectWillChangePublisher == ObservableObjectPublisher { init()
     // MARK: Attributes
     var alignment: PopupAlignment { get set }
     var popups: [AnyPopup] { get set }
@@ -47,7 +47,7 @@ extension ViewModel {
 
 // MARK: Setup
 extension ViewModel {
-    @MainActor func setup(updatePopupAction: @escaping (AnyPopup) async -> (), closePopupAction: @escaping (AnyPopup) async -> ()) {
+    func setup(updatePopupAction: @escaping (AnyPopup) async -> (), closePopupAction: @escaping (AnyPopup) async -> ()) {
         self.updatePopupAction = updatePopupAction
         self.closePopupAction = closePopupAction
     }
@@ -61,7 +61,7 @@ extension ViewModel {
 
 // MARK: Popups
 extension ViewModel {
-    @MainActor func updatePopups(_ newPopups: [AnyPopup]) async {
+    func updatePopups(_ newPopups: [AnyPopup]) async {
         popups = await filteredPopups(newPopups)
         await updateActivePopupProperties()
 
@@ -81,7 +81,7 @@ extension ViewModel {
 
 // MARK: Gesture Translation
 extension ViewModel {
-    @MainActor func updateGestureTranslation(_ newGestureTranslation: CGFloat) async {
+    func updateGestureTranslation(_ newGestureTranslation: CGFloat) async {
         await updateActivePopupPropertiesOnGestureTranslationChange(newGestureTranslation)
 
         withAnimation(activePopupProperties.gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
@@ -90,7 +90,7 @@ extension ViewModel {
 
 // MARK: Popup Height
 extension ViewModel {
-    @MainActor func updatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async {
+    func updatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async {
         guard activePopupProperties.gestureTranslation == 0 else { return }
 
         let newHeight = await calculatePopupHeight(heightCandidate, popup)
@@ -102,7 +102,7 @@ extension ViewModel {
 
 // MARK: Popup Drag Height
 extension ViewModel {
-    @MainActor func updatePopupDragHeight(_ targetDragHeight: CGFloat, _ popup: AnyPopup) async {
+    func updatePopupDragHeight(_ targetDragHeight: CGFloat, _ popup: AnyPopup) async {
         await updatePopupAction(popup.updatedDragHeight(targetDragHeight))
     }
 }
