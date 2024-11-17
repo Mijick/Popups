@@ -21,7 +21,7 @@ import SwiftUI
 
 // MARK: Update
 extension PopupStack {
-    func update(popup: AnyPopup) { if let index = popups.firstIndex(of: popup) {
+    func update(popup: AnyPopup) async { if let index = popups.firstIndex(of: popup) {
         popups[index] = popup
     }}
 }
@@ -64,14 +64,14 @@ private extension PopupStack {
     nonisolated func getNewPriority(_ newPopups: [AnyPopup]) async -> StackPriority {
         await priority.reshuffled(newPopups)
     }
-    nonisolated func updatePopups(_ newPopups: [AnyPopup]) async {
-        Task { @MainActor in popups = newPopups }
+    func updatePopups(_ newPopups: [AnyPopup]) async {
+        popups = newPopups
     }
-    nonisolated func updatePriority(_ newPriority: StackPriority, _ oldPopupsCount: Int) async {
-        let delayDuration = await oldPopupsCount > popups.count ? Animation.duration : 0
+    func updatePriority(_ newPriority: StackPriority, _ oldPopupsCount: Int) async {
+        let delayDuration = oldPopupsCount > popups.count ? Animation.duration : 0
         await Task.sleep(seconds: delayDuration)
 
-        Task { @MainActor in priority = newPriority }
+        priority = newPriority
     }
 }
 private extension PopupStack {
