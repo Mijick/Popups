@@ -221,14 +221,14 @@ private extension VM.VerticalStack {
 
 // MARK: Is Popup Active
 extension VM.VerticalStack {
-    @MainActor func isPopupActive(_ popup: AnyPopup) -> Bool {
+    func isPopupActive(_ popup: AnyPopup) -> Bool {
         popups.getInvertedIndex(of: popup) < maxNumberOfVisiblePopups
     }
 }
 
 // MARK: Offset Y
 extension VM.VerticalStack {
-    @MainActor func calculateOffsetY(for popup: AnyPopup) -> CGFloat { switch popup == popups.last {
+    func calculateOffsetY(for popup: AnyPopup) -> CGFloat { switch popup == popups.last {
         case true: calculateOffsetForActivePopup()
         case false: calculateOffsetForStackedPopup(popup)
     }}
@@ -258,7 +258,7 @@ private extension VM.VerticalStack {
 
 // MARK: Scale X
 extension VM.VerticalStack {
-    @MainActor func calculateScaleX(for popup: AnyPopup) -> CGFloat {
+    func calculateScaleX(for popup: AnyPopup) -> CGFloat {
         guard popup != popups.last else { return 1 }
 
         let invertedIndex = popups.getInvertedIndex(of: popup),
@@ -272,14 +272,14 @@ extension VM.VerticalStack {
 
 // MARK: Z Index
 extension VM.VerticalStack {
-    @MainActor func calculateZIndex() -> CGFloat {
+    func calculateZIndex() -> CGFloat {
         popups.last == nil ? 2137 : .init(popups.count)
     }
 }
 
 // MARK: - Stack Overlay Opacity
 extension VM.VerticalStack {
-    @MainActor func calculateStackOverlayOpacity(for popup: AnyPopup) -> CGFloat {
+    func calculateStackOverlayOpacity(for popup: AnyPopup) -> CGFloat {
         guard popup != popups.last else { return 0 }
 
         let invertedIndex = popups.getInvertedIndex(of: popup),
@@ -314,7 +314,7 @@ extension VM.VerticalStack {
 
 // MARK: On Changed
 extension VM.VerticalStack {
-    @MainActor func onPopupDragGestureChanged(_ value: CGFloat) async {
+    func onPopupDragGestureChanged(_ value: CGFloat) async {
         guard dragGestureEnabled else { return }
         
         let newGestureTranslation = await calculateGestureTranslation(value)
@@ -359,7 +359,7 @@ private extension VM.VerticalStack {
 
 // MARK: On Ended
 extension VM.VerticalStack {
-    @MainActor func onPopupDragGestureEnded(_ value: CGFloat) async { Task {
+    func onPopupDragGestureEnded(_ value: CGFloat) async { Task {
         guard value != 0, let activePopup = popups.last else { return }
 
         await dismissLastPopupIfNeeded(activePopup)
