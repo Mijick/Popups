@@ -61,12 +61,12 @@ extension ViewModel {
 
 // MARK: Popups
 extension ViewModel {
-    @MainActor func updatePopups(_ newPopups: [AnyPopup]) async { Task {
+    @MainActor func updatePopups(_ newPopups: [AnyPopup]) async {
         popups = await filteredPopups(newPopups)
         await updateActivePopupProperties()
 
         withAnimation(.transition) { objectWillChange.send() }
-    }}
+    }
 }
 
 // MARK: Screen
@@ -81,23 +81,23 @@ extension ViewModel {
 
 // MARK: Gesture Translation
 extension ViewModel {
-    @MainActor func updateGestureTranslation(_ newGestureTranslation: CGFloat) async { Task {
+    @MainActor func updateGestureTranslation(_ newGestureTranslation: CGFloat) async {
         await updateActivePopupPropertiesOnGestureTranslationChange(newGestureTranslation)
 
         withAnimation(activePopupProperties.gestureTranslation == 0 ? .transition : nil) { objectWillChange.send() }
-    }}
+    }
 }
 
 // MARK: Popup Height
 extension ViewModel {
-    @MainActor func updatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async { Task {
+    @MainActor func updatePopupHeight(_ heightCandidate: CGFloat, _ popup: AnyPopup) async {
         guard activePopupProperties.gestureTranslation == 0 else { return }
 
         let newHeight = await calculatePopupHeight(heightCandidate, popup)
         if newHeight != popup.height {
             await updatePopupAction(popup.updatedHeight(newHeight))
         }
-    }}
+    }
 }
 
 // MARK: Popup Drag Height
