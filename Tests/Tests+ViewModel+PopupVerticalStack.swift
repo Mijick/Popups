@@ -110,7 +110,7 @@ extension PopupVerticalStackViewModelTests {
             viewModel: bottomViewModel,
             popups: popups,
             updatedPopup: updatedPopup,
-            expectedValue: (height: 1371, dragHeight: nil)
+            expectedValue: (height: 1371, dragHeight: 0)
         )
     }
     func test_updatePopup_3() async {
@@ -128,12 +128,12 @@ extension PopupVerticalStackViewModelTests {
             viewModel: bottomViewModel,
             popups: popups,
             updatedPopup: updatedPopup,
-            expectedValue: (height: nil, dragHeight: nil)
+            expectedValue: (height: nil, dragHeight: 0)
         )
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckPopups(viewModel: ViewModel, popups: [AnyPopup], updatedPopup: AnyPopup, expectedValue: (height: CGFloat?, dragHeight: CGFloat?)) async {
+    func appendPopupsAndCheckPopups(viewModel: ViewModel, popups: [AnyPopup], updatedPopup: AnyPopup, expectedValue: (height: CGFloat?, dragHeight: CGFloat)) async {
         await viewModel.updatePopups(popups)
         await viewModel.updatePopupAction(updatedPopup)
 
@@ -1168,7 +1168,7 @@ extension PopupVerticalStackViewModelTests {
             popups: popups,
             gestureTranslation: -123,
             calculateForIndex: 0,
-            expectedValueBuilder: { min($0.stackOverlayFactor * 9, $0.maxStackOverlayFactor) }
+            expectedValueBuilder: { $0.stackOverlayFactor * 9 }
         )
     }
     func test_calculateStackOverlayOpacity_withThreePopupsStacked_whenGestureTranslationIsPositive_last() async {
