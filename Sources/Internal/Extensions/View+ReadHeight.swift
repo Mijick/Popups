@@ -15,7 +15,6 @@ extension View {
     func onHeightChange(perform action: @escaping (CGFloat) async -> ()) -> some View { background(
         GeometryReader { proxy in
             Task { @MainActor in
-                await Task.sleep(seconds: 0.03)
                 await action(proxy.size.height)
             }
             return Color.clear

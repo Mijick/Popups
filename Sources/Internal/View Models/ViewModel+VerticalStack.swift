@@ -300,7 +300,7 @@ extension VM.VerticalStack {
     var stackOffset: CGFloat { GlobalConfigContainer.vertical.isStackingEnabled ? 8 : 0 }
     var dragThreshold: CGFloat { GlobalConfigContainer.vertical.dragThreshold }
     var dragGestureEnabled: Bool { popups.last?.config.isDragGestureEnabled ?? false }
-    var dragTranslationThreshold: CGFloat { 8 }
+    var dragTranslationThreshold: CGFloat { 32 }
     var minScaleProgressMultiplier: CGFloat { 0.7 }
     var minStackOverlayProgressMultiplier: CGFloat { 0.6 }
     var maxNumberOfVisiblePopups: Int { 3 }
