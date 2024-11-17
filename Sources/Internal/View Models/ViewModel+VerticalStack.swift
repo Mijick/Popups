@@ -314,12 +314,12 @@ extension VM.VerticalStack {
 
 // MARK: On Changed
 extension VM.VerticalStack {
-    @MainActor func onPopupDragGestureChanged(_ value: CGFloat) async { Task {
+    @MainActor func onPopupDragGestureChanged(_ value: CGFloat) async {
         guard dragGestureEnabled else { return }
         
         let newGestureTranslation = await calculateGestureTranslation(value)
         await updateGestureTranslation(newGestureTranslation)
-    }}
+    }
 }
 private extension VM.VerticalStack {
     func calculateGestureTranslation(_ value: CGFloat) async -> CGFloat { switch popups.last?.config.dragDetents.isEmpty ?? true {

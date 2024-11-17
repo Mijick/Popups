@@ -102,9 +102,9 @@ extension ViewModel {
 
 // MARK: Popup Drag Height
 extension ViewModel {
-    @MainActor func updatePopupDragHeight(_ targetDragHeight: CGFloat, _ popup: AnyPopup) async { Task {
+    @MainActor func updatePopupDragHeight(_ targetDragHeight: CGFloat, _ popup: AnyPopup) async {
         await updatePopupAction(popup.updatedDragHeight(targetDragHeight))
-    }}
+    }
 }
 
 // MARK: Helpers
