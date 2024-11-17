@@ -71,12 +71,12 @@ extension ViewModel {
 
 // MARK: Screen
 extension ViewModel {
-    @MainActor func updateScreen(screenHeight: CGFloat? = nil, screenSafeArea: EdgeInsets? = nil, isKeyboardActive: Bool? = nil) async { Task {
+    func updateScreen(screenHeight: CGFloat? = nil, screenSafeArea: EdgeInsets? = nil, isKeyboardActive: Bool? = nil) async {
         screen = await updatedScreenProperties(screenHeight, screenSafeArea, isKeyboardActive)
         await updateActivePopupProperties()
 
         withAnimation(.transition) { objectWillChange.send() }
-    }}
+    }
 }
 
 // MARK: Gesture Translation
