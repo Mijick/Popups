@@ -2,7 +2,8 @@
 name: "\U0001F99F Bug Report"
 about: If something isn't working
 title: "[BUG]"
-labels: 'state: inactive, type: bug'
+labels: 'bug'
+projects: "Mijick/13"
 assignees: FulcrumOne, jay-jay-lama
 
 ---
