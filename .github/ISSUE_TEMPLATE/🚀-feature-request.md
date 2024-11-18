@@ -2,7 +2,8 @@
 name: "\U0001F680 Feature Request"
 about: If you have a feature request
 title: "[FREQ]"
-labels: 'state: inactive, type: feature'
+labels: 'feature'
+projects: "Mijick/13"
 assignees: FulcrumOne
 
 ---
