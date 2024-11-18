@@ -129,8 +129,8 @@ MijickPopups library solves two seemingly contradictory problems - to allow deve
 - Popups can be automatically dismissed after a certain period of time.
 - Drag gesture can be used to resize the popup, according to the provided indentations.
 - Works with multiple windows.
-- Supports all Apple platforms: iOS 14.0+ / macOS 12.0+ / tvOS 15.0+ / watchOS 7.0+ / visionOS 1.0+
-- Supports Swift 6.0 
+- Supports all Apple platforms: iOS 14.0+ / macOS 12.0+ / tvOS 15.0+ / watchOS 7.0+ / visionOS 1.0+.
+- Supports Swift 6.0.
 - ... and much more.
 
 <!--Documentation-->
