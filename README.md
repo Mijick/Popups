@@ -81,7 +81,7 @@
 
 <!--Description-->
 # ☀️ Why MijickPopups?
-MijickPopups library solves two seemingly contradictory problems - to allow developers to create fully customizable swift popup views, and to make the process as simple as possible. Here is why we think we have successfully met these objectives:
+MijickPopups library solves two seemingly contradictory problems - to allow developers to create fully customizable popup views, and to make the process as simple as possible. Here is why we think we have successfully met these objectives:
 
 <p>
     <h3>The power of a single line of code</h3>
