@@ -44,25 +44,29 @@ private extension PopupCentreStackView {
 
 private extension PopupCentreStackView {
     func createPopupForNewPlatforms() -> some View {
-        activeView?
-            .readHeight(onChange: saveHeight)
-            .frame(height: height).frame(maxWidth: .infinity)
-            .opacity(contentOpacity)
-            .background(backgroundColour, overlayColour: .clear, radius: cornerRadius, corners: .allCorners, shadow: popupShadow)
-            .padding(.leading, lastPopupConfig.horizontalPadding)
-            .padding(.trailing, lastPopupConfig.horizontalPadding)
-            .compositingGroup()
-            .focusSectionIfAvailable()
+        HStack(spacing: 0) {
+            Spacer().frame(width: lastPopupConfig.horizontalPadding)
+            activeView?
+                .readHeight(onChange: saveHeight)
+                .frame(height: height).frame(maxWidth: .infinity)
+                .opacity(contentOpacity)
+                .background(backgroundColour, overlayColour: .clear, radius: cornerRadius, corners: .allCorners, shadow: popupShadow)
+                .compositingGroup()
+                .focusSectionIfAvailable()
+            Spacer().frame(width: lastPopupConfig.horizontalPadding)
+        }
     }
     func createPopupForOlderPlatforms() -> some View {
-        items.last?.body
-            .readHeight(onChange: saveHeight)
-            .frame(height: height).frame(maxWidth: .infinity)
-            .background(backgroundColour, overlayColour: .clear, radius: cornerRadius, corners: .allCorners, shadow: popupShadow)
-            .padding(.leading, lastPopupConfig.horizontalPadding)
-            .padding(.trailing, lastPopupConfig.horizontalPadding)
-            .compositingGroup()
-            .focusSectionIfAvailable()
+        HStack(spacing: 0) {
+            Spacer().frame(width: lastPopupConfig.horizontalPadding)
+            items.last?.body
+                .readHeight(onChange: saveHeight)
+                .frame(height: height).frame(maxWidth: .infinity)
+                .background(backgroundColour, overlayColour: .clear, radius: cornerRadius, corners: .allCorners, shadow: popupShadow)
+                .compositingGroup()
+                .focusSectionIfAvailable()
+            Spacer().frame(width: lastPopupConfig.horizontalPadding)
+        }
     }
 }
 
