@@ -44,29 +44,23 @@ private extension PopupCentreStackView {
 
 private extension PopupCentreStackView {
     func createPopupForNewPlatforms() -> some View {
-        HStack(spacing: 0) {
-            Spacer().frame(width: lastPopupConfig.horizontalPadding)
-            activeView?
-                .readHeight(onChange: saveHeight)
-                .frame(height: height)
-                .opacity(contentOpacity)
-                .background(backgroundColour, overlayColour: .clear, radius: cornerRadius, corners: .allCorners, shadow: popupShadow)
-                .compositingGroup()
-                .focusSectionIfAvailable()
-            Spacer().frame(width: lastPopupConfig.horizontalPadding)
-        }
+        activeView?
+            .readHeight(onChange: saveHeight)
+            .frame(height: height)
+            .opacity(contentOpacity)
+            .background(backgroundColour, overlayColour: .clear, radius: cornerRadius, corners: .allCorners, shadow: popupShadow)
+            .padding(.horizontal, lastPopupConfig.horizontalPadding)
+            .compositingGroup()
+            .focusSectionIfAvailable()
     }
     func createPopupForOlderPlatforms() -> some View {
-        HStack(spacing: 0) {
-            Spacer().frame(width: lastPopupConfig.horizontalPadding)
-            items.last?.body
-                .readHeight(onChange: saveHeight)
-                .frame(height: height)
-                .background(backgroundColour, overlayColour: .clear, radius: cornerRadius, corners: .allCorners, shadow: popupShadow)
-                .compositingGroup()
-                .focusSectionIfAvailable()
-            Spacer().frame(width: lastPopupConfig.horizontalPadding)
-        }
+        items.last?.body
+            .readHeight(onChange: saveHeight)
+            .frame(height: height)
+            .background(backgroundColour, overlayColour: .clear, radius: cornerRadius, corners: .allCorners, shadow: popupShadow)
+            .padding(.horizontal, lastPopupConfig.horizontalPadding)
+            .compositingGroup()
+            .focusSectionIfAvailable()
     }
 }
 
