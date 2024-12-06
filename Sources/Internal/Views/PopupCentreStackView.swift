@@ -45,7 +45,8 @@ private extension PopupCentreStackView {
 private extension PopupCentreStackView {
     func createPopupForNewPlatforms() -> some View {
         HStack(spacing: 0) {
-            Spacer().frame(width: lastPopupConfig.horizontalPadding)
+//            Spacer().frame(width: lastPopupConfig.horizontalPadding)
+            Color.red.frame(width: lastPopupConfig.horizontalPadding, height: 300)
             activeView?
                 .readHeight(onChange: saveHeight)
                 .frame(height: height).frame(maxWidth: .infinity)
@@ -53,7 +54,7 @@ private extension PopupCentreStackView {
                 .background(backgroundColour, overlayColour: .clear, radius: cornerRadius, corners: .allCorners, shadow: popupShadow)
                 .compositingGroup()
                 .focusSectionIfAvailable()
-            Spacer().frame(width: lastPopupConfig.horizontalPadding)
+            Color.red.frame(width: lastPopupConfig.horizontalPadding, height: 300)
         }
     }
     func createPopupForOlderPlatforms() -> some View {
