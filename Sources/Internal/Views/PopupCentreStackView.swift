@@ -52,9 +52,9 @@ private extension PopupCentreStackView {
                 .frame(height: height)
                 .opacity(contentOpacity)
                 .background(backgroundColour, overlayColour: .clear, radius: cornerRadius, corners: .allCorners, shadow: popupShadow)
-                .compositingGroup()
+//                .compositingGroup()
                 .focusSectionIfAvailable()
-            Color.red.frame(width: lastPopupConfig.horizontalPadding, height: 300)
+            Color.black.frame(width: lastPopupConfig.horizontalPadding, height: 300)
         }
     }
     func createPopupForOlderPlatforms() -> some View {
