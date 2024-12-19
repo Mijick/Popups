@@ -91,19 +91,19 @@
         <td>Three positions for the popups: Top, Center or Bottom</td>
     </tr>
     <tr>
-        <td></td>
+        <td>🎁</td>
         <td>Stackable popups</td>
     </tr>
     <tr>
-        <td></td>
+        <td>🐫</td>
         <td>Three height modes: Automatic, Large or Fullscreen</td>
     </tr>
     <tr>
-        <td></td>
+        <td>⛹️</td>
         <td>Resizable popups</td>
     </tr>
     <tr>
-        <td></td>
+        <td>🍃</td>
         <td>Automatic dismissal</td>
     </tr>
     <tr>
