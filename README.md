@@ -69,10 +69,6 @@
     <a href="https://link.mijick.com/linkedin">
         <img alt="Follow us on LinkedIn" src="https://github.com/Mijick/Assets/blob/main/Common/Buttons/linkedin.png" height="40px">
     </a>
-    <!--Linkedin-->
-    <a href="https://link.mijick.com/linkedin">
-        <img alt="Follow us on LinkedIn" src="https://github.com/Mijick/Assets/blob/main/Popups/Buttons/linkedin.png" height="40px">
-    </a>
     <!--GitHub-->
     <a href="https://link.mijick.com/github">
         <img alt="See our other frameworks" src="https://github.com/Mijick/Assets/blob/main/Common/Buttons/github.png" height="40px">
