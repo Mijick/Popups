@@ -83,6 +83,95 @@
     </a>
 </p>
 
+<!--Features-->
+# ✨ Features
+<table><tbody>
+    <tr>
+        <td>🙏🏻</td>
+        <td>Automatically handles permissions</td>
+    </tr>
+    <tr>
+        <td>🖼️</td>
+        <td>Image capture</td>
+    </tr>
+    <tr>
+        <td>🎬️</td>
+        <td>Video capture (with or without sound)</td>
+    </tr>
+    <tr>
+        <td>📸</td>
+        <td>Camera position changes</td>
+    </tr>
+    <tr>
+        <td>🔍️</td>
+        <td>Supports manual zoom</td>
+    </tr>
+    <tr>
+        <td>👁️</td>
+        <td>Supports manual focus</td>
+    </tr>
+    <tr>
+        <td>🎞️</td>
+        <td>Changeable frame rate</td>
+    </tr>
+    <tr>
+        <td>📺️</td>
+        <td>Changeable camera resolution</td>
+    </tr>
+    <tr>
+        <td>🙈</td>
+        <td>Camera filters</td>
+    </tr>
+    <tr>
+        <td>🔦</td>
+        <td>Torch</td>
+    </tr>
+    <tr>
+        <td>📸</td>
+        <td>Flash</td>
+    </tr>
+    <tr>
+        <td>⏱️</td>
+        <td>Other camera settings (exposure duration, target bias, ISO, HDR mode and more)</td>
+    </tr>
+    <tr>
+        <td>☢️</td>
+        <td>Displays error screen if permissions are not granted</td>
+    </tr>
+    <tr>
+        <td>🖼️</td>
+        <td>Displays captured media screen</td>
+    </tr>
+    <tr>
+        <td>📱</td>
+        <td>Modern and minimalistic UI</td>
+    </tr>
+    <tr>
+        <td>🕺</td>
+        <td>Beautiful animations</td>
+    </tr>
+    <tr>
+        <td>🚧</td>
+        <td>Fully customizable screens</td>
+    </tr>
+    <tr>
+        <td>🤏🏼</td>
+        <td>Gestures support</td>
+    </tr>
+    <tr>
+        <td>📲</td>
+        <td>Blocks screen orientation change</td>
+    </tr>
+    <tr>
+        <td>⚡️</td>
+        <td>Supports Swift 6</td>
+    </tr>
+    <tr>
+        <td>🚀</td>
+        <td>... and others</td>
+    </tr>
+</tbody></table>
+
 <!--Description-->
 # ☀️ Why MijickPopups?
 MijickPopups solves two seemingly contradictory problems - to allow developers to create fully customizable popup, and to make the process as simple as possible. Here is why we think we have successfully met these objectives:
