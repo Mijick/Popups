@@ -44,7 +44,6 @@ private extension PopupVerticalStackViewModelTests {
 }
 
 
-
 // MARK: - TEST CASES
 
 
@@ -1473,7 +1472,6 @@ private extension PopupVerticalStackViewModelTests {
         XCTAssertEqual(viewModel.activePopupProperties.height, expectedValues.popupHeight)
     }
 }
-
 
 
 // MARK: - HELPERS

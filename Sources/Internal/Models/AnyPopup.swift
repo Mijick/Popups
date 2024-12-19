@@ -24,7 +24,6 @@ struct AnyPopup: Popup {
 }
 
 
-
 // MARK: - INITIALIZE & UPDATE
 
 
@@ -68,7 +67,6 @@ private extension AnyPopup {
         return popup
     }
 }
-
 
 
 // MARK: - PROTOCOLS CONFORMANCE

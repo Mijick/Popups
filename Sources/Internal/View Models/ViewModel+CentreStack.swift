@@ -21,7 +21,6 @@ extension VM { class CenterStack: ViewModel { required init() {}
 }}
 
 
-
 // MARK: - METHODS / VIEW MODEL / ACTIVE POPUP
 
 
@@ -84,7 +83,6 @@ extension VM.CenterStack {
 }
 
 
-
 // MARK: - METHODS / VIEW MODEL / SELECTED POPUP
 
 
@@ -102,7 +100,6 @@ private extension VM.CenterStack {
         return fullscreenHeight - safeAreaHeight
     }
 }
-
 
 
 // MARK: - METHODS / VIEW

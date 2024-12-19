@@ -35,7 +35,6 @@ enum VM {}
 }
 
 
-
 // MARK: - INITIALIZE & SETUP
 
 
@@ -52,7 +51,6 @@ extension ViewModel {
         self.closePopupAction = closePopupAction
     }
 }
-
 
 
 // MARK: UPDATE

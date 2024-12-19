@@ -20,7 +20,6 @@ import SwiftUI
 }
 
 
-
 // MARK: - TEST CASES
 
 
@@ -239,7 +238,6 @@ extension PopupStackTests {
         XCTAssertEqual(popupsOnStack.count, 0)
     }
 }
-
 
 
 // MARK: - HELPERS

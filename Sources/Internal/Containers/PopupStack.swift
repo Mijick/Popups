@@ -27,7 +27,6 @@ extension PopupStack {
 }
 
 
-
 // MARK: - STACK OPERATIONS
 
 
@@ -94,7 +93,6 @@ private extension PopupStack {
         []
     }
 }
-
 
 
 // MARK: - STACK CONTAINER OPERATIONS

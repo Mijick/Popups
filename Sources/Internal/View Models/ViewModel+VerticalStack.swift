@@ -21,7 +21,6 @@ extension VM { class VerticalStack: ViewModel { required init() {}
 }}
 
 
-
 // MARK: - METHODS / VIEW MODEL / ACTIVE POPUP
 
 
@@ -171,7 +170,6 @@ extension VM.VerticalStack {
 }
 
 
-
 // MARK: - METHODS / VIEW MODEL / SELECTED POPUP
 
 
@@ -212,7 +210,6 @@ private extension VM.VerticalStack {
         return stackedItemsHeight
     }
 }
-
 
 
 // MARK: - METHODS / VIEW
@@ -305,7 +302,6 @@ extension VM.VerticalStack {
     var minStackOverlayProgressMultiplier: CGFloat { 0.6 }
     var maxNumberOfVisiblePopups: Int { 3 }
 }
-
 
 
 // MARK: - GESTURES

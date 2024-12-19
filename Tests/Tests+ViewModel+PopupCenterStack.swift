@@ -37,7 +37,6 @@ private extension PopupCenterStackViewModelTests {
 }
 
 
-
 // MARK: - TEST CASES
 
 
@@ -221,7 +220,6 @@ private extension PopupCenterStackViewModelTests {
         )
     }
 }
-
 
 
 // MARK: - HELPERS

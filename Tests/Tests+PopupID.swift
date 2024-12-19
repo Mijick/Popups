@@ -16,7 +16,6 @@ import SwiftUI
 @MainActor final class PopupIDTests: XCTestCase {}
 
 
-
 // MARK: - TEST CASES
 
 
@@ -117,7 +116,6 @@ extension PopupIDTests {
         XCTAssertEqual(result, false)
     }
 }
-
 
 
 // MARK: - HELPERS
