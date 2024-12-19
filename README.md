@@ -63,19 +63,19 @@
 <p>
     <!--Discord-->
     <a href="https://link.mijick.com/discord">
-        <img alt="Join us on Discord" src="https://github.com/Mijick/Assets/blob/main/Popups/Buttons/discord.png" height="40px">
+        <img alt="Join us on Discord" src="https://github.com/Mijick/Assets/blob/main/Common/Buttons/discord.png" height="40px">
     </a>
     <!--GitHub-->
     <a href="https://link.mijick.com/github">
-        <img alt="See our other frameworks" src="https://github.com/Mijick/Assets/blob/main/Popups/Buttons/github.png" height="40px">
+        <img alt="See our other frameworks" src="https://github.com/Mijick/Assets/blob/main/Common/Buttons/github.png" height="40px">
     </a>
     <!--Medium-->
     <a href="https://link.mijick.com/medium">
-        <img alt="Read us on Medium" src="https://github.com/Mijick/Assets/blob/main/Popups/Buttons/medium.png" height="40px">
+        <img alt="Read us on Medium" src="https://github.com/Mijick/Assets/blob/main/Common/Buttons/medium.png" height="40px">
     </a>
     <!--Buymeacoffee-->
     <a href="https://link.mijick.com/buymeacoffee">
-        <img alt="Buy us a coffee" src="https://github.com/Mijick/Assets/blob/main/Popups/Buttons/buymeacoffee.png" height="40px">
+        <img alt="Buy us a coffee" src="https://github.com/Mijick/Assets/blob/main/Common/Buttons/buymeacoffee.png" height="40px">
     </a>
 </p>
 
