@@ -44,11 +44,11 @@ public extension View {
      */
     func registerPopups(id: PopupStackID = .shared, configBuilder: @escaping (GlobalConfigContainer) -> GlobalConfigContainer = { $0 }) -> some View {
         #if os(tvOS)
-        PopupView(rootView: self, stack: .registerStack(id: id)).onAppear { _ = configBuilder(.init()) }
+        PopupView(rootView: self, popupStack: .registerStack(id: id)).onAppear { _ = configBuilder(.init()) }
         #else
         self
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .overlay(PopupView(stack: .registerStack(id: id)), alignment: .top)
+            .overlay(PopupView(rootView: self, popupStack: .registerStack(id: id)), alignment: .top)
             .onAppear { _ = configBuilder(.init()) }
         #endif
     }
