@@ -102,32 +102,32 @@
         <td></td>
         <td>Resizable popups</td>
     </tr>
-        <tr>
+    <tr>
         <td></td>
         <td>Automatic dismissal</td>
     </tr>
     <tr>
-        <td></td>
+        <td>🖖</td>
         <td>Super easy to use from any place in the code</td>
     </tr>
     <tr>
-        <td></td>
+        <td>🚧</td>
         <td>Fully customizable</td>
     </tr>
     <tr>
-        <td></td>
+        <td>🕺</td>
         <td>Beautiful animations</td>
     </tr>
     <tr>
-        <td></td>
+        <td>🤏🏼</td>
         <td>Gestures support</td>
     </tr>
     <tr>
-        <td></td>
+        <td>🍏</td>
         <td>Works with SwiftUI sheets</td>
     </tr>
     <tr>
-        <td></td>
+        <td>🖥️</td>
         <td>Supports iOS, macOS, tvOS, watchOS and visionOS</td>
     </tr>
     <tr>
