@@ -16,8 +16,8 @@ extension VM { class VerticalStack: ViewModel { required init() {}
     var popups: [AnyPopup] = []
     var activePopupProperties: ActivePopupProperties = .init()
     var screen: Screen = .init()
-    var updatePopupAction: ((AnyPopup) async -> ())!
-    var closePopupAction: ((AnyPopup) async -> ())!
+    var updatePopupAction: ((AnyPopup) async -> ())?
+    var closePopupAction: ((AnyPopup) async -> ())?
 }}
 
 
@@ -367,7 +367,7 @@ extension VM.VerticalStack {
 }
 private extension VM.VerticalStack {
     func dismissLastPopupIfNeeded(_ popup: AnyPopup) async { switch activePopupProperties.translationProgress >= dragThreshold {
-        case true: await closePopupAction(popup)
+        case true: await closePopupAction?(popup)
         case false: return
     }}
     func calculateTargetDragHeight(_ activePopup: AnyPopup) async -> CGFloat {

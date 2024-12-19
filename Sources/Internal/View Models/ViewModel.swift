@@ -21,8 +21,8 @@ enum VM {}
     var screen: Screen { get set }
 
     // MARK: Actions
-    var updatePopupAction: ((AnyPopup) async -> ())! { get set }
-    var closePopupAction: ((AnyPopup) async -> ())! { get set }
+    var updatePopupAction: ((AnyPopup) async -> ())? { get set }
+    var closePopupAction: ((AnyPopup) async -> ())? { get set }
 
     // MARK: Methods
     func calculateActivePopupHeight() async -> CGFloat?
@@ -93,7 +93,7 @@ extension ViewModel {
 
         let newHeight = await calculatePopupHeight(heightCandidate, popup)
         if newHeight != popup.height {
-            await updatePopupAction(popup.updatedHeight(newHeight))
+            await updatePopupAction?(popup.updatedHeight(newHeight))
         }
     }
 }
@@ -101,7 +101,7 @@ extension ViewModel {
 // MARK: Popup Drag Height
 extension ViewModel {
     func updatePopupDragHeight(_ targetDragHeight: CGFloat, _ popup: AnyPopup) async {
-        await updatePopupAction(popup.updatedDragHeight(targetDragHeight))
+        await updatePopupAction?(popup.updatedDragHeight(targetDragHeight))
     }
 }
 
