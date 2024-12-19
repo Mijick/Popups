@@ -91,6 +91,46 @@
         <td>Three positions for the popups: Top, Center or Bottom</td>
     </tr>
     <tr>
+        <td></td>
+        <td>Stackable popups</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Three height modes: Automatic, Large or Fullscreen</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Resizable popups</td>
+    </tr>
+        <tr>
+        <td></td>
+        <td>Automatic dismissal</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Super easy to use from any place in the code</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Fully customizable</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Beautiful animations</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Gestures support</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Works with SwiftUI sheets</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Supports iOS, macOS, tvOS, watchOS and visionOS</td>
+    </tr>
+    <tr>
         <td>⚡️</td>
         <td>Supports Swift 6</td>
     </tr>
