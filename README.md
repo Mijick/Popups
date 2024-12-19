@@ -69,6 +69,10 @@
     <a href="https://link.mijick.com/linkedin">
         <img alt="Follow us on LinkedIn" src="https://github.com/Mijick/Assets/blob/main/Common/Buttons/linkedin.png" height="40px">
     </a>
+    <!--Linkedin-->
+    <a href="https://link.mijick.com/linkedin">
+        <img alt="Follow us on LinkedIn" src="https://github.com/Mijick/Assets/blob/main/Popups/Buttons/linkedin.png" height="40px">
+    </a>
     <!--GitHub-->
     <a href="https://link.mijick.com/github">
         <img alt="See our other frameworks" src="https://github.com/Mijick/Assets/blob/main/Common/Buttons/github.png" height="40px">
@@ -102,7 +106,7 @@
 
 <!--Description-->
 # ☀️ Why MijickPopups?
-MijickPopups solves two seemingly contradictory problems - to allow developers to create fully customizable popup, and to make the process as simple as possible. Here is why we think we have successfully met these objectives:
+MijickPopups library solves two seemingly contradictory problems - to allow developers to create fully customizable popup views, and to make the process as simple as possible. Here is why we think we have successfully met these objectives:
 
 <p>
     <h3>The power of a single line of code</h3>
@@ -112,7 +116,7 @@ MijickPopups solves two seemingly contradictory problems - to allow developers t
 
 <p>
     <h3>Tailored to your needs. Designed to suit your preferences</h3>
-    <p>Developers have various programming styles, and we understand and respect that. Therefore, our framework is engineered in such a way that you can open or close a popup from anywhere in your code.</p>
+    <p>Developers have various programming styles, and we understand and respect that. Therefore, our framework is engineered in such a way that you can open or close a popup view from anywhere in your code.</p>
     <img alt="Code Example 2" src="https://github.com/Mijick/Assets/blob/main/Popups/Code/interact-anywhere.png" width="100%">
 </p>
 
@@ -136,7 +140,7 @@ MijickPopups solves two seemingly contradictory problems - to allow developers t
 
 <p>
     <h3>Past, present and future</h3>
-    <p>We decided to reach out to developers who, for various reasons, want to use native sheets and alerts alongside our framework. From now on, this is possible, and in the near future, we will also add the ability to call sheets in a native style, allowing you to integrate our framework into your existing projects as well.</p>
+    <p>We decided to reach out to developers who, for various reasons, want to use native sheets and alerts alongside our framework. From now on, this is possible, and in the near future, we will also add the ability to call sheets in a native SwiftUI style, allowing you to integrate our framework into your existing projects as well.</p>
     <img alt="Code Example 6" src="https://github.com/Mijick/Assets/blob/main/Popups/Code/native-with-framework.png" width="100%">
 </p>
 
@@ -146,7 +150,8 @@ MijickPopups solves two seemingly contradictory problems - to allow developers t
 - Popups can be automatically dismissed after a certain period of time.
 - Drag gesture can be used to resize the popup, according to the provided indentations.
 - Works with multiple windows.
-- Supports all Apple platforms.
+- Supports all Apple platforms: iOS 14.0+ / macOS 12.0+ / tvOS 15.0+ / watchOS 7.0+ / visionOS 1.0+.
+- Supports Swift 6.0.
 - ... and much more.
 
 <!--Documentation-->
