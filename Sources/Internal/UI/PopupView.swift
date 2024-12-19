@@ -22,6 +22,14 @@ struct PopupView: View {
     private let bottomStackViewModel: VM.VerticalStack = .init(BottomPopupConfig.self)
 
 
+    init(rootView: any View, popupStack: PopupStack) {
+        #if os(tvOS)
+        self.rootView = rootView
+        #endif
+        self.stack = popupStack
+
+        Task { [self] in await updateViewModels { await $0.updatePopups(stack.popups) } }
+    }
     var body: some View {
         #if os(tvOS)
         AnyView(rootView)
