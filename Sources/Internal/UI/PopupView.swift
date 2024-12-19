@@ -16,10 +16,10 @@ struct PopupView: View {
     let rootView: any View
     #endif
 
-    @StateObject var stack: PopupStack
-    @StateObject private var topStackViewModel: VM.VerticalStack = .init(TopPopupConfig.self)
-    @StateObject private var centerStackViewModel: VM.CenterStack = .init(CenterPopupConfig.self)
-    @StateObject private var bottomStackViewModel: VM.VerticalStack = .init(BottomPopupConfig.self)
+    @ObservedObject var stack: PopupStack
+    private let topStackViewModel: VM.VerticalStack = .init(TopPopupConfig.self)
+    private let centerStackViewModel: VM.CenterStack = .init(CenterPopupConfig.self)
+    private let bottomStackViewModel: VM.VerticalStack = .init(BottomPopupConfig.self)
 
 
     var body: some View {

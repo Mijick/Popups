@@ -15,12 +15,12 @@ struct PopupCenterStackView: View {
     @ObservedObject var viewModel: VM.CenterStack
 
     
-    var body: some View {
+    var body: some View { if viewModel.screen.height > 0 {
         ZStack(content: createPopupStack)
             .id(viewModel.popups.isEmpty)
             .transition(transition)
             .frame(maxWidth: .infinity, maxHeight: viewModel.screen.height)
-    }
+    }}
 }
 private extension PopupCenterStackView {
     func createPopupStack() -> some View {

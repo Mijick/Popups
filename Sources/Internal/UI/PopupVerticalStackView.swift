@@ -15,11 +15,11 @@ struct PopupVerticalStackView: View {
     @ObservedObject var viewModel: VM.VerticalStack
 
 
-    var body: some View {
+    var body: some View { if viewModel.screen.height > 0 {
         ZStack(alignment: (!viewModel.alignment).toAlignment(), content: createPopupStack)
             .frame(height: viewModel.screen.height, alignment: viewModel.alignment.toAlignment())
             .onDragGesture(onChanged: viewModel.onPopupDragGestureChanged, onEnded: viewModel.onPopupDragGestureEnded, isEnabled: viewModel.dragGestureEnabled)
-    }
+    }}
 }
 private extension PopupVerticalStackView {
     func createPopupStack() -> some View {
