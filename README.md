@@ -87,80 +87,8 @@
 # ✨ Features
 <table><tbody>
     <tr>
-        <td>🙏🏻</td>
-        <td>Automatically handles permissions</td>
-    </tr>
-    <tr>
-        <td>🖼️</td>
-        <td>Image capture</td>
-    </tr>
-    <tr>
-        <td>🎬️</td>
-        <td>Video capture (with or without sound)</td>
-    </tr>
-    <tr>
-        <td>📸</td>
-        <td>Camera position changes</td>
-    </tr>
-    <tr>
-        <td>🔍️</td>
-        <td>Supports manual zoom</td>
-    </tr>
-    <tr>
-        <td>👁️</td>
-        <td>Supports manual focus</td>
-    </tr>
-    <tr>
-        <td>🎞️</td>
-        <td>Changeable frame rate</td>
-    </tr>
-    <tr>
-        <td>📺️</td>
-        <td>Changeable camera resolution</td>
-    </tr>
-    <tr>
-        <td>🙈</td>
-        <td>Camera filters</td>
-    </tr>
-    <tr>
-        <td>🔦</td>
-        <td>Torch</td>
-    </tr>
-    <tr>
-        <td>📸</td>
-        <td>Flash</td>
-    </tr>
-    <tr>
-        <td>⏱️</td>
-        <td>Other camera settings (exposure duration, target bias, ISO, HDR mode and more)</td>
-    </tr>
-    <tr>
-        <td>☢️</td>
-        <td>Displays error screen if permissions are not granted</td>
-    </tr>
-    <tr>
-        <td>🖼️</td>
-        <td>Displays captured media screen</td>
-    </tr>
-    <tr>
         <td>📱</td>
-        <td>Modern and minimalistic UI</td>
-    </tr>
-    <tr>
-        <td>🕺</td>
-        <td>Beautiful animations</td>
-    </tr>
-    <tr>
-        <td>🚧</td>
-        <td>Fully customizable screens</td>
-    </tr>
-    <tr>
-        <td>🤏🏼</td>
-        <td>Gestures support</td>
-    </tr>
-    <tr>
-        <td>📲</td>
-        <td>Blocks screen orientation change</td>
+        <td>Three positions for the popups: Top, Center or Bottom</td>
     </tr>
     <tr>
         <td>⚡️</td>
