@@ -75,11 +75,20 @@ private extension PopupBottomStackView {
     }}
 }
 private extension PopupBottomStackView {
-    func canDragGestureBeUsed() -> Bool { lastPopupConfig.dragGestureEnabled ?? globalConfig.bottom.dragGestureEnabled }
-    func updateGestureTranslation(_ value: CGFloat) { switch lastPopupConfig.dragDetents.isEmpty {
+    func canDragGestureBeUsed() -> Bool {
+        let result = lastPopupConfig.dragGestureEnabled ?? globalConfig.bottom.dragGestureEnabled
+        if result == true {
+            return PopupManager.shared.enable
+        } else {
+            return result
+        }
+    }
+    func updateGestureTranslation(_ value: CGFloat) {
+        switch lastPopupConfig.dragDetents.isEmpty {
         case true: gestureTranslation = calculateGestureTranslationWhenNoDragDetents(value)
         case false: gestureTranslation = calculateGestureTranslationWhenDragDetents(value)
-    }}
+        }
+    }
 }
 private extension PopupBottomStackView {
     func calculateGestureTranslationWhenNoDragDetents(_ value: CGFloat) -> CGFloat { max(value, 0) }
