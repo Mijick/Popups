@@ -17,7 +17,7 @@ public class PopupManager: ObservableObject {
     private(set) var popupsToBeDismissed: [ID: DispatchSourceTimer] = [:]
     private(set) var popupActionsOnDismiss: [ID: () -> ()] = [:]
 
-    static let shared: PopupManager = .init()
+    public static let shared: PopupManager = .init()
     
     @Published public var enable = true
     
