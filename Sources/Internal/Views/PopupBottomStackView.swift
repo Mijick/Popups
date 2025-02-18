@@ -91,7 +91,11 @@ private extension PopupBottomStackView {
     }
 }
 private extension PopupBottomStackView {
-    func calculateGestureTranslationWhenNoDragDetents(_ value: CGFloat) -> CGFloat { max(value, 0) }
+    func calculateGestureTranslationWhenNoDragDetents(_ value: CGFloat) -> CGFloat {
+        let val = max(value, 0)
+        PopupManager.shared.continueMove = !(val == 0)
+        return val
+    }
     func calculateGestureTranslationWhenDragDetents(_ value: CGFloat) -> CGFloat { guard value < 0, let lastPopupHeight = getLastPopupHeight() else { return value }
         let maxHeight = calculateMaxHeightForDragGesture(lastPopupHeight)
         let dragTranslation = calculateDragTranslation(maxHeight, lastPopupHeight)

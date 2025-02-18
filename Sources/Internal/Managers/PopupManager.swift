@@ -20,6 +20,7 @@ public class PopupManager: ObservableObject {
     public static let shared: PopupManager = .init()
     
     @Published public var enable = true
+    @Published public var continueMove = true
     
     private init() {}
 }
