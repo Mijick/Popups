@@ -7,15 +7,14 @@
 
 import UIKit
 
-@objc public protocol MijickScrollViewGesture: UIScrollViewDelegate {
-    @objc func scrollViewDidScroll(_ scrollView: UIScrollView)
-    @objc func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
-    @objc func scrollViewWillBeginDragging(_ scrollView: UIScrollView)
+@MainActor public protocol MijickScrollViewGesture: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView)
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView)
 }
 
-public extension MijickScrollViewGesture {
+class MijickScrollViewGestureImpl: NSObject, MijickScrollViewGesture {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print(scrollView.contentOffset.y)
         if scrollView.contentOffset.y < 0 {
             scrollView.setContentOffset(.zero, animated: false)
             if scrollView.contentOffset.y <= 0 {
@@ -29,13 +28,11 @@ public extension MijickScrollViewGesture {
             }
         }
     }
-    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if PopupManager.shared.enable != true {
             PopupManager.shared.enable = true
         }
     }
-    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y > 0 {
             if PopupManager.shared.enable != false {
