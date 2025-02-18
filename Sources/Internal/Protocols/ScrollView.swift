@@ -13,9 +13,9 @@ import UIKit
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView)
 }
 
-public class MijickScrollViewGestureImpl: NSObject, MijickScrollViewGesture {
+open class MijickScrollViewGestureImpl: NSObject, MijickScrollViewGesture {
     
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y < 0 {
             scrollView.setContentOffset(.zero, animated: false)
             if scrollView.contentOffset.y <= 0 {
@@ -30,13 +30,13 @@ public class MijickScrollViewGestureImpl: NSObject, MijickScrollViewGesture {
         }
     }
     
-    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if PopupManager.shared.enable != true {
             PopupManager.shared.enable = true
         }
     }
     
-    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    open func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y > 0 {
             if PopupManager.shared.enable != false {
                 PopupManager.shared.enable = false
