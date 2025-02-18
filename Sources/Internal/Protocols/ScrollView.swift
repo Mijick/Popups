@@ -8,9 +8,9 @@
 import UIKit
 
 @objc public protocol MijickScrollViewGesture: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView)
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView)
+    @objc func scrollViewDidScroll(_ scrollView: UIScrollView)
+    @objc func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
+    @objc func scrollViewWillBeginDragging(_ scrollView: UIScrollView)
 }
 
 public extension MijickScrollViewGesture {
