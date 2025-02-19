@@ -24,7 +24,7 @@ open class MijickScrollViewGestureImpl: NSObject, MijickScrollViewGesture {
                 }
             }
         } else {
-            if PopupManager.shared.enable == true && PopupManager.shared.continueMove == true {
+            if PopupManager.shared.enable == true && PopupManager.shared.continueMove == false {
                 scrollView.setContentOffset(.zero, animated: false)
             }
         }
