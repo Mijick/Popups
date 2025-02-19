@@ -24,15 +24,17 @@ open class MijickScrollViewGestureImpl: NSObject, MijickScrollViewGesture {
                 }
             }
         } else {
-            if PopupManager.shared.enable == true && PopupManager.shared.continueMove == false {
+            if PopupManager.shared.enable == true && PopupManager.shared.continueMove == true {
                 scrollView.setContentOffset(.zero, animated: false)
             }
         }
     }
     
     open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if PopupManager.shared.enable != true {
-            PopupManager.shared.enable = true
+        if scrollView.contentOffset.y <= 0 {
+            if PopupManager.shared.enable != true {
+                PopupManager.shared.enable = true
+            }
         }
     }
     
