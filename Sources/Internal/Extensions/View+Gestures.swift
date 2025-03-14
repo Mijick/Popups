@@ -28,7 +28,7 @@ extension View {
         #if os(tvOS)
         self
         #else
-        let dragGesture = DragGesture()
+        let dragGesture = DragGesture(minimumDistance: 170)
             .onChanged { newValue in Task { @MainActor in await actionOnChanged(newValue.translation.height) }}
             .onEnded { newValue in Task { @MainActor in await actionOnEnded(newValue.translation.height) }}
         return highPriorityGesture(TapGesture().exclusively(before: dragGesture) )
