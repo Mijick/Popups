@@ -28,12 +28,10 @@ extension View {
         #if os(tvOS)
         self
         #else
-        highPriorityGesture(
-            DragGesture()
-                .onChanged { newValue in Task { @MainActor in await actionOnChanged(newValue.translation.height) }}
-                .onEnded { newValue in Task { @MainActor in await actionOnEnded(newValue.translation.height) }},
-            isEnabled: isEnabled
-        )
+        let dragGesture = DragGesture()
+            .onChanged { newValue in Task { @MainActor in await actionOnChanged(newValue.translation.height) }}
+            .onEnded { newValue in Task { @MainActor in await actionOnEnded(newValue.translation.height) }}
+        return highPriorityGesture(TapGesture().exclusively(before: dragGesture) )
         #endif
     }
 }
