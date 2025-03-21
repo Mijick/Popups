@@ -16,6 +16,7 @@ struct AnyPopup: Popup {
     private(set) var config: AnyPopupConfig
     private(set) var height: CGFloat? = nil
     private(set) var dragHeight: CGFloat = 0
+    private(set) var shouldDismissKeyboardOnDismissal: Bool = true
 
     private var _dismissTimer: PopupActionScheduler? = nil
     private var _body: AnyView
@@ -58,6 +59,7 @@ private extension AnyPopup {
 extension AnyPopup {
     func updatedDismissTimer(_ secondsToDismiss: Double) -> AnyPopup { updated { $0._dismissTimer = .prepare(time: secondsToDismiss) }}
     func updatedEnvironmentObject(_ environmentObject: some ObservableObject) -> AnyPopup { updated { $0._body = .init(_body.environmentObject(environmentObject)) }}
+    func updatedKeyboardDismissal(_ shouldDismiss: Bool) -> AnyPopup { updated { $0.shouldDismissKeyboardOnDismissal = shouldDismiss }}
     func startDismissTimerIfNeeded(_ popupStack: PopupStack) -> AnyPopup { updated { $0._dismissTimer?.schedule { popupStack.modify(.removePopup(self)) }}}
 }
 private extension AnyPopup {

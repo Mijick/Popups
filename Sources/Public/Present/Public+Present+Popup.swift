@@ -57,4 +57,12 @@ public extension Popup {
         - seconds: Time in seconds after which the popup will be closed.
      */
     @MainActor func dismissAfter(_ seconds: Double) async -> some Popup { await AnyPopup(self).updatedDismissTimer(seconds) }
+
+    /**
+     Configures whether the keyboard should be dismissed when the popup is removed.
+
+     - Parameters:
+        - shouldDismiss: If true, the keyboard will be dismissed when the popup is removed. If false, the keyboard will remain visible.
+     */
+    @MainActor func dismissKeyboardOnDismissal(_ shouldDismiss: Bool) async -> some Popup { await AnyPopup(self).updatedKeyboardDismissal(shouldDismiss) }
 }

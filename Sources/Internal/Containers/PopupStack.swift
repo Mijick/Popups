@@ -38,19 +38,27 @@ extension PopupStack { enum StackOperation {
 }}
 extension PopupStack {
     func modify(_ operation: StackOperation) { Task {
-        await hideKeyboard()
+        let oldPopups = popups
+        let newPopups = await getNewPopups(operation)
+        let newPriority = await getNewPriority(newPopups)
 
-        let oldPopups = popups,
-            newPopups = await getNewPopups(operation),
-            newPriority = await getNewPriority(newPopups)
+        // Find which popup is being dismissed by comparing old and new popups
+        if let dismissedPopup = await findDismissedPopup(oldPopups: oldPopups, newPopups: newPopups) {
+            if dismissedPopup.shouldDismissKeyboardOnDismissal {
+                await AnyView.hideKeyboard()
+            }
+        }
 
         await updatePopups(newPopups)
         await updatePriority(newPriority, oldPopups.count)
     }}
 }
 private extension PopupStack {
-    nonisolated func hideKeyboard() async {
-        await AnyView.hideKeyboard()
+    nonisolated func findDismissedPopup(oldPopups: [AnyPopup], newPopups: [AnyPopup]) async -> AnyPopup? {
+        // Find the popup that exists in oldPopups but not in newPopups
+        return oldPopups.first { popup in
+            !newPopups.contains { $0.id.isSame(as: popup) }
+        }
     }
     nonisolated func getNewPopups(_ operation: StackOperation) async -> [AnyPopup] { switch operation {
         case .insertPopup(let popup): await insertedPopup(popup)
