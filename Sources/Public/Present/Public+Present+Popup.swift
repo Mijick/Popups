@@ -62,7 +62,7 @@ public extension Popup {
      Configures whether the keyboard should be dismissed when the popup is removed.
 
      - Parameters:
-        - shouldDismiss: If true, the keyboard will be dismissed when the popup is removed. If false, the keyboard will remain visible.
+        - shouldDismiss: If true, the keyboard will be dismissed when the popup appears or hides. If false, the keyboard will remain visible.
      */
     @MainActor func dismissKeyboardOnDismissal(_ shouldDismiss: Bool) async -> some Popup { await AnyPopup(self).updatedKeyboardDismissal(shouldDismiss) }
 }
