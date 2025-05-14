@@ -61,6 +61,10 @@
 
 <!--Buttons-->
 <p>
+    <!--Website-->
+    <a href="https://link.mijick.com/app">
+        <img alt="Visit our Website" src="https://github.com/Mijick/Assets/blob/main/Common/Buttons/website.png" height="40px">
+    </a>
     <!--Discord-->
     <a href="https://link.mijick.com/discord">
         <img alt="Join us on Discord" src="https://github.com/Mijick/Assets/blob/main/Common/Buttons/discord.png" height="40px">
