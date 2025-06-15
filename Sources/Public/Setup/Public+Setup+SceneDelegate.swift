@@ -74,22 +74,29 @@ extension PopupSceneDelegate {
 
 
 // MARK: - WINDOW
-
-
-
-// MARK: Implementation
 fileprivate class Window: UIWindow {
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        if #available(iOS 18, *) { point_iOS18(inside: point, with: event) }
-        else { point_iOS17(inside: point, with: event) }
+        if #available(iOS 18, *) {
+            // This custom logic for iOS 18+ is likely still necessary.
+            return point_iOS18(inside: point, with: event)
+        }
+        // Fallback for older versions.
+        return super.point(inside: point, with: event)
     }
+
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        if #available(iOS 18, *) { hitTest_iOS18(point, with: event) }
-        else { hitTest_iOS17(point, with: event) }
+        // This unified logic correctly handles touch pass-through.
+        // It should be used for all relevant iOS versions.
+        guard let hit = super.hitTest(point, with: event) else { return nil }
+
+        // If the hit view is the root view controller's view (the transparent background),
+        // return nil to pass the touch through. Otherwise, return the hit view (the popup).
+        return rootViewController?.view == hit ? nil : hit
     }
 }
 
-// MARK: Point
+
+// MARK: Point Helper (for iOS 18+)
 private extension Window {
     @available(iOS 18, *)
     func point_iOS18(inside point: CGPoint, with event: UIEvent?) -> Bool {
@@ -98,25 +105,11 @@ private extension Window {
         let hit = hitTestHelper(point, with: event, view: subviews.count > 1 ? self : view)
         return hit != nil
     }
-    func point_iOS17(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        super.point(inside: point, with: event)
-    }
-}
-
-// MARK: Hit Test
-private extension Window {
-    @available(iOS 18, *)
-    func hitTest_iOS18(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        super.hitTest(point, with: event)
-    }
-    func hitTest_iOS17(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        guard let hit = super.hitTest(point, with: event) else { return nil }
-        return rootViewController?.view == hit ? nil : hit
-    }
 }
 
 
 // MARK: Hit Test Helper
+// This remains unchanged as it's required by point_iOS18.
 // Based on philip_trauner solution: https://forums.developer.apple.com/forums/thread/762292?answerId=803885022#803885022
 @available(iOS 18, *)
 private extension Window {
@@ -128,30 +121,28 @@ private extension Window {
             return getDeepestHitTestResult(candidate: result, current: deepest)
         }
     }
-}
-@available(iOS 18, *)
-private extension Window {
+    
     func shouldCheckSubview(_ subview: UIView, convertedPoint: CGPoint, event: UIEvent?) -> Bool {
         subview.isUserInteractionEnabled &&
         subview.isHidden == false &&
         subview.alpha > 0 &&
         subview.point(inside: convertedPoint, with: event)
     }
+
     func calculateHitTestSubviewResult(_ point: CGPoint, with event: UIEvent?, subview: UIView, depth: Int) -> HitTestResult {
         switch hitTestHelper(point, with: event, view: subview, depth: depth + 1) {
             case .some(let result): result
             case nil: (subview, depth)
         }
     }
+
     func getDeepestHitTestResult(candidate: HitTestResult, current: HitTestResult?) -> HitTestResult {
         switch current {
             case .some(let current) where current.depth > candidate.depth: current
             default: candidate
         }
     }
-}
-@available(iOS 18, *)
-private extension Window {
+    
     typealias HitTestResult = (view: UIView, depth: Int)
 }
 #endif
