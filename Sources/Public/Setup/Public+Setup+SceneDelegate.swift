@@ -74,50 +74,39 @@ extension PopupSceneDelegate {
 
 
 // MARK: - WINDOW
-
-
-
-// MARK: Implementation
 fileprivate class Window: UIWindow {
-    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        if #available(iOS 18, *) { point_iOS18(inside: point, with: event) }
-        else { point_iOS17(inside: point, with: event) }
-    }
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        if #available(iOS 18, *) { hitTest_iOS18(point, with: event) }
-        else { hitTest_iOS17(point, with: event) }
-    }
-}
+        let hitView: UIView?
 
-// MARK: Point
-private extension Window {
-    @available(iOS 18, *)
-    func point_iOS18(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        guard let view = rootViewController?.view else { return false }
+        // On iOS 18 and newer, we manually find the hit view because super.hitTest is unreliable.
+        if #available(iOS 18, *) {
+            hitView = hitTestHelper(point, with: event, view: self)?.view
+        } else {
+            // On older versions, super.hitTest is sufficient.
+            hitView = super.hitTest(point, with: event)
+        }
 
-        let hit = hitTestHelper(point, with: event, view: subviews.count > 1 ? self : view)
-        return hit != nil
-    }
-    func point_iOS17(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        super.point(inside: point, with: event)
-    }
-}
-
-// MARK: Hit Test
-private extension Window {
-    @available(iOS 18, *)
-    func hitTest_iOS18(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        super.hitTest(point, with: event)
-    }
-    func hitTest_iOS17(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        guard let hit = super.hitTest(point, with: event) else { return nil }
-        return rootViewController?.view == hit ? nil : hit
+        guard let hitView = hitView else { return nil }
+        
+        // Check if the tap-outside-to-dismiss feature is enabled for the top-most popup.
+        // Note: This assumes a single window context.
+        let isTapOutsideToDismissEnabled = PopupStackContainer.stacks.first?.popups.last?.config.isTapOutsideToDismissEnabled ?? false
+        
+        // Check if the hit view is the base background view of our hosting controller.
+        if hitView == rootViewController?.view {
+            // If the touch is on the background, we only handle it if tap-outside-to-dismiss is enabled.
+            // Otherwise, we return nil to pass the touch to the window behind.
+            return isTapOutsideToDismissEnabled ? hitView : nil
+        }
+        
+        // The touch landed on a popup or its content, so we handle it.
+        return hitView
     }
 }
 
 
 // MARK: Hit Test Helper
-// Based on philip_trauner solution: https://forums.developer.apple.com/forums/thread/762292?answerId=803885022#803885022
+// This helper is now used by hitTest() on iOS 18 and newer.
 @available(iOS 18, *)
 private extension Window {
     func hitTestHelper(_ point: CGPoint, with event: UIEvent?, view: UIView, depth: Int = 0) -> HitTestResult? {
@@ -128,30 +117,28 @@ private extension Window {
             return getDeepestHitTestResult(candidate: result, current: deepest)
         }
     }
-}
-@available(iOS 18, *)
-private extension Window {
+    
     func shouldCheckSubview(_ subview: UIView, convertedPoint: CGPoint, event: UIEvent?) -> Bool {
         subview.isUserInteractionEnabled &&
         subview.isHidden == false &&
         subview.alpha > 0 &&
         subview.point(inside: convertedPoint, with: event)
     }
+
     func calculateHitTestSubviewResult(_ point: CGPoint, with event: UIEvent?, subview: UIView, depth: Int) -> HitTestResult {
         switch hitTestHelper(point, with: event, view: subview, depth: depth + 1) {
             case .some(let result): result
             case nil: (subview, depth)
         }
     }
+
     func getDeepestHitTestResult(candidate: HitTestResult, current: HitTestResult?) -> HitTestResult {
         switch current {
             case .some(let current) where current.depth > candidate.depth: current
             default: candidate
         }
     }
-}
-@available(iOS 18, *)
-private extension Window {
+    
     typealias HitTestResult = (view: UIView, depth: Int)
 }
 #endif
