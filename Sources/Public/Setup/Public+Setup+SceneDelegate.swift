@@ -75,42 +75,38 @@ extension PopupSceneDelegate {
 
 // MARK: - WINDOW
 fileprivate class Window: UIWindow {
-    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        if #available(iOS 18, *) {
-            // This custom logic for iOS 18+ is likely still necessary.
-            return point_iOS18(inside: point, with: event)
-        }
-        // Fallback for older versions.
-        return super.point(inside: point, with: event)
-    }
-
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        // This unified logic correctly handles touch pass-through.
-        // It should be used for all relevant iOS versions.
-        guard let hit = super.hitTest(point, with: event) else { return nil }
+        let hitView: UIView?
 
-        // If the hit view is the root view controller's view (the transparent background),
-        // return nil to pass the touch through. Otherwise, return the hit view (the popup).
-        return rootViewController?.view == hit ? nil : hit
-    }
-}
+        // On iOS 18 and newer, we manually find the hit view because super.hitTest is unreliable.
+        if #available(iOS 18, *) {
+            hitView = hitTestHelper(point, with: event, view: self)?.view
+        } else {
+            // On older versions, super.hitTest is sufficient.
+            hitView = super.hitTest(point, with: event)
+        }
 
-
-// MARK: Point Helper (for iOS 18+)
-private extension Window {
-    @available(iOS 18, *)
-    func point_iOS18(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        guard let view = rootViewController?.view else { return false }
-
-        let hit = hitTestHelper(point, with: event, view: subviews.count > 1 ? self : view)
-        return hit != nil
+        guard let hitView = hitView else { return nil }
+        
+        // Check if the tap-outside-to-dismiss feature is enabled for the top-most popup.
+        // Note: This assumes a single window context.
+        let isTapOutsideToDismissEnabled = PopupStackContainer.stacks.first?.popups.last?.config.isTapOutsideToDismissEnabled ?? false
+        
+        // Check if the hit view is the base background view of our hosting controller.
+        if hitView == rootViewController?.view {
+            // If the touch is on the background, we only handle it if tap-outside-to-dismiss is enabled.
+            // Otherwise, we return nil to pass the touch to the window behind.
+            return isTapOutsideToDismissEnabled ? hitView : nil
+        }
+        
+        // The touch landed on a popup or its content, so we handle it.
+        return hitView
     }
 }
 
 
 // MARK: Hit Test Helper
-// This remains unchanged as it's required by point_iOS18.
-// Based on philip_trauner solution: https://forums.developer.apple.com/forums/thread/762292?answerId=803885022#803885022
+// This helper is now used by hitTest() on iOS 18 and newer.
 @available(iOS 18, *)
 private extension Window {
     func hitTestHelper(_ point: CGPoint, with event: UIEvent?, view: UIView, depth: Int = 0) -> HitTestResult? {
