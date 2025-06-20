@@ -77,32 +77,26 @@ extension PopupSceneDelegate {
 
 fileprivate class Window: UIWindow {
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        // For "iOS 26" (19+), we let hitTest do all the work.
-        if #available(iOS 19, *) {
+        if #available(iOS 26, *) {
             return super.point(inside: point, with: event)
         }
         
-        // For iOS 18, we must use the original helper logic in point(inside:).
         if #available(iOS 18, *) {
             return point_iOS18(inside: point, with: event)
         }
         
-        // For iOS 17 and below, the default behavior is sufficient.
         return super.point(inside: point, with: event)
     }
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        // "iOS 26" (19+) requires the new, manual hit-test logic.
-        if #available(iOS 19, *) {
+        if #available(iOS 26, *) {
             return hitTest_iOS19(point, with: event)
         }
         
-        // iOS 18 requires the original logic of just calling super.
         if #available(iOS 18, *) {
             return hitTest_iOS18(point, with: event)
         }
         
-        // iOS 17 and below use their own specific pass-through logic.
         return hitTest_iOS17(point, with: event)
     }
 }
@@ -111,13 +105,11 @@ fileprivate class Window: UIWindow {
 // MARK: - VERSION-SPECIFIC HELPERS
 
 private extension Window {
-    // MARK: For iOS 17 and below
     func hitTest_iOS17(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         guard let hit = super.hitTest(point, with: event) else { return nil }
         return rootViewController?.view == hit ? nil : hit
     }
     
-    // MARK: For iOS 18
     @available(iOS 18, *)
     func point_iOS18(inside point: CGPoint, with event: UIEvent?) -> Bool {
         guard let view = rootViewController?.view else { return false }
@@ -130,8 +122,7 @@ private extension Window {
         super.hitTest(point, with: event)
     }
 
-    // MARK: For "iOS 26" (iOS 19+)
-    @available(iOS 19, *)
+    @available(iOS 26, *)
     func hitTest_iOS19(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let hitView = hitTestHelper(point, with: event, view: self)?.view
         let isTapOutsideToDismissEnabled = PopupStackContainer.stacks.first?.popups.last?.config.isTapOutsideToDismissEnabled ?? false
@@ -144,7 +135,6 @@ private extension Window {
 }
 
 
-// MARK: - Hit Test Helper (used by iOS 18 and 19+)
 @available(iOS 18, *)
 private extension Window {
     func hitTestHelper(_ point: CGPoint, with event: UIEvent?, view: UIView, depth: Int = 0) -> HitTestResult? {
