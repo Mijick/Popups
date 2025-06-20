@@ -124,12 +124,29 @@ private extension Window {
 
     @available(iOS 26, *)
     func hitTest_iOS19(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let hitView = hitTestHelper(point, with: event, view: self)?.view
-        let isTapOutsideToDismissEnabled = PopupStackContainer.stacks.first?.popups.last?.config.isTapOutsideToDismissEnabled ?? false
+        guard let rootView = self.rootViewController?.view else { return nil }
+
+        // Instead of using the fragile helper, we will ask the system's reliable
+        // hit-test method to find the correct view, but we'll start it from the
+        // rootView, not the window. First, we must convert the point to the
+        // rootView's coordinate system.
+        let pointInRootView = self.convert(point, to: rootView)
         
-        if hitView == rootViewController?.view {
-            return isTapOutsideToDismissEnabled ? hitView : nil
+        // Now, ask the rootView to find the deepest subview at that point.
+        // This is much more robust than our manual hitTestHelper.
+        let hitView = rootView.hitTest(pointInRootView, with: event)
+
+        let isTapOutsideToDismissEnabled = PopupStackContainer.stacks.first?.popups.last?.config.isTapOutsideToDismissEnabled ?? false
+
+        // If the hit view is the rootView itself, it means the background was tapped.
+        if hitView == rootView || hitView == nil {
+             // If tap-to-dismiss is on, we must handle the touch on the background.
+             // If off, we return nil to pass the touch through to the app below.
+            return isTapOutsideToDismissEnabled ? rootView : nil
         }
+        
+        // A specific interactive subview (Button, TextField, etc.) was hit.
+        // Return it so it can process the touch.
         return hitView
     }
 }
