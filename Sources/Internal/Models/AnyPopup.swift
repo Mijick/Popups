@@ -11,7 +11,7 @@
 
 import SwiftUI
 
-struct AnyPopup: Popup {
+struct AnyPopup: Popup, Sendable {
     private(set) var id: PopupID
     private(set) var config: AnyPopupConfig
     private(set) var height: CGFloat? = nil

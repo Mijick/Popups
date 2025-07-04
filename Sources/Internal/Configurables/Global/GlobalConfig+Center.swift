@@ -11,6 +11,7 @@
 
 import SwiftUI
 
+@MainActor
 public final class GlobalConfigCenter: GlobalConfig { required public init() {}
     // MARK: Active Variables
     public var popupPadding: EdgeInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
