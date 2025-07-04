@@ -83,7 +83,7 @@ private extension PopupStack {
     }
 }
 private extension PopupStack {
-     unc insertedPopup(_ erasedPopup: AnyPopup) async -> [AnyPopup] { await popups.modifiedAsync(if: await !popups.contains { $0.id.isSameType(as: erasedPopup.id) }) {
+    func insertedPopup(_ erasedPopup: AnyPopup) async -> [AnyPopup] { await popups.modifiedAsync(if: await !popups.contains { $0.id.isSameType(as: erasedPopup.id) }) {
         $0.append(await erasedPopup.startDismissTimerIfNeeded(self))
     }}
     func removedLastPopup() async -> [AnyPopup] { await popups.modifiedAsync(if: !popups.isEmpty) {
