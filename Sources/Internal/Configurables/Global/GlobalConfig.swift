@@ -11,6 +11,7 @@
 
 import SwiftUI
 
+@MainActor
 public protocol GlobalConfig: LocalConfig {
     var dragThreshold: CGFloat { get set }
     var isStackingEnabled: Bool { get set }

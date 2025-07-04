@@ -11,6 +11,7 @@
 
 import SwiftUI
 
+@MainActor
 public protocol LocalConfig { init()
     // MARK: Content
     var popupPadding: EdgeInsets { get set }
