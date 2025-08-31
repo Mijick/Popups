@@ -60,7 +60,6 @@ private extension PopupStack {
             await AnyView.hideKeyboard()
         }
     }
-    
     nonisolated func getNewPopups(_ operation: StackOperation) async -> [AnyPopup] { switch operation {
         case .insertPopup(let popup): await insertedPopup(popup)
         case .removeLastPopup: await removedLastPopup()

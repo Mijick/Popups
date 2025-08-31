@@ -80,21 +80,26 @@ extension PopupSceneDelegate {
 // MARK: Implementation
 fileprivate class Window: UIWindow {
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        if #available(iOS 18, *) { point_iOS18(inside: point, with: event) }
+        if #available(iOS 26, *) { point_iOS26(inside: point, with: event) }
+        else if #available(iOS 18, *) { point_iOS18(inside: point, with: event) }
         else { point_iOS17(inside: point, with: event) }
     }
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        if #available(iOS 18, *) { hitTest_iOS18(point, with: event) }
+        if #available(iOS 26, *) { hitTest_iOS26(point, with: event) }
+        else if #available(iOS 18, *) { hitTest_iOS18(point, with: event) }
         else { hitTest_iOS17(point, with: event) }
     }
 }
 
 // MARK: Point
 private extension Window {
+    @available(iOS 26, *)
+    func point_iOS26(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        super.point(inside: point, with: event)
+    }
     @available(iOS 18, *)
     func point_iOS18(inside point: CGPoint, with event: UIEvent?) -> Bool {
         guard let view = rootViewController?.view else { return false }
-
         let hit = hitTestHelper(point, with: event, view: subviews.count > 1 ? self : view)
         return hit != nil
     }
@@ -105,16 +110,26 @@ private extension Window {
 
 // MARK: Hit Test
 private extension Window {
-    @available(iOS 18, *)
-    func hitTest_iOS18(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        super.hitTest(point, with: event)
+    @available(iOS 26, *)
+    func hitTest_iOS26(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        guard let rootView = self.rootViewController?.view else { return nil }
+        
+        let pointInRootView = self.convert(point, to: rootView)
+        let hitView = rootView.hitTest(pointInRootView, with: event)
+        let isTapOutsideToDismissEnabled = PopupStackContainer.stacks.first?.popups.last?.config.isTapOutsideToDismissEnabled ?? false
+        
+        if hitView == rootView || hitView == nil { return isTapOutsideToDismissEnabled ? rootView : nil }
+        return hitView
     }
+    @available(iOS 18, *)
+        func hitTest_iOS18(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+            super.hitTest(point, with: event)
+        }
     func hitTest_iOS17(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         guard let hit = super.hitTest(point, with: event) else { return nil }
         return rootViewController?.view == hit ? nil : hit
     }
 }
-
 
 // MARK: Hit Test Helper
 // Based on philip_trauner solution: https://forums.developer.apple.com/forums/thread/762292?answerId=803885022#803885022
@@ -123,7 +138,7 @@ private extension Window {
     func hitTestHelper(_ point: CGPoint, with event: UIEvent?, view: UIView, depth: Int = 0) -> HitTestResult? {
         view.subviews.reversed().reduce(nil) { deepest, subview in let convertedPoint = view.convert(point, to: subview)
             guard shouldCheckSubview(subview, convertedPoint: convertedPoint, event: event) else { return deepest }
-
+            
             let result = calculateHitTestSubviewResult(convertedPoint, with: event, subview: subview, depth: depth)
             return getDeepestHitTestResult(candidate: result, current: deepest)
         }

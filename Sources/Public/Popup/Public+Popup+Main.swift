@@ -18,7 +18,7 @@ import SwiftUI
  - ``onFocus()-6krqs``
  - ``onDismiss()-254h8``
  */
-public protocol Popup: View {
+public protocol Popup: View, Sendable {
     associatedtype Config: LocalConfig
 
     /**
