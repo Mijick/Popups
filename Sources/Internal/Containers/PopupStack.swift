@@ -50,7 +50,7 @@ extension PopupStack {
     }}
 }
 private extension PopupStack {
-    nonisolated func hideKeyboard(_ operation: StackOperation) async {
+    func hideKeyboard(_ operation: StackOperation) async {
         switch operation {
         case .insertPopup(let popup):
             guard popup.shouldDismissKeyboardOnPopupToggle else { return }
@@ -61,15 +61,15 @@ private extension PopupStack {
         }
     }
     
-    nonisolated func getNewPopups(_ operation: StackOperation) async -> [AnyPopup] { switch operation {
-        case .insertPopup(let popup): await insertedPopup(popup)
-        case .removeLastPopup: await removedLastPopup()
-        case .removePopup(let popup): await removedPopup(popup)
-        case .removeAllPopupsOfType(let popupType): await removedAllPopupsOfType(popupType)
-        case .removeAllPopupsWithID(let id): await removedAllPopupsWithID(id)
-        case .removeAllPopups: await removedAllPopups()
+    func getNewPopups(_ operation: StackOperation) -> [AnyPopup] { switch operation {
+        case .insertPopup(let popup): insertedPopup(popup)
+        case .removeLastPopup: removedLastPopup()
+        case .removePopup(let popup): removedPopup(popup)
+        case .removeAllPopupsOfType(let popupType): removedAllPopupsOfType(popupType)
+        case .removeAllPopupsWithID(let id): removedAllPopupsWithID(id)
+        case .removeAllPopups: removedAllPopups()
     }}
-    nonisolated func getNewPriority(_ newPopups: [AnyPopup]) async -> StackPriority {
+    func getNewPriority(_ newPopups: [AnyPopup]) async -> StackPriority {
         await priority.reshuffled(newPopups)
     }
     func updatePopups(_ newPopups: [AnyPopup]) async {
@@ -83,23 +83,45 @@ private extension PopupStack {
     }
 }
 private extension PopupStack {
-    nonisolated func insertedPopup(_ erasedPopup: AnyPopup) async -> [AnyPopup] { await popups.modifiedAsync(if: await !popups.contains { $0.id.isSameType(as: erasedPopup.id) }) {
-        $0.append(await erasedPopup.startDismissTimerIfNeeded(self))
-    }}
-    nonisolated func removedLastPopup() async -> [AnyPopup] { await popups.modifiedAsync(if: !popups.isEmpty) {
-        $0.removeLast()
-    }}
-    nonisolated func removedPopup(_ popup: AnyPopup) async -> [AnyPopup] { await popups.modifiedAsync {
-        $0.removeAll { $0.id.isSame(as: popup) }
-    }}
-    nonisolated func removedAllPopupsOfType(_ popupType: any Popup.Type) async -> [AnyPopup] { await popups.modifiedAsync {
-        $0.removeAll { $0.id.isSameType(as: popupType) }
-    }}
-    nonisolated func removedAllPopupsWithID(_ id: String) async -> [AnyPopup] { await popups.modifiedAsync {
-        $0.removeAll { $0.id.isSameType(as: id) }
-    }}
-    nonisolated func removedAllPopups() async -> [AnyPopup] {
-        []
+    func insertedPopup(_ erasedPopup: AnyPopup) -> [AnyPopup] {
+        if popups.contains(where: { $0.id.isSameType(as: erasedPopup.id) }) {
+            return popups
+        }
+        
+        var newPopups = popups
+        let popupWithTimer = erasedPopup.startDismissTimerIfNeeded(self)
+        newPopups.append(popupWithTimer)
+        return newPopups
+    }
+
+    func removedLastPopup() -> [AnyPopup] {
+        var newPopups = popups
+        if !newPopups.isEmpty {
+            newPopups.removeLast()
+        }
+        return newPopups
+    }
+
+    func removedPopup(_ popup: AnyPopup) -> [AnyPopup] {
+        var newPopups = popups
+        newPopups.removeAll { $0.id.isSame(as: popup) }
+        return newPopups
+    }
+
+    func removedAllPopupsOfType(_ popupType: any Popup.Type) -> [AnyPopup] {
+        var newPopups = popups
+        newPopups.removeAll { $0.id.isSameType(as: popupType) }
+        return newPopups
+    }
+
+    func removedAllPopupsWithID(_ id: String) -> [AnyPopup] {
+        var newPopups = popups
+        newPopups.removeAll { $0.id.isSameType(as: id) }
+        return newPopups
+    }
+
+    func removedAllPopups() -> [AnyPopup] {
+        return []
     }
 }
 
@@ -110,14 +132,14 @@ private extension PopupStack {
 
 // MARK: Fetch
 extension PopupStack {
-    nonisolated static func fetch(id: PopupStackID) async -> PopupStack? {
+    static func fetch(id: PopupStackID) async -> PopupStack? {
         let stack = await PopupStackContainer.stacks.first(where: { $0.id == id })
         await logNoStackRegisteredErrorIfNeeded(stack: stack, id: id)
         return stack
     }
 }
 private extension PopupStack {
-    nonisolated static func logNoStackRegisteredErrorIfNeeded(stack: PopupStack?, id: PopupStackID) async { if stack == nil {
+    static func logNoStackRegisteredErrorIfNeeded(stack: PopupStack?, id: PopupStackID) async { if stack == nil {
         Logger.log(
             level: .fault,
             message: "PopupStack (\(id.rawValue)) must be registered before use. More details can be found in the documentation."

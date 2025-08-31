@@ -11,6 +11,7 @@
 
 import Foundation
 
+@MainActor
 class PopupActionScheduler {
     private var time: Double = 0
     private var action: DispatchSourceTimer?
