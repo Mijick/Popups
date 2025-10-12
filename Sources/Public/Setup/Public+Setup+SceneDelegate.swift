@@ -113,14 +113,16 @@ private extension Window {
     @available(iOS 26, *)
     func hitTest_iOS26(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         guard let rootView = self.rootViewController?.view else { return nil }
+        guard let isDismissParameterEmpty = PopupStackContainer.stacks.first?.popups.last?.config.isTapOutsideToDismissEnabled else { return nil }
         
         let pointInRootView = self.convert(point, to: rootView)
         let hitView = rootView.hitTest(pointInRootView, with: event)
         let isTapOutsideToDismissEnabled = PopupStackContainer.stacks.first?.popups.last?.config.isTapOutsideToDismissEnabled ?? false
         
-        if hitView == rootView || hitView == nil { return isTapOutsideToDismissEnabled ? rootView : nil }
+        if hitView == rootView || hitView == nil { return isTapOutsideToDismissEnabled ? rootView : hitView }
         return hitView
     }
+  
     @available(iOS 18, *)
         func hitTest_iOS18(_ point: CGPoint, with event: UIEvent?) -> UIView? {
             super.hitTest(point, with: event)
