@@ -1287,16 +1287,17 @@ extension PopupVerticalStackViewModelTests {
             viewModel: topViewModel,
             popups: popups,
             gestureValue: -133,
+            gestureStartLocation: 1000,
             expectedValues: (popupHeight: 344, gestureTranslation: -133)
         )
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckGestureTranslationOnChange(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat, gestureTranslation: CGFloat)) async {
+    func appendPopupsAndCheckGestureTranslationOnChange(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, gestureStartLocation: CGFloat = 0, expectedValues: (popupHeight: CGFloat, gestureTranslation: CGFloat)) async {
         await viewModel.updatePopups(popups)
         await updatePopups(viewModel)
-        await viewModel.onPopupDragGestureChanged(gestureValue)
-
+        await viewModel.onPopupDragGestureChanged(.init(startLocationY: gestureStartLocation, height: gestureValue))
+        
         XCTAssertEqual(viewModel.activePopupProperties.height, expectedValues.popupHeight)
         XCTAssertEqual(viewModel.activePopupProperties.gestureTranslation, expectedValues.gestureTranslation)
     }
@@ -1385,6 +1386,7 @@ extension PopupVerticalStackViewModelTests {
             viewModel: topViewModel,
             popups: popups,
             gestureValue: -300,
+            gestureStartLocation: 1000,
             expectedValues: (popupHeight: nil, shouldPopupBeDismissed: true)
         )
     }
@@ -1433,6 +1435,7 @@ extension PopupVerticalStackViewModelTests {
             viewModel: topViewModel,
             popups: popups,
             gestureValue: 400,
+            gestureStartLocation: 1000,
             expectedValues: (popupHeight: 400, shouldPopupBeDismissed: false)
         )
     }
@@ -1445,6 +1448,7 @@ extension PopupVerticalStackViewModelTests {
             viewModel: topViewModel,
             popups: popups,
             gestureValue: 100,
+            gestureStartLocation: 1000,
             expectedValues: (popupHeight: 400, shouldPopupBeDismissed: false)
         )
     }
@@ -1457,16 +1461,17 @@ extension PopupVerticalStackViewModelTests {
             viewModel: topViewModel,
             popups: popups,
             gestureValue: 400,
+            gestureStartLocation: 1000,
             expectedValues: (popupHeight: screen.height - screen.safeArea.bottom, shouldPopupBeDismissed: false)
         )
     }
 }
 private extension PopupVerticalStackViewModelTests {
-    func appendPopupsAndCheckGestureTranslationOnEnd(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, expectedValues: (popupHeight: CGFloat?, shouldPopupBeDismissed: Bool)) async {
+    func appendPopupsAndCheckGestureTranslationOnEnd(viewModel: ViewModel, popups: [AnyPopup], gestureValue: CGFloat, gestureStartLocation: CGFloat = 0, expectedValues: (popupHeight: CGFloat?, shouldPopupBeDismissed: Bool)) async {
         await viewModel.updatePopups(popups)
         await updatePopups(viewModel)
         await viewModel.updateGestureTranslation(gestureValue)
-        await viewModel.onPopupDragGestureEnded(gestureValue)
+        await viewModel.onPopupDragGestureEnded(.init(startLocationY: gestureStartLocation, height: gestureValue))
 
         XCTAssertEqual(viewModel.popups.count, expectedValues.shouldPopupBeDismissed ? 0 : 1)
         XCTAssertEqual(viewModel.activePopupProperties.height, expectedValues.popupHeight)
