@@ -154,7 +154,7 @@ public extension LocalConfigVertical {
     /**
      Defines the vertical size (in points) of the area that responds to drag gestures.
      
-     Use this to control how much of the popup’s top/down region is draggable for dismiss gesture.
+     Use this to control how much of the popup’s top/bottom region is draggable for dismiss gesture.
      A larger value allows dragging from a wider area.
      
      ## Visualisation
