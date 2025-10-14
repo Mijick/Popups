@@ -12,9 +12,7 @@
 import SwiftUI
 
 @MainActor
-public class LocalConfigCenter: LocalConfig {
-    
-    required public init() {}
+public class LocalConfigCenter: LocalConfig { required public init() {}
     // MARK: Active Variables
     public var popupPadding: EdgeInsets = GlobalConfigContainer.center.popupPadding
     public var cornerRadius: CGFloat = GlobalConfigContainer.center.cornerRadius
