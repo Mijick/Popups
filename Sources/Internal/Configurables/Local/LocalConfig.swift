@@ -25,4 +25,5 @@ public protocol LocalConfig { init()
     // MARK: Gestures
     var isTapOutsideToDismissEnabled: Bool { get set }
     var isDragGestureEnabled: Bool { get set }
+    var dragGestureAreaSize: CGFloat { get set }
 }

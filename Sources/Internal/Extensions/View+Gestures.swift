@@ -24,14 +24,14 @@ extension View {
 
 // MARK: On Drag Gesture
 extension View {
-    func onDragGesture(onChanged actionOnChanged: @escaping (CGFloat) async -> (), onEnded actionOnEnded: @escaping (CGFloat) async -> (), isEnabled: Bool) -> some View {
+    func onDragGesture(onChanged actionOnChanged: @escaping (DragGesture.Value) async -> (), onEnded actionOnEnded: @escaping (DragGesture.Value) async -> (), isEnabled: Bool) -> some View {
         #if os(tvOS)
         self
         #else
-        highPriorityGesture(
+        simultaneousGesture(
             DragGesture()
-                .onChanged { newValue in Task { @MainActor in await actionOnChanged(newValue.translation.height) }}
-                .onEnded { newValue in Task { @MainActor in await actionOnEnded(newValue.translation.height) }},
+                .onChanged { newValue in Task { @MainActor in await actionOnChanged(newValue) }}
+                .onEnded { newValue in Task { @MainActor in await actionOnEnded(newValue) }},
             isEnabled: isEnabled
         )
         #endif

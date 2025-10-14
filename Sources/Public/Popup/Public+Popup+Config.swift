@@ -150,4 +150,15 @@ public extension LocalConfigVertical {
      ![image](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/enable-drag-gesture.png?raw=true)
      */
     func enableDragGesture(_ value: Bool) -> Self { self.isDragGestureEnabled = value; return self }
+    
+    /**
+     Defines the vertical size (in points) of the area that responds to drag gestures.
+     
+     Use this to control how much of the popup’s upper/down region is draggable for dismiss gesture.
+     A larger value allows dragging from a wider area.
+     
+     ## Visualisation
+     ![image](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/bottom-popup-draggable-area.png?raw=true)
+     */
+    func dragGestureAreaSize(_ value: CGFloat) -> Self { self.dragGestureAreaSize = value; return self }
 }

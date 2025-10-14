@@ -18,7 +18,6 @@ struct PopupVerticalStackView: View {
     var body: some View { if viewModel.screen.height > 0 {
         ZStack(alignment: (!viewModel.alignment).toAlignment(), content: createPopupStack)
             .frame(height: viewModel.screen.height, alignment: viewModel.alignment.toAlignment())
-            .onDragGesture(onChanged: viewModel.onPopupDragGestureChanged, onEnded: viewModel.onPopupDragGestureEnded, isEnabled: viewModel.dragGestureEnabled)
     }}
 }
 private extension PopupVerticalStackView {
@@ -33,8 +32,8 @@ private extension PopupVerticalStackView {
             .padding(viewModel.activePopupProperties.innerPadding)
             .fixedSize(horizontal: false, vertical: viewModel.activePopupProperties.verticalFixedSize)
             .onHeightChange { await viewModel.updatePopupHeight($0, popup) }
-            .frame(height: viewModel.activePopupProperties.height, alignment: (!viewModel.alignment).toAlignment())
-            .frame(maxWidth: .infinity, maxHeight: viewModel.activePopupProperties.height, alignment: (!viewModel.alignment).toAlignment())
+            .frame(height: viewModel.activePopupProperties.height, alignment: popupAlignment)
+            .frame(maxWidth: .infinity, maxHeight: viewModel.activePopupProperties.height, alignment: popupAlignment)
             .background(backgroundColor: getBackgroundColor(for: popup), overlayColor: getStackOverlayColor(for: popup), corners: viewModel.activePopupProperties.corners)
             .offset(y: viewModel.calculateOffsetY(for: popup))
             .scaleEffect(x: viewModel.calculateScaleX(for: popup))
@@ -42,6 +41,7 @@ private extension PopupVerticalStackView {
             .padding(viewModel.activePopupProperties.outerPadding)
             .transition(transition)
             .zIndex(viewModel.calculateZIndex())
+            .onDragGesture(onChanged: viewModel.onPopupDragGestureChanged, onEnded: viewModel.onPopupDragGestureEnded, isEnabled: viewModel.dragGestureEnabled)
     }}
 }
 
@@ -52,4 +52,5 @@ private extension PopupVerticalStackView {
 private extension PopupVerticalStackView {
     var stackOverlayColor: Color { .black }
     var transition: AnyTransition { .move(edge: viewModel.alignment.toEdge()) }
+    var popupAlignment: Alignment { (!viewModel.alignment).toAlignment() }
 }
