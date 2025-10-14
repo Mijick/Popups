@@ -320,7 +320,7 @@ extension VM.VerticalStack {
 private extension VM.VerticalStack {
     func isValidDragGesture(_ value: DragGestureState) -> Bool {
         guard popups.isEmpty == false else { return false }
-        guard let gestureAreaSize = popups.last?.config.dragGestureAreaSize, gestureAreaSize > 0 else { return false }
+        guard let gestureAreaSize = popups.last?.config.dragGestureAreaSize, gestureAreaSize >= 0 else { return false }
 
         var minStartPointOffset: CGFloat {
             if screen.height <= activePopupProperties.height ?? 0 { return screen.safeArea.top + gestureAreaSize }
