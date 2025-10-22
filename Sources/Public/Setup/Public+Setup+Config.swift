@@ -143,7 +143,7 @@ public extension GlobalConfigVertical {
     func dragThreshold(_ value: CGFloat) -> Self { self.dragThreshold = value; return self }
     
     /**
-     Defines the vertical size (in points) of the area that responds to drag gestures.
+     Defines the vertical size (in points) of the area that responds to dismissal drag gestures.
      
      Use this to control how much of the popup’s top/bottom region is draggable for dismiss gesture.
      A larger value allows dragging from a wider area.
