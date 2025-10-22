@@ -24,6 +24,7 @@ public final class GlobalConfigVertical: GlobalConfig { required public init() {
     public var isTapOutsideToDismissEnabled: Bool = false
     public var isDragGestureEnabled: Bool = true
     public var dragThreshold: CGFloat = 1/3
+    public var dragGestureAreaSize: CGFloat = 30
 
     // MARK: Non-Customizable
     public var ignoredSafeAreaEdges: Edge.Set = []

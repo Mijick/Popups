@@ -310,14 +310,29 @@ extension VM.VerticalStack {
 
 // MARK: On Changed
 extension VM.VerticalStack {
-    func onPopupDragGestureChanged(_ value: CGFloat) async {
-        guard dragGestureEnabled else { return }
+    func onPopupDragGestureChanged(_ value: DragGestureState) async {
+        guard dragGestureEnabled, isValidDragGesture(value) else { return }
         
-        let newGestureTranslation = await calculateGestureTranslation(value)
+        let newGestureTranslation = await calculateGestureTranslation(value.height)
         await updateGestureTranslation(newGestureTranslation)
     }
 }
 private extension VM.VerticalStack {
+    func isValidDragGesture(_ value: DragGestureState) -> Bool {
+        guard popups.isEmpty == false else { return false }
+        guard let gestureAreaSize = popups.last?.config.dragGestureAreaSize, gestureAreaSize >= 0 else { return false }
+
+        var minStartPointOffset: CGFloat {
+            if screen.height <= activePopupProperties.height ?? 0 { return screen.safeArea.top + gestureAreaSize }
+            return gestureAreaSize
+        }
+        let popupHeight = activePopupProperties.height ?? minStartPointOffset
+    
+        switch popups.last?.config.alignment {
+            case .top: return popupHeight - minStartPointOffset <= value.startLocationY
+            default: return value.startLocationY <= minStartPointOffset
+        }
+    }
     func calculateGestureTranslation(_ value: CGFloat) async -> CGFloat { switch popups.last?.config.dragDetents.isEmpty ?? true {
         case true: calculateGestureTranslationWhenNoDragDetents(value)
         case false: calculateGestureTranslationWhenDragDetents(value)
@@ -355,8 +370,8 @@ private extension VM.VerticalStack {
 
 // MARK: On Ended
 extension VM.VerticalStack {
-    func onPopupDragGestureEnded(_ value: CGFloat) async {
-        guard value != 0, let activePopup = popups.last else { return }
+    func onPopupDragGestureEnded(_ value: DragGestureState) async {
+        guard value.height != 0, let activePopup = popups.last, isValidDragGesture(value) else { return }
 
         await dismissLastPopupIfNeeded(activePopup)
 

@@ -141,4 +141,15 @@ public extension GlobalConfigVertical {
      - important: Drag progress is calculated as **dragTranslation** / **popupHeight**, therefore drag threshold value is expected to be between 0 and 1.
      */
     func dragThreshold(_ value: CGFloat) -> Self { self.dragThreshold = value; return self }
+    
+    /**
+     Defines the vertical size (in points) of the area that responds to dismissal drag gestures.
+     
+     Use this to control how much of the popup’s top/bottom region is draggable for dismiss gesture.
+     A larger value allows dragging from a wider area.
+     
+     ## Visualisation
+     ![image](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/bottom-popup-draggable-area.png?raw=true)
+     */
+    func dragGestureAreaSize(_ value: CGFloat) -> Self { self.dragGestureAreaSize = value; return self }
 }

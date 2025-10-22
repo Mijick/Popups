@@ -25,4 +25,5 @@ public class LocalConfigCenter: LocalConfig { required public init() {}
     public var heightMode: HeightMode = GlobalConfigContainer.center.heightMode
     public var dragDetents: [DragDetent] = GlobalConfigContainer.center.dragDetents
     public var isDragGestureEnabled: Bool = GlobalConfigContainer.center.isDragGestureEnabled
+    public var dragGestureAreaSize: CGFloat = GlobalConfigContainer.center.dragGestureAreaSize
 }
