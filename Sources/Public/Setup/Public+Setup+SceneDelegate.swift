@@ -55,6 +55,8 @@ import SwiftUI
 open class PopupSceneDelegate: NSObject, UIWindowSceneDelegate {
     open var window: UIWindow?
     open var configBuilder: (GlobalConfigContainer) -> (GlobalConfigContainer) = { _ in .init() }
+    open func sceneStoppedBeingFirstResponder() { }
+    open func makeSceneKey() { window?.makeKey() }
 }
 
 // MARK: Create Popup Scene
@@ -65,10 +67,10 @@ extension PopupSceneDelegate {
             .registerPopups(configBuilder: configBuilder)
         )
         hostingController.view.backgroundColor = .clear
-
-        window = Window(windowScene: windowScene)
+        window = Window(scene: self, windowScene: windowScene)
         window?.rootViewController = hostingController
         window?.isHidden = false
+        window?.makeKey()
     }}
 }
 
@@ -77,8 +79,21 @@ extension PopupSceneDelegate {
 
 
 
-// MARK: Implementation
+
 fileprivate class Window: UIWindow {
+    weak var scene: PopupSceneDelegate?
+    
+    init(scene: PopupSceneDelegate, windowScene: UIWindowScene) {
+        super.init(windowScene: windowScene)
+        self.scene = scene
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: Implementation
+extension Window {
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         if #available(iOS 26, *) { point_iOS26(inside: point, with: event) }
         else if #available(iOS 18, *) { point_iOS18(inside: point, with: event) }
@@ -88,6 +103,11 @@ fileprivate class Window: UIWindow {
         if #available(iOS 26, *) { hitTest_iOS26(point, with: event) }
         else if #available(iOS 18, *) { hitTest_iOS18(point, with: event) }
         else { hitTest_iOS17(point, with: event) }
+    }
+    override func resignKey() {
+        super.resignKey()
+        
+        scene?.sceneStoppedBeingFirstResponder()
     }
 }
 
